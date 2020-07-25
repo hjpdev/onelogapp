@@ -10,6 +10,8 @@ export const HomeScreen: React.FC = () => {
     <View style={ScreenStyles.containerView}>
       <LastReading />
       <Stats days={7} />
+      <Stats days={14} />
+      <Stats days={30} />
     </View>
   )
 }

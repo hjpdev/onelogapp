@@ -2,6 +2,8 @@ import fetch from 'node-fetch'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
+import { decimalPadRight } from '../Helpers/GeneralHelpers'
+
 const getStats = async days => {
   const url = `http://localhost:8088/readings/bg/stats/${days}`
 
@@ -42,10 +44,10 @@ export const Stats = ({ days }): React.FC => {
           </Text>
           <View style={Styles.statsFigures}>
             <Text style={Styles.statsAvg}>
-              { avg }
+              { decimalPadRight(avg) }
             </Text>
             <Text style={Styles.statsStddev}>
-              { `±${stddev}` }
+              { `±${decimalPadRight(stddev)}` }
             </Text>
           </View>
         </View>
@@ -58,6 +60,7 @@ export const Stats = ({ days }): React.FC => {
 
 const Styles = StyleSheet.create({
   stats: {
+    borderWidth: 0.5,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1
@@ -75,6 +78,7 @@ const Styles = StyleSheet.create({
   statsStddev: {
     fontSize: 40,
     padding: 12,
-    paddingLeft: 0
+    paddingLeft: 0,
+    paddingBottom: 0,
   }
 })

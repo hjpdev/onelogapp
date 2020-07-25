@@ -1,4 +1,4 @@
-export const padLeft = (value: number | string) => `${value}`.length === 1 ? `0${value}` : value
+import { padLeft } from './GeneralHelpers'
 
 export const newDate = ({ m, d, h, min, sec }): string => {
   const date = new Date()

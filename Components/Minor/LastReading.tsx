@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
-import { padLeft } from '../Helpers/DateHelpers'
+import { decimalPadRight, padLeft } from '../Helpers/GeneralHelpers'
 
 const getLastReading = async () => {
   const url = 'http://localhost:8088/readings/bg/last'
@@ -41,10 +41,10 @@ if (lastReading) {
     lastReading
       ? <View style={Styles.lastReading}>
           <Text style={Styles.lastReadingTime}>
-            {created}
+            { created }
           </Text>
           <Text style={Styles.lastReadingReading}>
-            {reading}
+            { decimalPadRight(reading) }
           </Text>
         </View>
       : <View style={{ ...Styles.lastReading, justifyContent: 'center' }}>
@@ -55,15 +55,16 @@ if (lastReading) {
 
 const Styles = StyleSheet.create({
   lastReading: {
+    borderWidth: 0.5,
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     flex: 1
   },
   lastReadingReading: {
     fontSize: 60
   },
   lastReadingTime: {
-    fontSize: 38,
-    paddingTop: 10
+    fontSize: 38
   }
 })
