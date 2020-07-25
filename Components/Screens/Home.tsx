@@ -8,10 +8,10 @@ import { ScreenStyles } from '../../Assets/Styles/Screen'
 export const HomeScreen: React.FC = () => {
   return(
     <View style={ScreenStyles.containerView}>
-      <LastReading />
+      <LastReading table={'bg'}/>
       <Stats days={7} />
-      <Stats days={14} />
-      <Stats days={30} />
+      <LastReading table={'dose'} />
+      <LastReading table={'macro'} />
     </View>
   )
 }

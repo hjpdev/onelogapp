@@ -1,11 +1,17 @@
 import fetch from 'node-fetch'
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
-import { decimalPadRight, padLeft } from '../Helpers/GeneralHelpers'
+import { delay } from '../Helpers/GeneralHelpers'
 
-const getLastReading = async () => {
-  const url = 'http://localhost:8088/readings/bg/last'
+import { BgLayout } from '../Layouts/Bg'
+import { DoseLayout } from '../Layouts/Dose'
+import { MacroLayout } from '../Layouts/Macro'
+
+const getLastReading = async (table: string) => {
+  const url = `http://localhost:8088/readings/${table}/last`
+
+  await delay(3000)
 
   return fetch(url, {
     method: 'GET',
@@ -18,38 +24,34 @@ const getLastReading = async () => {
     .catch(err => err)
 }
 
-export const LastReading = (): React.FC => {
+const generateLayout = ({ table, lastReading }) => {
+  const layoutMap = {
+    'bg': <BgLayout lastReading={ lastReading } />,
+    'dose': <DoseLayout lastReading={ lastReading } />,
+    'macro': <MacroLayout lastReading={ lastReading } />,
+    'keto': <BgLayout lastReading={ lastReading } />
+  }
+
+  return layoutMap[table]
+}
+
+export const LastReading = ({ table }): React.FC => {
   const [lastReading, setLastReading] = useState()
 
   useEffect(() => {
-    getLastReading().then(res => setLastReading({
-      created: res.created,
-      reading: res.reading
-    }))
-}, [])
-
-let created: string, reading: number
-
-if (lastReading) {
-  const hours = padLeft(new Date(lastReading.created).getHours())
-  const minutes = padLeft(new Date(lastReading.created).getMinutes())
-  created = `${hours}:${minutes}`
-  reading = lastReading.reading
-}
+    getLastReading(table).then(res => setLastReading(res))
+  }, [])
 
   return(
     lastReading
-      ? <View style={Styles.lastReading}>
-          <Text style={Styles.lastReadingTime}>
-            { created }
-          </Text>
-          <Text style={Styles.lastReadingReading}>
-            { decimalPadRight(reading) }
-          </Text>
+      ? generateLayout({ table, lastReading })
+      : <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }} />
+          <View style={{ ...Styles.lastReading, justifyContent: 'center' }}>
+            <ActivityIndicator color={'black'} />
+          </View>
         </View>
-      : <View style={{ ...Styles.lastReading, justifyContent: 'center' }}>
-          <ActivityIndicator color={'black'} style={Styles.lastReadingSpinner} />
-        </View>
+        
   )
 }
 
@@ -59,12 +61,6 @@ const Styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1
-  },
-  lastReadingReading: {
-    fontSize: 60
-  },
-  lastReadingTime: {
-    fontSize: 38
+    flex: 5
   }
 })

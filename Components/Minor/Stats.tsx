@@ -2,10 +2,12 @@ import fetch from 'node-fetch'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
-import { decimalPadRight } from '../Helpers/GeneralHelpers'
+import { decimalPadRight, delay } from '../Helpers/GeneralHelpers'
 
 const getStats = async days => {
   const url = `http://localhost:8088/readings/bg/stats/${days}`
+
+  await delay(3000)
 
   return fetch(url, {
     method: 'GET',
@@ -38,10 +40,12 @@ export const Stats = ({ days }): React.FC => {
     stats
       ? 
       <>
-        <View style={Styles.stats}>
-          <Text style={Styles.statsText}>
-            { `Past ${days} days:` }
-          </Text>
+        <View style={Styles.statsContainer}>
+          <View style={Styles.statsHeader}>
+            <Text style={Styles.statsTime}>
+              { `Past ${days} days:` }
+            </Text>
+          </View>
           <View style={Styles.statsFigures}>
             <Text style={Styles.statsAvg}>
               { decimalPadRight(avg) }
@@ -52,25 +56,36 @@ export const Stats = ({ days }): React.FC => {
           </View>
         </View>
       </>
-      : <View style={Styles.stats}>
-          <ActivityIndicator color={'black'} style={Styles.statsSpinner} />
+      : <View style={Styles.statsContainer}>
+          <View style={{ flex: 1 }} />
+          <View style={{ flex: 5, justifyContent: 'center' }}>
+            <ActivityIndicator color={'black'} />
+          </View>
         </View>
   )
 }
 
 const Styles = StyleSheet.create({
-  stats: {
+  statsContainer: {
+    flex: 1,
     borderWidth: 0.5,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1
   },
   statsFigures: {
+    flex: 5,
+    width: '80%',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-around',
+    // borderWidth: 0.5
   },
   statsText: {
     fontSize: 20
+  },
+  statsTime: {
+    fontSize: 22,
+    textAlignVertical: 'top'
   },
   statsAvg: {
     fontSize: 60,
@@ -78,7 +93,14 @@ const Styles = StyleSheet.create({
   statsStddev: {
     fontSize: 40,
     padding: 12,
-    paddingLeft: 0,
+    paddingLeft: 10,
     paddingBottom: 0,
+  },
+  statsHeader: {
+    flex: 1,
+    borderWidth: 0.5,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 })
