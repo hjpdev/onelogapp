@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-export const NavBar: React.FC = props => {
+export const NavBar: React.FC = (props) => {
   const { setCurrentScreen } = props
 
   const handlePress = (screen: string) => {
@@ -10,23 +10,23 @@ export const NavBar: React.FC = props => {
 
   return (
     <View style={Styles.navBar}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('Settings')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('settings')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarSettings.png')} />
       </TouchableOpacity>        
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('Account')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('account')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarAccount.png')} />
       </TouchableOpacity>        
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('Home')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('home')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarHome.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('New Reading')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('newReading')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarNewReading.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('Analytics')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('analytics')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarAnalytics.png')} />
       </TouchableOpacity>
     </View>

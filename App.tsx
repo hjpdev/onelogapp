@@ -5,8 +5,8 @@ import { Container } from './Components/Container'
 import { MainHeader } from './Components/MainHeader'
 import { NavBar } from './Components/NavBar'
 
-const App: () => React.Node = () => {
-  const [currentScreen, setCurrentScreen] = useState('Home')
+const App: React.FC = () => {
+  const [currentScreen, setCurrentScreen] = useState('home')
 
   return (
     <>

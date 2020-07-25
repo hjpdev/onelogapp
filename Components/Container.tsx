@@ -1,8 +1,26 @@
 import React from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
 
-var deviceHeight = Dimensions.get('window').height;
-var deviceWidth = Dimensions.get('window').width;
+import { AccountScreen } from './Screens/Account'
+import { AnalyticsScreen } from './Screens/Analytics'
+import { HomeScreen } from './Screens/Home'
+import { NewReadingScreen } from './Screens/NewReading'
+import { SettingsScreen } from './Screens/Settings'
+
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
+
+const screens = (currentScreen: string) => {
+  const map = {
+    account: <AccountScreen />,
+    settings: <SettingsScreen />,
+    home: <HomeScreen />,
+    newReading: <NewReadingScreen />,
+    analytics: <AnalyticsScreen />
+  }
+
+  return map[currentScreen]
+}
 
 export const Container: React.FC = props => {
   const { currentScreen } = props
@@ -10,7 +28,7 @@ export const Container: React.FC = props => {
   return(
     <View style={Styles.containerView}>
       <Text style={Styles.containerText}>
-        {currentScreen}
+        { screens(currentScreen) }
       </Text>
     </View>
   )
