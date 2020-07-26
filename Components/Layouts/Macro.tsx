@@ -1,7 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 
-import { decimalPadRight, padLeft } from '../Helpers/GeneralHelpers'
+import { generateCreatedDate } from '../Helpers/DateHelpers'
+
+import { MacroLayoutStyles } from '../../Assets/Styles/Layouts'
 
 interface MacroLayoutProps {
   kcal: number,
@@ -12,91 +14,38 @@ interface MacroLayoutProps {
 }
 
 export const MacroLayout: React.FC = ({ lastReading }) => {
-    const hours: (string | number) = padLeft(new Date(lastReading.created).getHours())
-    const minutes: (string | number) = padLeft(new Date(lastReading.created).getMinutes())
-    const created: string = `${hours}:${minutes}`
+    const created: string = generateCreatedDate(lastReading.created)
     const { kcal, carbs, sugar, protein, fat }: MacroLayoutProps = lastReading
 
   return(
-    <View style={Styles.macroReadingContainer}>
-      <View style={Styles.macroLayoutHeader}>
-        <Text style={Styles.macroLayoutTag}>
+    <View style={MacroLayoutStyles.macroReadingContainer}>
+      <View style={MacroLayoutStyles.macroLayoutHeader}>
+        <Text style={MacroLayoutStyles.macroLayoutTag}>
           { 'Macro' }
         </Text>
-        <Text style={Styles.macroLayoutTime}>
+        <Text style={MacroLayoutStyles.macroLayoutTime}>
           { created }
         </Text>
       </View>
-      <View style={Styles.macroLayoutContentContainer}>
-        <View style={Styles.macroLayoutTable}>
-          <View style={Styles.macroLayoutTableColumnHeaders}>
-            <Text style={Styles.macroLayoutTableColumnHeader}>{'Kcal'}</Text>
-            <Text style={Styles.macroLayoutTableColumnHeader}>{'Carbs'}</Text>
-            <Text style={Styles.macroLayoutTableColumnHeader}>{'Sugar'}</Text>
-            <Text style={Styles.macroLayoutTableColumnHeader}>{'Protein'}</Text>
-            <Text style={Styles.macroLayoutTableColumnHeader}>{'Fat'}</Text>
+
+      <View style={MacroLayoutStyles.macroLayoutContentContainer}>
+        <View style={MacroLayoutStyles.macroLayoutTable}>
+          <View style={MacroLayoutStyles.macroLayoutTableHeaders}>
+            <Text style={MacroLayoutStyles.macroLayoutTableHeader}>{'Kcal'}</Text>
+            <Text style={MacroLayoutStyles.macroLayoutTableHeader}>{'Carbs'}</Text>
+            <Text style={MacroLayoutStyles.macroLayoutTableHeader}>{'Sugar'}</Text>
+            <Text style={MacroLayoutStyles.macroLayoutTableHeader}>{'Protein'}</Text>
+            <Text style={MacroLayoutStyles.macroLayoutTableHeader}>{'Fat'}</Text>
           </View>
-          <View style={Styles.macroLayoutTableColumnValues}>
-            <Text style={Styles.macroLayoutTableColumnValue}>{ kcal.toFixed(1) }</Text>
-            <Text style={Styles.macroLayoutTableColumnValue}>{ carbs.toFixed(1) }</Text>
-            <Text style={Styles.macroLayoutTableColumnValue}>{ sugar.toFixed(1) }</Text>
-            <Text style={Styles.macroLayoutTableColumnValue}>{ protein.toFixed(1) }</Text>
-            <Text style={Styles.macroLayoutTableColumnValue}>{ fat.toFixed(1) }</Text>
+          <View style={MacroLayoutStyles.macroLayoutTableValues}>
+            <Text style={MacroLayoutStyles.macroLayoutTableValue}>{ kcal.toFixed(1) }</Text>
+            <Text style={MacroLayoutStyles.macroLayoutTableValue}>{ carbs.toFixed(1) }</Text>
+            <Text style={MacroLayoutStyles.macroLayoutTableValue}>{ sugar.toFixed(1) }</Text>
+            <Text style={MacroLayoutStyles.macroLayoutTableValue}>{ protein.toFixed(1) }</Text>
+            <Text style={MacroLayoutStyles.macroLayoutTableValue}>{ fat.toFixed(1) }</Text>
           </View>
         </View>
       </View>
     </View>
   )
 }
-
-const Styles = StyleSheet.create({
-  macroReadingContainer: {
-    borderWidth: 0.5,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1
-  },
-  macroLayoutContentContainer: {
-    flex: 5,
-    // borderWidth: 0.5,
-    width: '80%'
-  },
-  macroLayoutTable: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  macroLayoutTableColumnHeaders: {
-    flexDirection: 'column',
-    padding: 20
-  },
-  macroLayoutTableColumnHeader: {
-    fontSize: 16
-  },
-  macroLayoutTableColumnValues: {
-    flexDirection: 'column',
-    padding: 20
-  },
-  macroLayoutTableColumnValue: {
-    fontSize: 16
-  },
-  macroReadingReading: {
-    fontSize: 10,
-    lineHeight: 14
-  },
-  macroLayoutTime: {
-    fontSize: 22,
-    textAlignVertical: 'top'
-  },
-  macroLayoutTag: {
-    fontSize: 22
-  },
-  macroLayoutHeader: {
-    flex: 1,
-    flexDirection: 'row',
-    borderWidth: 0.5,
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  }
-})

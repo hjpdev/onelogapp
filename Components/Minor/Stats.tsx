@@ -4,10 +4,10 @@ import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
 import { decimalPadRight, delay } from '../Helpers/GeneralHelpers'
 
-const getStats = async days => {
+const getStats = async (days: number) => {
   const url = `http://localhost:8088/readings/bg/stats/${days}`
 
-  await delay(3000)
+  await delay(1000)
 
   return fetch(url, {
     method: 'GET',
@@ -19,6 +19,8 @@ const getStats = async days => {
     .then(res => res.json())
     .catch(err => err)
 }
+
+const unit = 'mmol/L'
 
 export const Stats = ({ days }): React.FC => {
   const [stats, setStats] = useState()
@@ -38,24 +40,27 @@ export const Stats = ({ days }): React.FC => {
 
   return(
     stats
-      ? 
-      <>
-        <View style={Styles.statsContainer}>
+      ? <View style={Styles.statsContainer}>
           <View style={Styles.statsHeader}>
             <Text style={Styles.statsTime}>
-              { `Past ${days} days:` }
+              { `Past ${days} days` }
             </Text>
           </View>
-          <View style={Styles.statsFigures}>
-            <Text style={Styles.statsAvg}>
-              { decimalPadRight(avg) }
-            </Text>
+
+          <View style={Styles.statsContent}>
+            <View>
+              <Text style={Styles.statsAvg}>
+                { decimalPadRight(avg) }
+              </Text>
+              <Text style={Styles.statsAvgUnit}>
+                { unit }
+              </Text>
+            </View>
             <Text style={Styles.statsStddev}>
               { `±${decimalPadRight(stddev)}` }
             </Text>
           </View>
         </View>
-      </>
       : <View style={Styles.statsContainer}>
           <View style={{ flex: 1 }} />
           <View style={{ flex: 5, justifyContent: 'center' }}>
@@ -68,39 +73,45 @@ export const Stats = ({ days }): React.FC => {
 const Styles = StyleSheet.create({
   statsContainer: {
     flex: 1,
-    borderWidth: 0.5,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 0.2
   },
-  statsFigures: {
+  statsContent: {
     flex: 5,
-    width: '80%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    // borderWidth: 0.5
+    width: '80%'
   },
   statsText: {
     fontSize: 20
   },
   statsTime: {
-    fontSize: 22,
-    textAlignVertical: 'top'
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 4,
+    borderWidth: 0.2,
+    width: 104
   },
   statsAvg: {
-    fontSize: 60,
+    fontSize: 54,
+    textAlign: 'right'
+  },
+  statsAvgUnit: {
+    fontSize: 12,
+    textAlign: 'center'
   },
   statsStddev: {
-    fontSize: 40,
+    fontSize: 32,
     padding: 12,
     paddingLeft: 10,
-    paddingBottom: 0,
+    paddingBottom: 0
   },
   statsHeader: {
     flex: 1,
-    borderWidth: 0.5,
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start'
   }
 })

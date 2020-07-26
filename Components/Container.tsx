@@ -37,7 +37,7 @@ export const Container: React.FC = props => {
 const Styles = StyleSheet.create({
   containerView: {
     backgroundColor: '#ebebeb',
-    height: deviceHeight-120,
+    height: deviceHeight-120, //96 In reality
     width: deviceWidth,
     flexDirection: 'column',
     justifyContent: 'center'

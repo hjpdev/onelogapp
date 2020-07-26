@@ -12,3 +12,18 @@ export const newDate = ({ m, d, h, min, sec }): string => {
 
   return `${dateString} ${timeString}`
 }
+
+export const generateCreatedDate = (date: string) => {
+  const today = new Date()
+  const todayMonth = today.getMonth()
+  const todayDay = today.getDate()
+
+  const month: (string | number) = new Date(date).getMonth()
+  const day: (string | number) = new Date(date).getDate()
+  const hours: (string | number) = padLeft(new Date(date).getHours())
+  const minutes: (string | number) = padLeft(new Date(date).getMinutes())
+  
+  return (month === todayMonth && day === todayDay)
+    ? `${hours}:${minutes}`
+    : `${padLeft(month)}/${padLeft(day)} ${hours}:${minutes}`
+}

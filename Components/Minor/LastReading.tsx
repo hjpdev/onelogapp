@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
 
 import { delay } from '../Helpers/GeneralHelpers'
-
 import { BgLayout } from '../Layouts/Bg'
 import { DoseLayout } from '../Layouts/Dose'
 import { MacroLayout } from '../Layouts/Macro'
@@ -11,7 +10,7 @@ import { MacroLayout } from '../Layouts/Macro'
 const getLastReading = async (table: string) => {
   const url = `http://localhost:8088/readings/${table}/last`
 
-  await delay(3000)
+  await delay(1000)
 
   return fetch(url, {
     method: 'GET',
@@ -57,10 +56,10 @@ export const LastReading = ({ table }): React.FC => {
 
 const Styles = StyleSheet.create({
   lastReading: {
-    borderWidth: 0.5,
+    flex: 5,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 5
+    borderBottomWidth: 0.2
   }
 })
