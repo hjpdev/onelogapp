@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, Text, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 
 import { decimalPadRight, padLeft } from '../Helpers/GeneralHelpers'
 
@@ -23,6 +24,12 @@ export const BgLayout: React.FC = ({ lastReading }) => {
           { created }
         </Text>
       </View>
+      <LinearGradient 
+        start={{x: 0.0, y: 1.0}} end={{x: 0.4, y: 1.0}}
+        colors={['grey', '#ebebeb']}
+        style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+        >
+      </LinearGradient>
 
       <View style={BgLayoutStyles.bgLayoutContentContainer}>
         <Text style={BgLayoutStyles.bgLayoutReading}>
@@ -37,6 +44,12 @@ export const BgLayout: React.FC = ({ lastReading }) => {
           { reading > 8.0 && <Image style={BgLayoutStyles.bgLayoutImage} source={require('../../Assets/Images/LastReadingUpArrow.png')} /> }
         </View>
       </View>
+      <LinearGradient 
+        start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
+        colors={['#ebebeb', 'grey', '#ebebeb']}
+        style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+        >
+      </LinearGradient>
     </View>
   )
 }

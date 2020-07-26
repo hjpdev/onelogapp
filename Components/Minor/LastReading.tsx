@@ -1,6 +1,7 @@
 import fetch from 'node-fetch'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 
 import { delay } from '../Helpers/GeneralHelpers'
 import { BgLayout } from '../Layouts/Bg'
@@ -49,6 +50,12 @@ export const LastReading = ({ table }): React.FC => {
           <View style={{ ...Styles.lastReading, justifyContent: 'center' }}>
             <ActivityIndicator color={'black'} />
           </View>
+          <LinearGradient 
+            start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
+            colors={['#ebebeb', 'grey', '#ebebeb']}
+            style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+            >
+          </LinearGradient>
         </View>
         
   )
@@ -59,7 +66,6 @@ const Styles = StyleSheet.create({
     flex: 5,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 0.2
+    justifyContent: 'center'
   }
 })

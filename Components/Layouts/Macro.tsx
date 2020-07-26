@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 
 import { generateCreatedDate } from '../Helpers/DateHelpers'
 
@@ -27,6 +28,12 @@ export const MacroLayout: React.FC = ({ lastReading }) => {
           { created }
         </Text>
       </View>
+      <LinearGradient 
+        start={{x: 0.0, y: 1.0}} end={{x: 0.4, y: 1.0}}
+        colors={['grey', '#ebebeb']}
+        style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+        >
+      </LinearGradient>
 
       <View style={MacroLayoutStyles.macroLayoutContentContainer}>
         <View style={MacroLayoutStyles.macroLayoutTable}>

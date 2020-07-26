@@ -5,8 +5,7 @@ export const BgLayoutStyles = StyleSheet.create({
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
-      borderBottomWidth: 0.2
+      justifyContent: 'center'
     },
     bgLayoutContentContainer: {
       flex: 5,
@@ -35,8 +34,7 @@ export const BgLayoutStyles = StyleSheet.create({
     bgLayoutTime: {
       fontSize: 16,
       fontWeight: 'bold',
-      padding: 4,
-      borderWidth: 0.2
+      padding: 4
     },
     bgLayoutTag: {
       fontSize: 16,
@@ -60,8 +58,7 @@ export const DoseLayoutStyles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 0.2
+    justifyContent: 'center'
   },
   doselayoutContent: {
     flex: 5,
@@ -83,8 +80,7 @@ export const DoseLayoutStyles = StyleSheet.create({
   doseLayoutTime: {
     fontSize: 16,
     fontWeight: 'bold',
-    padding: 4,
-    borderWidth: 0.2
+    padding: 4
   },
   doseLayoutTag: {
     fontSize: 16,
@@ -132,8 +128,7 @@ export const MacroLayoutStyles = StyleSheet.create({
   macroLayoutTime: {
     fontSize: 16,
     fontWeight: 'bold',
-    padding: 4,
-    borderWidth: 0.2
+    padding: 4
   },
   macroLayoutTag: {
     fontSize: 16,

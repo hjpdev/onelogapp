@@ -1,6 +1,7 @@
 import fetch from 'node-fetch'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 
 import { decimalPadRight, delay } from '../Helpers/GeneralHelpers'
 
@@ -46,6 +47,12 @@ export const Stats = ({ days }): React.FC => {
               { `Past ${days} days` }
             </Text>
           </View>
+          <LinearGradient 
+            start={{x: 0.0, y: 1.0}} end={{x: 0.4, y: 1.0}}
+            colors={['grey', '#ebebeb']}
+            style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+            >
+          </LinearGradient>
 
           <View style={Styles.statsContent}>
             <View>
@@ -60,12 +67,24 @@ export const Stats = ({ days }): React.FC => {
               { `±${decimalPadRight(stddev)}` }
             </Text>
           </View>
+          <LinearGradient 
+            start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
+            colors={['#ebebeb', 'grey', '#ebebeb']}
+            style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+            >
+          </LinearGradient>
         </View>
       : <View style={Styles.statsContainer}>
           <View style={{ flex: 1 }} />
           <View style={{ flex: 5, justifyContent: 'center' }}>
             <ActivityIndicator color={'black'} />
           </View>
+          <LinearGradient 
+            start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
+            colors={['#ebebeb', 'grey', '#ebebeb']}
+            style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+            >
+          </LinearGradient>
         </View>
   )
 }
@@ -92,7 +111,6 @@ const Styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 4,
-    borderWidth: 0.2,
     width: 104
   },
   statsAvg: {
