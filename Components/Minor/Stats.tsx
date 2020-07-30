@@ -35,8 +35,8 @@ export const Stats = ({ days }): React.FC => {
   let avg: number, stddev: number
 
   if (stats) {
-    avg = stats.stats.avg.toFixed(1)
-    stddev = stats.stats.stddev.toFixed(1)
+    avg = stats.stats.avg && stats.stats.avg.toFixed(1)
+    stddev = stats.stats.stddev && stats.stats.stddev.toFixed(1)
   }
 
   return(

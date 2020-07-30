@@ -7,9 +7,13 @@ export const BgLayoutStyles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center'
     },
-    bgLayoutContentContainer: {
-      flex: 5,
+    bgLayoutContentReading: {
+      flex: 4,
       width: '80%'
+    },
+    bgLayoutContent: {
+      flex: 5,
+      flexDirection: 'row'
     },
     bgLayoutImageContainer: {
       flex: 1,

@@ -14,9 +14,9 @@ interface MacroLayoutProps {
   fat: number
 }
 
-export const MacroLayout: React.FC = ({ lastReading }) => {
-    const created: string = generateCreatedDate(lastReading.created)
-    const { kcal, carbs, sugar, protein, fat }: MacroLayoutProps = lastReading
+export const MacroLayout: React.FC = ({ previousReadings }) => {
+    const created: string = generateCreatedDate(previousReadings.created)
+    const { kcal, carbs, sugar, protein, fat }: MacroLayoutProps = previousReadings
 
   return(
     <View style={MacroLayoutStyles.macroReadingContainer}>

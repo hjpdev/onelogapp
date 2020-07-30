@@ -1,21 +1,21 @@
 import React from 'react'
-import { Image, Text, View } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
+import { Dimensions, Image, Text, View } from 'react-native'
 
-import { decimalPadRight, padLeft } from '../Helpers/GeneralHelpers'
+import ReadingRepresentation from '../Minor/ReadingRepresentation'
+import { Chevron } from '../Minor/Chevron'
+import { GradientBorder } from '../Minor/GradientBorder'
+import { generateCreatedDate } from '../Helpers/DateHelpers'
 
 import { BgLayoutStyles } from '../../Assets/Styles/Layouts'
 
 const unit = 'mmol/L'
 
-export const BgLayout: React.FC = ({ lastReading }) => {
-    const hours = padLeft(new Date(lastReading.created).getHours())
-    const minutes = padLeft(new Date(lastReading.created).getMinutes())
-    const created = `${hours}:${minutes}`
-    const reading = lastReading.reading
+export const BgLayout: React.FC = ({ data }) => {
+    const reading = data.reading
+    const created = generateCreatedDate(data.created)
 
   return(
-    <View style={BgLayoutStyles.bgLayoutContainer}>
+    <View width={Dimensions.get('window').width} style={BgLayoutStyles.bgLayoutContainer}>
       <View style={BgLayoutStyles.bgLayoutHeader}>
         <Text style={BgLayoutStyles.bgLayoutTag}>
           { 'BG' }
@@ -24,32 +24,20 @@ export const BgLayout: React.FC = ({ lastReading }) => {
           { created }
         </Text>
       </View>
-      <LinearGradient 
-        start={{x: 0.0, y: 1.0}} end={{x: 0.4, y: 1.0}}
-        colors={['grey', '#ebebeb']}
-        style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
-        >
-      </LinearGradient>
+      <GradientBorder x={0.4} y={1.0} />
 
-      <View style={BgLayoutStyles.bgLayoutContentContainer}>
-        <Text style={BgLayoutStyles.bgLayoutReading}>
-          { `${decimalPadRight(reading)}` }
-        </Text>
-        <Text style={BgLayoutStyles.bgLayoutUnit}>
-          { unit }
-        </Text>
-        <View style={BgLayoutStyles.bgLayoutImageContainer}>
-          { reading < 3.8 && <Image style={BgLayoutStyles.bgLayoutImage} source={require('../../Assets/Images/LastReadingDownArrow.png')} /> }
-          { (reading >= 3.8 && reading <= 8.0) && <Image style={BgLayoutStyles.bgLayoutImage} source={require('../../Assets/Images/LastReadingTick.png')} /> }
-          { reading > 8.0 && <Image style={BgLayoutStyles.bgLayoutImage} source={require('../../Assets/Images/LastReadingUpArrow.png')} /> }
+      <View style={BgLayoutStyles.bgLayoutContent}>
+        <Chevron symbol={' '} />
+        <View style={BgLayoutStyles.bgLayoutContentReading}>
+          <ReadingRepresentation reading={reading} unit={unit} />
+          <View style={BgLayoutStyles.bgLayoutImageContainer}>
+            { reading < 3.8 && <Image style={BgLayoutStyles.bgLayoutImage} source={require('../../Assets/Images/LastReadingDownArrow.png')} /> }
+            { (reading >= 3.8 && reading <= 8.0) && <Image style={BgLayoutStyles.bgLayoutImage} source={require('../../Assets/Images/LastReadingTick.png')} /> }
+            { reading > 8.0 && <Image style={BgLayoutStyles.bgLayoutImage} source={require('../../Assets/Images/LastReadingUpArrow.png')} /> }
+          </View>
         </View>
+        <Chevron symbol={' '} />
       </View>
-      <LinearGradient 
-        start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
-        colors={['#ebebeb', 'grey', '#ebebeb']}
-        style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
-        >
-      </LinearGradient>
     </View>
   )
 }

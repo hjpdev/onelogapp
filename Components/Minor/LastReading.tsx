@@ -8,7 +8,7 @@ import { BgLayout } from '../Layouts/Bg'
 import { DoseLayout } from '../Layouts/Dose'
 import { MacroLayout } from '../Layouts/Macro'
 
-const getLastReading = async (table: string) => {
+const getPreviousReadings = async (table: string) => {
   const url = `http://localhost:8088/readings/${table}/last`
 
   await delay(1000)
@@ -24,27 +24,27 @@ const getLastReading = async (table: string) => {
     .catch(err => err)
 }
 
-const generateLayout = ({ table, lastReading }) => {
+const generateLayout = ({ table, previousReadings }) => {
   const layoutMap = {
-    'bg': <BgLayout lastReading={ lastReading } />,
-    'dose': <DoseLayout lastReading={ lastReading } />,
-    'macro': <MacroLayout lastReading={ lastReading } />,
-    'keto': <BgLayout lastReading={ lastReading } />
+    'bg': <BgLayout previousReadings={ previousReadings } />,
+    'dose': <DoseLayout previousReadings={ previousReadings } />,
+    'macro': <MacroLayout previousReadings={ previousReadings } />,
+    'keto': <BgLayout previousReadings={ previousReadings } />
   }
 
   return layoutMap[table]
 }
 
 export const LastReading = ({ table }): React.FC => {
-  const [lastReading, setLastReading] = useState()
+  const [previousReadings, setpreviousReadings] = useState()
 
   useEffect(() => {
-    getLastReading(table).then(res => setLastReading(res))
+    getPreviousReadings(table).then(res => setpreviousReadings(res))
   }, [])
 
   return(
-    lastReading
-      ? generateLayout({ table, lastReading })
+    previousReadings
+      ? generateLayout({ table, previousReadings })
       : <View style={{ flex: 1 }}>
           <View style={{ flex: 1 }} />
           <View style={{ ...Styles.lastReading, justifyContent: 'center' }}>

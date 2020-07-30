@@ -6,11 +6,11 @@ import { decimalPadRight, padLeft } from '../Helpers/GeneralHelpers'
 
 import { DoseLayoutStyles } from '../../Assets/Styles/Layouts'
 
-export const DoseLayout: React.FC = ({ lastReading }) => {
-    const hours = padLeft(new Date(lastReading.created).getHours())
-    const minutes = padLeft(new Date(lastReading.created).getMinutes())
+export const DoseLayout: React.FC = ({ previousReadings }) => {
+    const hours = padLeft(new Date(previousReadings.created).getHours())
+    const minutes = padLeft(new Date(previousReadings.created).getMinutes())
     const created = `${hours}:${minutes}`
-    const { reading, islong } = lastReading
+    const { reading, islong } = previousReadings
 
   return(
     <View style={DoseLayoutStyles.doseLayoutContainer}>

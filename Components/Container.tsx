@@ -7,8 +7,8 @@ import { HomeScreen } from './Screens/Home'
 import { NewReadingScreen } from './Screens/NewReading'
 import { SettingsScreen } from './Screens/Settings'
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height
+const deviceWidth = Dimensions.get('window').width
 
 const screens = (currentScreen: string) => {
   const map = {
