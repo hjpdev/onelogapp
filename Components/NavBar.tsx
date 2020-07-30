@@ -1,7 +1,11 @@
 import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 
-export const NavBar: React.FC = (props) => {
+interface NavBarProps {
+  setCurrentScreen: (screen: string) => any
+}
+
+export const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
   const { setCurrentScreen } = props
 
   return (
