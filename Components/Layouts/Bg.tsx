@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dimensions, Image, Text, View } from 'react-native'
+import {  Image, Text, View } from 'react-native'
 
 import ReadingRepresentation from '../Minor/ReadingRepresentation'
 import { Chevron } from '../Minor/Chevron'
@@ -8,20 +8,25 @@ import { generateCreatedDate } from '../Helpers/DateHelpers'
 
 import { BgLayoutStyles } from '../../Assets/Styles/Layouts'
 
+interface BgLayoutProps {
+  created: string,
+  reading: number
+}
+
 const unit = 'mmol/L'
 
-export const BgLayout: React.FC = ({ data }) => {
-    const reading = data.reading
-    const created = generateCreatedDate(data.created)
+export const BgLayout: React.FC<BgLayoutProps> = (props: BgLayoutProps) => {
+  const { created, reading } = props
+  const date = generateCreatedDate(created)
 
   return(
-    <View width={Dimensions.get('window').width} style={BgLayoutStyles.bgLayoutContainer}>
+    <View style={BgLayoutStyles.bgLayoutContainer}>
       <View style={BgLayoutStyles.bgLayoutHeader}>
         <Text style={BgLayoutStyles.bgLayoutTag}>
           { 'BG' }
         </Text>
         <Text style={BgLayoutStyles.bgLayoutTime}>
-          { created }
+          { date }
         </Text>
       </View>
       <GradientBorder x={0.4} y={1.0} />

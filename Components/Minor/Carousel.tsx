@@ -5,7 +5,12 @@ import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native'
 import { GradientBorder } from './GradientBorder'
 import { delay } from '../Helpers/GeneralHelpers'
 
-const getReadings = (table) => {
+interface CarouselProps {
+  table: string,
+  Template: React.FC
+}
+
+const getReadings = (table: string) => {
   const url = `http://localhost:8088/readings/${table}`
 
   delay(1000)
@@ -21,7 +26,7 @@ const getReadings = (table) => {
     .catch(err => err)
 }
 
-const Carousel: React.FC = props => {
+const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   const { table, Template } = props
   const [readings, setReadings] = useState()
 
@@ -32,7 +37,7 @@ const Carousel: React.FC = props => {
   let templates
   if (readings) {
     templates = readings.map(r => {
-      return <Template data={r} />
+      return <Template created={r.created} reading={r.reading} />
     })
   }
 

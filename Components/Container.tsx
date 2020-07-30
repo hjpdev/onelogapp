@@ -1,5 +1,5 @@
-import React from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import React, { ReactElement } from 'react'
+import { Dimensions, StyleSheet, View } from 'react-native'
 
 import { AccountScreen } from './Screens/Account'
 import { AnalyticsScreen } from './Screens/Analytics'
@@ -7,11 +7,12 @@ import { HomeScreen } from './Screens/Home'
 import { NewReadingScreen } from './Screens/NewReading'
 import { SettingsScreen } from './Screens/Settings'
 
-const deviceHeight = Dimensions.get('window').height
-const deviceWidth = Dimensions.get('window').width
+interface ContainerProps {
+  currentScreen: string
+}
 
 const screens = (currentScreen: string) => {
-  const map = {
+  const map: { [key: string]: ReactElement } = {
     account: <AccountScreen />,
     settings: <SettingsScreen />,
     home: <HomeScreen />,
@@ -22,14 +23,12 @@ const screens = (currentScreen: string) => {
   return map[currentScreen]
 }
 
-export const Container: React.FC = props => {
+export const Container: React.FC<ContainerProps> = (props: ContainerProps) => {
   const { currentScreen } = props
 
   return(
     <View style={Styles.containerView}>
-      <Text style={Styles.containerText}>
-        { screens(currentScreen) }
-      </Text>
+      { screens(currentScreen) }
     </View>
   )
 }
@@ -37,8 +36,8 @@ export const Container: React.FC = props => {
 const Styles = StyleSheet.create({
   containerView: {
     backgroundColor: '#ebebeb',
-    height: deviceHeight-120, //96 In reality
-    width: deviceWidth,
+    height: Dimensions.get('window').height - 120, //96 In reality
+    width: Dimensions.get('window').width,
     flexDirection: 'column',
     justifyContent: 'center'
   },

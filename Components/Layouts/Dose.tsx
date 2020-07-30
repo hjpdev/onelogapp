@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
 
+import { GradientBorder } from '../Minor/GradientBorder'
 import { decimalPadRight, padLeft } from '../Helpers/GeneralHelpers'
 
 import { DoseLayoutStyles } from '../../Assets/Styles/Layouts'
@@ -22,12 +22,7 @@ export const DoseLayout: React.FC = ({ previousReadings }) => {
           { created }
         </Text>
       </View>
-      <LinearGradient 
-        start={{x: 0.0, y: 1.0}} end={{x: 0.4, y: 1.0}}
-        colors={['grey', '#ebebeb']}
-        style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
-        >
-      </LinearGradient>
+      <GradientBorder x={0.4} y={1.0} />
 
       <View style={DoseLayoutStyles.doselayoutContent}>
         <View>
@@ -42,12 +37,7 @@ export const DoseLayout: React.FC = ({ previousReadings }) => {
           { islong === true ? 'Long' : 'Short' }
         </Text>
       </View>
-      <LinearGradient 
-        start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
-        colors={['#ebebeb', 'grey', '#ebebeb']}
-        style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
-        >
-      </LinearGradient>
+      <GradientBorder x={1.0} y={1.0} />
     </View>
   )
 }

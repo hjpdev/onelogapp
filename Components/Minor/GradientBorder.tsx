@@ -6,7 +6,7 @@ interface GradientBorderProps {
   y: number
 }
 
-export const GradientBorder: React.FC = (props: GradientBorderProps) => {
+export const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBorderProps) => {
   const { x, y } = props
 
   return(

@@ -1,11 +1,12 @@
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 export const BgLayoutStyles = StyleSheet.create({
   bgLayoutContainer: {
       flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      width: Dimensions.get('window').width
     },
     bgLayoutContentReading: {
       flex: 4,

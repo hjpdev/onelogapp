@@ -1,11 +1,16 @@
 import React from 'react'
-import { Image, Text, View } from 'react-native'
+import { Text } from 'react-native'
 
 import { decimalPadRight } from '../Helpers/GeneralHelpers'
 
 import { BgLayoutStyles } from '../../Assets/Styles/Layouts'
 
-const ReadingRepresentation: React.FC = props => {
+interface ReadingRepresentationProps {
+  reading: number,
+  unit: string
+}
+
+const ReadingRepresentation: React.FC<ReadingRepresentationProps> = (props: ReadingRepresentationProps) => {
   const { reading, unit } = props
 
   return(
