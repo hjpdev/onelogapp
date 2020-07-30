@@ -4,29 +4,25 @@ import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 export const NavBar: React.FC = (props) => {
   const { setCurrentScreen } = props
 
-  const handlePress = (screen: string) => {
-    setCurrentScreen(screen)
-  }
-
   return (
     <View style={Styles.navBar}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('settings')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('settings')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarSettings.png')} />
       </TouchableOpacity>        
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('account')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('account')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarAccount.png')} />
       </TouchableOpacity>        
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('home')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('home')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarHome.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('newReading')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('newReading')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarNewReading.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => handlePress('analytics')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('analytics')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarAnalytics.png')} />
       </TouchableOpacity>
     </View>
@@ -35,11 +31,11 @@ export const NavBar: React.FC = (props) => {
 
 const Styles = StyleSheet.create({
   navBar: {
-    backgroundColor: 'black',
     flexDirection: 'row',
-    justifyContent: 'space-around',
     alignItems: 'center',
+    justifyContent: 'space-around',
     textAlign: 'center',
+    backgroundColor: 'black',
     height: 48
   },
   navBarImage: {

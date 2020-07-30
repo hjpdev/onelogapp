@@ -7,8 +7,8 @@ import { HomeScreen } from './Screens/Home'
 import { NewReadingScreen } from './Screens/NewReading'
 import { SettingsScreen } from './Screens/Settings'
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+const deviceHeight = Dimensions.get('window').height
+const deviceWidth = Dimensions.get('window').width
 
 const screens = (currentScreen: string) => {
   const map = {
@@ -37,7 +37,7 @@ export const Container: React.FC = props => {
 const Styles = StyleSheet.create({
   containerView: {
     backgroundColor: '#ebebeb',
-    height: deviceHeight-120,
+    height: deviceHeight-120, //96 In reality
     width: deviceWidth,
     flexDirection: 'column',
     justifyContent: 'center'
