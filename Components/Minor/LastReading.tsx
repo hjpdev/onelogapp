@@ -1,11 +1,17 @@
 import fetch from 'node-fetch'
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 
-import { padLeft } from '../Helpers/DateHelpers'
+import { delay } from '../Helpers/GeneralHelpers'
+import { BgLayout } from '../Layouts/Bg'
+import { DoseLayout } from '../Layouts/Dose'
+import { MacroLayout } from '../Layouts/Macro'
 
-const getLastReading = async () => {
-  const url = 'http://localhost:8088/readings/bg/last'
+const getPreviousReadings = async (table: string) => {
+  const url = `http://localhost:8088/readings/${table}/last`
+
+  await delay(1000)
 
   return fetch(url, {
     method: 'GET',
@@ -18,52 +24,48 @@ const getLastReading = async () => {
     .catch(err => err)
 }
 
-export const LastReading = (): React.FC => {
-  const [lastReading, setLastReading] = useState()
+const generateLayout = ({ table, previousReadings }) => {
+  const layoutMap = {
+    'bg': <BgLayout previousReadings={ previousReadings } />,
+    'dose': <DoseLayout previousReadings={ previousReadings } />,
+    'macro': <MacroLayout previousReadings={ previousReadings } />,
+    'keto': <BgLayout previousReadings={ previousReadings } />
+  }
 
-  useEffect(() => {
-    getLastReading().then(res => setLastReading({
-      created: res.created,
-      reading: res.reading
-    }))
-}, [])
-
-let created: string, reading: number
-
-if (lastReading) {
-  const hours = padLeft(new Date(lastReading.created).getHours())
-  const minutes = padLeft(new Date(lastReading.created).getMinutes())
-  created = `${hours}:${minutes}`
-  reading = lastReading.reading
+  return layoutMap[table]
 }
 
+export const LastReading = ({ table }): React.FC => {
+  const [previousReadings, setpreviousReadings] = useState()
+
+  useEffect(() => {
+    getPreviousReadings(table).then(res => setpreviousReadings(res))
+  }, [])
+
   return(
-    lastReading
-      ? <View style={Styles.lastReading}>
-          <Text style={Styles.lastReadingTime}>
-            {created}
-          </Text>
-          <Text style={Styles.lastReadingReading}>
-            {reading}
-          </Text>
+    previousReadings
+      ? generateLayout({ table, previousReadings })
+      : <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }} />
+          <View style={{ ...Styles.lastReading, justifyContent: 'center' }}>
+            <ActivityIndicator color={'black'} />
+          </View>
+          <LinearGradient 
+            start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
+            colors={['#ebebeb', 'grey', '#ebebeb']}
+            style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+            >
+          </LinearGradient>
         </View>
-      : <View style={{ ...Styles.lastReading, justifyContent: 'center' }}>
-          <ActivityIndicator color={'black'} style={Styles.lastReadingSpinner} />
-        </View>
+        
   )
 }
 
 const Styles = StyleSheet.create({
   lastReading: {
+    flex: 5,
     flexDirection: 'column',
     alignItems: 'center',
-    flex: 1
-  },
-  lastReadingReading: {
-    fontSize: 60
-  },
-  lastReadingTime: {
-    fontSize: 38,
-    paddingTop: 10
+    justifyContent: 'center'
   }
 })
