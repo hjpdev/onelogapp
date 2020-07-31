@@ -1,19 +1,16 @@
 import fetch from 'node-fetch'
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native'
 
 import { GradientBorder } from './GradientBorder'
-import { delay } from '../Helpers/GeneralHelpers'
 
 interface CarouselProps {
   table: string,
-  Template: React.FC
+  Template: ReactElement
 }
 
 const getReadings = (table: string) => {
   const url = `http://localhost:8088/readings/${table}`
-
-  delay(1000)
 
   return fetch(url, {
     method: 'GET',
@@ -36,8 +33,8 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
 
   let templates
   if (readings) {
-    templates = readings.map(r => {
-      return <Template created={r.created} reading={r.reading} />
+    templates = readings.map((r, i) => {
+      return <Template created={r.created} reading={r.reading} index={i} />
     })
   }
 

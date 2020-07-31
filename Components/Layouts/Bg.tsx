@@ -10,13 +10,14 @@ import { BgLayoutStyles } from '../../Assets/Styles/Layouts'
 
 interface BgLayoutProps {
   created: string,
-  reading: number
+  reading: number,
+  index: number
 }
 
 const unit = 'mmol/L'
 
 export const BgLayout: React.FC<BgLayoutProps> = (props: BgLayoutProps) => {
-  const { created, reading } = props
+  const { created, reading, index } = props
   const date = generateCreatedDate(created)
 
   return(
@@ -32,7 +33,9 @@ export const BgLayout: React.FC<BgLayoutProps> = (props: BgLayoutProps) => {
       <GradientBorder x={0.4} y={1.0} />
 
       <View style={BgLayoutStyles.bgLayoutContent}>
-        <Chevron symbol={' '} />
+        {index === 0
+          ? <Chevron symbol={' '} />
+          : <Chevron symbol={'<'} />}
         <View style={BgLayoutStyles.bgLayoutContentReading}>
           <ReadingRepresentation reading={reading} unit={unit} />
           <View style={BgLayoutStyles.bgLayoutImageContainer}>
@@ -41,7 +44,7 @@ export const BgLayout: React.FC<BgLayoutProps> = (props: BgLayoutProps) => {
             { reading > 8.0 && <Image style={BgLayoutStyles.bgLayoutImage} source={require('../../Assets/Images/LastReadingUpArrow.png')} /> }
           </View>
         </View>
-        <Chevron symbol={' '} />
+        <Chevron symbol={'>'} />
       </View>
     </View>
   )
