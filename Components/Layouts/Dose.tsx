@@ -22,7 +22,7 @@ export const DoseLayout: React.FC = ({ previousReadings }) => {
           { created }
         </Text>
       </View>
-      <GradientBorder x={0.4} y={1.0} />
+      <GradientBorder x={0.4} y={1.0} colors={['grey', '#ebebeb']} />
 
       <View style={DoseLayoutStyles.doselayoutContent}>
         <View>
