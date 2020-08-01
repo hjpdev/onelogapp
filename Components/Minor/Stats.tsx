@@ -47,7 +47,7 @@ export const Stats = ({ days }): ReactElement => {
               { `Past ${days} days` }
             </Text>
           </View>
-          <GradientBorder x={0.4} y={1.0} />
+          <GradientBorder x={0.4} y={1.0} colors={['grey', '#ebebeb']} />
 
           <View style={Styles.statsContent}>
             <View>

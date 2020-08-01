@@ -30,7 +30,7 @@ export const BgLayout: React.FC<BgLayoutProps> = (props: BgLayoutProps) => {
           { date }
         </Text>
       </View>
-      <GradientBorder x={0.4} y={1.0} />
+      <GradientBorder x={0.4} y={1.0} colors={['grey', '#ebebeb']} />
 
       <View style={BgLayoutStyles.bgLayoutContent}>
         {index === 0
