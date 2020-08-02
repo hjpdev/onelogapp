@@ -1,12 +1,13 @@
 import React from 'react'
 import { Text, View } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
 
+import { GradientBorder } from '../Minor/GradientBorder'
 import { generateCreatedDate } from '../Helpers/DateHelpers'
 
 import { MacroLayoutStyles } from '../../Assets/Styles/Layouts'
 
 interface MacroLayoutProps {
+  created: string,
   kcal: number,
   carbs: number,
   sugar: number,
@@ -14,7 +15,8 @@ interface MacroLayoutProps {
   fat: number
 }
 
-export const MacroLayout: React.FC = ({ previousReadings }) => {
+export const MacroLayout: React.FC<MacroLayoutProps> = ({previousReadings}: MacroLayoutProps) => {
+    console.log('HERE IT IS => ', previousReadings)
     const created: string = generateCreatedDate(previousReadings.created)
     const { kcal, carbs, sugar, protein, fat }: MacroLayoutProps = previousReadings
 
@@ -28,12 +30,7 @@ export const MacroLayout: React.FC = ({ previousReadings }) => {
           { created }
         </Text>
       </View>
-      <LinearGradient 
-        start={{x: 0.0, y: 1.0}} end={{x: 0.4, y: 1.0}}
-        colors={['grey', '#ebebeb']}
-        style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
-        >
-      </LinearGradient>
+      <GradientBorder x={0.4} y={1.0} colors={['grey', '#ebebeb']} />
 
       <View style={MacroLayoutStyles.macroLayoutContentContainer}>
         <View style={MacroLayoutStyles.macroLayoutTable}>

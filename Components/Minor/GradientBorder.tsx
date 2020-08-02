@@ -3,17 +3,23 @@ import LinearGradient from 'react-native-linear-gradient'
 
 interface GradientBorderProps {
   x: number,
-  y: number
+  y: number,
+  colors?: string[]
 }
 
-export const GradientBorder: React.FC = (props: GradientBorderProps) => {
+export const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBorderProps) => {
   const { x, y } = props
+  let colors = props.colors
+
+  if (colors === undefined) {
+    colors = ['#ebebeb', 'grey', '#ebebeb']
+  }
 
   return(
     <LinearGradient 
-      start={{x: 0.0, y: 1.0}} end={{x, y}}
-      colors={['#ebebeb', 'grey', '#ebebeb']}
-      style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
+      start={{ x: 0.0, y: 1.0 }} end={{ x, y }}
+      colors={ colors }
+      style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center' }}
       >
     </LinearGradient>
   )
