@@ -4,12 +4,11 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import { decimalPadRight } from '../../Helpers/GeneralHelpers'
 
 interface NewReadingRepresentationProps {
-  reading: any,
-  unit: string
+  reading: any
 }
 
 const BgReading: React.FC<NewReadingRepresentationProps> = (props: NewReadingRepresentationProps) => {
-  const { reading, unit } = props
+  const { reading } = props
 
   return(
     <View style={Styles.container}>
@@ -17,7 +16,7 @@ const BgReading: React.FC<NewReadingRepresentationProps> = (props: NewReadingRep
         { `${decimalPadRight(reading)}` }
       </Text>
       <Text style={Styles.unit}>
-        { unit }
+        { 'mmol/L' }
       </Text>
       <>
         { reading < 3.8 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingDownArrow.png')} /> }
@@ -33,7 +32,7 @@ const Styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 100,
     paddingRight: 100,
-    // backgroundColor: 'grey'
+    backgroundColor: '#ebebeb'
   },
   reading: {
     alignSelf: 'center',
