@@ -7,6 +7,7 @@ import { generateCreatedDate } from '../Helpers/DateHelpers'
 import { MacroLayoutStyles } from '../../Assets/Styles/Layouts'
 
 interface MacroLayoutProps {
+  created: string,
   kcal: number,
   carbs: number,
   sugar: number,
@@ -14,7 +15,8 @@ interface MacroLayoutProps {
   fat: number
 }
 
-export const MacroLayout: React.FC = ({ previousReadings }) => {
+export const MacroLayout: React.FC<MacroLayoutProps> = ({previousReadings}: MacroLayoutProps) => {
+    console.log('HERE IT IS => ', previousReadings)
     const created: string = generateCreatedDate(previousReadings.created)
     const { kcal, carbs, sugar, protein, fat }: MacroLayoutProps = previousReadings
 
