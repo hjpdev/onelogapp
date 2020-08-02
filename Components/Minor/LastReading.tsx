@@ -57,7 +57,6 @@ export const LastReading = ({ table }): React.FC => {
             >
           </LinearGradient>
         </View>
-        
   )
 }
 
