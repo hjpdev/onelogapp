@@ -60,14 +60,14 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
 
           <View style={{ flexDirection: 'row', flex: 5 }}>
             {index === 0
-              ? <Chevron symbol={''} />
-              : <Chevron symbol={'<'} />}
-            <GestureRecognizer onSwipeLeft={handleSwipeLeft} onSwipeRight={handleSwipeRight} style={{ flex: 5 }}>
-              <BgReading reading={reading['reading']} unit={'mmol/L'} />
+              ? <Chevron symbol={''} handlePress={() => {}}/>
+              : <Chevron symbol={'<'} handlePress={handleSwipeRight} />}
+            <GestureRecognizer onSwipeLeft={handleSwipeLeft} onSwipeRight={handleSwipeRight}>
+              <BgReading reading={reading['reading']} />
             </GestureRecognizer>
             {index < readings.length
-              ? <Chevron symbol={'>'} />
-              : <Chevron symbol={''} />}
+              ? <Chevron symbol={'>'} handlePress={handleSwipeLeft} />
+              : <Chevron symbol={''} handlePress={() => {}} />}
           </View>
           <GradientBorder x={1.0} y={1.0} />
         </View>
