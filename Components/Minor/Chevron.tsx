@@ -1,13 +1,21 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-export const Chevron: React.FC = props => {
-  const { symbol } = props
+interface ChevronProps {
+  symbol: string,
+  handlePress: () => any
+}
+
+export const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
+  const { symbol, handlePress } = props
+  
   return(
     <View style={Styles.chevronContainer}>
-      <Text style={Styles.chevronSymbol}>
-        { symbol }
-      </Text>
+      <TouchableOpacity onPress={() => handlePress()}>
+        <Text style={Styles.chevronSymbol}>
+          { symbol }
+        </Text>
+      </TouchableOpacity>
     </View>
   )
 }

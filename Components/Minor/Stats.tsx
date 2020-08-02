@@ -1,8 +1,8 @@
 import fetch from 'node-fetch'
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement, useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
 
+import { GradientBorder } from '../Minor/GradientBorder'
 import { decimalPadRight, delay } from '../Helpers/GeneralHelpers'
 
 const getStats = async (days: number) => {
@@ -23,7 +23,7 @@ const getStats = async (days: number) => {
 
 const unit = 'mmol/L'
 
-export const Stats = ({ days }): React.FC => {
+export const Stats = ({ days }): ReactElement => {
   const [stats, setStats] = useState()
 
   useEffect(() => {
@@ -47,12 +47,7 @@ export const Stats = ({ days }): React.FC => {
               { `Past ${days} days` }
             </Text>
           </View>
-          <LinearGradient 
-            start={{x: 0.0, y: 1.0}} end={{x: 0.4, y: 1.0}}
-            colors={['grey', '#ebebeb']}
-            style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
-            >
-          </LinearGradient>
+          <GradientBorder x={0.4} y={1.0} colors={['grey', '#ebebeb']} />
 
           <View style={Styles.statsContent}>
             <View>
@@ -67,24 +62,14 @@ export const Stats = ({ days }): React.FC => {
               { `±${decimalPadRight(stddev)}` }
             </Text>
           </View>
-          <LinearGradient 
-            start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
-            colors={['#ebebeb', 'grey', '#ebebeb']}
-            style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
-            >
-          </LinearGradient>
+          <GradientBorder x={1.0} y={1.0} />
         </View>
       : <View style={Styles.statsContainer}>
           <View style={{ flex: 1 }} />
           <View style={{ flex: 5, justifyContent: 'center' }}>
             <ActivityIndicator color={'black'} />
           </View>
-          <LinearGradient 
-            start={{x: 0.0, y: 1.0}} end={{x: 1.0, y: 1.0}}
-            colors={['#ebebeb', 'grey', '#ebebeb']}
-            style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'}}
-            >
-          </LinearGradient>
+          <GradientBorder x={1.0} y={1.0} />
         </View>
   )
 }
@@ -93,8 +78,7 @@ const Styles = StyleSheet.create({
   statsContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    borderBottomWidth: 0.2
+    justifyContent: 'center'
   },
   statsContent: {
     flex: 5,
