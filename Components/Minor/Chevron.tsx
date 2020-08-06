@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 interface ChevronProps {
   symbol: string,
@@ -23,6 +23,7 @@ const Styles = StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
     textAlignVertical: 'center',
-    height: '100%'
+    height: '100%',
+    color: 'grey'
   }
 })
