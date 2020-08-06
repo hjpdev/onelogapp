@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
@@ -10,31 +10,13 @@ import { capitalise } from '../Helpers/GeneralHelpers'
 
 interface CarouselProps {
   table: string,
-  Template: React.FC
-}
-
-const getReadings = (table: string) => {
-  const url = `http://localhost:8088/readings/${table}`
-
-  return fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(res => res.json())
-    .catch(err => err)
+  Template: React.FC,
+  readings: React.Node[]
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { table, Template } = props
-  const [readings, setReadings] = useState([])
+  const { table, Template, readings } = props
   const [index, setIndex] = useState(0)
-
-  useEffect(() => {
-    getReadings(table).then(res => setReadings(res))
-  }, [])
 
   const handleSwipeLeft = () => {
     if (index < readings.length - 1) setIndex(index + 1)
