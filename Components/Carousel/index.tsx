@@ -116,8 +116,7 @@ const Styles = StyleSheet.create({
     alignContent: 'center'
   },
   chevron: {
-    flex: 1,
-    backgroundColor: 'grey'
+    flex: 1
   },
   tag: {
     fontSize: 16,

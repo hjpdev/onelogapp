@@ -12,10 +12,10 @@ const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
   const { reading, islong } = data
 
   return(
-      <View style={Styles.readingContainer}>
-        <View>
+      <View style={Styles.container}>
+        <View style={Styles.readingContainer}>
           <Text style={Styles.reading}>
-            { `${decimalPadRight(reading)}` }
+            { reading.toFixed(1) }
           </Text>
           <Text style={Styles.unit}>
           { 'Units' }
@@ -30,11 +30,15 @@ const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
 }
 
 const Styles = StyleSheet.create({
-  readingContainer: {
+  container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%'
+  },
+  readingContainer: {
+    alignItems: 'center',
+    width: '50%'
   },
   reading: {
     fontSize: 54,
@@ -44,11 +48,13 @@ const Styles = StyleSheet.create({
     fontSize: 12,
   },
   type: {
+    textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
     padding: 12,
     backgroundColor: 'black',
     color: 'white',
+    width: '30%'
   }
 })
 
