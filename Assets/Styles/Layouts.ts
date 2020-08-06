@@ -65,12 +65,11 @@ export const DoseLayoutStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  doselayoutContent: {
+  doseLayoutContent: {
     flex: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
-    width: '80%'
+    justifyContent: 'space-around'
   },
   doseLayoutText: {
     fontSize: 54,

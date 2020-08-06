@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import BgReading from './Readings/Bg'
 import { GradientBorder } from '../Minor/GradientBorder'
 import { Chevron } from '../Minor/Chevron'
 import { generateCreatedDate } from '../Helpers/DateHelpers'
+import { capitalise } from '../Helpers/GeneralHelpers'
 
 interface CarouselProps {
-  table: string
+  table: string,
+  Template: React.FC
 }
 
 const getReadings = (table: string) => {
@@ -27,16 +28,21 @@ const getReadings = (table: string) => {
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { table } = props
+  const { table, Template } = props
   const [readings, setReadings] = useState([])
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    getReadings(table).then(res => setReadings(res.reverse()))
+    getReadings(table).then(res => setReadings(res
+      .reverse()
+      .sort((a: any, b: any) => {
+        return new Date(b.created).getTime() - new Date(a.created).getTime()
+      })
+    ))
   }, [])
 
   const handleSwipeLeft = () => {
-    if (index < readings.length) setIndex(index + 1)
+    if (index < readings.length - 1) setIndex(index + 1)
   }
 
   const handleSwipeRight = () => {
@@ -50,7 +56,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
       ? <View style={Styles.container}>
           <View style={Styles.header}>
             <Text style={Styles.tag}>
-              { table.toUpperCase() }
+              { capitalise(table) }
             </Text>
             <Text style={Styles.time}>
               { generateCreatedDate(reading['created']) }
@@ -58,16 +64,20 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
           </View>
           <GradientBorder x={0.4} y={1.0} colors={['grey', '#ebebeb']} />
 
-          <View style={{ flexDirection: 'row', flex: 5 }}>
+          <View style={Styles.contentContainer}>
+            <View style={Styles.chevron}>
             {index === 0
               ? <Chevron symbol={''} handlePress={() => {}}/>
               : <Chevron symbol={'<'} handlePress={handleSwipeRight} />}
-            <GestureRecognizer onSwipeLeft={handleSwipeLeft} onSwipeRight={handleSwipeRight}>
-              <BgReading reading={reading['reading']} />
+            </View>
+            <GestureRecognizer onSwipeLeft={handleSwipeLeft} onSwipeRight={handleSwipeRight} style={Styles.template}>
+              <Template data={reading} />
             </GestureRecognizer>
-            {index < readings.length
+            <View style={Styles.chevron}>
+            {index < readings.length - 1
               ? <Chevron symbol={'>'} handlePress={handleSwipeLeft} />
               : <Chevron symbol={''} handlePress={() => {}} />}
+            </View>
           </View>
           <GradientBorder x={1.0} y={1.0} />
         </View>
@@ -87,11 +97,27 @@ const Styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#ebebeb'
+    // backgroundColor: 'grey'
   },
   header: {
-    flexDirection: 'row',
     flex: 1,
+    flexDirection: 'row',
     width: '100%',
+  },
+  contentContainer: {
+    flexDirection: 'row',
+    flex: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+},
+  template: {
+    flex: 4,
+    alignContent: 'center'
+  },
+  chevron: {
+    flex: 1,
+    backgroundColor: 'grey'
   },
   tag: {
     fontSize: 16,

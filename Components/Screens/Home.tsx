@@ -1,6 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
 
+import BgReading from '../Carousel/Readings/Bg'
+import DoseReading from '../Carousel/Readings/Dose'
 import NewCarousel from '../Carousel'
 import { Stats } from '../Minor/Stats'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
@@ -8,10 +10,10 @@ import { ScreenStyles } from '../../Assets/Styles/Screen'
 export const HomeScreen: React.FC = () => {
   return(
     <View style={ScreenStyles.containerView}>
-      <NewCarousel table={'bg'} />
+      <NewCarousel table={'bg'} Template={BgReading} />
       <Stats days={7} />
-      <NewCarousel table={'bg'} />
-      <NewCarousel table={'bg'} />
+      <NewCarousel table={'dose'} Template={DoseReading} />
+      <NewCarousel table={'bg'} Template={BgReading} />
     </View>
   )
 }
