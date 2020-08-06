@@ -3,7 +3,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 
 import { GradientBorder } from '../Minor/GradientBorder'
-import { decimalPadRight, delay } from '../Helpers/GeneralHelpers'
+import { delay } from '../Helpers/GeneralHelpers'
 
 const getStats = async (days: number) => {
   const url = `http://localhost:8088/readings/bg/stats/${days}`
@@ -32,11 +32,12 @@ export const Stats = ({ days }): ReactElement => {
     })
   }, [])
 
-  let avg: number, stddev: number
+  let avg: number = 1.1
+  let stddev: number = 1.1
 
   if (stats) {
-    avg = stats.stats.avg && stats.stats.avg.toFixed(1)
-    stddev = stats.stats.stddev && stats.stats.stddev.toFixed(1)
+    avg = stats.stats.avg
+    stddev = stats.stats.stddev
   }
 
   return(
@@ -52,14 +53,16 @@ export const Stats = ({ days }): ReactElement => {
           <View style={Styles.statsContent}>
             <View>
               <Text style={Styles.statsAvg}>
-                { decimalPadRight(avg) }
+                {/* { avg.toFixed(1) } */}
+                { 1.1 }
               </Text>
               <Text style={Styles.statsAvgUnit}>
                 { unit }
               </Text>
             </View>
             <Text style={Styles.statsStddev}>
-              { `±${decimalPadRight(stddev)}` }
+              {/* { `±${stddev.toFixed(1)}` } */}
+              { `±1.1` }
             </Text>
           </View>
           <GradientBorder x={1.0} y={1.0} />

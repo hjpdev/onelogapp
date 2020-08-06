@@ -1,8 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { decimalPadRight } from '../../Helpers/GeneralHelpers'
-
 interface DoseReadingProps {
   data: any
 }

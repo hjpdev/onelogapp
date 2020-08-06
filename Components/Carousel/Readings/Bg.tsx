@@ -1,8 +1,6 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-import { decimalPadRight } from '../../Helpers/GeneralHelpers'
-
 interface BgReadingProps {
   data: any
 }
@@ -14,7 +12,7 @@ export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {
   return(
     <View style={Styles.container}>
       <Text style={Styles.reading}>
-        { `${decimalPadRight(reading)}` }
+        { reading.toFixed(1) }
       </Text>
       <Text style={Styles.unit}>
         { 'mmol/L' }

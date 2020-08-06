@@ -33,12 +33,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
-    getReadings(table).then(res => setReadings(res
-      .reverse()
-      .sort((a: any, b: any) => {
-        return new Date(b.created).getTime() - new Date(a.created).getTime()
-      })
-    ))
+    getReadings(table).then(res => setReadings(res))
   }, [])
 
   const handleSwipeLeft = () => {
