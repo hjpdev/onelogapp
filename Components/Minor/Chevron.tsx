@@ -10,23 +10,19 @@ export const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
   const { symbol, handlePress } = props
   
   return(
-    <View style={Styles.chevronContainer}>
-      <TouchableOpacity onPress={() => handlePress()}>
-        <Text style={Styles.chevronSymbol}>
-          { symbol }
-        </Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity onPress={() => handlePress()}>
+      <Text style={Styles.chevronSymbol}>
+        { symbol }
+      </Text>
+    </TouchableOpacity>
   )
 }
 
 const Styles = StyleSheet.create({
-  chevronContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   chevronSymbol: {
-    fontSize: 28
+    fontSize: 28,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    height: '100%'
   }
 })
