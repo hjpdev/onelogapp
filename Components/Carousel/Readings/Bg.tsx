@@ -31,7 +31,6 @@ const Styles = StyleSheet.create({
     flex: 5,
     paddingBottom: 10,
     backgroundColor: '#ebebeb',
-    // backgroundColor: 'grey',
     width: '100%'
   },
   reading: {
@@ -39,7 +38,6 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 54,
     paddingTop: 8,
-    // backgroundColor: 'blue',
   },
   unit: {
     alignSelf: 'center',
