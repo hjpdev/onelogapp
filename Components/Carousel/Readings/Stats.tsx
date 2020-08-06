@@ -15,9 +15,6 @@ const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingProps) => 
           <Text style={Styles.reading}>
             { avg.toFixed(1) }
           </Text>
-          <Text style={Styles.unit}>
-          { 'Units' }
-          </Text>
         </View>
 
         <Text style={Styles.type}>
