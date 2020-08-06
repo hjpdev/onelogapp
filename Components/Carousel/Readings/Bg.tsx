@@ -3,12 +3,13 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 
 import { decimalPadRight } from '../../Helpers/GeneralHelpers'
 
-interface NewReadingRepresentationProps {
-  reading: any
+interface BgReadingProps {
+  data: any
 }
 
-const BgReading: React.FC<NewReadingRepresentationProps> = (props: NewReadingRepresentationProps) => {
-  const { reading } = props
+export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {
+  const { data } = props
+  const reading = data.reading
 
   return(
     <View style={Styles.container}>
@@ -29,15 +30,18 @@ const BgReading: React.FC<NewReadingRepresentationProps> = (props: NewReadingRep
 
 const Styles = StyleSheet.create({
   container: {
+    flex: 5,
     paddingBottom: 10,
-    paddingLeft: 100,
-    paddingRight: 100,
-    backgroundColor: '#ebebeb'
+    backgroundColor: '#ebebeb',
+    // backgroundColor: 'grey',
+    width: '100%'
   },
   reading: {
     alignSelf: 'center',
+    justifyContent: 'center',
     fontSize: 54,
-    paddingTop: 8
+    paddingTop: 8,
+    // backgroundColor: 'blue',
   },
   unit: {
     alignSelf: 'center',
