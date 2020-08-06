@@ -1,12 +1,14 @@
-export const padLeft = (value: number | string) => `${value}`.length === 1 ? `0${value}` : value
+export const padLeft = (value: number | string): number | string => {
+  return `${value}`.length === 1 ? `0${value}` : value
+}
 
-export const delay = async (ms: number) => {
-  await new Promise((resolve) => {
+export const delay = async (ms: number): Promise<void> => {
+  return new Promise((resolve) => {
     setTimeout(() => { resolve() }, ms)
   })
 }
 
-export const capitalise = (word: string) => {
+export const capitalise = (word: string): string => {
   if (parseInt(word[0])) {
     return word
   }

@@ -1,6 +1,6 @@
 import { padLeft } from './GeneralHelpers'
 
-export const newDate = ({ m, d, h, min, sec }): string => {
+export const newDate = ({ m, d, h, min, sec }: {[key: string]: number}): string => {
   const date = new Date()
   const month = padLeft(m) || padLeft(date.getMonth() + 1)
   const day = padLeft(d) || padLeft(date.getDate())
@@ -13,7 +13,7 @@ export const newDate = ({ m, d, h, min, sec }): string => {
   return `${dateString} ${timeString}`
 }
 
-export const generateCreatedDate = (date: string) => {
+export const generateCreatedDate = (date: string): string => {
   if (date.split(' ')[1] === 'Day') return date
 
   const today = new Date()
