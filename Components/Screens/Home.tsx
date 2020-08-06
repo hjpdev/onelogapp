@@ -4,8 +4,8 @@ import { View } from 'react-native'
 import BgReading from '../Carousel/Readings/Bg'
 import DoseReading from '../Carousel/Readings/Dose'
 import MacroReading from '../Carousel/Readings/Macro'
+import StatsReading from '../Carousel/Readings/Stats'
 import Carousel from '../Carousel'
-import { Stats } from '../Minor/Stats'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
 const getReadings = (table: string) => {
@@ -22,37 +22,45 @@ const getReadings = (table: string) => {
     .catch(err => err)
 }
 
-const statsObj = {
-  three: null,
-  seven: null,
-  fourteen: null,
-  thirty: null,
-  ninety: null
+const compare = ( a: any, b: any ) => {
+  const aNumber = parseInt(a.created.split(' ')[0])
+  const bNumber = parseInt(b.created.split(' ')[0])
+
+  if ( aNumber < bNumber ){
+    return -1;
+  }
+  if ( aNumber > bNumber ){
+    return 1;
+  }
+  return 0;
 }
 
 export const HomeScreen: React.FC = () => {
   const [bgReadings, setBgReadings] = useState([])
-  const [bgStats, setBgStats] = useState(statsObj)
+  const [bgStats, setBgStats] = useState([])
   const [doseReadings, setDoseReadings] = useState([])
   const [macroReadings, setMacroReadings] = useState([])
 
   useEffect(() => {
+    const tmpArr = [] as any
     Promise.all([
       getReadings('bg').then(res => setBgReadings(res)),
-      getReadings('bg/stats/3').then(res => statsObj.three = res),
-      getReadings('bg/stats/7').then(res => statsObj.seven = res),
-      getReadings('bg/stats/14').then(res => statsObj.fourteen = res),
-      getReadings('bg/stats/30').then(res => statsObj.thirty = res),
-      getReadings('bg/stats/90').then(res => statsObj.ninety = res),
+      getReadings('bg/stats/3').then(res => tmpArr.push({ created: '3 Day' , ...res }) ),
+      getReadings('bg/stats/7').then(res => tmpArr.push({ created: '7 Day', ...res, }) ),
+      getReadings('bg/stats/14').then(res => tmpArr.push({ created: '14 Day', ...res, }) ),
+      getReadings('bg/stats/30').then(res => tmpArr.push({ created: '30 Day', ...res, }) ),
+      getReadings('bg/stats/90').then(res => tmpArr.push({ created: '90 Day', ...res, }) ),
       getReadings('dose').then(res => setDoseReadings(res)),
       getReadings('macro').then(res => setMacroReadings(res))
-    ]).then(() => { setBgStats(statsObj) })
+    ]).then(() => {
+      setBgStats(tmpArr.sort(compare))
+    })
   }, [])
 
   return(
     <View style={ScreenStyles.containerView}>
       <Carousel table={'bg'} Template={BgReading} readings={bgReadings} />
-      <Stats days={7} />
+      <Carousel table={'stats'} Template={StatsReading} readings={bgStats} />
       <Carousel table={'dose'} Template={DoseReading} readings={doseReadings} />
       <Carousel table={'macro'} Template={MacroReading} readings={macroReadings} />
     </View>

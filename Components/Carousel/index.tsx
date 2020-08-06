@@ -1,5 +1,4 @@
-import fetch from 'node-fetch'
-import React, { useState } from 'react'
+import React, { useState, ReactElement } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
@@ -11,7 +10,7 @@ import { capitalise } from '../Helpers/GeneralHelpers'
 interface CarouselProps {
   table: string,
   Template: React.FC,
-  readings: React.Node[]
+  readings: ReactElement[]
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {

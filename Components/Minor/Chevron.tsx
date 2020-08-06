@@ -23,6 +23,7 @@ const Styles = StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
     textAlignVertical: 'center',
-    height: '100%'
+    height: '100%',
+    color: 'grey'
   }
 })

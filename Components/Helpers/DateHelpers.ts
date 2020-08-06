@@ -14,6 +14,8 @@ export const newDate = ({ m, d, h, min, sec }): string => {
 }
 
 export const generateCreatedDate = (date: string) => {
+  if (date.split(' ')[1] === 'Day') return date
+
   const today = new Date()
   const todayMonth = today.getMonth() + 1
   const todayDay = today.getDate()
