@@ -1,8 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { decimalPadRight } from '../Helpers/GeneralHelpers'
-
 import { CommonStyles } from '../../Assets/Styles/Common'
 import { BgLayoutStyles } from '../../Assets/Styles/Layouts'
 
@@ -17,7 +15,7 @@ const ReadingRepresentation: React.FC<ReadingRepresentationProps> = (props: Read
   return(
     <View style={Styles.readingRepresenatation}>
       <Text style={BgLayoutStyles.bgLayoutReading}>
-        { `${decimalPadRight(reading)}` }
+        { reading.toFixed(1) }
       </Text>
       <Text style={BgLayoutStyles.bgLayoutUnit}>
         { unit }
