@@ -43,7 +43,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
           <View style={Styles.contentContainer}>
             <View style={Styles.chevron}>
             {index === 0
-              ? <Chevron symbol={''} handlePress={() => {}}/>
+              ? <Chevron symbol={''} handlePress={() => null}/>
               : <Chevron symbol={'<'} handlePress={handleSwipeRight} />}
             </View>
             <GestureRecognizer onSwipeLeft={handleSwipeLeft} onSwipeRight={handleSwipeRight} style={Styles.template}>
@@ -52,7 +52,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
             <View style={Styles.chevron}>
             {index < readings.length - 1
               ? <Chevron symbol={'>'} handlePress={handleSwipeLeft} />
-              : <Chevron symbol={''} handlePress={() => {}} />}
+              : <Chevron symbol={''} handlePress={() => null} />}
             </View>
           </View>
           <GradientBorder x={1.0} y={1.0} />
