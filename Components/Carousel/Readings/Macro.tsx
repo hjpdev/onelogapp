@@ -11,7 +11,6 @@ const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingProps) => 
 
   return(
       <View style={Styles.container}>
-        <View style={Styles.table}>
           <View style={Styles.labels}>
             <Text style={Styles.label}>{'Kcal'}</Text>
             <Text style={Styles.label}>{'Carbs'}</Text>
@@ -27,7 +26,6 @@ const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingProps) => 
             <Text style={Styles.value}>{ protein.toFixed(1) }</Text>
             <Text style={Styles.value}>{ fat.toFixed(1) }</Text>
           </View>
-        </View>
       </View>
   )
 }
@@ -35,16 +33,10 @@ const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingProps) => 
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 10,
-    backgroundColor: '#ebebeb',
-    // backgroundColor: 'grey',
-    width: '100%'
-  },
-  table: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    fontSize: 54,
-    paddingTop: 8,
+    paddingBottom: 10,
+    backgroundColor: '#ebebeb',
     width: '100%'
   },
   labels: {

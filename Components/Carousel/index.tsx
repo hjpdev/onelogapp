@@ -74,7 +74,6 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#ebebeb'
-    // backgroundColor: 'grey'
   },
   header: {
     flex: 1,
