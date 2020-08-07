@@ -9,8 +9,8 @@ import { capitalise } from '../Helpers/GeneralHelpers'
 
 interface CarouselProps {
   table: string,
-  Template: React.FC,
-  readings: ReactElement[]
+  Template: ReactElement,
+  readings: {[key: string]: any}[]
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {

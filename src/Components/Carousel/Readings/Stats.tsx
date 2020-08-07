@@ -2,7 +2,10 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 interface StatsReadingProps {
-  data: any
+  data: {
+    avg: number,
+    stddev: number
+  }
 }
 
 const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingProps) => {
@@ -14,6 +17,9 @@ const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingProps) => 
         <View style={Styles.readingContainer}>
           <Text style={Styles.reading}>
             { avg.toFixed(1) }
+          </Text>
+          <Text style={Styles.unit}>
+          { 'mmol/L' }
           </Text>
         </View>
 
@@ -29,15 +35,15 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    // backgroundColor: 'blue'
   },
   readingContainer: {
     alignItems: 'center',
     width: '50%'
   },
   reading: {
-    fontSize: 54,
-    paddingTop: 8
+    fontSize: 54
   },
   unit: {
     fontSize: 12,
