@@ -2,7 +2,10 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 interface DoseReadingProps {
-  data: any
+  data: {
+    reading: number,
+    islong: boolean
+  }
 }
 
 const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
