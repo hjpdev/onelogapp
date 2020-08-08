@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View } from 'react-native'
+import { asy View } from 'react-native'
 
 import BgReading from '../Carousel/Readings/Bg'
 import DoseReading from '../Carousel/Readings/Dose'
@@ -58,7 +58,7 @@ export const HomeScreen: React.FC = () => {
   }, [])
 
   return(
-    <View style={ScreenStyles.containerView}>
+    <View style={ScreenStyles.container}>
       <Carousel table={'bg'} Template={BgReading} readings={bgReadings} />
       <Carousel table={'stats'} Template={StatsReading} readings={bgStats} />
       <Carousel table={'dose'} Template={DoseReading} readings={doseReadings} />
