@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { asy View } from 'react-native'
+import React, { useEffect } from 'react'
+import { View } from 'react-native'
 
+import { getData, storeData } from '../Store'
 import BgReading from '../Carousel/Readings/Bg'
 import DoseReading from '../Carousel/Readings/Dose'
 import MacroReading from '../Carousel/Readings/Macro'
@@ -8,18 +9,31 @@ import StatsReading from '../Carousel/Readings/Stats'
 import Carousel from '../Carousel'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-const getReadings = (table: string) => {
+const getReadings = async (table: string) => {
   const url = `http://localhost:8088/readings/${table}`
+  try {
+    const readings = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    return readings
+  } catch(err) {
+    console.log('Error: ', err)
+  }
+}
 
-  return fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(res => res.json())
-    .catch(err => err)
+const getStats = (): Promise<any> => {
+  const days = [3, 7, 14, 30, 90]
+  const tmpArr = [] as any
+
+  for (const day of days) {
+    return getReadings(`bg/stats/${day})`).then(res => tmpArr.push({ created: `${day} Day` , ...res }) )
+  }
+
+  return tmpArr.sort(compare)
 }
 
 const compare = ( a: any, b: any ) => {
@@ -36,33 +50,50 @@ const compare = ( a: any, b: any ) => {
 }
 
 export const HomeScreen: React.FC = () => {
-  const [bgReadings, setBgReadings] = useState([])
-  const [bgStats, setBgStats] = useState([])
-  const [doseReadings, setDoseReadings] = useState([])
-  const [macroReadings, setMacroReadings] = useState([])
-
   useEffect(() => {
-    const tmpArr = [] as any
-    Promise.all([
-      getReadings('bg').then(res => setBgReadings(res)),
-      getReadings('bg/stats/3').then(res => tmpArr.push({ created: '3 Day' , ...res }) ),
-      getReadings('bg/stats/7').then(res => tmpArr.push({ created: '7 Day', ...res, }) ),
-      getReadings('bg/stats/14').then(res => tmpArr.push({ created: '14 Day', ...res, }) ),
-      getReadings('bg/stats/30').then(res => tmpArr.push({ created: '30 Day', ...res, }) ),
-      getReadings('bg/stats/90').then(res => tmpArr.push({ created: '90 Day', ...res, }) ),
-      getReadings('dose').then(res => setDoseReadings(res)),
-      getReadings('macro').then(res => setMacroReadings(res))
-    ]).then(() => {
-      setBgStats(tmpArr.sort(compare))
-    })
+    const checkData = async () => {
+      let bgReadings, stats, doseReadings, macroReadings
+      try {
+        // if (await getData('bgReadings') === null) {
+          bgReadings = await getReadings('bg')
+          console.log('bgReadings HERE => ', bgReadings)
+          // await storeData('bgReadings', JSON.stringify(bgReadings))
+        // }
+        // if (await getData('bgStats') === null) {
+          stats = getStats()
+          console.log('stats HERE => ', stats)
+          // await storeData('bgStats', JSON.stringify(stats))
+        // }
+        // if (await getData('doseReadings') === null) {
+          doseReadings = getReadings('dose')
+          console.log('doseReadings HERE => ', doseReadings)
+          // await storeData('doseReadings', JSON.stringify(doseReadings))
+          // ))
+        // }
+        // if (await getData('macroReadings') === null) {
+          macroReadings = getReadings('macro')
+          console.log('macroReadings HERE => ', macroReadings)
+          // await storeData('macroReadings', JSON.stringify(macroReadings))
+        // }
+        await storeData('bgReadings', JSON.stringify(bgReadings))
+        await storeData('bgStats', JSON.stringify(stats))
+        await storeData('doseReadings', JSON.stringify(doseReadings))
+        await storeData('macroReadings', JSON.stringify(macroReadings))
+      } catch(err) {
+        console.log('Error: ', err)
+      }
+    }
+
+    checkData()
   }, [])
+
 
   return(
     <View style={ScreenStyles.container}>
-      <Carousel table={'bg'} Template={BgReading} readings={bgReadings} />
-      <Carousel table={'stats'} Template={StatsReading} readings={bgStats} />
-      <Carousel table={'dose'} Template={DoseReading} readings={doseReadings} />
-      <Carousel table={'macro'} Template={MacroReading} readings={macroReadings} />
+      <Carousel table={'bg'} Template={BgReading} dataKey={'bgReadings'} />
+      <Carousel table={'stats'} Template={StatsReading} dataKey={'bgStats'} />
+      <Carousel table={'dose'} Template={DoseReading} dataKey={'doseReadings'} />
+      <Carousel table={'macro'} Template={MacroReading} dataKey={'macroReadings'} />
     </View>
   )
 }
