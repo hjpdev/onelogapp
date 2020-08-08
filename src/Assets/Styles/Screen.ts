@@ -4,14 +4,14 @@ const deviceHeight = Dimensions.get('window').height
 const deviceWidth = Dimensions.get('window').width
 
 export const ScreenStyles = StyleSheet.create({
-  containerView: {
+  container: {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     backgroundColor: '#ebebeb',
     height: deviceHeight-120,
     width: deviceWidth,
   },
-  containerText: {
+  text: {
     fontSize: 28,
     textAlign: 'center',
     color: 'black'
