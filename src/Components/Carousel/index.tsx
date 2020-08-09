@@ -7,7 +7,7 @@ import { IStatsReading } from './Readings/Stats'
 import { IDoseReading } from './Readings/Dose'
 import { IMacroReading } from './Readings/Macro';
 
-import { getData } from '../Store'
+import { getData } from '../Store/index'
 import { GradientBorder } from '../Minor/GradientBorder'
 import { Chevron } from '../Minor/Chevron'
 import { generateCreatedDate } from '../Helpers/DateHelpers'
