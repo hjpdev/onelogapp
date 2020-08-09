@@ -31,7 +31,8 @@ const getStats = async () => {
 
   try {
     for (const day of days) {
-      await getReadings(`bg/stats/${day})`).then(res => tmpArr.push({ created: `${day} Day` , ...res }) )
+      const stats = await getReadings(`bg/stats/${day})`)
+      tmpArr.push({ created: `${day} Day` , ...stats })
     }
   } catch(err) {
     console.log('Error getStats: ', err)
