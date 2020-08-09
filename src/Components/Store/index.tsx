@@ -35,7 +35,7 @@ export const needsUpdating = async (key: string): Promise<boolean> => {
     const lastUpdated = data && data.updated
 
     const diff = Date.now() - lastUpdated
-    console.log(`Last Updated: ${(diff / 60000).toFixed(1)} minutes ago.`)
+    console.log(`${key} last Updated: ${(diff / 60000).toFixed(1)} minutes ago.`)
 
     if (data && (Date.now() - lastUpdated) > 3600000) {
       console.log(`${key} updated`)

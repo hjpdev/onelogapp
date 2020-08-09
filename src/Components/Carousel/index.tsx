@@ -10,8 +10,8 @@ import { IMacroReading } from './Readings/Macro';
 import { getData } from '../Store/index'
 import { GradientBorder } from '../Minor/GradientBorder'
 import { Chevron } from '../Minor/Chevron'
-import { generateCreatedDate } from '../Helpers/DateHelpers'
-import { capitalise } from '../Helpers/GeneralHelpers'
+import { generateCreatedDate } from '../Helpers/Date'
+import { capitalise } from '../Helpers/General'
 
 export interface BgTemplateProps {
   data: IBgReading

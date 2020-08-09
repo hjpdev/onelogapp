@@ -1,4 +1,4 @@
-import { padLeft } from './GeneralHelpers'
+import { padLeft } from './General'
 
 export const newDate = ({ m, d, h, min, sec }: {[key: string]: number}): string => {
   const date = new Date()
