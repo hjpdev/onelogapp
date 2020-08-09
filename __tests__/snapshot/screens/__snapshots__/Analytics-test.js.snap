@@ -21,7 +21,7 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    Account
+    Analytics
   </Text>
 </View>
 `;
