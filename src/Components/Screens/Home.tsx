@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 
-import { storeData, needsUpdating } from '../Store'
+import { storeData, needsUpdating } from '../Store/index'
 import BgReading from '../Carousel/Readings/Bg'
 import DoseReading from '../Carousel/Readings/Dose'
 import MacroReading from '../Carousel/Readings/Macro'
