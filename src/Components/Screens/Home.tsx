@@ -54,7 +54,7 @@ const compare = ( a: IStatsReading, b: IStatsReading ) => {
   return 0;
 }
 
-export const HomeScreen: React.FC = () => {
+const HomeScreen: React.FC = () => {
   useEffect(() => {
     const checkData = async () => {
       try {
@@ -94,3 +94,5 @@ export const HomeScreen: React.FC = () => {
     </View>
   )
 }
+
+export default HomeScreen

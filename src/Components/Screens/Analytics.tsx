@@ -3,7 +3,7 @@ import { Text, View } from 'react-native'
 
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-export const AnalyticsScreen: React.FC = () => {
+const AnalyticsScreen: React.FC = () => {
   return(
     <View style={ScreenStyles.container}>
       <Text style={ScreenStyles.text}>
@@ -12,3 +12,5 @@ export const AnalyticsScreen: React.FC = () => {
     </View>
   )
 }
+
+export default AnalyticsScreen
