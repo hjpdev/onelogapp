@@ -5,7 +5,7 @@ import { storeData, needsUpdating } from '../Store'
 import BgReading from '../Carousel/Readings/Bg'
 import DoseReading from '../Carousel/Readings/Dose'
 import MacroReading from '../Carousel/Readings/Macro'
-import StatsReading from '../Carousel/Readings/Stats'
+import StatsReading, { IStatsReading } from '../Carousel/Readings/Stats'
 import Carousel from '../Carousel'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
@@ -27,7 +27,7 @@ const getReadings = async (table: string) => {
 
 const getStats = async () => {
   const days = [3, 7, 14, 30, 90]
-  const tmpArr = [] as any
+  const tmpArr: Array<IStatsReading> = []
 
   try {
     for (const day of days) {
@@ -41,7 +41,7 @@ const getStats = async () => {
   return tmpArr.sort(compare)
 }
 
-const compare = ( a: any, b: any ) => {
+const compare = ( a: IStatsReading, b: IStatsReading ) => {
   const aNumber = parseInt(a.created.split(' ')[0])
   const bNumber = parseInt(b.created.split(' ')[0])
 

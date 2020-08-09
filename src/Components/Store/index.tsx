@@ -1,6 +1,21 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
-export const storeData = async (key: string, data: any): Promise<any> => {
+export interface ReadingData {
+  created?: Date
+  name?: string
+  reading?: number
+  kcal?: number
+  carbs?: number
+  sugar?: number
+  protein?: number
+  fat?: number
+  amount?: number
+  unit?: string
+  isLong?: boolean,
+  updated: number
+}
+
+export const storeData = async (key: string, data: ReadingData): Promise<void> => {
   try {
     const value = JSON.stringify(data)
     await AsyncStorage.setItem(key, value)
@@ -9,13 +24,14 @@ export const storeData = async (key: string, data: any): Promise<any> => {
   }
 }
 
-export const getData = async (key: string): Promise<any> => {
+export const getData = async (key: string): Promise<ReadingData> => {
+  let value
   try {
-    const value = await AsyncStorage.getItem(key)
-    return value && JSON.parse(value)
+    value = await AsyncStorage.getItem(key)
   } catch(err) {
     console.log('Error getData: ', err)
   }
+  return value && JSON.parse(value)
 }
 
 export const needsUpdating = async (key: string): Promise<boolean> => {
@@ -23,7 +39,7 @@ export const needsUpdating = async (key: string): Promise<boolean> => {
     const data = await getData(key)
     const lastUpdated = data && data.updated
 
-    if (data === null || (Date.now() - lastUpdated) > 3600000) {
+    if (data && (Date.now() - lastUpdated) > 3600000) {
       console.log(`${key} updated`)
       return true
     }
