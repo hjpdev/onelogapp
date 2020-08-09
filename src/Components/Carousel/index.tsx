@@ -1,6 +1,11 @@
-import React, { useEffect, useState, ReactElement } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures';
+
+import { IBgReading } from './Readings/Bg'
+import { IStatsReading } from './Readings/Stats'
+import { IDoseReading } from './Readings/Dose'
+import { IMacroReading } from './Readings/Macro';
 
 import { getData } from '../Store'
 import { GradientBorder } from '../Minor/GradientBorder'
@@ -8,22 +13,39 @@ import { Chevron } from '../Minor/Chevron'
 import { generateCreatedDate } from '../Helpers/DateHelpers'
 import { capitalise } from '../Helpers/GeneralHelpers'
 
+export interface BgTemplateProps {
+  data: IBgReading
+}
+export interface StatsTemplateProps {
+  data: IStatsReading
+}
+export interface DoseTemplateProps {
+  data: IDoseReading
+}
+export interface MacroTemplateProps {
+  data: IMacroReading
+}
+
 interface CarouselProps {
   table: string,
-  Template: ReactElement,
+  Template: React.FC<BgTemplateProps> | React.FC<StatsTemplateProps> | React.FC<DoseTemplateProps> | React.FC<MacroTemplateProps>,
   dataKey: string
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   const { table, Template, dataKey } = props
-  const [readings, setReadings] = useState([])
+  const [readings, setReadings] = useState([] as any)
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
     const fetchReadings = async (key: string) => {
-      const data = await getData(key)
-      if (data !== null && data.readings) {
-        setReadings(data.readings)
+      try {
+        const data = await getData(key)
+        if (data && data.readings) {
+          setReadings(data.readings)
+        }
+      } catch(err) {
+        console.log('Error fetchReadings: ', err)
       }
     }
     fetchReadings(dataKey)

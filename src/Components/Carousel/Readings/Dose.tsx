@@ -1,14 +1,15 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-interface DoseReadingProps {
-  data: {
-    reading: number,
-    islong: boolean
-  }
+import { DoseTemplateProps } from '../index'
+
+export interface IDoseReading {
+  reading: number,
+  islong: boolean
 }
 
-const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
+
+const DoseReading: React.FC<DoseTemplateProps> = (props: DoseTemplateProps) => {
   const { data } = props
   const { reading, islong } = data
 

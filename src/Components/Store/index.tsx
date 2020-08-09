@@ -1,25 +1,16 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
-export interface ReadingData {
-  created?: Date
-  name?: string
-  reading?: number
-  kcal?: number
-  carbs?: number
-  sugar?: number
-  protein?: number
-  fat?: number
-  amount?: number
-  unit?: string
-  isLong?: boolean
-}
+import { IBgReading } from '../Carousel/Readings/Bg';
+import { IStatsReading } from '../Carousel/Readings/Stats';
+import { IDoseReading } from '../Carousel/Readings/Dose';
+import { IMacroReading } from '../Carousel/Readings/Macro';
 
-interface IStoreData {
+export interface IStoreData {
   updated: number,
-  readings: ReadingData[]
+  readings: IBgReading[] | IStatsReading[] | IDoseReading[] | IMacroReading[]
 }
 
-export const storeData = async (key: string, data: ReadingData): Promise<void> => {
+export const storeData = async (key: string, data: IStoreData | IStatsReading): Promise<void> => {
   try {
     const value = JSON.stringify(data)
     await AsyncStorage.setItem(key, value)

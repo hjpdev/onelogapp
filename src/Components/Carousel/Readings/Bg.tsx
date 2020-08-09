@@ -1,13 +1,13 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-interface BgReadingProps {
-  data: {
-    reading: number
-  }
+import { BgTemplateProps } from '../index'
+
+export interface IBgReading {
+  reading: number
 }
 
-export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {
+export const BgReading: React.FC<BgTemplateProps> = (props: BgTemplateProps) => {
   const { data } = props
   const reading = data.reading
 
