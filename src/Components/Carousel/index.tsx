@@ -22,9 +22,10 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   useEffect(() => {
     const fetchReadings = async (key: string) => {
       const data = await getData(key)
-      // if (data !== null) {
-        setReadings(JSON.parse(data))
-      // }
+      const json = JSON.parse(data)
+      if (data !== null && json.readings) {
+        setReadings(json.readings)
+      }
     }
     fetchReadings(dataKey)
   }, [])

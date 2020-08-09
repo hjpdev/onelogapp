@@ -19,18 +19,22 @@ const getReadings = async (table: string) => {
         'Content-Type': 'application/json'
       }
     })
-    return readings
+    return readings.json()
   } catch(err) {
-    console.log('Error: ', err)
+    console.log('Error getReadings: ', err)
   }
 }
 
-const getStats = (): Promise<any> => {
+const getStats = async () => {
   const days = [3, 7, 14, 30, 90]
   const tmpArr = [] as any
 
-  for (const day of days) {
-    return getReadings(`bg/stats/${day})`).then(res => tmpArr.push({ created: `${day} Day` , ...res }) )
+  try {
+    for (const day of days) {
+      await getReadings(`bg/stats/${day})`).then(res => tmpArr.push({ created: `${day} Day` , ...res }) )
+    }
+  } catch(err) {
+    console.log('Error getStats: ', err)
   }
 
   return tmpArr.sort(compare)
@@ -54,39 +58,29 @@ export const HomeScreen: React.FC = () => {
     const checkData = async () => {
       let bgReadings, stats, doseReadings, macroReadings
       try {
-        // if (await getData('bgReadings') === null) {
+        if (await getData('bgReadings') === null) {
           bgReadings = await getReadings('bg')
-          console.log('bgReadings HERE => ', bgReadings)
-          // await storeData('bgReadings', JSON.stringify(bgReadings))
-        // }
-        // if (await getData('bgStats') === null) {
-          stats = getStats()
-          console.log('stats HERE => ', stats)
-          // await storeData('bgStats', JSON.stringify(stats))
-        // }
-        // if (await getData('doseReadings') === null) {
-          doseReadings = getReadings('dose')
-          console.log('doseReadings HERE => ', doseReadings)
-          // await storeData('doseReadings', JSON.stringify(doseReadings))
-          // ))
-        // }
-        // if (await getData('macroReadings') === null) {
-          macroReadings = getReadings('macro')
-          console.log('macroReadings HERE => ', macroReadings)
-          // await storeData('macroReadings', JSON.stringify(macroReadings))
-        // }
-        await storeData('bgReadings', JSON.stringify(bgReadings))
-        await storeData('bgStats', JSON.stringify(stats))
-        await storeData('doseReadings', JSON.stringify(doseReadings))
-        await storeData('macroReadings', JSON.stringify(macroReadings))
+          await storeData('bgReadings', JSON.stringify({ updated: Date.now(), readings: bgReadings }))
+        }
+        if (await getData('bgStats') === null) {
+          stats = await getStats()
+          await storeData('bgStats', JSON.stringify({ updated: Date.now(), readings: stats }))
+        }
+        if (await getData('doseReadings') === null) {
+          doseReadings = await getReadings('dose')
+          await storeData('doseReadings', JSON.stringify({ updated: Date.now(), readings: doseReadings }))
+        }
+        if (await getData('macroReadings') === null) {
+          macroReadings = await getReadings('macro')
+          await storeData('macroReadings', JSON.stringify({ updated: Date.now(), readings: macroReadings }))
+        }
       } catch(err) {
-        console.log('Error: ', err)
+        console.log('Error checkData: ', err)
       }
     }
 
     checkData()
   }, [])
-
 
   return(
     <View style={ScreenStyles.container}>
