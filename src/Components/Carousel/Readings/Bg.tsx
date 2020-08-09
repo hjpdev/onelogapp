@@ -2,7 +2,9 @@ import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 interface BgReadingProps {
-  data: any
+  data: {
+    reading: number
+  }
 }
 
 export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {

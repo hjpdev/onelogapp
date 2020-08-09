@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 interface NavBarProps {
-  setCurrentScreen: (screen: string) => any
+  setCurrentScreen: (screen: string) => void
 }
 
 export const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
