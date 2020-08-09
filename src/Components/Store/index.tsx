@@ -11,8 +11,12 @@ export interface ReadingData {
   fat?: number
   amount?: number
   unit?: string
-  isLong?: boolean,
-  updated: number
+  isLong?: boolean
+}
+
+interface IStoreData {
+  updated: number,
+  readings: ReadingData[]
 }
 
 export const storeData = async (key: string, data: ReadingData): Promise<void> => {
@@ -24,7 +28,7 @@ export const storeData = async (key: string, data: ReadingData): Promise<void> =
   }
 }
 
-export const getData = async (key: string): Promise<ReadingData> => {
+export const getData = async (key: string): Promise<IStoreData> => {
   let value
   try {
     value = await AsyncStorage.getItem(key)
