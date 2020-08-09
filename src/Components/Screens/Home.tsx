@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 
-import { getData, storeData } from '../Store'
+import { storeData, needsUpdating } from '../Store'
 import BgReading from '../Carousel/Readings/Bg'
 import DoseReading from '../Carousel/Readings/Dose'
 import MacroReading from '../Carousel/Readings/Macro'
@@ -56,23 +56,25 @@ const compare = ( a: any, b: any ) => {
 export const HomeScreen: React.FC = () => {
   useEffect(() => {
     const checkData = async () => {
-      let bgReadings, stats, doseReadings, macroReadings
       try {
-        if (await getData('bgReadings') === null) {
-          bgReadings = await getReadings('bg')
-          await storeData('bgReadings', { updated: Date.now(), readings: bgReadings })
+        if (await needsUpdating('bgReadings')) {
+          const readings = await getReadings('bg')
+          await storeData('bgReadings', { updated: Date.now(), readings })
         }
-        if (await getData('bgStats') === null) {
-          stats = await getStats()
-          await storeData('bgStats', { updated: Date.now(), readings: stats })
+
+        if (await needsUpdating('bgStats')) {
+          const readings = await getStats()
+          await storeData('bgStats', { updated: Date.now(), readings })
         }
-        if (await getData('doseReadings') === null) {
-          doseReadings = await getReadings('dose')
-          await storeData('doseReadings', { updated: Date.now(), readings: doseReadings })
+
+        if (await needsUpdating('doseReadings')) {
+          const readings = await getReadings('dose')
+          await storeData('doseReadings', { updated: Date.now(), readings })
         }
-        if (await getData('macroReadings') === null) {
-          macroReadings = await getReadings('macro')
-          await storeData('macroReadings', { updated: Date.now(), readings: macroReadings })
+
+        if (await needsUpdating('macroReadings')) {
+          const readings = await getReadings('macro')
+          await storeData('macroReadings', { updated: Date.now(), readings })
         }
       } catch(err) {
         console.log('Error checkData: ', err)
