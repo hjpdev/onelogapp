@@ -1,11 +1,17 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-interface MacroReadingProps {
-  data: {[key: string]: number};
+import { MacroTemplateProps } from '../index'
+
+export interface IMacroReading {
+  kcal: number,
+  carbs: number,
+  sugar: number,
+  protein: number,
+  fat: number
 }
 
-const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingProps) => {
+const MacroReading: React.FC<MacroTemplateProps> = (props: MacroTemplateProps) => {
   const { data } = props
     const { kcal, carbs, sugar, protein, fat } = data
 
