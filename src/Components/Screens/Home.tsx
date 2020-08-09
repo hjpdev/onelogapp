@@ -60,19 +60,19 @@ export const HomeScreen: React.FC = () => {
       try {
         if (await getData('bgReadings') === null) {
           bgReadings = await getReadings('bg')
-          await storeData('bgReadings', JSON.stringify({ updated: Date.now(), readings: bgReadings }))
+          await storeData('bgReadings', { updated: Date.now(), readings: bgReadings })
         }
         if (await getData('bgStats') === null) {
           stats = await getStats()
-          await storeData('bgStats', JSON.stringify({ updated: Date.now(), readings: stats }))
+          await storeData('bgStats', { updated: Date.now(), readings: stats })
         }
         if (await getData('doseReadings') === null) {
           doseReadings = await getReadings('dose')
-          await storeData('doseReadings', JSON.stringify({ updated: Date.now(), readings: doseReadings }))
+          await storeData('doseReadings', { updated: Date.now(), readings: doseReadings })
         }
         if (await getData('macroReadings') === null) {
           macroReadings = await getReadings('macro')
-          await storeData('macroReadings', JSON.stringify({ updated: Date.now(), readings: macroReadings }))
+          await storeData('macroReadings', { updated: Date.now(), readings: macroReadings })
         }
       } catch(err) {
         console.log('Error checkData: ', err)
