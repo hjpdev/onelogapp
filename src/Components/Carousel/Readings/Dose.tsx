@@ -8,6 +8,12 @@ export interface IDoseReading {
   islong: boolean
 }
 
+const generateStyle = (isLong: boolean) => {
+  return isLong === true 
+    ? { ...Styles.type, backgroundColor: '#c4c4c4' }
+    : Styles.type
+}
+
 
 const DoseReading: React.FC<DoseTemplateProps> = (props: DoseTemplateProps) => {
   const { data } = props
@@ -24,7 +30,7 @@ const DoseReading: React.FC<DoseTemplateProps> = (props: DoseTemplateProps) => {
           </Text>
         </View>
 
-        <Text style={Styles.type}>
+        <Text style={generateStyle(islong)}>
         { islong === true ? 'Long' : 'Short' }
        </Text>
       </View>
@@ -51,11 +57,12 @@ const Styles = StyleSheet.create({
   },
   type: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     padding: 12,
-    backgroundColor: 'black',
-    color: 'white',
+    borderWidth: 1,
+    borderColor: '#c4c4c4',
+    borderRadius: 1,
     width: '30%'
   }
 })

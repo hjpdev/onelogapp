@@ -51,11 +51,12 @@ const Styles = StyleSheet.create({
   },
   type: {
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     padding: 12,
-    backgroundColor: 'black',
-    color: 'white',
+    borderWidth: 1,
+    borderColor: '#c4c4c4',
+    // backgroundColor: 'black',
     width: '30%'
   }
 })

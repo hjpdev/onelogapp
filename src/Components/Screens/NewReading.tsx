@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 import { GradientBorder } from '../Minor/GradientBorder'
 
-export const NewReadingScreen: React.FC = () => {
+const NewReadingScreen: React.FC = () => {
   return(
     <View style={ScreenStyles.container}>
         <View style={Styles.row}>
@@ -32,3 +32,5 @@ const Styles = StyleSheet.create({
     flexDirection: 'row'
   }
 })
+
+export default NewReadingScreen

@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 
-import { AccountScreen } from './Screens/Account'
-import { AnalyticsScreen } from './Screens/Analytics'
-import { HomeScreen } from './Screens/Home'
-import { NewReadingScreen } from './Screens/NewReading'
-import { SettingsScreen } from './Screens/Settings'
+import AccountScreen from './Screens/Account'
+import AnalyticsScreen from './Screens/Analytics'
+import HomeScreen from './Screens/Home'
+import NewReadingScreen from './Screens/NewReading'
+import SettingsScreen from './Screens/Settings'
 
 interface ContainerProps {
   currentScreen: string
