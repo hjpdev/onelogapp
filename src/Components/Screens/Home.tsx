@@ -1,28 +1,47 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { View } from 'react-native'
 
+import { storeData, needsUpdating } from '../Store'
 import BgReading from '../Carousel/Readings/Bg'
 import DoseReading from '../Carousel/Readings/Dose'
 import MacroReading from '../Carousel/Readings/Macro'
-import StatsReading from '../Carousel/Readings/Stats'
+import StatsReading, { IStatsReading } from '../Carousel/Readings/Stats'
 import Carousel from '../Carousel'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-const getReadings = (table: string) => {
+const getReadings = async (table: string) => {
   const url = `http://localhost:8088/readings/${table}`
-
-  return fetch(url, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
-  })
-    .then(res => res.json())
-    .catch(err => err)
+  try {
+    const readings = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    return readings.json()
+  } catch(err) {
+    console.log('Error getReadings: ', err)
+  }
 }
 
-const compare = ( a: any, b: any ) => {
+const getStats = async () => {
+  const days = [3, 7, 14, 30, 90]
+  const tmpArr: Array<IStatsReading> = []
+
+  try {
+    for (const day of days) {
+      const stats = await getReadings(`bg/stats/${day})`)
+      tmpArr.push({ created: `${day} Day` , ...stats })
+    }
+  } catch(err) {
+    console.log('Error getStats: ', err)
+  }
+
+  return tmpArr.sort(compare)
+}
+
+const compare = ( a: IStatsReading, b: IStatsReading ) => {
   const aNumber = parseInt(a.created.split(' ')[0])
   const bNumber = parseInt(b.created.split(' ')[0])
 
@@ -36,33 +55,42 @@ const compare = ( a: any, b: any ) => {
 }
 
 export const HomeScreen: React.FC = () => {
-  const [bgReadings, setBgReadings] = useState([])
-  const [bgStats, setBgStats] = useState([])
-  const [doseReadings, setDoseReadings] = useState([])
-  const [macroReadings, setMacroReadings] = useState([])
-
   useEffect(() => {
-    const tmpArr = [] as any
-    Promise.all([
-      getReadings('bg').then(res => setBgReadings(res)),
-      getReadings('bg/stats/3').then(res => tmpArr.push({ created: '3 Day' , ...res }) ),
-      getReadings('bg/stats/7').then(res => tmpArr.push({ created: '7 Day', ...res, }) ),
-      getReadings('bg/stats/14').then(res => tmpArr.push({ created: '14 Day', ...res, }) ),
-      getReadings('bg/stats/30').then(res => tmpArr.push({ created: '30 Day', ...res, }) ),
-      getReadings('bg/stats/90').then(res => tmpArr.push({ created: '90 Day', ...res, }) ),
-      getReadings('dose').then(res => setDoseReadings(res)),
-      getReadings('macro').then(res => setMacroReadings(res))
-    ]).then(() => {
-      setBgStats(tmpArr.sort(compare))
-    })
+    const checkData = async () => {
+      try {
+        if (await needsUpdating('bgReadings')) {
+          const readings = await getReadings('bg')
+          await storeData('bgReadings', { updated: Date.now(), readings })
+        }
+
+        if (await needsUpdating('bgStats')) {
+          const readings = await getStats()
+          await storeData('bgStats', { updated: Date.now(), readings })
+        }
+
+        if (await needsUpdating('doseReadings')) {
+          const readings = await getReadings('dose')
+          await storeData('doseReadings', { updated: Date.now(), readings })
+        }
+
+        if (await needsUpdating('macroReadings')) {
+          const readings = await getReadings('macro')
+          await storeData('macroReadings', { updated: Date.now(), readings })
+        }
+      } catch(err) {
+        console.log('Error checkData: ', err)
+      }
+    }
+
+    checkData()
   }, [])
 
   return(
-    <View style={ScreenStyles.containerView}>
-      <Carousel table={'bg'} Template={BgReading} readings={bgReadings} />
-      <Carousel table={'stats'} Template={StatsReading} readings={bgStats} />
-      <Carousel table={'dose'} Template={DoseReading} readings={doseReadings} />
-      <Carousel table={'macro'} Template={MacroReading} readings={macroReadings} />
+    <View style={ScreenStyles.container}>
+      <Carousel table={'bg'} Template={BgReading} dataKey={'bgReadings'} />
+      <Carousel table={'stats'} Template={StatsReading} dataKey={'bgStats'} />
+      <Carousel table={'dose'} Template={DoseReading} dataKey={'doseReadings'} />
+      <Carousel table={'macro'} Template={MacroReading} dataKey={'macroReadings'} />
     </View>
   )
 }

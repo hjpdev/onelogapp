@@ -1,7 +1,8 @@
-import React, { useState, ReactElement } from 'react'
+import React, { useEffect, useState, ReactElement } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
+import { getData } from '../Store'
 import { GradientBorder } from '../Minor/GradientBorder'
 import { Chevron } from '../Minor/Chevron'
 import { generateCreatedDate } from '../Helpers/DateHelpers'
@@ -10,12 +11,23 @@ import { capitalise } from '../Helpers/GeneralHelpers'
 interface CarouselProps {
   table: string,
   Template: ReactElement,
-  readings: {[key: string]: any}[]
+  dataKey: string
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { table, Template, readings } = props
+  const { table, Template, dataKey } = props
+  const [readings, setReadings] = useState([])
   const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const fetchReadings = async (key: string) => {
+      const data = await getData(key)
+      if (data !== null && data.readings) {
+        setReadings(data.readings)
+      }
+    }
+    fetchReadings(dataKey)
+  }, [])
 
   const handleSwipeLeft = () => {
     if (index < readings.length - 1) setIndex(index + 1)

@@ -5,8 +5,8 @@ import { ScreenStyles } from '../../Assets/Styles/Screen'
 
 export const SettingsScreen: React.FC = () => {
   return(
-    <View style={ScreenStyles.containerView}>
-      <Text style={ScreenStyles.containerText}>
+    <View style={ScreenStyles.container}>
+      <Text style={ScreenStyles.text}>
         {'Settings'}
       </Text>
     </View>

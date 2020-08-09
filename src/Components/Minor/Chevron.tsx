@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 interface ChevronProps {
   symbol: string,
-  handlePress: () => any
+  handlePress: () => void
 }
 
 export const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
