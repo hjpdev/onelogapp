@@ -5,53 +5,22 @@ import { storeData, needsUpdating } from '../Store/index'
 import BgReading from '../Carousel/Readings/Bg'
 import DoseReading from '../Carousel/Readings/Dose'
 import MacroReading from '../Carousel/Readings/Macro'
-import StatsReading, { IStatsReading } from '../Carousel/Readings/Stats'
+import StatsReading from '../Carousel/Readings/Stats'
 import Carousel from '../Carousel'
+import { getReadings, getStats } from '../Helpers/Data'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-const getReadings = async (table: string) => {
-  const url = `http://localhost:8088/readings/${table}`
-  try {
-    const readings = await fetch(url, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    return readings.json()
-  } catch(err) {
-    console.log('Error getReadings: ', err)
-  }
-}
+const update = async (table: string) => {
+  const isReading = ['bg', 'dose', 'macro'].includes(table)
 
-const getStats = async () => {
-  const days = [3, 7, 14, 30, 90]
-  const tmpArr: Array<IStatsReading> = []
+  const readings = isReading
+    ? await getReadings(table)
+    : await getStats()
 
-  try {
-    for (const day of days) {
-      const stats = await getReadings(`bg/stats/${day})`)
-      tmpArr.push({ created: `${day} Day` , ...stats })
-    }
-  } catch(err) {
-    console.log('Error getStats: ', err)
-  }
-
-  return tmpArr.sort(compare)
-}
-
-const compare = ( a: IStatsReading, b: IStatsReading ) => {
-  const aNumber = parseInt(a.created.split(' ')[0])
-  const bNumber = parseInt(b.created.split(' ')[0])
-
-  if ( aNumber < bNumber ){
-    return -1;
-  }
-  if ( aNumber > bNumber ){
-    return 1;
-  }
-  return 0;
+  
+return isReading
+  ? await storeData(`${table}Readings`, { updated: Date.now(), readings })
+  : await storeData('bgStats', { updated: Date.now(), readings })
 }
 
 const HomeScreen: React.FC = () => {
@@ -59,23 +28,19 @@ const HomeScreen: React.FC = () => {
     const checkData = async () => {
       try {
         if (await needsUpdating('bgReadings')) {
-          const readings = await getReadings('bg')
-          await storeData('bgReadings', { updated: Date.now(), readings })
+          await update('bg')
         }
 
         if (await needsUpdating('bgStats')) {
-          const readings = await getStats()
-          await storeData('bgStats', { updated: Date.now(), readings })
+          await update('stats')
         }
 
         if (await needsUpdating('doseReadings')) {
-          const readings = await getReadings('dose')
-          await storeData('doseReadings', { updated: Date.now(), readings })
+          await update('dose')
         }
 
         if (await needsUpdating('macroReadings')) {
-          const readings = await getReadings('macro')
-          await storeData('macroReadings', { updated: Date.now(), readings })
+          await update('macro')
         }
       } catch(err) {
         console.log('Error checkData: ', err)
