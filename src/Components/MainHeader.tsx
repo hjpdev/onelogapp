@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export const MainHeader: React.FC = () => {
+const MainHeader: React.FC = () => {
   return (
     <View style={Styles.mainHeaderView}>
       <Text style={Styles.mainHeaderText}>
@@ -10,6 +10,9 @@ export const MainHeader: React.FC = () => {
     </View>
   )
 }
+
+export default MainHeader
+
 
 const Styles = StyleSheet.create({
   mainHeaderView: {

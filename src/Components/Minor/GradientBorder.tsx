@@ -7,7 +7,7 @@ interface GradientBorderProps {
   colors?: string[]
 }
 
-export const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBorderProps) => {
+const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBorderProps) => {
   const { x, y } = props
   let colors = props.colors
 
@@ -24,3 +24,5 @@ export const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBor
     </LinearGradient>
   )
 }
+
+export default GradientBorder

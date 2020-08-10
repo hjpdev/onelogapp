@@ -1,8 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
+import GradientBorder from '../Minor/GradientBorder'
+
 import { ScreenStyles } from '../../Assets/Styles/Screen'
-import { GradientBorder } from '../Minor/GradientBorder'
 
 const NewReadingScreen: React.FC = () => {
   return(
