@@ -32,8 +32,12 @@ export const getData = async (key: string): Promise<IStoreData> => {
 export const needsUpdating = async (key: string): Promise<boolean> => {
   try {
     const data = await getData(key)
-    const lastUpdated = data && data.updated
 
+    if (!data || !data.readings) {
+      return true
+    }
+
+    const lastUpdated = data && data.updated
     const diff = Date.now() - lastUpdated
     console.log(`${key} last Updated: ${(diff / 60000).toFixed(1)} minutes ago.`)
 

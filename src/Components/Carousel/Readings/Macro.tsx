@@ -50,7 +50,8 @@ const Styles = StyleSheet.create({
     padding: 20
   },
   label: {
-    fontSize: 16
+    fontSize: 16,
+    color: '#3f3d3d'
   },
   values: {
     flexDirection: 'column',
@@ -58,7 +59,8 @@ const Styles = StyleSheet.create({
   },
   value: {
     fontSize: 16,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    color: '#3f3d3d'
   }
 })
 

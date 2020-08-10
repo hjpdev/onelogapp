@@ -44,7 +44,8 @@ const Styles = StyleSheet.create({
     width: '50%'
   },
   reading: {
-    fontSize: 54
+    fontSize: 54,
+    color: '#3f3d3d'
   },
   unit: {
     fontSize: 12,
