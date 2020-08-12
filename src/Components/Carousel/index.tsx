@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import { IBgReading } from './Readings/Bg'
-import { IStatsReading } from './Readings/Stats'
-import { IDoseReading } from './Readings/Dose'
-import { IMacroReading } from './Readings/Macro';
+import { IBgReading, IStatsReading, IDoseReading, IMacroReading } from './Readings'
 
-import { getData } from '../Store/index'
+import { getData } from '../../Store/index'
 import GradientBorder from '../Minor/GradientBorder'
 import Chevron from '../Minor/Chevron'
 import { generateCreatedDate } from '../Helpers/Date'
@@ -27,13 +24,13 @@ export interface MacroTemplateProps {
 }
 
 interface CarouselProps {
-  table: string,
+  name: string,
   Template: React.FC<BgTemplateProps> | React.FC<StatsTemplateProps> | React.FC<DoseTemplateProps> | React.FC<MacroTemplateProps>,
   dataKey: string
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { table, Template, dataKey } = props
+  const { name, Template, dataKey } = props
   const [readings, setReadings] = useState([] as any)
   const [index, setIndex] = useState(0)
 
@@ -66,7 +63,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
       ? <View style={Styles.container}>
           <View style={Styles.header}>
             <Text style={Styles.tag}>
-              { capitalise(table) }
+              { capitalise(name) }
             </Text>
             <Text style={Styles.time}>
               { generateCreatedDate(reading['created']) }
