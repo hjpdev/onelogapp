@@ -1,3 +1,4 @@
+import { IStatsReading } from '../Carousel/Readings/Stats'
 import { padLeft } from './General'
 
 export const newDate = ({ m, d, h, min, sec }: {[key: string]: number}): string => {
@@ -28,4 +29,17 @@ export const generateCreatedDate = (date: string): string => {
   return (month === todayMonth && day === todayDay)
     ? `${hours}:${minutes}`
     : `${padLeft(day)}/${padLeft(month)} ${hours}:${minutes}`
+}
+
+export const statsDateTitleCompare = ( a: IStatsReading, b: IStatsReading ) => {
+  const aNumber = parseInt(a.created.split(' ')[0])
+  const bNumber = parseInt(b.created.split(' ')[0])
+
+  if ( aNumber < bNumber ){
+    return -1;
+  }
+  if ( aNumber > bNumber ){
+    return 1;
+  }
+  return 0;
 }

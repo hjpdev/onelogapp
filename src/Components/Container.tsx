@@ -23,7 +23,7 @@ const screens = (currentScreen: string) => {
   return map[currentScreen]
 }
 
-export const Container: React.FC<ContainerProps> = (props: ContainerProps) => {
+const Container: React.FC<ContainerProps> = (props: ContainerProps) => {
   const { currentScreen } = props
 
   return(
@@ -32,6 +32,9 @@ export const Container: React.FC<ContainerProps> = (props: ContainerProps) => {
     </View>
   )
 }
+
+export default Container
+
 
 const Styles = StyleSheet.create({
   containerView: {

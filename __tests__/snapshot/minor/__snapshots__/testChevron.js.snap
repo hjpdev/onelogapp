@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly when symbol not provided 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "color": "#c4c4c4",
+        "fontSize": 28,
+        "height": "100%",
+        "textAlign": "center",
+        "textAlignVertical": "center",
+      }
+    }
+  >
+    
+  </Text>
+</View>
+`;
+
+exports[`renders correctly when symbol provided 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "opacity": 1,
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "color": "#c4c4c4",
+        "fontSize": 28,
+        "height": "100%",
+        "textAlign": "center",
+        "textAlignVertical": "center",
+      }
+    }
+  >
+    &gt;
+  </Text>
+</View>
+`;

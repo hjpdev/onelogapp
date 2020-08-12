@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 
-import { Container } from './src/Components/Container'
-import { MainHeader } from './src/Components/MainHeader'
-import { NavBar } from './src/Components/NavBar'
+import Container from './src/Components/Container'
+import MainHeader from './src/Components/MainHeader'
+import NavBar from './src/Components/NavBar'
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState('home')

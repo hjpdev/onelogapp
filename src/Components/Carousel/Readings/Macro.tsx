@@ -11,9 +11,9 @@ export interface IMacroReading {
   fat: number
 }
 
-const MacroReading: React.FC<MacroTemplateProps> = (props: MacroTemplateProps) => {
+export const MacroReading: React.FC<MacroTemplateProps> = (props: MacroTemplateProps) => {
   const { data } = props
-    const { kcal, carbs, sugar, protein, fat } = data
+  const { kcal, carbs, sugar, protein, fat } = data
 
   return(
       <View style={Styles.container}>
@@ -50,7 +50,8 @@ const Styles = StyleSheet.create({
     padding: 20
   },
   label: {
-    fontSize: 16
+    fontSize: 16,
+    color: '#3f3d3d'
   },
   values: {
     flexDirection: 'column',
@@ -58,8 +59,7 @@ const Styles = StyleSheet.create({
   },
   value: {
     fontSize: 16,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    color: 'black'
   }
 })
-
-export default MacroReading

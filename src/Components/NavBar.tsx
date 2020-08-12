@@ -5,7 +5,7 @@ interface NavBarProps {
   setCurrentScreen: (screen: string) => void
 }
 
-export const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
+const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
   const { setCurrentScreen } = props
 
   return (
@@ -32,6 +32,9 @@ export const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
     </View>
   )
 }
+
+export default NavBar
+
 
 const Styles = StyleSheet.create({
   navBar: {

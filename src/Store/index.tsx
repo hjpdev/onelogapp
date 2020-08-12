@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
-import { IBgReading } from '../Carousel/Readings/Bg';
-import { IStatsReading } from '../Carousel/Readings/Stats';
-import { IDoseReading } from '../Carousel/Readings/Dose';
-import { IMacroReading } from '../Carousel/Readings/Macro';
+import { IBgReading } from '../Components/Carousel/Readings/Bg';
+import { IStatsReading } from '../Components/Carousel/Readings/Stats';
+import { IDoseReading } from '../Components/Carousel/Readings/Dose';
+import { IMacroReading } from '../Components/Carousel/Readings/Macro';
 
 export interface IStoreData {
   updated: number,
@@ -32,8 +32,12 @@ export const getData = async (key: string): Promise<IStoreData> => {
 export const needsUpdating = async (key: string): Promise<boolean> => {
   try {
     const data = await getData(key)
-    const lastUpdated = data && data.updated
 
+    if (!data || !data.readings) {
+      return true
+    }
+
+    const lastUpdated = data && data.updated
     const diff = Date.now() - lastUpdated
     console.log(`${key} last Updated: ${(diff / 60000).toFixed(1)} minutes ago.`)
 
