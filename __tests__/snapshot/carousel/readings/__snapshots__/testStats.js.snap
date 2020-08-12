@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "justifyContent": "space-around",
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "width": "50%",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "black",
+          "fontSize": 54,
+        }
+      }
+    >
+      6.2
+    </Text>
+    <Text
+      style={
+        Object {
+          "fontSize": 12,
+        }
+      }
+    >
+      mmol/L
+    </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "borderColor": "#c4c4c4",
+        "borderWidth": 1,
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "padding": 12,
+        "textAlign": "center",
+        "width": "30%",
+      }
+    }
+  >
+    ±1.2
+  </Text>
+</View>
+`;

@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly when colors not provided 1`] = `
+<BVLinearGradient
+  colors={
+    Array [
+      4293651435,
+      4286611584,
+      4293651435,
+    ]
+  }
+  endPoint={
+    Object {
+      "x": 1,
+      "y": 1,
+    }
+  }
+  locations={null}
+  startPoint={
+    Object {
+      "x": 0,
+      "y": 1,
+    }
+  }
+  style={
+    Object {
+      "alignItems": "center",
+      "height": 0.5,
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+/>
+`;
+
+exports[`renders correctly when colors provided 1`] = `
+<BVLinearGradient
+  colors={
+    Array [
+      4293651435,
+      4286611584,
+    ]
+  }
+  endPoint={
+    Object {
+      "x": 1,
+      "y": 1,
+    }
+  }
+  locations={null}
+  startPoint={
+    Object {
+      "x": 0,
+      "y": 1,
+    }
+  }
+  style={
+    Object {
+      "alignItems": "center",
+      "height": 0.5,
+      "justifyContent": "center",
+      "width": "100%",
+    }
+  }
+/>
+`;

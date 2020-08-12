@@ -38,6 +38,7 @@ const Styles = StyleSheet.create({
   reading: {
     alignSelf: 'center',
     justifyContent: 'center',
+    color: 'black',
     fontSize: 54,
     paddingTop: 8,
   },

@@ -6,7 +6,7 @@ interface ChevronProps {
   handlePress: () => void
 }
 
-export const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
+const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
   const { symbol, handlePress } = props
   
   return(
@@ -17,6 +17,9 @@ export const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
     </TouchableOpacity>
   )
 }
+
+export default Chevron
+
 
 const Styles = StyleSheet.create({
   chevronSymbol: {
