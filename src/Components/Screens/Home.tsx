@@ -1,25 +1,22 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 
-import { storeData, needsUpdating } from '../Store/index'
-import BgReading from '../Carousel/Readings/Bg'
-import DoseReading from '../Carousel/Readings/Dose'
-import MacroReading from '../Carousel/Readings/Macro'
-import StatsReading from '../Carousel/Readings/Stats'
+import { storeData, needsUpdating } from '../../Store/index'
+import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/Readings'
 import Carousel from '../Carousel'
 import { getReadings, getStats } from '../Helpers/Data'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-const update = async (table: string) => {
-  const isReading = ['bg', 'dose', 'macro'].includes(table)
+const update = async (name: string) => {
+  const isReading = ['bg', 'dose', 'macro'].includes(name)
 
   const readings = isReading
-    ? await getReadings(table)
+    ? await getReadings(name)
     : await getStats()
 
   
 return isReading
-  ? await storeData(`${table}Readings`, { updated: Date.now(), readings })
+  ? await storeData(`${name}Readings`, { updated: Date.now(), readings })
   : await storeData('bgStats', { updated: Date.now(), readings })
 }
 
@@ -52,10 +49,10 @@ const HomeScreen: React.FC = () => {
 
   return(
     <View style={ScreenStyles.container}>
-      <Carousel table={'bg'} Template={BgReading} dataKey={'bgReadings'} />
-      <Carousel table={'stats'} Template={StatsReading} dataKey={'bgStats'} />
-      <Carousel table={'dose'} Template={DoseReading} dataKey={'doseReadings'} />
-      <Carousel table={'macro'} Template={MacroReading} dataKey={'macroReadings'} />
+      <Carousel name={'bg'} Template={BgReading} dataKey={'bgReadings'} />
+      <Carousel name={'stats'} Template={StatsReading} dataKey={'bgStats'} />
+      <Carousel name={'dose'} Template={DoseReading} dataKey={'doseReadings'} />
+      <Carousel name={'macro'} Template={MacroReading} dataKey={'macroReadings'} />
     </View>
   )
 }

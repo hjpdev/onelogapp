@@ -15,7 +15,7 @@ const generateStyle = (isLong: boolean) => {
 }
 
 
-const DoseReading: React.FC<DoseTemplateProps> = (props: DoseTemplateProps) => {
+export const DoseReading: React.FC<DoseTemplateProps> = (props: DoseTemplateProps) => {
   const { data } = props
   const { reading, islong } = data
 
@@ -51,7 +51,7 @@ const Styles = StyleSheet.create({
   reading: {
     fontSize: 54,
     paddingTop: 8,
-    color: '#3f3d3d'
+    color: 'black'
   },
   unit: {
     fontSize: 12,
@@ -68,5 +68,3 @@ const Styles = StyleSheet.create({
     width: '30%'
   }
 })
-
-export default DoseReading

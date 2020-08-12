@@ -9,7 +9,7 @@ export interface IStatsReading {
   stddev: number
 }
 
-const StatsReading: React.FC<StatsTemplateProps> = (props: StatsTemplateProps) => {
+export const StatsReading: React.FC<StatsTemplateProps> = (props: StatsTemplateProps) => {
   const { data } = props
   const { avg, stddev } = data
 
@@ -37,7 +37,6 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     width: '100%',
-    // backgroundColor: 'blue'
   },
   readingContainer: {
     alignItems: 'center',
@@ -45,7 +44,7 @@ const Styles = StyleSheet.create({
   },
   reading: {
     fontSize: 54,
-    color: '#3f3d3d'
+    color: 'black'
   },
   unit: {
     fontSize: 12,
@@ -57,9 +56,6 @@ const Styles = StyleSheet.create({
     padding: 12,
     borderWidth: 1,
     borderColor: '#c4c4c4',
-    // backgroundColor: 'black',
     width: '30%'
   }
 })
-
-export default StatsReading
