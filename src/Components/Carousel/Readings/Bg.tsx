@@ -20,9 +20,9 @@ export const BgReading: React.FC<BgTemplateProps> = (props: BgTemplateProps) => 
         { 'mmol/L' }
       </Text>
       <>
-        { reading < 3.8 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingDownArrow.png')} /> }
-        { (reading >= 3.8 && reading <= 8.0) && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingTick.png')} /> }
-        { reading > 8.0 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingUpArrow.png')} /> }
+        { reading < 3.8 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingDownArrow.png')} testID={'bg-image-low'} /> }
+        { (reading >= 3.8 && reading <= 8.0) && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingTick.png')} testID={'bg-image-normal'}/> }
+        { reading > 8.0 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingUpArrow.png')} testID={'bg-image-high'} /> }
       </>
     </View>
   )
