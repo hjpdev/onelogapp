@@ -48,7 +48,7 @@ const HomeScreen: React.FC = () => {
   }, [])
 
   return(
-    <View style={ScreenStyles.container}>
+    <View style={ScreenStyles.container} testID={'home-screen'}>
       <Carousel name={'bg'} Template={BgReading} dataKey={'bgReadings'} />
       <Carousel name={'stats'} Template={StatsReading} dataKey={'bgStats'} />
       <Carousel name={'dose'} Template={DoseReading} dataKey={'doseReadings'} />
