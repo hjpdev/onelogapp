@@ -9,7 +9,7 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
   const { setCurrentScreen } = props
 
   return (
-    <View style={Styles.navBar}>
+    <View style={Styles.navBar} testID={"nav-bar"}>
       <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('settings')}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarSettings.png')} />
       </TouchableOpacity>        
