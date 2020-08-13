@@ -1,6 +1,6 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react-native'
 
 import { StatsReading } from '../../../../src/Components/Carousel/Readings'
 
@@ -10,7 +10,7 @@ const testData = {
 }
 
 it('renders correctly', () => {
-  const statsReading = renderer.create(<StatsReading data={testData} />)
+  const { getByTestId } = render(<StatsReading data={testData} />)
 
-  expect(statsReading).toMatchSnapshot()
+  expect(getByTestId('carousel-bg-stats')).toBeTruthy()
 })
