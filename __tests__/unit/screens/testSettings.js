@@ -1,11 +1,12 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react-native'
 
 import SettingsScreen from '../../../src/Components/Screens/Settings'
 
-it('renders correctly', () => {
-  const settingsScreen = renderer.create(<SettingsScreen />)
+it('renders', () => {
+  const { getByTestId, getByText } = render(<SettingsScreen />)
 
-  expect(settingsScreen).toMatchSnapshot()
+  expect(getByTestId('settings-screen')).toBeTruthy()
+  expect(getByText('Settings')).toBeTruthy()
 })

@@ -1,11 +1,12 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react-native'
 
 import AnalyticsScreen from '../../../src/Components/Screens/Analytics'
 
-it('renders correctly', () => {
-  const analyticsScreen = renderer.create(<AnalyticsScreen />)
+it('renders', () => {
+  const { getByTestId, getByText } = render(<AnalyticsScreen />)
 
-  expect(analyticsScreen).toMatchSnapshot()
+  expect(getByTestId('analytics-screen')).toBeTruthy()
+  expect(getByText('Analytics')).toBeTruthy()
 })
