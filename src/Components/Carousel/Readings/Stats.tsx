@@ -14,7 +14,7 @@ export const StatsReading: React.FC<StatsTemplateProps> = (props: StatsTemplateP
   const { avg, stddev } = data
 
   return(
-      <View style={Styles.container}>
+      <View style={Styles.container} testID={'carousel-bg-stats'}>
         <View style={Styles.readingContainer}>
           <Text style={Styles.reading}>
             { avg.toFixed(1) }
