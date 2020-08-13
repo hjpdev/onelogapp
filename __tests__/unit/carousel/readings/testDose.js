@@ -1,6 +1,6 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react-native'
 
 import { DoseReading } from '../../../../src/Components/Carousel/Readings'
 
@@ -9,8 +9,12 @@ const testData = {
   islong: false
 }
 
-it('renders correctly', () => {
-  const doseReading = renderer.create(<DoseReading data={testData} />)
+it('renders correct tag for dose type', () => {
+  const { getByTestId, getByText, rerender } = render(<DoseReading data={testData} />)
 
-  expect(doseReading).toMatchSnapshot()
+  expect(getByTestId('carousel-dose')).toBeTruthy()
+  expect(getByText('Short')).toBeTruthy()
+
+  rerender(<DoseReading data={{ ...testData, islong: true }} />)
+  expect(getByText('Long')).toBeTruthy()
 })
