@@ -1,11 +1,11 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react-native'
 
 import NewReadingScreen from '../../../src/Components/Screens/NewReading'
 
 it('renders correctly', () => {
-  const newReadingScreen = renderer.create(<NewReadingScreen />)
+  const { getByTestId } = render(<NewReadingScreen />)
 
-  expect(newReadingScreen).toMatchSnapshot()
+  expect(getByTestId('new-reading-screen')).toBeTruthy()
 })
