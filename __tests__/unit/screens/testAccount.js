@@ -1,11 +1,12 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react-native'
 
 import AccountScreen from '../../../src/Components/Screens/Account'
 
-it('renders correctly', () => {
-  const accountScreen = renderer.create(<AccountScreen />)
+it('renders', () => {
+  const { getByTestId, getByText } = render(<AccountScreen />)
 
-  expect(accountScreen).toMatchSnapshot()
+  expect(getByTestId('account-screen')).toBeTruthy()
+  expect(getByText('Account')).toBeTruthy()
 })
