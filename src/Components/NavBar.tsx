@@ -10,23 +10,23 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
 
   return (
     <View style={Styles.navBar} testID={"nav-bar"}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('settings')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('settings')} testID={'nav-link-settings'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarSettings.png')} />
       </TouchableOpacity>        
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('account')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('account')} testID={'nav-link-account'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarAccount.png')} />
       </TouchableOpacity>        
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('home')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('home')} testID={'nav-link-home'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarHome.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('newReading')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('newReading')} testID={'nav-link-new-reading'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarNewReading.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('analytics')}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('analytics')} testID={'nav-link-analytics'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarAnalytics.png')} />
       </TouchableOpacity>
     </View>
