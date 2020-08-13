@@ -12,7 +12,7 @@ export const BgReading: React.FC<BgTemplateProps> = (props: BgTemplateProps) => 
   const reading = data.reading
 
   return(
-    <View style={Styles.container}>
+    <View style={Styles.container} testID={'carousel-bg'}>
       <Text style={Styles.reading}>
         { reading.toFixed(1) }
       </Text>

@@ -7,8 +7,8 @@ import { IBgReading, IStatsReading, IDoseReading, IMacroReading } from './Readin
 import { getData } from '../../Store/index'
 import GradientBorder from '../Minor/GradientBorder'
 import Chevron from '../Minor/Chevron'
-import { generateCreatedDate } from '../Helpers/Date'
-import { capitalise } from '../Helpers/General'
+import { generateCreatedDate } from '../../Helpers/Date'
+import { capitalise } from '../../Helpers/General'
 
 export interface BgTemplateProps {
   data: IBgReading
@@ -60,7 +60,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
 
   return(
     readings.length > 0
-      ? <View style={Styles.container}>
+      ? <View style={Styles.container} testID={'carousel'}>
           <View style={Styles.header}>
             <Text style={Styles.tag}>
               { capitalise(name) }
@@ -88,7 +88,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
           </View>
           <GradientBorder x={1.0} y={1.0} />
         </View>
-      : <View style={{ flex: 1 }}>
+      : <View style={{ flex: 1 }} testID={'carousel'}>
           <View style={{ flex: 1 }} />
           <View style={{ ...Styles.lastReading }}>
             <ActivityIndicator color={'black'} />

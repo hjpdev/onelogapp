@@ -1,4 +1,4 @@
-import { IStatsReading } from '../Carousel/Readings/Stats'
+import { IStatsReading } from '../Components/Carousel/Readings/Stats'
 import { padLeft } from './General'
 
 export const newDate = ({ m, d, h, min, sec }: {[key: string]: number}): string => {

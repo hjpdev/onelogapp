@@ -1,11 +1,16 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react-native'
 
 import HomeScreen from '../../../src/Components/Screens/Home'
 
-it('renders correctly', () => {
-  const homeScreen = renderer.create(<HomeScreen />)
+jest.mock('../../../src/Helpers/Data', () => ({ checkHomeScreenData: jest.fn() }))
+import { checkHomeScreenData } from '../../../src/Helpers/Data'
 
-  expect(homeScreen).toMatchSnapshot()
+it('renders four Carousels', async () => {
+  const { getByTestId, getAllByTestId } = render(<HomeScreen />)
+
+  expect(getByTestId('home-screen')).toBeTruthy()
+  expect(getAllByTestId('carousel').length).toEqual(4)
+  expect(checkHomeScreenData.mock.calls.length).toEqual(1)
 })

@@ -20,7 +20,7 @@ export const DoseReading: React.FC<DoseTemplateProps> = (props: DoseTemplateProp
   const { reading, islong } = data
 
   return(
-      <View style={Styles.container}>
+      <View style={Styles.container} testID={'carousel-dose'}>
         <View style={Styles.readingContainer}>
           <Text style={Styles.reading}>
             { reading.toFixed(1) }
