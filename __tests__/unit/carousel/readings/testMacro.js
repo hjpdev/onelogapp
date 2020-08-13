@@ -1,6 +1,6 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react-native'
 
 import { MacroReading } from '../../../../src/Components/Carousel/Readings'
 
@@ -12,8 +12,8 @@ const testData = {
   fat: 10.0
 }
 
-it('renders correctly', () => {
-  const macroReading = renderer.create(<MacroReading data={testData} />)
+it('renders', () => {
+  const { getByTestId } = render(<MacroReading data={testData} />)
 
-  expect(macroReading).toMatchSnapshot()
+  expect(getByTestId('carousel-macro')).toBeTruthy()
 })
