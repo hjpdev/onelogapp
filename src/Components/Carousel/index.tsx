@@ -7,8 +7,8 @@ import { IBgReading, IStatsReading, IDoseReading, IMacroReading } from './Readin
 import { getData } from '../../Store/index'
 import GradientBorder from '../Minor/GradientBorder'
 import Chevron from '../Minor/Chevron'
-import { generateCreatedDate } from '../Helpers/Date'
-import { capitalise } from '../Helpers/General'
+import { generateCreatedDate } from '../../Helpers/Date'
+import { capitalise } from '../../Helpers/General'
 
 export interface BgTemplateProps {
   data: IBgReading
@@ -26,13 +26,14 @@ export interface MacroTemplateProps {
 interface CarouselProps {
   name: string,
   Template: React.FC<BgTemplateProps> | React.FC<StatsTemplateProps> | React.FC<DoseTemplateProps> | React.FC<MacroTemplateProps>,
-  dataKey: string
+  dataKey: string,
+  i?: number
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { name, Template, dataKey } = props
+  const { name, Template, dataKey, i } = props
   const [readings, setReadings] = useState([] as any)
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(i || 0)
 
   useEffect(() => {
     const fetchReadings = async (key: string) => {
@@ -60,7 +61,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
 
   return(
     readings.length > 0
-      ? <View style={Styles.container}>
+      ? <View style={Styles.container} testID={'carousel'}>
           <View style={Styles.header}>
             <Text style={Styles.tag}>
               { capitalise(name) }
@@ -74,21 +75,21 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
           <View style={Styles.contentContainer}>
             <View style={Styles.chevron}>
             {index === 0
-              ? <Chevron symbol={''} handlePress={() => null}/>
-              : <Chevron symbol={'<'} handlePress={handleSwipeRight} />}
+              ? <Chevron handlePress={() => null}/>
+              : <Chevron left handlePress={handleSwipeRight} />}
             </View>
             <GestureRecognizer onSwipeLeft={handleSwipeLeft} onSwipeRight={handleSwipeRight} style={Styles.template}>
               <Template data={reading} />
             </GestureRecognizer>
             <View style={Styles.chevron}>
             {index < readings.length - 1
-              ? <Chevron symbol={'>'} handlePress={handleSwipeLeft} />
-              : <Chevron symbol={''} handlePress={() => null} />}
+              ? <Chevron right handlePress={handleSwipeLeft} />
+              : <Chevron handlePress={() => null} />}
             </View>
           </View>
           <GradientBorder x={1.0} y={1.0} />
         </View>
-      : <View style={{ flex: 1 }}>
+      : <View style={{ flex: 1 }} testID={'carousel'}>
           <View style={{ flex: 1 }} />
           <View style={{ ...Styles.lastReading }}>
             <ActivityIndicator color={'black'} />

@@ -5,7 +5,7 @@ import { ScreenStyles } from '../../Assets/Styles/Screen'
 
 const AnalyticsScreen: React.FC = () => {
   return(
-    <View style={ScreenStyles.container}>
+    <View style={ScreenStyles.container} testID={'analytics-screen'}>
       <Text style={ScreenStyles.text}>
         {'Analytics'}
       </Text>

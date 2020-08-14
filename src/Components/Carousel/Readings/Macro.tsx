@@ -16,7 +16,7 @@ export const MacroReading: React.FC<MacroTemplateProps> = (props: MacroTemplateP
   const { kcal, carbs, sugar, protein, fat } = data
 
   return(
-      <View style={Styles.container}>
+      <View style={Styles.container} testID={'carousel-macro'}>
           <View style={Styles.labels}>
             <Text style={Styles.label}>{'Kcal'}</Text>
             <Text style={Styles.label}>{'Carbs'}</Text>

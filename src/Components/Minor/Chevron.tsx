@@ -2,12 +2,16 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 interface ChevronProps {
-  symbol: string,
+  left?: boolean,
+  right?: boolean,
   handlePress: () => void
 }
 
 const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
-  const { symbol, handlePress } = props
+  const { left, right,  handlePress } = props
+  let symbol = ''
+  if (left) symbol = '<'
+  if (right) symbol = '>'
   
   return(
     <TouchableOpacity onPress={() => handlePress()}>
