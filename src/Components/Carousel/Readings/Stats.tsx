@@ -17,7 +17,7 @@ export const StatsReading: React.FC<StatsTemplateProps> = (props: StatsTemplateP
       <View style={Styles.container} testID={'carousel-bg-stats'}>
         <View style={Styles.readingContainer}>
           <Text style={Styles.reading}>
-            { avg.toFixed(1) }
+            { avg && avg.toFixed(1) }
           </Text>
           <Text style={Styles.unit}>
           { 'mmol/L' }
@@ -25,7 +25,7 @@ export const StatsReading: React.FC<StatsTemplateProps> = (props: StatsTemplateP
         </View>
 
         <Text style={Styles.type}>
-        { `±${stddev.toFixed(1)}` }
+        { `±${stddev && stddev.toFixed(1)}` }
        </Text>
       </View>
   )
