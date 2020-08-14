@@ -2,7 +2,7 @@ import 'react-native'
 import React from 'react'
 import { render } from '@testing-library/react-native'
 
-import { BgReading } from '../../../../src/Components/Carousel/Readings'
+import { BgReading } from '../../../../../src/Components/Carousel/Readings'
 
 it('renders correct image for the provided reading', () => {
   const { getByTestId, rerender } = render(<BgReading data={{ reading: 7.2 }} />)

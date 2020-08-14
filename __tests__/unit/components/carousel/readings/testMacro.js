@@ -2,7 +2,7 @@ import 'react-native'
 import React from 'react'
 import { render } from '@testing-library/react-native'
 
-import { MacroReading } from '../../../../src/Components/Carousel/Readings'
+import { MacroReading } from '../../../../../src/Components/Carousel/Readings'
 
 const testData = {
   kcal: 100,

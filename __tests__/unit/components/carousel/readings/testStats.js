@@ -2,7 +2,7 @@ import 'react-native'
 import React from 'react'
 import { render } from '@testing-library/react-native'
 
-import { StatsReading } from '../../../../src/Components/Carousel/Readings'
+import { StatsReading } from '../../../../../src/Components/Carousel/Readings'
 
 const testData = {
   avg: 6.2,
