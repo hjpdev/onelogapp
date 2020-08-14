@@ -1,31 +1,34 @@
 import 'react-native'
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render, fireEvent } from '@testing-library/react-native'
 
 import Carousel from '../../../src/Components/Carousel'
-import { BgReading, StatsReading, DoseReading, MacroReading } from '../../../src/Components/Carousel/Readings'
+import { BgReading } from '../../../src/Components/Carousel/Readings'
 
+jest.mock('../../../src/Store/index', () => ({ getData: jest.fn() }))
+import { getData } from '../../../src/Store/index'
 
-it('renders correctly for bg reading', () => {
-  const carousel = renderer.create(<Carousel name={'bg'} Template={BgReading} dataKey={'bgReadings'} />)
+getData.mockImplementation(() => Promise.resolve({ readings: [{ created: '2020-08-10T19:54:29.374Z', reading: 7.2 }, { created: '2020-08-10T14:54:29.374Z', reading: 5.2 }] }))
 
-  expect(carousel).toMatchSnapshot()
+it('renders for bg reading', async () => {
+  const { findByText, getByTestId } = render(<Carousel name={'bg'} Template={BgReading} dataKey={'bgReadings'} />)
+
+  expect(getByTestId('carousel')).toBeTruthy()
+  expect(await findByText('7.2')).toBeTruthy()
 })
 
-it('renders correctly for bg stats', () => {
-  const carousel = renderer.create(<Carousel name={'stats'} Template={StatsReading} dataKey={'bgStats'} />)
+it('pressing right chevron shows the next reading', async () => {
+  const { findByText, getByText } = render(<Carousel name={'bg'} Template={BgReading} dataKey={'bgReadings'} />)
 
-  expect(carousel).toMatchSnapshot()
+  fireEvent.press(await findByText('>'))
+
+  expect(getByText('5.2')).toBeTruthy()
 })
 
-it('renders correctly for dose reading', () => {
-  const carousel = renderer.create(<Carousel name={'dose'} Template={DoseReading} dataKey={'doseReadings'} />)
+it('pressing left chevron shows the previous reading', async () => {
+  const { findByText, getByText } = render(<Carousel name={'bg'} Template={BgReading} dataKey={'bgReadings'} i={1} />)
 
-  expect(carousel).toMatchSnapshot()
-})
+  fireEvent.press( await findByText('<'))
 
-it('renders correctly for macro reading', () => {
-  const carousel = renderer.create(<Carousel name={'macro'} Template={MacroReading} dataKey={'macroReadings'} />)
-
-  expect(carousel).toMatchSnapshot()
+  expect(getByText('7.2')).toBeTruthy()
 })
