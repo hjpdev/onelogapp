@@ -26,13 +26,14 @@ export interface MacroTemplateProps {
 interface CarouselProps {
   name: string,
   Template: React.FC<BgTemplateProps> | React.FC<StatsTemplateProps> | React.FC<DoseTemplateProps> | React.FC<MacroTemplateProps>,
-  dataKey: string
+  dataKey: string,
+  i?: number
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { name, Template, dataKey } = props
+  const { name, Template, dataKey, i } = props
   const [readings, setReadings] = useState([] as any)
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(i || 0)
 
   useEffect(() => {
     const fetchReadings = async (key: string) => {
