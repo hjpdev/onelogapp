@@ -2,7 +2,7 @@ import 'react-native'
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
 
-import NavBar from '../../src/Components/NavBar'
+import NavBar from '../../../src/Components/NavBar'
 
 it('renders five nav links', () => {
   const { getByTestId } = render(<NavBar />)

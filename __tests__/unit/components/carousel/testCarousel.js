@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react-native'
 import Carousel from '../../../../src/Components/Carousel'
 import { BgReading } from '../../../../src/Components/Carousel/Readings'
 
-jest.mock('../../../src/Store/index', () => ({ getData: jest.fn() }))
+jest.mock('../../../../src/Store/index', () => ({ getData: jest.fn() }))
 import { getData } from '../../../../src/Store/index'
 
 getData.mockImplementation(() => Promise.resolve({ readings: [{ created: '2020-08-10T19:54:29.374Z', reading: 7.2 }, { created: '2020-08-10T14:54:29.374Z', reading: 5.2 }] }))

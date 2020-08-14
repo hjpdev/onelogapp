@@ -2,7 +2,7 @@ import 'react-native'
 import React from 'react'
 import { render } from '@testing-library/react-native'
 
-import Container from '../../src/Components/Container'
+import Container from '../../../src/Components/Container'
 
 it('renders the correct screen provided in props', () => {
   const { getByTestId, rerender } = render(<Container currentScreen={'home'} />)
