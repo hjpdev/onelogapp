@@ -14,7 +14,7 @@ const App: React.FC = () => {
       <SafeAreaView>
         <MainHeader />
         <Container currentScreen={currentScreen} />
-        <NavBar setCurrentScreen={setCurrentScreen}/>
+        <NavBar setCurrentScreen={setCurrentScreen} testID={"nav-bar"} />
       </SafeAreaView>
     </>
   );

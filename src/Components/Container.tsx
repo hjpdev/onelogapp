@@ -11,24 +11,20 @@ interface ContainerProps {
   currentScreen: string
 }
 
-const screens = (currentScreen: string) => {
-  const map: { [key: string]: ReactElement } = {
-    account: <AccountScreen />,
-    settings: <SettingsScreen />,
-    home: <HomeScreen />,
-    newReading: <NewReadingScreen />,
-    analytics: <AnalyticsScreen />
-  }
-
-  return map[currentScreen]
+const screenMap: { [key: string]: ReactElement } = {
+  account: <AccountScreen />,
+  settings: <SettingsScreen />,
+  home: <HomeScreen />,
+  newReading: <NewReadingScreen />,
+  analytics: <AnalyticsScreen />
 }
 
 const Container: React.FC<ContainerProps> = (props: ContainerProps) => {
   const { currentScreen } = props
 
   return(
-    <View style={Styles.containerView}>
-      { screens(currentScreen) }
+    <View style={Styles.containerView} testID={"app-container"}>
+      { screenMap[currentScreen] }
     </View>
   )
 }

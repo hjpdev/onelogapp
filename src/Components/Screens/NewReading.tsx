@@ -5,7 +5,7 @@ import { ScreenStyles } from '../../Assets/Styles/Screen'
 
 const NewReadingScreen: React.FC = () => {
   return(
-    <View style={ScreenStyles.container}>
+    <View style={ScreenStyles.container} testID={'new-reading-screen'}>
         <View style={Styles.row}>
           <View style={{ ...Styles.topPill, alignItems: 'flex-end' }}>
             <TouchableOpacity>

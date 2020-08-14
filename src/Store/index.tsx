@@ -1,9 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
-import { IBgReading } from '../Components/Carousel/Readings/Bg';
-import { IStatsReading } from '../Components/Carousel/Readings/Stats';
-import { IDoseReading } from '../Components/Carousel/Readings/Dose';
-import { IMacroReading } from '../Components/Carousel/Readings/Macro';
+import { IBgReading, IStatsReading, IDoseReading, IMacroReading } from '../Components/Carousel/Readings'
 
 export interface IStoreData {
   updated: number,

@@ -3,9 +3,9 @@ import { StyleSheet, Text, View } from 'react-native'
 
 const MainHeader: React.FC = () => {
   return (
-    <View style={Styles.mainHeaderView}>
+    <View style={Styles.mainHeaderView} testID={'main-header'}>
       <Text style={Styles.mainHeaderText}>
-        {'OneLog'}
+        {'Onelog'}
       </Text>
     </View>
   )

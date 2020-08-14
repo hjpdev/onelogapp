@@ -12,7 +12,7 @@ export const BgReading: React.FC<BgTemplateProps> = (props: BgTemplateProps) => 
   const reading = data.reading
 
   return(
-    <View style={Styles.container}>
+    <View style={Styles.container} testID={'carousel-bg'}>
       <Text style={Styles.reading}>
         { reading.toFixed(1) }
       </Text>
@@ -20,9 +20,9 @@ export const BgReading: React.FC<BgTemplateProps> = (props: BgTemplateProps) => 
         { 'mmol/L' }
       </Text>
       <>
-        { reading < 3.8 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingDownArrow.png')} /> }
-        { (reading >= 3.8 && reading <= 8.0) && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingTick.png')} /> }
-        { reading > 8.0 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingUpArrow.png')} /> }
+        { reading < 3.8 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingDownArrow.png')} testID={'bg-image-low'} /> }
+        { (reading >= 3.8 && reading <= 8.0) && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingTick.png')} testID={'bg-image-normal'}/> }
+        { reading > 8.0 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingUpArrow.png')} testID={'bg-image-high'} /> }
       </>
     </View>
   )
