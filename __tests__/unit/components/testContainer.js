@@ -1,10 +1,12 @@
 import 'react-native'
 import React from 'react'
 import { render } from '@testing-library/react-native'
+import fetchMock from 'jest-fetch-mock'
 
 import Container from '../../../src/Components/Container'
 
-it('renders the correct screen provided in props', () => {
+it.only('renders the correct screen provided in props', () => {
+  fetchMock.mockResponse(() => Promise.resolve(JSON.stringify({})))
   const { getByTestId, rerender } = render(<Container currentScreen={'home'} />)
   expect(getByTestId('home-screen')).toBeTruthy()
 

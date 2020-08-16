@@ -6,7 +6,7 @@
     "android": "scripts/run-android.sh",
     "ios": "react-native run-ios",
     "start": "scripts/start.sh",
-    "test": "jest",
+    "test": "jest --verbose",
     "lint": "eslint ./src"
   },
   "dependencies": {
@@ -30,11 +30,15 @@
     "eslint": "^7.6.0",
     "eslint-plugin-react": "^7.20.5",
     "jest": "^26.3.0",
+    "jest-fetch-mock": "^3.0.3",
     "metro-react-native-babel-preset": "^0.62.0",
     "react-test-renderer": "^16.13.1",
     "typescript": "^3.9.7"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFiles": [
+      "./jestSetup.js"
+    ]
   }
 }
