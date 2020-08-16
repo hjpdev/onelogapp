@@ -34,7 +34,7 @@ export const checkHomeScreenData = async (): Promise<void> => {
       await update('macro')
     }
   } catch(err) {
-    console.log('Error checkData: ', err)
+    console.log('Error checkHomeScreenData: ', err.stack)
   }
 }
 
