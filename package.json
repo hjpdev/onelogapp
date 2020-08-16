@@ -7,8 +7,12 @@
     "ios": "react-native run-ios",
     "start": "scripts/start.sh",
     "test": "jest --verbose",
+    "test:unit": "jest --verbose __tests__/unit",
     "lint": "eslint ./src"
   },
+  "pre-commit": [
+    "test:unit"
+  ],
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
     "react": "16.13.1",
