@@ -33,7 +33,7 @@ const NewReadingScreen: React.FC = () => {
     <View style={ScreenStyles.container} testID={'new-reading-screen'}>
       {newReadingType
         ? newReadingTypeMap[newReadingType]
-        : <NewReadingSelection setNewReadingType={(newreadingType: string) => setNewReadingType(newreadingType)} />}
+        : <NewReadingSelection setNewReadingType={(newReadingType: string) => setNewReadingType(newReadingType)} />}
     </View>
   )
 }
