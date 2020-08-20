@@ -43,3 +43,29 @@ export const statsDateTitleCompare = ( a: IStatsReading, b: IStatsReading ) => {
   }
   return 0;
 }
+
+export const generateLastSevenDays = (): number[] => {
+  const days = []
+  const today = new Date().getDate()
+
+  if (today < 7) {
+    for(let i = today; i > 0; i -= 1) {
+      const date = new Date().setDate(i)
+      days.push(new Date(date).toLocaleString())
+    }
+    const diff = 7 - today
+    for(let i = 0; i < diff; i++) {
+      const date = new Date().setDate(-i)
+      days.push(new Date(date).toLocaleString())
+    }
+  }
+
+  if (today >= 7) {
+    for(let i = today; i > today - 7; i -= 1) {
+      const date = new Date().setDate(i)
+      days.push(new Date(date).toLocaleString())
+    }
+  }
+
+  return days
+}

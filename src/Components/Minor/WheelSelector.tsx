@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Text, View } from "react-native"
+import { Text, View, StyleSheet } from "react-native"
 import { WheelPicker } from "../../react-native-wheel-picker-android"
 
 import {
@@ -20,8 +20,8 @@ interface WheelSelectorProps {
 const defaultProps = {
   isDose: false,
   isKeto: false,
-  width: 50,
-  height: 250
+  // width: 50,
+  // height: 100
 }
 
 const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
@@ -54,11 +54,10 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   const fractionalOptions = isDose ? doseFractionOptions : defaultOptions
 
   return (
-    <View style={{padding: 10, justifyContent: 'center'}}>
 
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={Styles.container}>
 
-        <View style={{borderLeftWidth: 0.5}}>
+        <View style={Styles.wheelLeft}>
           <WheelPicker
             selectedItem={integerPart}
             data={integerOptions}
@@ -66,14 +65,14 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
             isCyclic={true}
             selectedItemTextSize={30}
             itemTextSize={16}
-            width={width}
-            height={height}
+            selectedItemTextFontFamily={'roboto'}
+            itemTextFontFamily={'roboto'}
           />
         </View>
 
-        <View style={{paddingTop: 95 }}><Text style={{fontWeight: 'bold', fontSize: 26}}>{'.'}</Text></View>
+        <View style={Styles.decimalContainer}><Text style={Styles.decimalText}>{'.'}</Text></View>
 
-        <View style={{borderRightWidth: 0.5}}>
+        <View style={Styles.wheelRight}>
           <WheelPicker
             selectedItem={fractionalPart}
             data={fractionalOptions}
@@ -81,15 +80,39 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
             isCyclic={isDose ? false : true}
             selectedItemTextSize={30}
             itemTextSize={16}
+            selectedItemTextFontFamily={'roboto'}
+            itemTextFontFamily={'roboto'}
           />
         </View>
 
       </View>
-
-    </View>
   );
 }
 
 WheelSelector.defaultProps = defaultProps
 
 export default WheelSelector
+
+
+const Styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    // backgroundColor: 'blue'
+  },
+  wheelLeft: {
+    borderLeftWidth: 0.5
+  },
+  decimalContainer: {
+    justifyContent: 'center',
+    // backgroundColor: 'yellow'
+  },
+  decimalText: {
+    fontWeight: 'bold',
+    fontSize: 26,
+    paddingBottom: 6
+  },
+  wheelRight: {
+    borderRightWidth: 0.5
+  }
+})
