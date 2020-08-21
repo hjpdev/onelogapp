@@ -21,7 +21,7 @@
     "react-native-swipe-gestures": "1.0.5"
   },
   "devDependencies": {
-    "@babel/core": "7.11.1",
+    "@babel/core": "7.11.4",
     "@babel/runtime": "7.11.2",
     "@react-native-community/eslint-config": "2.0.0",
     "@testing-library/react-native": "7.0.2",
