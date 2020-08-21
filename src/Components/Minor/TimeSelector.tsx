@@ -31,11 +31,11 @@ const TimeInput: React.FC = () => {
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
           height={100}
-          width={40}
+          width={44}
         />
       </View>
       <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14}}>{'/'}</Text>
-      <View style={{...Styles.wheel, paddingRight: 10}}>
+      <View style={{...Styles.wheel, paddingRight: 10, borderRightWidth: 0.5}}>
         <WheelPicker
           selectedItem={month}
           // data={getDaysAndMonthsForLastSevenDays().months}
@@ -47,7 +47,7 @@ const TimeInput: React.FC = () => {
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
           height={100}
-          width={40}
+          width={44}
         />
       </View>
       <View style={{...Styles.wheel, paddingLeft: 10}}>
@@ -61,7 +61,7 @@ const TimeInput: React.FC = () => {
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
           height={100}
-          width={40}
+          width={44}
         />
       </View>
       <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14}}>{':'}</Text>
@@ -76,7 +76,7 @@ const TimeInput: React.FC = () => {
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
           height={100}
-          width={40}
+          width={44}
         />
       </View>
     </View>
