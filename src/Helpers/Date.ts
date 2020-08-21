@@ -44,28 +44,42 @@ export const statsDateTitleCompare = ( a: IStatsReading, b: IStatsReading ) => {
   return 0;
 }
 
-export const generateLastSevenDays = (): number[] => {
+export const generateLastSevenDays = (): Date[] => {
   const days = []
-  const today = new Date().getDate()
+  const today = new Date().getDate() - 17
 
   if (today < 7) {
     for(let i = today; i > 0; i -= 1) {
       const date = new Date().setDate(i)
-      days.push(new Date(date).toLocaleString())
+      days.push(new Date(date))
     }
     const diff = 7 - today
     for(let i = 0; i < diff; i++) {
       const date = new Date().setDate(-i)
-      days.push(new Date(date).toLocaleString())
+      days.push(new Date(date))
     }
   }
 
   if (today >= 7) {
     for(let i = today; i > today - 7; i -= 1) {
       const date = new Date().setDate(i)
-      days.push(new Date(date).toLocaleString())
+      days.push(new Date(date))
     }
   }
 
   return days
+}
+
+export const getDaysAndMonthsForLastSevenDays = (): any => {
+  const lastSevenDays = generateLastSevenDays()
+  const days = []
+  let months = []
+  for(const date of lastSevenDays) {
+    days.push(date.getDate())
+    months.push(date.getMonth() + 1)
+  }
+
+  months = Array.from(new Set(months))
+
+  return { days, months }
 }

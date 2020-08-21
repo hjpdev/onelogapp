@@ -14,7 +14,7 @@ export const NewBgReading: React.FC = () => {
       <Text>{'BG'}</Text>
       <Text>{reading}</Text>
       <TimeSelector />
-      <WheelSelector updateReading={setReading}/>
+      <WheelSelector updateReading={setReading} />
     </View>
   )
 }

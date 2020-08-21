@@ -67,6 +67,8 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
             itemTextSize={16}
             selectedItemTextFontFamily={'roboto'}
             itemTextFontFamily={'roboto'}
+            height={250}
+            width={100}
           />
         </View>
 
@@ -82,6 +84,8 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
             itemTextSize={16}
             selectedItemTextFontFamily={'roboto'}
             itemTextFontFamily={'roboto'}
+            height={250}
+            width={100}
           />
         </View>
 
