@@ -24,12 +24,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
   const day = parseInt(lastSevenDays[selectedDate].split(' / ')[0])
   const month = parseInt(lastSevenDays[selectedDate].split(' / ')[1])
 
-  const date = newDate({
-    m: month,
-    d: day,
-    h: hours,
-    min: minutes
-  })
+  const date = newDate({ m: month, d: day, h: hours, min: minutes })
 
   if (selectedDate !== 0 || hours !== hoursNow || minutes !== minutesNow) {
     setDateTime(date)

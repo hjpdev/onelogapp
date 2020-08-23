@@ -12,20 +12,16 @@ import {
 interface WheelSelectorProps {
   updateReading: (reading: number) => void,
   isDose?: boolean,
-  isKeto?: boolean,
-  width?: number,
-  height?: number
+  isKeto?: boolean
 }
 
 const defaultProps = {
   isDose: false,
-  isKeto: false,
-  // width: 50,
-  // height: 100
+  isKeto: false
 }
 
 const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
-  const { updateReading, isDose, isKeto, width, height } = props
+  const { updateReading, isDose, isKeto } = props
 
   const [integerPart, setIntegerPart] = useState(0)
   const [fractionalPart, setFractionalPart] = useState(0)
