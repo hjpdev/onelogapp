@@ -58,7 +58,7 @@ export const getReadings = async (table: string): Promise<any> => {
 }
 
 export const getStats = async (): Promise<IStatsReading[]> => {
-  const days = [3, 7, 14, 30, 90]
+  const days = [14, 30, 90, 180, 365]
   const tmpArr: Array<IStatsReading> = []
 
   try {

@@ -1,17 +1,16 @@
 import { IStatsReading } from '../Components/Carousel/Readings/Stats'
 import { padLeft } from './General'
 
-export const newDate = ({ m, d, h, min, sec }: {[key: string]: number}): string => {
+export const newDate = ({ m, d, h, min }: {[key: string]: number}): Date => {
   const date = new Date()
   const month = padLeft(m) || padLeft(date.getMonth() + 1)
   const day = padLeft(d) || padLeft(date.getDate())
   const hours = padLeft(h) || padLeft(date.getHours())
   const minutes = padLeft(min) || padLeft(date.getMinutes())
-  const seconds = padLeft(sec) || padLeft(date.getSeconds())
   const dateString = [date.getFullYear(), month, day].join('-')
-  const timeString = [hours, minutes, seconds, '000000'].join(':')
+  const timeString = [hours, minutes].join(':')
 
-  return `${dateString} ${timeString}`
+  return new Date([dateString, timeString].join('T'))
 }
 
 export const generateCreatedDate = (date: string): string => {
@@ -46,7 +45,7 @@ export const statsDateTitleCompare = ( a: IStatsReading, b: IStatsReading ) => {
 
 export const generateLastSevenDays = (): Date[] => {
   const days = []
-  const today = new Date().getDate() - 17
+  const today = new Date().getDate()
 
   if (today < 7) {
     for(let i = today; i > 0; i -= 1) {
@@ -73,13 +72,9 @@ export const generateLastSevenDays = (): Date[] => {
 export const getDaysAndMonthsForLastSevenDays = (): any => {
   const lastSevenDays = generateLastSevenDays()
   const days = []
-  let months = []
   for(const date of lastSevenDays) {
-    days.push(date.getDate())
-    months.push(date.getMonth() + 1)
+    days.push(`${date.getDate().toString()} / ${(date.getMonth() + 1).toString()}`)
   }
 
-  months = Array.from(new Set(months))
-
-  return { days, months }
+  return days
 }
