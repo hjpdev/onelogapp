@@ -6,7 +6,7 @@ import { clockHours, clockMinutes } from '../../Helpers/General'
 import { newDate, getDaysAndMonthsForLastSevenDays } from '../../Helpers/Date'
 
 interface TimeSelectorProps {
-  setDateTime: (date: Date) => void
+  setDateTime: (date: Date | null) => void
 }
 
 const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => {
@@ -21,13 +21,32 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
   const [hours, setHours] = useState(hoursNow)
   const [minutes, setMinutes] = useState(minutesNow)
 
-  const day = parseInt(lastSevenDays[selectedDate].split(' / ')[0])
-  const month = parseInt(lastSevenDays[selectedDate].split(' / ')[1])
+  const onDateSelected = (index: number) => {
+    setSelectedDate(index)
 
-  const date = newDate({ m: month, d: day, h: hours, min: minutes })
+    const dayNow = parseInt(lastSevenDays[0].split(' / ')[0])
+    const monthNow = parseInt(lastSevenDays[0].split(' / ')[1])
+    const dateNow = newDate({ m: monthNow, d: dayNow, h: hoursNow, min: minutesNow })
 
-  if (selectedDate !== 0 || hours !== hoursNow || minutes !== minutesNow) {
+    const day = parseInt(lastSevenDays[index].split(' / ')[0])
+    const month = parseInt(lastSevenDays[index].split(' / ')[1])
+    const date = newDate({ m: month, d: day, h: hours, min: minutes })
+
+    if (date.toString() === dateNow.toString()) {
+      return setDateTime(null)
+    }
+
     setDateTime(date)
+  }
+
+  const onHoursSelected = (hours: number) => {
+    setHours(hours)
+    onDateSelected(selectedDate)
+  }
+
+  const onMinutesSelected = (minutes: number) => {
+    setMinutes(minutes)
+    onDateSelected(selectedDate)
   }
 
   return(
@@ -36,7 +55,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
         <WheelPicker
           selectedItem={0}
           data={lastSevenDays}
-          onItemSelected={setSelectedDate}
+          onItemSelected={onDateSelected}
           selectedItemTextSize={20}
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
@@ -49,7 +68,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
         <WheelPicker
           selectedItem={hours}
           data={clockHours}
-          onItemSelected={setHours}
+          onItemSelected={onHoursSelected}
           isCyclic={true}
           selectedItemTextSize={20}
           itemTextSize={8}
@@ -64,7 +83,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
         <WheelPicker
           selectedItem={minutes}
           data={clockMinutes}
-          onItemSelected={setMinutes}
+          onItemSelected={onMinutesSelected}
           isCyclic={true}
           selectedItemTextSize={20}
           itemTextSize={8}
