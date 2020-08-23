@@ -3,51 +3,51 @@ import { StyleSheet, Text, View } from 'react-native'
 import { WheelPicker } from "../../react-native-wheel-picker-android"
 
 import { clockHours, clockMinutes } from '../../Helpers/General'
-import { getDaysAndMonthsForLastSevenDays } from '../../Helpers/Date'
+import { newDate, getDaysAndMonthsForLastSevenDays } from '../../Helpers/Date'
 
-const TimeInput: React.FC = () => {
+interface TimeSelectorProps {
+  setDateTime: (date: Date) => void
+}
+
+const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => {
+  const { setDateTime } = props
+
   const time = new Date()
+  const hoursNow = time.getHours()
+  const minutesNow = time.getMinutes()
+  const lastSevenDays = getDaysAndMonthsForLastSevenDays()
 
-  const [date, setDate] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(0)
+  const [hours, setHours] = useState(hoursNow)
+  const [minutes, setMinutes] = useState(minutesNow)
 
-  const [day, setDay] = useState(time.getDate())
-  const [month, setMonth] = useState(time.getMonth() + 1)
-  const [hours, setHours] = useState(time.getHours())
-  const [minutes, setMinutes] = useState(time.getMinutes())
+  const day = parseInt(lastSevenDays[selectedDate].split(' / ')[0])
+  const month = parseInt(lastSevenDays[selectedDate].split(' / ')[1])
 
-  console.log(`HERE => ${getDaysAndMonthsForLastSevenDays().months}`)
+  const date = newDate({
+    m: month,
+    d: day,
+    h: hours,
+    min: minutes
+  })
+
+  if (selectedDate !== 0 || hours !== hoursNow || minutes !== minutesNow) {
+    setDateTime(date)
+  }
 
   return(
     <View style={Styles.container}>
-      <View style={Styles.wheel}>
-        <WheelPicker
-          selectedItem={day}
-          // data={getDaysAndMonthsForLastSevenDays().days}
-          data={clockHours}
-          onItemSelected={setDay}
-          isCyclic={true}
-          selectedItemTextSize={20}
-          itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
-          height={100}
-          width={44}
-        />
-      </View>
-      <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14}}>{'/'}</Text>
       <View style={{...Styles.wheel, paddingRight: 10, borderRightWidth: 0.5}}>
         <WheelPicker
-          selectedItem={month}
-          // data={getDaysAndMonthsForLastSevenDays().months}
-          data={clockHours}
-          onItemSelected={setMonth}
-          isCyclic={true}
+          selectedItem={0}
+          data={lastSevenDays}
+          onItemSelected={setSelectedDate}
           selectedItemTextSize={20}
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
           height={100}
-          width={44}
+          width={84}
         />
       </View>
       <View style={{...Styles.wheel, paddingLeft: 10}}>
@@ -61,7 +61,7 @@ const TimeInput: React.FC = () => {
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
           height={100}
-          width={44}
+          width={42}
         />
       </View>
       <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14}}>{':'}</Text>
@@ -76,27 +76,24 @@ const TimeInput: React.FC = () => {
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
           height={100}
-          width={44}
+          width={42}
         />
       </View>
     </View>
   )
 }
 
-export default TimeInput
+export default TimeSelector
 
 
 const Styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: 'green'
+    justifyContent: 'center'
   },
   wheel: {
     justifyContent: 'center',
     alignItems: 'flex-end',
-    alignContent: 'flex-end',
-    // backgroundColor: 'yellow'
+    alignContent: 'flex-end'
   }
 })
