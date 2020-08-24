@@ -1,33 +1,20 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
-import WheelSelector from '../Minor/WheelSelector'
 import TimeSelector from '../Minor/TimeSelector'
+import WheelSelector from '../Minor/WheelSelector'
+import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
 
 export const NewKetoReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
 
-  const submitReading = async () => {
-    const url = 'http://localhost:8088/readings/keto'
+  const handleSubmit = async () => {
+    if (reading === 0) { delay(500) }
     const data = dateTime ? { reading, created: dateTime } : { reading }
 
-    try {
-      if (reading >= 0) {
-        if (reading < 1) { delay(500) }
-        return fetch(url, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        })
-      }
-    } catch (err) {
-      console.log('Error submitReading: ', err)
-    }
+    await submitReading('keto', data)
   }
 
   return(
@@ -36,12 +23,13 @@ export const NewKetoReading: React.FC = () => {
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
       <Text style={Styles.text}>{'mmol/L'}</Text>
-      <TouchableOpacity onPress={async() => await submitReading()} style={Styles.submit}>
+      <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
   )
 }
+
 
 const Styles = StyleSheet.create({
   container: {
