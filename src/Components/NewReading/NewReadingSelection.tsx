@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
 
-interface NewReadingSelectionProps {
+type NewReadingSelectionProps = {
   setNewReadingType: (newReadingType: string) => void
 }
 

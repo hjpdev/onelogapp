@@ -1,11 +1,11 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { DoseTemplateProps } from '../index'
-
-export interface IDoseReading {
-  reading: number,
-  islong: boolean
+export type DoseReadingProps = {
+  data: {
+    reading: number,
+    islong: boolean
+  }
 }
 
 const generateStyle = (isLong: boolean) => {
@@ -15,7 +15,7 @@ const generateStyle = (isLong: boolean) => {
 }
 
 
-export const DoseReading: React.FC<DoseTemplateProps> = (props: DoseTemplateProps) => {
+export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
   const { data } = props
   const { reading, islong } = data
 

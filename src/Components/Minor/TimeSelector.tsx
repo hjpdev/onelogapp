@@ -5,7 +5,7 @@ import { WheelPicker } from "../../react-native-wheel-picker-android"
 import { clockHours, clockMinutes } from '../../Helpers/General'
 import { newDate, getDaysAndMonthsForLastSevenDays } from '../../Helpers/Date'
 
-interface TimeSelectorProps {
+type TimeSelectorProps = {
   setDateTime: (date: Date | null) => void
 }
 
