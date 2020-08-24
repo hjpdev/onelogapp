@@ -15,9 +15,9 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
   const time = new Date()
   const hoursNow = time.getHours()
   const minutesNow = time.getMinutes()
-  const lastSevenDays = getDaysAndMonthsForLastSevenDays()
+  const lastSevenDays = getDaysAndMonthsForLastSevenDays().reverse()
 
-  const [selectedDate, setSelectedDate] = useState(0)
+  const [selectedDate, setSelectedDate] = useState(6)
   const [hours, setHours] = useState(hoursNow)
   const [minutes, setMinutes] = useState(minutesNow)
 
@@ -54,7 +54,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
     <View style={Styles.container}>
       <View style={{...Styles.wheel, paddingRight: 10, borderRightWidth: 0.5}}>
         <WheelPicker
-          selectedItem={0}
+          selectedItem={selectedDate}
           data={lastSevenDays}
           onItemSelected={onDateSelected}
           selectedItemTextSize={20}

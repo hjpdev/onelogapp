@@ -35,6 +35,7 @@ export const NewBgReading: React.FC = () => {
       <Text style={Styles.text}>{'New Bg Reading'}</Text>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
+      <Text style={Styles.text}>{'mmol/L'}</Text>
       <TouchableOpacity onPress={async() => await submitReading()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
