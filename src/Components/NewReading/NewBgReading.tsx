@@ -36,7 +36,7 @@ export const NewBgReading: React.FC = () => {
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
       <TouchableOpacity onPress={async() => await submitReading()} style={Styles.submit}>
-        <Text>{'Submit'}</Text>
+        <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
   )
@@ -54,5 +54,9 @@ const Styles = StyleSheet.create({
   submit: {
     padding: 20,
     backgroundColor: '#c4c4c4'
+  },
+  submitText: {
+    fontSize: 16,
+    fontWeight: 'bold'
   }
 })
