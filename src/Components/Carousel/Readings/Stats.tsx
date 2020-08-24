@@ -1,15 +1,15 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-import { StatsTemplateProps } from '../index'
-
-export interface IStatsReading {
-  created: string,
-  avg: number,
-  stddev: number
+export type StatsReadingProps = {
+  data: {
+    created: string,
+    avg: number,
+    stddev: number
+  }
 }
 
-export const StatsReading: React.FC<StatsTemplateProps> = (props: StatsTemplateProps) => {
+export const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingProps) => {
   const { data } = props
   const { avg, stddev } = data
 

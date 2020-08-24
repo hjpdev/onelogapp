@@ -9,7 +9,7 @@ import {
   doseFractionOptions
 } from '../../Helpers/General'
 
-interface WheelSelectorProps {
+type WheelSelectorProps = {
   updateReading: (reading: number) => void,
   isDose?: boolean,
   isKeto?: boolean

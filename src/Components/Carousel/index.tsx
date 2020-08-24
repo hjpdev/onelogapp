@@ -2,30 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
-import { IBgReading, IStatsReading, IDoseReading, IMacroReading } from './Readings'
-
-import { getData } from '../../Store/index'
-import GradientBorder from '../Minor/GradientBorder'
 import Chevron from '../Minor/Chevron'
-import { generateCreatedDate } from '../../Helpers/Date'
+import GradientBorder from '../Minor/GradientBorder'
 import { capitalise } from '../../Helpers/General'
+import { getData } from '../../Store/index'
+import { generateCreatedDate } from '../../Helpers/Date'
+import { BgReadingProps, StatsReadingProps, DoseReadingProps, MacroReadingProps } from './Readings'
 
-export interface BgTemplateProps {
-  data: IBgReading
-}
-export interface StatsTemplateProps {
-  data: IStatsReading
-}
-export interface DoseTemplateProps {
-  data: IDoseReading
-}
-export interface MacroTemplateProps {
-  data: IMacroReading
-}
-
-interface CarouselProps {
+type CarouselProps = {
   name: string,
-  Template: React.FC<BgTemplateProps> | React.FC<StatsTemplateProps> | React.FC<DoseTemplateProps> | React.FC<MacroTemplateProps>,
+  Template: React.FC<BgReadingProps> | React.FC<StatsReadingProps> | React.FC<DoseReadingProps> | React.FC<MacroReadingProps>,
   dataKey: string,
   i?: number
 }
