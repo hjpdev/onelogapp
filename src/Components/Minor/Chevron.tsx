@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
-interface ChevronProps {
+type ChevronProps = {
   left?: boolean,
   right?: boolean,
   handlePress: () => void

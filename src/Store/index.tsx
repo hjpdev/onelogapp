@@ -1,13 +1,13 @@
 import AsyncStorage from '@react-native-community/async-storage'
 
-import { IBgReading, IStatsReading, IDoseReading, IMacroReading } from '../Components/Carousel/Readings'
+import { BgReadingProps, StatsReadingProps, DoseReadingProps, MacroReadingProps } from '../Components/Carousel/Readings'
 
-export interface IStoreData {
+export type StoreData = {
   updated: number,
-  readings: IBgReading[] | IStatsReading[] | IDoseReading[] | IMacroReading[]
+  readings: BgReadingProps[] | StatsReadingProps[] | DoseReadingProps[] | MacroReadingProps[]
 }
 
-export const storeData = async (key: string, data: IStoreData | IStatsReading): Promise<void> => {
+export const storeData = async (key: string, data: StoreData | StatsReadingProps): Promise<void> => {
   try {
     const value = JSON.stringify(data)
     await AsyncStorage.setItem(key, value)
@@ -16,7 +16,7 @@ export const storeData = async (key: string, data: IStoreData | IStatsReading): 
   }
 }
 
-export const getData = async (key: string): Promise<IStoreData> => {
+export const getData = async (key: string): Promise<StoreData> => {
   let value
   try {
     value = await AsyncStorage.getItem(key)

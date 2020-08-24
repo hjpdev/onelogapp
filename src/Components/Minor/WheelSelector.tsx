@@ -9,7 +9,7 @@ import {
   doseFractionOptions
 } from '../../Helpers/General'
 
-interface WheelSelectorProps {
+type WheelSelectorProps = {
   updateReading: (reading: number) => void,
   isDose?: boolean,
   isKeto?: boolean
@@ -26,15 +26,15 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   const [integerPart, setIntegerPart] = useState(0)
   const [fractionalPart, setFractionalPart] = useState(0)
 
-  const onIntegerPartSelected = integer => {
+  const onIntegerPartSelected = (integer: number) => {
     setIntegerPart(integer)
 
-    const reading = parseFloat(`${integerPart}.${fractionalPart}`).toFixed(1)
+    const reading = Number(parseFloat(`${integerPart}.${fractionalPart}`).toFixed(1))
 
     updateReading(reading)
   }
 
-  const onFractionalPartSelected = fraction => {
+  const onFractionalPartSelected = (fraction: number) => {
     if (isDose) {
       fraction ? setFractionalPart(5) : setFractionalPart(0)
     } else {
@@ -50,42 +50,39 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   const fractionalOptions = isDose ? doseFractionOptions : defaultOptions
 
   return (
-
-      <View style={Styles.container}>
-
-        <View style={Styles.wheelLeft}>
-          <WheelPicker
-            selectedItem={integerPart}
-            data={integerOptions}
-            onItemSelected={onIntegerPartSelected}
-            isCyclic={true}
-            selectedItemTextSize={30}
-            itemTextSize={16}
-            selectedItemTextFontFamily={'roboto'}
-            itemTextFontFamily={'roboto'}
-            height={250}
-            width={100}
-          />
-        </View>
-
-        <View style={Styles.decimalContainer}><Text style={Styles.decimalText}>{'.'}</Text></View>
-
-        <View style={Styles.wheelRight}>
-          <WheelPicker
-            selectedItem={fractionalPart}
-            data={fractionalOptions}
-            onItemSelected={onFractionalPartSelected}
-            isCyclic={isDose ? false : true}
-            selectedItemTextSize={30}
-            itemTextSize={16}
-            selectedItemTextFontFamily={'roboto'}
-            itemTextFontFamily={'roboto'}
-            height={250}
-            width={100}
-          />
-        </View>
-
+    <View style={Styles.container}>
+      <View style={Styles.wheelLeft}>
+        <WheelPicker
+          selectedItem={integerPart}
+          data={integerOptions}
+          onItemSelected={onIntegerPartSelected}
+          isCyclic={true}
+          selectedItemTextSize={30}
+          itemTextSize={16}
+          selectedItemTextFontFamily={'roboto'}
+          itemTextFontFamily={'roboto'}
+          height={250}
+          width={100}
+        />
       </View>
+
+      <View style={Styles.decimalContainer}><Text style={Styles.decimalText}>{'.'}</Text></View>
+
+      <View style={Styles.wheelRight}>
+        <WheelPicker
+          selectedItem={fractionalPart}
+          data={fractionalOptions}
+          onItemSelected={onFractionalPartSelected}
+          isCyclic={isDose ? false : true}
+          selectedItemTextSize={30}
+          itemTextSize={16}
+          selectedItemTextFontFamily={'roboto'}
+          itemTextFontFamily={'roboto'}
+          height={250}
+          width={100}
+        />
+      </View>
+    </View>
   );
 }
 
@@ -97,15 +94,13 @@ export default WheelSelector
 const Styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    // backgroundColor: 'blue'
+    justifyContent: 'center'
   },
   wheelLeft: {
-    borderLeftWidth: 0.5
+    borderLeftWidth: 1
   },
   decimalContainer: {
-    justifyContent: 'center',
-    // backgroundColor: 'yellow'
+    justifyContent: 'center'
   },
   decimalText: {
     fontWeight: 'bold',
@@ -113,6 +108,6 @@ const Styles = StyleSheet.create({
     paddingBottom: 6
   },
   wheelRight: {
-    borderRightWidth: 0.5
+    borderRightWidth: 1
   }
 })
