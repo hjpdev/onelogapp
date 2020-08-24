@@ -50,39 +50,39 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   const fractionalOptions = isDose ? doseFractionOptions : defaultOptions
 
   return (
-      <View style={Styles.container}>
-        <View style={Styles.wheelLeft}>
-          <WheelPicker
-            selectedItem={integerPart}
-            data={integerOptions}
-            onItemSelected={onIntegerPartSelected}
-            isCyclic={true}
-            selectedItemTextSize={30}
-            itemTextSize={16}
-            selectedItemTextFontFamily={'roboto'}
-            itemTextFontFamily={'roboto'}
-            height={250}
-            width={100}
-          />
-        </View>
-
-        <View style={Styles.decimalContainer}><Text style={Styles.decimalText}>{'.'}</Text></View>
-
-        <View style={Styles.wheelRight}>
-          <WheelPicker
-            selectedItem={fractionalPart}
-            data={fractionalOptions}
-            onItemSelected={onFractionalPartSelected}
-            isCyclic={isDose ? false : true}
-            selectedItemTextSize={30}
-            itemTextSize={16}
-            selectedItemTextFontFamily={'roboto'}
-            itemTextFontFamily={'roboto'}
-            height={250}
-            width={100}
-          />
-        </View>
+    <View style={Styles.container}>
+      <View style={Styles.wheelLeft}>
+        <WheelPicker
+          selectedItem={integerPart}
+          data={integerOptions}
+          onItemSelected={onIntegerPartSelected}
+          isCyclic={true}
+          selectedItemTextSize={30}
+          itemTextSize={16}
+          selectedItemTextFontFamily={'roboto'}
+          itemTextFontFamily={'roboto'}
+          height={250}
+          width={100}
+        />
       </View>
+
+      <View style={Styles.decimalContainer}><Text style={Styles.decimalText}>{'.'}</Text></View>
+
+      <View style={Styles.wheelRight}>
+        <WheelPicker
+          selectedItem={fractionalPart}
+          data={fractionalOptions}
+          onItemSelected={onFractionalPartSelected}
+          isCyclic={isDose ? false : true}
+          selectedItemTextSize={30}
+          itemTextSize={16}
+          selectedItemTextFontFamily={'roboto'}
+          itemTextFontFamily={'roboto'}
+          height={250}
+          width={100}
+        />
+      </View>
+    </View>
   );
 }
 
