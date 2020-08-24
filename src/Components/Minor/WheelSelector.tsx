@@ -51,7 +51,6 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
 
   return (
       <View style={Styles.container}>
-
         <View style={Styles.wheelLeft}>
           <WheelPicker
             selectedItem={integerPart}
@@ -83,7 +82,6 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
             width={100}
           />
         </View>
-
       </View>
   );
 }
