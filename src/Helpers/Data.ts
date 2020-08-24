@@ -1,7 +1,7 @@
 
 import { needsUpdating, storeData } from '../Store'
 import { statsDateTitleCompare } from './Date'
-import { IStatsReading } from '../Components/Carousel/Readings'
+import { StatsReadingProps } from '../Components/Carousel/Readings'
 
 const update = async (name: string) => {
   const isReading = ['bg', 'dose', 'macro'].includes(name)
@@ -57,9 +57,9 @@ export const getReadings = async (table: string): Promise<any> => {
   return readings && readings.json()
 }
 
-export const getStats = async (): Promise<IStatsReading[]> => {
-  const days = [14, 30, 90, 180, 365]
-  const tmpArr: Array<IStatsReading> = []
+export const getStats = async (): Promise<StatsReadingProps[]> => {
+  const days = [7, 30, 90, 180, 365]
+  const tmpArr: Array<StatsReadingProps> = []
 
   try {
     for (const day of days) {
@@ -71,4 +71,26 @@ export const getStats = async (): Promise<IStatsReading[]> => {
   }
 
   return tmpArr.sort(statsDateTitleCompare)
+}
+
+type submitReadingData = {
+  reading: number,
+  created?: Date | undefined | null
+}
+
+export const submitReading = async (table: string, data: submitReadingData): Promise<any> => {
+  const url = `http://localhost:8088/readings/${table}`
+
+  try {
+    return fetch(url, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+  } catch (err) {
+    console.log('Error submitReading: ', err)
+  }
 }
