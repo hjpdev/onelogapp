@@ -7,7 +7,7 @@ import HomeScreen from './Screens/Home'
 import NewReadingScreen from './Screens/NewReading'
 import SettingsScreen from './Screens/Settings'
 
-interface ContainerProps {
+type ContainerProps = {
   currentScreen: string
 }
 

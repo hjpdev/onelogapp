@@ -1,7 +1,7 @@
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 
-interface GradientBorderProps {
+type GradientBorderProps = {
   x: number,
   y: number,
   colors?: string[]
