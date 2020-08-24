@@ -31,6 +31,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
     const day = parseInt(lastSevenDays[index].split(' / ')[0])
     const month = parseInt(lastSevenDays[index].split(' / ')[1])
     const date = newDate({ m: month, d: day, h: hours, min: minutes })
+    date.setTime(date.getTime() + date.getTimezoneOffset()*60*1000)
 
     if (date.toString() === dateNow.toString()) {
       return setDateTime(null)
