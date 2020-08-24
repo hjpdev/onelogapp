@@ -26,15 +26,15 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   const [integerPart, setIntegerPart] = useState(0)
   const [fractionalPart, setFractionalPart] = useState(0)
 
-  const onIntegerPartSelected = integer => {
+  const onIntegerPartSelected = (integer: number) => {
     setIntegerPart(integer)
 
-    const reading = parseFloat(`${integerPart}.${fractionalPart}`).toFixed(1)
+    const reading = Number(parseFloat(`${integerPart}.${fractionalPart}`).toFixed(1))
 
     updateReading(reading)
   }
 
-  const onFractionalPartSelected = fraction => {
+  const onFractionalPartSelected = (fraction: number) => {
     if (isDose) {
       fraction ? setFractionalPart(5) : setFractionalPart(0)
     } else {
@@ -50,7 +50,6 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   const fractionalOptions = isDose ? doseFractionOptions : defaultOptions
 
   return (
-
       <View style={Styles.container}>
 
         <View style={Styles.wheelLeft}>
@@ -97,15 +96,13 @@ export default WheelSelector
 const Styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    // backgroundColor: 'blue'
+    justifyContent: 'center'
   },
   wheelLeft: {
-    borderLeftWidth: 0.5
+    borderLeftWidth: 1
   },
   decimalContainer: {
-    justifyContent: 'center',
-    // backgroundColor: 'yellow'
+    justifyContent: 'center'
   },
   decimalText: {
     fontWeight: 'bold',
@@ -113,6 +110,6 @@ const Styles = StyleSheet.create({
     paddingBottom: 6
   },
   wheelRight: {
-    borderRightWidth: 0.5
+    borderRightWidth: 1
   }
 })
