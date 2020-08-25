@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { WheelPicker } from "../../react-native-wheel-picker-android"
 
@@ -6,7 +6,7 @@ import { clockHours, clockMinutes } from '../../Helpers/General'
 import { newDate, getDaysAndMonthsForLastSevenDays } from '../../Helpers/Date'
 
 type TimeSelectorProps = {
-  setDateTime: (date: Date | null) => void
+  setDateTime: Dispatch<SetStateAction<Date | null>>
 }
 
 const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => {

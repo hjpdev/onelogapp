@@ -3,8 +3,13 @@ import { View } from 'react-native'
 
 import MacroSelector from './MacroSelector'
 
-const MacroReadingInput: React.FC = () => {
-  const [reading, setReading] = useState({})
+type MacroReadingInputProps = {
+  updateReading: (reading: {[macro: string]: number}) => any
+}
+
+const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReadingInputProps) => {
+  const { updateReading } = props
+
   const [kcal, setKcal] = useState(0)
   const [carbs, setCarbs] = useState(0)
   const [sugar, setSugar] = useState(0)
@@ -12,7 +17,8 @@ const MacroReadingInput: React.FC = () => {
   const [fat, setFat] = useState(0)
 
   useEffect(() => {
-    setReading({ kcal, carbs, sugar, protein, fat })
+    const reading = { kcal, carbs, sugar, protein, fat }
+    updateReading(reading)
   }, [kcal, carbs, sugar, protein, fat])
 
   return(
