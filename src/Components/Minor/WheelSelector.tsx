@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { Text, View, StyleSheet } from "react-native"
 import { WheelPicker } from "../../react-native-wheel-picker-android"
-// import { WheelPicker } from '../WheelPicker'
 
 import {
   bgIntegerOptions,
