@@ -21,6 +21,17 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
   const [hours, setHours] = useState(hoursNow)
   const [minutes, setMinutes] = useState(minutesNow)
 
+  const hoursCheck = selectedDate === 6
+  const minutesCheck = selectedDate === 6 && hours === hoursNow
+
+  const hoursData = hoursCheck
+    ? clockHours.slice(0, hoursNow + 1)
+    : clockHours
+
+  const minutesData = minutesCheck
+    ? clockMinutes.slice(0, minutesNow + 1)
+    : clockMinutes
+
   const onDateSelected = (index: number) => {
     setSelectedDate(index)
 
@@ -67,9 +78,9 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
       <View style={{...Styles.wheel, paddingLeft: 10}}>
         <WheelPicker
           selectedItem={hours}
-          data={clockHours}
+          data={hoursData}
           onItemSelected={onHoursSelected}
-          isCyclic={true}
+          isCyclic={!hoursCheck}
           selectedItemTextSize={20}
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
@@ -81,9 +92,9 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
       <View style={Styles.wheel}>
         <WheelPicker
           selectedItem={minutes}
-          data={clockMinutes}
+          data={minutesData}
           onItemSelected={onMinutesSelected}
-          isCyclic={true}
+          isCyclic={!minutesCheck}
           selectedItemTextSize={20}
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
