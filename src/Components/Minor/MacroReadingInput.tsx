@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 
 import MacroSelector from './MacroSelector'
 
@@ -22,14 +22,45 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   }, [kcal, carbs, sugar, protein, fat])
 
   return(
-    <View>
-      <MacroSelector hasThousands updateMacro={setKcal} />
-      <MacroSelector hasThousands={false} updateMacro={setCarbs} />
-      <MacroSelector hasThousands={false} updateMacro={setSugar} />
-      <MacroSelector hasThousands={false} updateMacro={setProtein} />
-      <MacroSelector hasThousands={false} updateMacro={setFat} />
+    <View style={Styles.container}>
+      <View style={Styles.input}>
+        <Text style={Styles.label}>{'Kcal: '}</Text>
+        <MacroSelector hasThousands updateMacro={setKcal} />
+      </View>
+      <View style={Styles.input}>
+        <Text style={Styles.label}>{'Carbs: '}</Text>
+        <MacroSelector hasThousands={false} updateMacro={setCarbs} />
+      </View>
+      <View style={Styles.input}>
+        <Text style={Styles.label}>{'Sugar: '}</Text>
+        <MacroSelector hasThousands={false} updateMacro={setSugar} />
+      </View>
+      <View style={Styles.input}>
+        <Text style={Styles.label}>{'Protein: '}</Text>
+        <MacroSelector hasThousands={false} updateMacro={setProtein} />
+      </View>
+      <View style={Styles.input}>
+        <Text style={Styles.label}>{'Fat: '}</Text>
+        <MacroSelector hasThousands={false} updateMacro={setFat} />
+      </View>
     </View>
   )
 }
 
 export default MacroReadingInput
+
+
+const Styles = StyleSheet.create({
+  container: {
+    width: '60%'
+  },
+  input: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  label: {
+    fontSize: 16,
+    textAlignVertical: 'bottom',
+    paddingBottom: 6
+  }
+})
