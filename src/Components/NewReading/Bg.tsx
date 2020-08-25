@@ -11,7 +11,7 @@ export const NewBgReading: React.FC = () => {
   const [dateTime, setDateTime] = useState(null)
 
   const handleSubmit = async () => {
-    if (reading >= 0) {
+    if (reading > 0) {
       if (reading < 1) { delay(500) }
       const data = dateTime ? { reading, created: dateTime } : { reading }
       await submitReading('bg', data)
