@@ -22,7 +22,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
   const [minutes, setMinutes] = useState(minutesNow)
 
   const hoursCheck = selectedDate === 6
-  const minutesCheck = selectedDate === 6 && hours === hoursNow
+  const minutesCheck = hoursCheck && hours === hoursNow
 
   const hoursData = hoursCheck
     ? clockHours.slice(0, new Date().getHours() + 1)
