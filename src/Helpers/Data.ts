@@ -3,16 +3,14 @@ import { needsUpdating, storeData } from '../Store'
 import { statsDateTitleCompare } from './Date'
 import { StatsReadingProps } from '../Components/Carousel/Readings'
 
-const update = async (name: string) => {
-  const isReading = ['bg', 'dose', 'macro'].includes(name)
+const update = async (table: string) => {
+  const readings = table === 'stats'
+    ? await getStats()
+    : await getReadings(table)
 
-  const readings = isReading
-    ? await getReadings(name)
-    : await getStats()
-
-  return isReading
-    ? await storeData(`${name}Readings`, { updated: Date.now(), readings })
-    : await storeData('bgStats', { updated: Date.now(), readings })
+  return table === 'stats'
+    ? await storeData('bgStats', { updated: Date.now(), readings })
+    : await storeData(`${table}Readings`, { updated: Date.now(), readings })
 }
 
 export const checkHomeScreenData = async (): Promise<void> => {
