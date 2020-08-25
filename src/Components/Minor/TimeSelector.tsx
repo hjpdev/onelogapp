@@ -25,11 +25,11 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
   const minutesCheck = selectedDate === 6 && hours === hoursNow
 
   const hoursData = hoursCheck
-    ? clockHours.slice(0, hoursNow + 1)
+    ? clockHours.slice(0, new Date().getHours() + 1)
     : clockHours
 
   const minutesData = minutesCheck
-    ? clockMinutes.slice(0, minutesNow + 1)
+    ? clockMinutes.slice(0, new Date().getMinutes() + 1)
     : clockMinutes
 
   const onDateSelected = (index: number) => {
