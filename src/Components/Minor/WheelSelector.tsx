@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Text, View, StyleSheet } from "react-native"
 import { WheelPicker } from "../../react-native-wheel-picker-android"
+// import { WheelPicker } from '../WheelPicker'
 
 import {
   bgIntegerOptions,
@@ -13,11 +14,6 @@ type WheelSelectorProps = {
   updateReading: (reading: number) => void,
   isDose?: boolean,
   isKeto?: boolean
-}
-
-const defaultProps = {
-  isDose: false,
-  isKeto: false
 }
 
 const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
@@ -83,8 +79,6 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
     </View>
   );
 }
-
-WheelSelector.defaultProps = defaultProps
 
 export default WheelSelector
 
