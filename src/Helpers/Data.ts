@@ -68,7 +68,7 @@ export const getStats = async (): Promise<StatsReadingProps[]> => {
 }
 
 type submitReadingData = {
-  reading: number,
+  reading: number | {[key: string]: number},
   created?: Date | undefined | null
 }
 
