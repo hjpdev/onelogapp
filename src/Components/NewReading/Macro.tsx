@@ -1,35 +1,36 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import MacroReadingInput from '../Minor/MacroReadingInput'
 import TimeSelector from '../Minor/TimeSelector'
-import WheelSelector from '../Minor/WheelSelector'
 import { submitReading } from '../../Helpers/Data'
-import { delay } from '../../Helpers/General'
 
-export const NewBgReading: React.FC = () => {
-  const [reading, setReading] = useState(0.0)
+export const NewMacroReading: React.FC = () => {
+  const [reading, setReading] = useState({})
   const [dateTime, setDateTime] = useState(null)
 
   const handleSubmit = async () => {
-    if (reading >= 0) {
-      if (reading < 1) { delay(500) }
-      const data = dateTime ? { reading, created: dateTime } : { reading }
-      await submitReading('bg', data)
+    if (Object.keys(reading).length > 0) {
+      if (!Object.keys(reading).every(macro => { return reading[macro] === 0 })) {
+        const data = dateTime ? { ...reading, created: dateTime } : { ...reading }
+        await submitReading('macro', data)
+      }
     }
   }
 
   return(
     <View style={Styles.container}>
-      <Text style={Styles.text}>{'New Bg Reading'}</Text>
+      <Text style={Styles.text}>{'New Macro Reading'}</Text>
       <TimeSelector setDateTime={setDateTime} />
-      <WheelSelector updateReading={setReading} />
-      <Text style={Styles.text}>{'mmol/L'}</Text>
+      <MacroReadingInput updateReading={setReading} />
       <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
   )
 }
+
+export default NewMacroReading
 
 
 const Styles = StyleSheet.create({

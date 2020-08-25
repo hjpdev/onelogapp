@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { WheelPicker } from "../../react-native-wheel-picker-android"
 
@@ -6,7 +6,7 @@ import { clockHours, clockMinutes } from '../../Helpers/General'
 import { newDate, getDaysAndMonthsForLastSevenDays } from '../../Helpers/Date'
 
 type TimeSelectorProps = {
-  setDateTime: (date: Date | null) => void
+  setDateTime: Dispatch<SetStateAction<Date | null>>
 }
 
 const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => {
@@ -20,6 +20,17 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
   const [selectedDate, setSelectedDate] = useState(6)
   const [hours, setHours] = useState(hoursNow)
   const [minutes, setMinutes] = useState(minutesNow)
+
+  const hoursCheck = selectedDate === 6
+  const minutesCheck = hoursCheck && hours === hoursNow
+
+  const hoursData = hoursCheck
+    ? clockHours.slice(0, new Date().getHours() + 1)
+    : clockHours
+
+  const minutesData = minutesCheck
+    ? clockMinutes.slice(0, new Date().getMinutes() + 1)
+    : clockMinutes
 
   const onDateSelected = (index: number) => {
     setSelectedDate(index)
@@ -61,37 +72,34 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
-          height={100}
-          width={84}
+          style={Styles.date}
         />
       </View>
       <View style={{...Styles.wheel, paddingLeft: 10}}>
         <WheelPicker
           selectedItem={hours}
-          data={clockHours}
+          data={hoursData}
           onItemSelected={onHoursSelected}
-          isCyclic={true}
+          isCyclic={!hoursCheck}
           selectedItemTextSize={20}
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
-          height={100}
-          width={42}
+          style={Styles.time}
         />
       </View>
       <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14}}>{':'}</Text>
       <View style={Styles.wheel}>
         <WheelPicker
           selectedItem={minutes}
-          data={clockMinutes}
+          data={minutesData}
           onItemSelected={onMinutesSelected}
-          isCyclic={true}
+          isCyclic={!minutesCheck}
           selectedItemTextSize={20}
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
-          height={100}
-          width={42}
+          style={Styles.time}
         />
       </View>
     </View>
@@ -110,5 +118,13 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     alignContent: 'flex-end'
+  },
+  date: {
+    height: 100,
+    width: 84
+  },
+  time: {
+    height: 100,
+    width: 42
   }
 })
