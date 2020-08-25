@@ -20,7 +20,7 @@ export const NewMacroReading: React.FC = () => {
 
   return(
     <View style={Styles.container}>
-      <Text>{'Macro'}</Text>
+      <Text style={Styles.text}>{'New Macro Reading'}</Text>
       <TimeSelector setDateTime={setDateTime} />
       <MacroReadingInput updateReading={setReading} />
       <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
@@ -38,6 +38,9 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     height: '100%'
+  },
+  text: {
+    fontSize: 20
   },
   submit: {
     padding: 20,
