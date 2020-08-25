@@ -61,8 +61,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
           itemTextSize={16}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
-          height={250}
-          width={100}
+          style={Styles.wheel}
         />
       </View>
 
@@ -78,8 +77,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
           itemTextSize={16}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
-          height={250}
-          width={100}
+          style={Styles.wheel}
         />
       </View>
     </View>
@@ -96,8 +94,15 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center'
   },
+  wheel: {
+    height: 250,
+    width: 100
+  },
   wheelLeft: {
     borderLeftWidth: 1
+  },
+  wheelRight: {
+    borderRightWidth: 1
   },
   decimalContainer: {
     justifyContent: 'center'
@@ -106,8 +111,5 @@ const Styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 26,
     paddingBottom: 6
-  },
-  wheelRight: {
-    borderRightWidth: 1
   }
 })
