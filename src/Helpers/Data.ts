@@ -10,7 +10,6 @@ const update = async (name: string) => {
     ? await getReadings(name)
     : await getStats()
 
-  
   return isReading
     ? await storeData(`${name}Readings`, { updated: Date.now(), readings })
     : await storeData('bgStats', { updated: Date.now(), readings })
@@ -21,15 +20,12 @@ export const checkHomeScreenData = async (): Promise<void> => {
     if (await needsUpdating('bgReadings')) {
       await update('bg')
     }
-
     if (await needsUpdating('bgStats')) {
       await update('stats')
     }
-
     if (await needsUpdating('doseReadings')) {
       await update('dose')
     }
-
     if (await needsUpdating('macroReadings')) {
       await update('macro')
     }
