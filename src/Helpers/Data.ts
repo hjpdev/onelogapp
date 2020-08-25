@@ -3,17 +3,14 @@ import { needsUpdating, storeData } from '../Store'
 import { statsDateTitleCompare } from './Date'
 import { StatsReadingProps } from '../Components/Carousel/Readings'
 
-const update = async (name: string) => {
-  const isReading = ['bg', 'dose', 'macro'].includes(name)
+const update = async (table: string) => {
+  const readings = table === 'stats'
+    ? await getStats()
+    : await getReadings(table)
 
-  const readings = isReading
-    ? await getReadings(name)
-    : await getStats()
-
-  
-  return isReading
-    ? await storeData(`${name}Readings`, { updated: Date.now(), readings })
-    : await storeData('bgStats', { updated: Date.now(), readings })
+  return table === 'stats'
+    ? await storeData('bgStats', { updated: Date.now(), readings })
+    : await storeData(`${table}Readings`, { updated: Date.now(), readings })
 }
 
 export const checkHomeScreenData = async (): Promise<void> => {
@@ -21,15 +18,12 @@ export const checkHomeScreenData = async (): Promise<void> => {
     if (await needsUpdating('bgReadings')) {
       await update('bg')
     }
-
     if (await needsUpdating('bgStats')) {
       await update('stats')
     }
-
     if (await needsUpdating('doseReadings')) {
       await update('dose')
     }
-
     if (await needsUpdating('macroReadings')) {
       await update('macro')
     }
@@ -74,7 +68,7 @@ export const getStats = async (): Promise<StatsReadingProps[]> => {
 }
 
 type submitReadingData = {
-  reading: number,
+  reading: number | {[key: string]: number},
   created?: Date | undefined | null
 }
 
