@@ -61,8 +61,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
-          height={100}
-          width={84}
+          style={Styles.date}
         />
       </View>
       <View style={{...Styles.wheel, paddingLeft: 10}}>
@@ -75,8 +74,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
-          height={100}
-          width={42}
+          style={Styles.time}
         />
       </View>
       <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14}}>{':'}</Text>
@@ -90,8 +88,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
           itemTextFontFamily={'roboto'}
-          height={100}
-          width={42}
+          style={Styles.time}
         />
       </View>
     </View>
@@ -110,5 +107,13 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-end',
     alignContent: 'flex-end'
+  },
+  date: {
+    height: 100,
+    width: 84
+  },
+  time: {
+    height: 100,
+    width: 42
   }
 })

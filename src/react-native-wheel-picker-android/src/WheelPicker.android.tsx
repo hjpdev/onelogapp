@@ -20,9 +20,7 @@ type Props = {
   itemTextSize?: number,
   selectedItem?: number,
   backgroundColor?: string,
-  onItemSelected?: (n: number) => void,
-  height?: number,
-  width?: number
+  onItemSelected?: (n: number) => void
 }
 
 const WheelPicker: React.FC<Props> = (props) => {
@@ -36,7 +34,6 @@ const WheelPicker: React.FC<Props> = (props) => {
     <WheelPickerView
       {...props}
       onChange={onItemSelected}
-      style={{ width: props.width, height: props.height }}
     />
   )
 }
