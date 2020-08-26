@@ -34,7 +34,7 @@
     "babel-jest": "26.3.0",
     "eslint": "7.7.0",
     "eslint-plugin-react": "7.20.6",
-    "jest": "26.4.0",
+    "jest": "26.4.2",
     "jest-fetch-mock": "3.0.3",
     "metro-react-native-babel-preset": "0.63.0",
     "react-test-renderer": "16.13.1",
