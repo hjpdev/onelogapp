@@ -24,23 +24,23 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   return(
     <View style={Styles.container}>
       <View style={Styles.input}>
-        <Text style={Styles.label}>{'Kcal: '}</Text>
+        <Text style={Styles.label}>{'Kcal:'}</Text>
         <MacroSelector hasThousands updateMacro={setKcal} />
       </View>
       <View style={Styles.input}>
-        <Text style={Styles.label}>{'Carbs: '}</Text>
+        <Text style={Styles.label}>{'Carbs (g):'}</Text>
         <MacroSelector hasThousands={false} updateMacro={setCarbs} />
       </View>
       <View style={Styles.input}>
-        <Text style={Styles.label}>{'Sugar: '}</Text>
+        <Text style={Styles.label}>{'Sugar (g):'}</Text>
         <MacroSelector hasThousands={false} updateMacro={setSugar} />
       </View>
       <View style={Styles.input}>
-        <Text style={Styles.label}>{'Protein: '}</Text>
+        <Text style={Styles.label}>{'Protein (g):'}</Text>
         <MacroSelector hasThousands={false} updateMacro={setProtein} />
       </View>
       <View style={Styles.input}>
-        <Text style={Styles.label}>{'Fat: '}</Text>
+        <Text style={Styles.label}>{'Fat (g):'}</Text>
         <MacroSelector hasThousands={false} updateMacro={setFat} />
       </View>
     </View>
