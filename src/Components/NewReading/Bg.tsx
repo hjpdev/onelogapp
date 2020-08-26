@@ -3,6 +3,7 @@ import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
+import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
 import { submitReading } from '../../Helpers/Data'
@@ -43,13 +44,7 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
-    <Modal isVisible={showSuccessModal} animationIn='zoomIn' animationOut='zoomOut' animationInTiming={500} animationOutTiming={200} hasBackdrop={false} style={{ alignItems: 'center', justifyContent: 'center' }}>
-      <View>
-        <TouchableOpacity style={{padding: 300}} onPress={() => setShowSuccessModal(false)}>
-          <Image style={{ height: 100, width: 100 }} source={require('../../Assets/Images/Confirmation.png')} />
-        </TouchableOpacity>
-      </View>
-    </Modal>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
