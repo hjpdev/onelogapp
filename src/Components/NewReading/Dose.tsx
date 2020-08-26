@@ -55,7 +55,7 @@ const Styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '100%'
+    height: '90%'
   },
   text: {
     fontSize: 20
