@@ -92,10 +92,10 @@ const Styles = StyleSheet.create({
     width: 100
   },
   wheelLeft: {
-    borderLeftWidth: 1
+    borderLeftWidth: 0.7
   },
   wheelRight: {
-    borderRightWidth: 1
+    borderRightWidth: 0.7
   },
   decimalContainer: {
     justifyContent: 'center'
