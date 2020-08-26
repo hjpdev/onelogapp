@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { WheelPicker } from "../../react-native-wheel-picker-android"
 
@@ -32,34 +32,25 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
     ? clockMinutes.slice(0, new Date().getMinutes() + 1)
     : clockMinutes
 
-  const onDateSelected = (index: number) => {
-    setSelectedDate(index)
-
-    const dayNow = parseInt(lastSevenDays[0].split(' / ')[0])
-    const monthNow = parseInt(lastSevenDays[0].split(' / ')[1])
+  const isDateDifferentToNow = (date: Date) => {
+    const dayNow = parseInt(lastSevenDays[6].split(' / ')[0])
+    const monthNow = parseInt(lastSevenDays[6].split(' / ')[1])
     const dateNow = newDate({ m: monthNow, d: dayNow, h: hoursNow, min: minutesNow })
 
-    const day = parseInt(lastSevenDays[index].split(' / ')[0])
-    const month = parseInt(lastSevenDays[index].split(' / ')[1])
+    return date.toString() !== dateNow.toString()
+  }
+
+  useEffect(() => {
+    const day = parseInt(lastSevenDays[selectedDate].split(' / ')[0])
+    const month = parseInt(lastSevenDays[selectedDate].split(' / ')[1])
     const date = newDate({ m: month, d: day, h: hours, min: minutes })
-    date.setTime(date.getTime() + date.getTimezoneOffset()*60*1000)
 
-    if (date.toString() === dateNow.toString()) {
-      return setDateTime(null)
+    if (isDateDifferentToNow(date)) {
+      date.setTime(date.getTime() + date.getTimezoneOffset()*60*1000)
+      return setDateTime(date)
     }
-
-    setDateTime(date)
-  }
-
-  const onHoursSelected = (hours: number) => {
-    setHours(hours)
-    onDateSelected(selectedDate)
-  }
-
-  const onMinutesSelected = (minutes: number) => {
-    setMinutes(minutes)
-    onDateSelected(selectedDate)
-  }
+    setDateTime(null)
+  }, [selectedDate, hours, minutes])
 
   return(
     <View style={Styles.container}>
@@ -67,7 +58,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
         <WheelPicker
           selectedItem={selectedDate}
           data={lastSevenDays}
-          onItemSelected={onDateSelected}
+          onItemSelected={setSelectedDate}
           selectedItemTextSize={20}
           itemTextSize={8}
           selectedItemTextFontFamily={'roboto'}
@@ -79,7 +70,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
         <WheelPicker
           selectedItem={hours}
           data={hoursData}
-          onItemSelected={onHoursSelected}
+          onItemSelected={setHours}
           isCyclic={!hoursCheck}
           selectedItemTextSize={20}
           itemTextSize={8}
@@ -93,7 +84,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
         <WheelPicker
           selectedItem={minutes}
           data={minutesData}
-          onItemSelected={onMinutesSelected}
+          onItemSelected={setMinutes}
           isCyclic={!minutesCheck}
           selectedItemTextSize={20}
           itemTextSize={8}
