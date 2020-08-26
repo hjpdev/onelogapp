@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native'
-import Modal from 'react-native-modal'
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
