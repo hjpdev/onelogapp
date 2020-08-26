@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
+import NewReadingHeader from '../Minor/NewReadingHeader'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
 import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
 
-export const NewKetoReading: React.FC = () => {
+type NewKetoReadingProps = {
+  onBack: () => void
+}
+
+export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoReadingProps) => {
+  const { onBack } = props
+
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
 
@@ -18,8 +25,9 @@ export const NewKetoReading: React.FC = () => {
   }
 
   return(
+    <>
+    <NewReadingHeader text={'New Ketones Reading'} onBack={onBack} />
     <View style={Styles.container}>
-      <Text style={Styles.text}>{'New Ketones Reading'}</Text>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
       <Text style={Styles.text}>{'mmol/L'}</Text>
@@ -27,6 +35,7 @@ export const NewKetoReading: React.FC = () => {
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    </>
   )
 }
 
@@ -35,7 +44,7 @@ const Styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '100%'
+    height: '90%'
   },
   text: {
     fontSize: 20
