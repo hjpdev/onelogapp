@@ -5,8 +5,8 @@ import NewReadingHeader from '../Minor/NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
-import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
+import { submitReading } from '../../Helpers/Data'
 
 type NewKetoReadingProps = {
   onBack: () => void
