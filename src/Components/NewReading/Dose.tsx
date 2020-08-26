@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
+import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
-import { submitReading } from '../../Helpers/Data'
+import { submitReading, update } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
 
 type NewDoseReadingProps = {
@@ -17,12 +18,15 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
   const [reading, setReading] = useState(0.0)
   const [isLong, setIsLong] = useState(false)
   const [dateTime, setDateTime] = useState(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     if (reading > 0) {
       if (reading < 1) { delay(500) }
       const data = dateTime ? { reading, isLong, created: dateTime } : { reading, isLong }
       await submitReading('dose', data)
+      await update('dose')
+      setShowSuccessModal(true)
     }
   }
 
@@ -46,6 +50,7 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
