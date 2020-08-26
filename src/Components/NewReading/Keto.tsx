@@ -5,7 +5,7 @@ import NewReadingHeader from '../Minor/NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
-import { submitReading, update } from '../../Helpers/Data'
+import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
 
 type NewKetoReadingProps = {
@@ -21,10 +21,14 @@ export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoRead
 
   const handleSubmit = async () => {
     if (reading === 0) { delay(500) }
-    const data = dateTime ? { reading, created: dateTime } : { reading }
+    try {
+      const data = dateTime ? { reading, created: dateTime } : { reading }
 
-    await submitReading('keto', data)
-    setShowSuccessModal(true)
+      await submitReading('keto', data)
+      setShowSuccessModal(true)
+    } catch(err) {
+      console.log('Error keto handleSubmit: ', err)
+    }
   }
 
   return(
