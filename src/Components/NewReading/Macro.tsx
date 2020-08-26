@@ -5,6 +5,7 @@ import MacroReadingInput from '../Minor/MacroReadingInput'
 import NewReadingHeader from '../Minor/NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
+import { delay } from '../../Helpers/General'
 import { submitReading, update } from '../../Helpers/Data'
 
 type NewMacroReadingProps = {
@@ -27,6 +28,8 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
           await submitReading('macro', data)
           await update('macro')
           setShowSuccessModal(true)
+          await delay(1000)
+          setShowSuccessModal(false)
         } catch(err) {
           console.log('Error macro handleSubmit: ', err)
         }

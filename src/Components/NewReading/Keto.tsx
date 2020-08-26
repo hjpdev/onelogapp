@@ -26,6 +26,8 @@ export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoRead
 
       await submitReading('keto', data)
       setShowSuccessModal(true)
+      await delay(1000)
+      setShowSuccessModal(false)
     } catch(err) {
       console.log('Error keto handleSubmit: ', err)
     }
