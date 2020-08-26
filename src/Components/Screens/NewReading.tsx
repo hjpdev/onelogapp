@@ -6,15 +6,15 @@ import { NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '.
 
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-const newReadingTypeMap: { [key: string]: ReactElement } = {
-  bg: <NewBgReading />,
-  dose: <NewDoseReading />,
-  macro: <NewMacroReading />,
-  keto: <NewKetoReading />
-}
-
 const NewReadingScreen: React.FC = () => {
   const [newReadingType, setNewReadingType] = useState('')
+
+  const newReadingTypeMap: { [key: string]: ReactElement } = {
+    bg: <NewBgReading onBack={() => setNewReadingType('')} />,
+    dose: <NewDoseReading onBack={() => setNewReadingType('')} />,
+    macro: <NewMacroReading onBack={() => setNewReadingType('')} />,
+    keto: <NewKetoReading onBack={() => setNewReadingType('')} />
+  }
 
   useEffect(() => {
     const backAction = () => {
