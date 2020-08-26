@@ -2,10 +2,17 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import MacroReadingInput from '../Minor/MacroReadingInput'
+import NewReadingHeader from '../Minor/NewReadingHeader'
 import TimeSelector from '../Minor/TimeSelector'
 import { submitReading } from '../../Helpers/Data'
 
-export const NewMacroReading: React.FC = () => {
+type NewMacroReadingProps = {
+  onBack: () => void
+}
+
+export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroReadingProps) => {
+  const { onBack } = props
+
   const [reading, setReading] = useState({})
   const [dateTime, setDateTime] = useState(null)
 
@@ -19,14 +26,16 @@ export const NewMacroReading: React.FC = () => {
   }
 
   return(
+    <>
+    <NewReadingHeader text={'New Macro Reading'} onBack={onBack} />
     <View style={Styles.container}>
-      <Text style={Styles.text}>{'New Macro Reading'}</Text>
       <TimeSelector setDateTime={setDateTime} />
       <MacroReadingInput updateReading={setReading} />
       <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    </>
   )
 }
 

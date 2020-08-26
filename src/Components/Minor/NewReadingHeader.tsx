@@ -26,7 +26,8 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-around',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: 8
   },
   text: {
     fontSize: 20
