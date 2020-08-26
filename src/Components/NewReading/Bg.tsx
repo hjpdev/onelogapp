@@ -26,8 +26,9 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
   }
 
   return(
+    <>
+    <NewReadingHeader text={'New Bg Reading'} onBack={onBack} />
     <View style={Styles.container}>
-      <NewReadingHeader text={'New Bg Reading'} onBack={onBack} />
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
       <Text style={Styles.text}>{'mmol/L'}</Text>
@@ -35,6 +36,7 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    </>
   )
 }
 
