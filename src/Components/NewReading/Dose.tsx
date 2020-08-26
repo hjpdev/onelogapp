@@ -23,10 +23,15 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
   const handleSubmit = async () => {
     if (reading > 0) {
       if (reading < 1) { delay(500) }
-      const data = dateTime ? { reading, isLong, created: dateTime } : { reading, isLong }
-      await submitReading('dose', data)
-      await update('dose')
-      setShowSuccessModal(true)
+      try {
+        const data = dateTime ? { reading, isLong, created: dateTime } : { reading, isLong }
+
+        await submitReading('dose', data)
+        await update('dose')
+        setShowSuccessModal(true)
+      } catch(err) {
+        console.log('Error dose handleSubmit: ', err)
+      }
     }
   }
 
