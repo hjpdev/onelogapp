@@ -104,9 +104,6 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
           style={generateStyle()}
         />
       </View>
-      {hasThousands
-        ? <Text style={Styles.unit}>{' '}</Text>
-        : <Text style={Styles.unit}>{'g'}</Text>}
     </View>
   )
 }
@@ -117,7 +114,9 @@ export default MacroSelector
 const Styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderLeftWidth: 0.5,
+    borderRightWidth: 0.5
   },
   thousands: {
     width: 32,
@@ -130,10 +129,5 @@ const Styles = StyleSheet.create({
   decimalPoint: {
     textAlignVertical: 'bottom',
     paddingBottom: 6
-  },
-  unit: {
-    paddingLeft: 6,
-    paddingBottom: 6,
-    textAlignVertical: 'bottom'
   }
 })

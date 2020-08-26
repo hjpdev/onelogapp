@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native'
 
+import NewReadingHeader from '../Minor/NewReadingHeader'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
 import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
 
-export const NewDoseReading: React.FC = () => {
+type NewDoseReadingProps = {
+  onBack: () => void
+}
+
+export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseReadingProps) => {
+  const { onBack } = props
+
   const [reading, setReading] = useState(0.0)
   const [isLong, setIsLong] = useState(false)
   const [dateTime, setDateTime] = useState(null)
@@ -20,8 +27,9 @@ export const NewDoseReading: React.FC = () => {
   }
 
   return(
+    <>
+    <NewReadingHeader text={'New Dose Reading'} onBack={onBack} />
     <View style={Styles.container}>
-      <Text style={Styles.text}>{'New Dose Reading'}</Text>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector isDose updateReading={setReading} />
       <Text style={Styles.text}>{'Units'}</Text>
@@ -38,6 +46,7 @@ export const NewDoseReading: React.FC = () => {
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    </>
   )
 }
 
@@ -46,7 +55,7 @@ const Styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '100%'
+    height: '90%'
   },
   text: {
     fontSize: 20

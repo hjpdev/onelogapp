@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
+import NewReadingHeader from '../Minor/NewReadingHeader'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
 import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
 
-export const NewBgReading: React.FC = () => {
+type NewBgReadingProps = {
+  onBack: () => void
+}
+
+export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingProps) => {
+  const { onBack } = props
+
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
 
@@ -19,8 +26,9 @@ export const NewBgReading: React.FC = () => {
   }
 
   return(
+    <>
+    <NewReadingHeader text={'New Bg Reading'} onBack={onBack} />
     <View style={Styles.container}>
-      <Text style={Styles.text}>{'New Bg Reading'}</Text>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
       <Text style={Styles.text}>{'mmol/L'}</Text>
@@ -28,6 +36,7 @@ export const NewBgReading: React.FC = () => {
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    </>
   )
 }
 
@@ -36,10 +45,7 @@ const Styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '100%'
-  },
-  text: {
-    fontSize: 20
+    height: '90%'
   },
   submit: {
     padding: 20,
