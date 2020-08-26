@@ -27,6 +27,8 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
         await submitReading('bg', data)
         await update('bg')
         setShowSuccessModal(true)
+        await delay(1000)
+        setShowSuccessModal(false)
       } catch (err) {
         console.log('Error bg handleSubmit: ', err)
       }

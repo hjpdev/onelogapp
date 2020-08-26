@@ -29,6 +29,8 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
         await submitReading('dose', data)
         await update('dose')
         setShowSuccessModal(true)
+        await delay(1000)
+        setShowSuccessModal(false)
       } catch(err) {
         console.log('Error dose handleSubmit: ', err)
       }
