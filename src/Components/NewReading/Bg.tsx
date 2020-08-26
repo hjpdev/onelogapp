@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Image, Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import Modal from 'react-native-modal'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
 import TimeSelector from '../Minor/TimeSelector'
@@ -16,12 +17,18 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
 
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     if (reading > 0) {
       if (reading < 1) { delay(500) }
-      const data = dateTime ? { reading, created: dateTime } : { reading }
-      await submitReading('bg', data)
+      try {
+        const data = dateTime ? { reading, created: dateTime } : { reading }
+        await submitReading('bg', data)
+        setShowSuccessModal(true)
+      } catch (err) {
+        console.log('Error bg handleSubmit: ', err)
+      }
     }
   }
 
@@ -36,6 +43,13 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    <Modal isVisible={showSuccessModal} animationIn='zoomIn' animationOut='zoomOut' animationInTiming={500} animationOutTiming={200} hasBackdrop={false} style={{ alignItems: 'center', justifyContent: 'center' }}>
+      <View>
+        <TouchableOpacity style={{padding: 300}} onPress={() => setShowSuccessModal(false)}>
+          <Image style={{ height: 100, width: 100 }} source={require('../../Assets/Images/Confirmation.png')} />
+        </TouchableOpacity>
+      </View>
+    </Modal>
     </>
   )
 }
