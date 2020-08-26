@@ -3,8 +3,10 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import MacroReadingInput from '../Minor/MacroReadingInput'
 import NewReadingHeader from '../Minor/NewReadingHeader'
+import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
-import { submitReading } from '../../Helpers/Data'
+import { delay } from '../../Helpers/General'
+import { submitReading, update } from '../../Helpers/Data'
 
 type NewMacroReadingProps = {
   onBack: () => void
@@ -15,12 +17,22 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
 
   const [reading, setReading] = useState({})
   const [dateTime, setDateTime] = useState(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     if (Object.keys(reading).length > 0) {
       if (!Object.keys(reading).every(macro => { return reading[macro] === 0 })) {
-        const data = dateTime ? { ...reading, created: dateTime } : { ...reading }
-        await submitReading('macro', data)
+        try {
+          const data = dateTime ? { ...reading, created: dateTime } : { ...reading }
+
+          await submitReading('macro', data)
+          await update('macro')
+          setShowSuccessModal(true)
+          await delay(1000)
+          setShowSuccessModal(false)
+        } catch(err) {
+          console.log('Error macro handleSubmit: ', err)
+        }
       }
     }
   }
@@ -35,6 +47,7 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
@@ -47,9 +60,6 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     height: '90%'
-  },
-  text: {
-    fontSize: 20
   },
   submit: {
     padding: 20,

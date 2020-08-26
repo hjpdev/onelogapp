@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
+import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
-import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
+import { submitReading, update } from '../../Helpers/Data'
 
 type NewBgReadingProps = {
   onBack: () => void
@@ -16,12 +17,21 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
 
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     if (reading > 0) {
       if (reading < 1) { delay(500) }
-      const data = dateTime ? { reading, created: dateTime } : { reading }
-      await submitReading('bg', data)
+      try {
+        const data = dateTime ? { reading, created: dateTime } : { reading }
+        await submitReading('bg', data)
+        await update('bg')
+        setShowSuccessModal(true)
+        await delay(1000)
+        setShowSuccessModal(false)
+      } catch (err) {
+        console.log('Error bg handleSubmit: ', err)
+      }
     }
   }
 
@@ -31,11 +41,12 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
-      <Text style={Styles.text}>{'mmol/L'}</Text>
+      <Text style={Styles.unit}>{'mmol/L'}</Text>
       <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
@@ -54,5 +65,8 @@ const Styles = StyleSheet.create({
   submitText: {
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  unit: {
+    fontSize: 20
   }
 })

@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
+import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
-import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
+import { submitReading } from '../../Helpers/Data'
 
 type NewKetoReadingProps = {
   onBack: () => void
@@ -16,12 +17,20 @@ export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoRead
 
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     if (reading === 0) { delay(500) }
-    const data = dateTime ? { reading, created: dateTime } : { reading }
+    try {
+      const data = dateTime ? { reading, created: dateTime } : { reading }
 
-    await submitReading('keto', data)
+      await submitReading('keto', data)
+      setShowSuccessModal(true)
+      await delay(1000)
+      setShowSuccessModal(false)
+    } catch(err) {
+      console.log('Error keto handleSubmit: ', err)
+    }
   }
 
   return(
@@ -30,11 +39,12 @@ export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoRead
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
-      <Text style={Styles.text}>{'mmol/L'}</Text>
+      <Text style={Styles.unit}>{'mmol/L'}</Text>
       <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
@@ -46,7 +56,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     height: '90%'
   },
-  text: {
+  unit: {
     fontSize: 20
   },
   submit: {
