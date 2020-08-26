@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
+import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
-import { submitReading } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
+import { submitReading, update } from '../../Helpers/Data'
 
 type NewDoseReadingProps = {
   onBack: () => void
@@ -17,12 +18,22 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
   const [reading, setReading] = useState(0.0)
   const [isLong, setIsLong] = useState(false)
   const [dateTime, setDateTime] = useState(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     if (reading > 0) {
       if (reading < 1) { delay(500) }
-      const data = dateTime ? { reading, isLong, created: dateTime } : { reading, isLong }
-      await submitReading('dose', data)
+      try {
+        const data = dateTime ? { reading, isLong, created: dateTime } : { reading, isLong }
+
+        await submitReading('dose', data)
+        await update('dose')
+        setShowSuccessModal(true)
+        await delay(1000)
+        setShowSuccessModal(false)
+      } catch(err) {
+        console.log('Error dose handleSubmit: ', err)
+      }
     }
   }
 
@@ -32,7 +43,7 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector isDose updateReading={setReading} />
-      <Text style={Styles.text}>{'Units'}</Text>
+      <Text style={Styles.unit}>{'Units'}</Text>
       <View style={Styles.switch}>
         <Text style={Styles.switchText}>Short</Text>
         <Switch
@@ -46,6 +57,7 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
     </View>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
@@ -57,7 +69,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     height: '90%'
   },
-  text: {
+  unit: {
     fontSize: 20
   },
   switch: {
