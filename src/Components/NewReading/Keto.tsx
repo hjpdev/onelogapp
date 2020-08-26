@@ -30,7 +30,7 @@ export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoRead
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
-      <Text style={Styles.text}>{'mmol/L'}</Text>
+      <Text style={Styles.unit}>{'mmol/L'}</Text>
       <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
@@ -46,7 +46,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     height: '90%'
   },
-  text: {
+  unit: {
     fontSize: 20
   },
   submit: {

@@ -32,7 +32,7 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector isDose updateReading={setReading} />
-      <Text style={Styles.text}>{'Units'}</Text>
+      <Text style={Styles.unit}>{'Units'}</Text>
       <View style={Styles.switch}>
         <Text style={Styles.switchText}>Short</Text>
         <Switch
@@ -57,7 +57,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     height: '90%'
   },
-  text: {
+  unit: {
     fontSize: 20
   },
   switch: {
