@@ -48,9 +48,6 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     height: '90%'
   },
-  text: {
-    fontSize: 20
-  },
   submit: {
     padding: 20,
     backgroundColor: '#c4c4c4'

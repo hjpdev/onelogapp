@@ -31,7 +31,7 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
-      <Text style={Styles.text}>{'mmol/L'}</Text>
+      <Text style={Styles.unit}>{'mmol/L'}</Text>
       <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
@@ -54,5 +54,8 @@ const Styles = StyleSheet.create({
   submitText: {
     fontSize: 16,
     fontWeight: 'bold'
+  },
+  unit: {
+    fontSize: 20
   }
 })
