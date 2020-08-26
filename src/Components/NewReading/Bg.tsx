@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
-import { submitReading } from '../../Helpers/Data'
+import { submitReading, update } from '../../Helpers/Data'
 import { delay } from '../../Helpers/General'
 
 type NewBgReadingProps = {
@@ -25,6 +25,7 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
       try {
         const data = dateTime ? { reading, created: dateTime } : { reading }
         await submitReading('bg', data)
+        await update('bg')
         setShowSuccessModal(true)
       } catch (err) {
         console.log('Error bg handleSubmit: ', err)

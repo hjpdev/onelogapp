@@ -3,7 +3,7 @@ import { needsUpdating, storeData } from '../Store'
 import { statsDateTitleCompare } from './Date'
 import { StatsReadingProps } from '../Components/Carousel/Readings'
 
-const update = async (table: string) => {
+export const update = async (table: string) => {
   const readings = table === 'stats'
     ? await getStats()
     : await getReadings(table)
