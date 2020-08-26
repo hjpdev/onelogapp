@@ -11,10 +11,10 @@ const SuccessModal: React.FC<SuccessModalProps> = (props: SuccessModalProps) => 
   const { isVisible, onPress } = props
 
   return(
-    <Modal isVisible={isVisible} animationIn='zoomIn' animationOut='zoomOut' animationInTiming={500} animationOutTiming={200} hasBackdrop={false} style={{ alignItems: 'center', justifyContent: 'center' }}>
+    <Modal isVisible={isVisible} animationIn='zoomIn' animationOut='zoomOut' animationInTiming={500} animationOutTiming={200} hasBackdrop={false} style={Styles.modal}>
       <View>
-        <TouchableOpacity style={{padding: 300}} onPress={onPress}>
-          <Image style={{ height: 100, width: 100 }} source={require('../../Assets/Images/Confirmation.png')} />
+        <TouchableOpacity onPress={onPress}>
+          <Image style={Styles.image} source={require('../../Assets/Images/Confirmation.png')} />
         </TouchableOpacity>
       </View>
     </Modal>
@@ -25,5 +25,12 @@ export default SuccessModal
 
 
 const Styles = StyleSheet.create({
-
+  modal: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  image: {
+    height: 100,
+    width: 100
+  }
 })
