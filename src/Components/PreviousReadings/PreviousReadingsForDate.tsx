@@ -4,12 +4,13 @@ import { Text, TouchableOpacity, View, StyleSheet, ScrollView } from 'react-nati
 import GradientBorder from '../Minor/GradientBorder'
 
 type PreviousReadingsForDateProps = {
-  date: string
+  date: string,
+  readings: {[key: string]: any}
 }
 
 const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: PreviousReadingsForDateProps) => {
-  const { date } = props
-  
+  const { date, readings } = props
+
   const [isOpen, setIsOpen] = useState(false)
 
   return(
