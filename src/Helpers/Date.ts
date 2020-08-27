@@ -29,6 +29,13 @@ export const generateCreatedDate = (date: string): string => {
     : `${padLeft(day)}/${padLeft(month)} ${hours}:${minutes}`
 }
 
+export const generateCreatedDay = (date: string): string => {
+  const day = padLeft(new Date(date).getDate())
+  const month = padLeft(new Date(date).getMonth() + 1)
+
+  return `${day}/${month}`
+}
+
 export const generateCreatedTime = (date: string): string => {
   const hours = padLeft(new Date(date).getHours())
   const minutes = padLeft(new Date(date).getMinutes())

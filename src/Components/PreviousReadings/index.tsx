@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native'
 
 import PreviousReadingsForDate from './PreviousReadingsForDate'
 import NewReadingHeader from '../Minor/NewReadingHeader'
+import { generateCreatedDay } from '../../Helpers/Date'
 import { getData } from '../../Store'
 
 type PreviousReadingsProps = {
@@ -29,23 +30,25 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
     fetchReadings(dataKey)
   }, [])
 
-  const generateListItems = () => {
-    const dates = readings.map(reading => {
-      const date =  new Date(reading.created)
-      return `${date.getDate()}/${date.getMonth() + 1}`
-    })
-    const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i)
+  const sortReadingsByDay = (uniqueDates: string[]) => {
     const readingsByDay: {[day: string]: any[]} = {}
     uniqueDates.forEach(uniqueDate => {
       readingsByDay[uniqueDate] = []
     })
-
     readings.forEach(reading => {
-      const readingDate =  new Date(reading.created)
-      const formattedReadingDate = `${readingDate.getDate()}/${readingDate.getMonth() + 1}`
-
-      readingsByDay[formattedReadingDate].push(reading)
+      const readingDate = generateCreatedDay(reading.created)
+      readingsByDay[readingDate].push(reading)
     })
+
+    return readingsByDay
+  }
+
+  const generateListItems = () => {
+    const dates = readings.map(reading => {
+      return generateCreatedDay(reading.created)
+    })
+    const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i)
+    const readingsByDay = sortReadingsByDay(uniqueDates)
 
     return uniqueDates.map(date => {
       return <PreviousReadingsForDate date={date} readings={readingsByDay[date]} key={date} />
