@@ -15,7 +15,7 @@ const NewReadingScreen: React.FC = () => {
     dose: <NewDoseReading onBack={() => setNewReadingType('')} />,
     macro: <NewMacroReading onBack={() => setNewReadingType('')} />,
     keto: <NewKetoReading onBack={() => setNewReadingType('')} />,
-    previous: <PreviousReadings onBack={() => setNewReadingType('bg')} />
+    previous: <PreviousReadings dataKey={'bgReadings'} onBack={() => setNewReadingType('bg')} />
   }
 
   useEffect(() => {
