@@ -26,7 +26,7 @@ const App: React.FC = () => {
         <Stack.Screen name="Analytics" component={AnalyticsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
-};
+  )
+}
 
 export default App
