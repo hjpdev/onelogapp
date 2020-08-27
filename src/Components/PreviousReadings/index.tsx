@@ -1,24 +1,24 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
-import Modal from 'react-native-modal'
+import { Text, View, StyleSheet } from 'react-native'
+
+import NewReadingHeader from '../Minor/NewReadingHeader'
 
 type PreviousReadingsModalProps = {
-  isVisible: boolean,
-  onPress: () => void
+  onBack: () => void
 }
 
 const PreviousReadingsModal: React.FC<PreviousReadingsModalProps> = (props: PreviousReadingsModalProps) => {
-  const { isVisible, onPress } = props
+  const { onBack } = props
 
   return(
-    <Modal isVisible={isVisible} animationIn='fadeInUp' animationOut='fadeOutDown' style={Styles.modal}>
-      <TouchableOpacity onPress={onPress}>
-        <Text>{'Close'}</Text>
-      </TouchableOpacity>
+    <>
+    <NewReadingHeader text={'Previous Bg Readings'} onBack={onBack} onShowPrevious={() => null} />
+    <View style={Styles.container}>
       <View>
         <Text>{'PreviousReadings'}</Text>
       </View>
-    </Modal>
+    </View>
+    </>
   )
 }
 
@@ -26,8 +26,9 @@ export default PreviousReadingsModal
 
 
 const Styles = StyleSheet.create({
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
+  container: {
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    height: '92%'
   }
 })

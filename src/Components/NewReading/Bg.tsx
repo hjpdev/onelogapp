@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import NewReadingHeader from '../Minor/NewReadingHeader'
-import PreviousReadings from '../PreviousReadings'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
@@ -10,16 +9,16 @@ import { delay } from '../../Helpers/General'
 import { submitReading, update } from '../../Helpers/Data'
 
 type NewBgReadingProps = {
-  onBack: () => void
+  onBack: () => void,
+  onShowPrevious: () => void
 }
 
 export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingProps) => {
-  const { onBack } = props
+  const { onBack, onShowPrevious } = props
 
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [showPreviousReadingsModal, setShowPreviousReadingsModal] = useState(false)
 
   const handleSubmit = async () => {
     if (reading > 0) {
@@ -39,7 +38,7 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
 
   return(
     <>
-    <NewReadingHeader text={'New Bg Reading'} onBack={onBack} onShowPrevious={() => setShowPreviousReadingsModal(true)} />
+    <NewReadingHeader text={'New Bg Reading'} onBack={onBack} onShowPrevious={onShowPrevious} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
@@ -49,7 +48,6 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
       </TouchableOpacity>
     </View>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-    <PreviousReadings isVisible={showPreviousReadingsModal} onPress={() => setShowPreviousReadingsModal(false)} />
     </>
   )
 }
