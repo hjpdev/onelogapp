@@ -25,7 +25,7 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
       <View style={Styles.header}>
         <GradientBorder x={1.0} y={1.0} />
           <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
-            <Text style={Styles.text}>{date}</Text>
+            <Text style={Styles.date}>{date}</Text>
           </TouchableOpacity>
           {isOpen &&
           <>
@@ -47,8 +47,9 @@ const Styles = StyleSheet.create({
   header: {
     width: '100%'
   },
-  text: {
-    fontSize: 20,
+  date: {
+    fontSize: 22,
+    fontWeight: 'bold',
     padding: 14,
     textAlign: 'center'
   }
