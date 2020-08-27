@@ -15,9 +15,9 @@ const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgRe
   const timeCreated = generateCreatedTime(created)
 
   const generateColor = () => {
-    if (reading < 3.9) return 'red'
-    if (reading >= 3.9 && reading < 8.1) return 'green'
-    if (reading > 8.0) return 'yellow'
+    if (reading < 3.9) return '#d91e1e'
+    if (reading >= 3.9 && reading < 8.1) return '#279621'
+    if (reading > 8.0) return '#f5ed11'
   }
 
   const color = reading && generateColor() || '#ebebeb'
