@@ -5,16 +5,16 @@ import GradientBorder from './GradientBorder'
 
 type NewReadingHeaderProps = {
   text: string,
-  hidePreviousIcon?: boolean,
+  hidePreviousReadingsIcon?: boolean,
   onBack: () => void,
   onShowPrevious: () => void
 }
 
 const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHeaderProps) => {
-  const { text, hidePreviousIcon, onBack, onShowPrevious } = props
+  const { text, hidePreviousReadingsIcon, onBack, onShowPrevious } = props
 
   const generatePreviousReadingsIconStyle = () => {
-    return hidePreviousIcon
+    return hidePreviousReadingsIcon
       ? {...Styles.previousReadingsIcon, tintColor: '#ebebeb'}
       : Styles.previousReadingsIcon
   }
