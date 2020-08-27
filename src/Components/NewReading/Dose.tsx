@@ -90,7 +90,7 @@ const Styles = StyleSheet.create({
     backgroundColor: '#b8b8b8'
   },
   submitText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold'
   },
 })
