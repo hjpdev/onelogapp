@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/Readings'
 import Carousel from '../Carousel'

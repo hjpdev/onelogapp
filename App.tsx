@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import React from 'react'
+import { StatusBar } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
-import Container from './src/Components/Container'
+import AccountScreen from './src/Components/Screens/Account'
+import AnalyticsScreen from './src/Components/Screens/Analytics'
+import HomeScreen from './src/Components/Screens/Home'
+import NewReadingScreen from './src/Components/Screens/NewReading'
+import SettingsScreen from './src/Components/Screens/Settings'
+
 import MainHeader from './src/Components/MainHeader'
-import NavBar from './src/Components/NavBar'
+
+const Stack = createStackNavigator()
 
 const App: React.FC = () => {
-  const [currentScreen, setCurrentScreen] = useState('home')
-
   return (
-    <>
+    <NavigationContainer>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <MainHeader />
-        <Container currentScreen={currentScreen} />
-        <NavBar setCurrentScreen={setCurrentScreen} testID={"nav-bar"} />
-      </SafeAreaView>
-    </>
+      <MainHeader />
+      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+        <Stack.Screen name="Settings" component={SettingsScreen} />
+        <Stack.Screen name="Account" component={AccountScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="NewReading" component={NewReadingScreen} />
+        <Stack.Screen name="Analytics" component={AnalyticsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

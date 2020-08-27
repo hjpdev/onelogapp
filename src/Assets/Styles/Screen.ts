@@ -5,8 +5,6 @@ const deviceWidth = Dimensions.get('window').width
 
 export const ScreenStyles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
     backgroundColor: '#ebebeb',
     height: deviceHeight-120,
     width: deviceWidth,

@@ -23,9 +23,11 @@ const Container: React.FC<ContainerProps> = (props: ContainerProps) => {
   const { currentScreen } = props
 
   return(
-    <View style={Styles.containerView} testID={"app-container"}>
+    // <View style={Styles.containerView} testID={"app-container"}>
+    <>
       { screenMap[currentScreen] }
-    </View>
+    </>
+    // </View>
   )
 }
 
@@ -36,15 +38,6 @@ const Styles = StyleSheet.create({
   containerView: {
     backgroundColor: '#ebebeb',
     height: Dimensions.get('window').height - 120, //96 In reality
-    width: Dimensions.get('window').width,
-    flexDirection: 'column',
-    justifyContent: 'center'
-  },
-  containerText: {
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    alignSelf: 'center',
-    color: 'black',
-    fontSize: 28
+    width: Dimensions.get('window').width
   }
 })
