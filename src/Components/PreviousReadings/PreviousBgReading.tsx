@@ -17,7 +17,7 @@ const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgRe
   const generateColor = () => {
     if (reading < 3.9) return '#d91e1e'
     if (reading >= 3.9 && reading < 8.1) return '#279621'
-    if (reading > 8.0) return '#f5ed11'
+    if (reading > 8.0) return '#e0dd12'
   }
 
   const color = reading && generateColor() || '#ebebeb'
