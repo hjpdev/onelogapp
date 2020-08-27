@@ -12,7 +12,7 @@ const PreviousReadingsModal: React.FC<PreviousReadingsModalProps> = (props: Prev
 
   return(
     <>
-    <NewReadingHeader text={'Previous Bg Readings'} onBack={onBack} onShowPrevious={() => null} />
+    <NewReadingHeader text={'Previous Bg Readings'} hidePreviousIcon onBack={onBack} onShowPrevious={() => null} />
     <View style={Styles.container}>
       <View>
         <Text>{'PreviousReadings'}</Text>

@@ -5,19 +5,26 @@ import GradientBorder from './GradientBorder'
 
 type NewReadingHeaderProps = {
   text: string,
+  hidePreviousIcon?: boolean,
   onBack: () => void,
   onShowPrevious: () => void
 }
 
 const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHeaderProps) => {
-  const { text, onBack, onShowPrevious } = props
+  const { text, hidePreviousIcon, onBack, onShowPrevious } = props
+
+  const generatePreviousReadingsIconStyle = () => {
+    return hidePreviousIcon
+      ? {...Styles.previousReadingsIcon, tintColor: '#ebebeb'}
+      : Styles.previousReadingsIcon
+  }
 
   return(
     <>
     <View style={Styles.header}>
       <View style={Styles.iconContainer}>
         <TouchableOpacity onPress={onBack}>
-          <Image source={require('../../Assets/Images/BackArrow.png')} style={{height: 30, width: 30}} />
+          <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
         </TouchableOpacity>
       </View>
       <View style={Styles.textContainer}>
@@ -25,7 +32,7 @@ const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHead
       </View>
       <View style={Styles.iconContainer}>
         <TouchableOpacity onPress={onShowPrevious}>
-          <Image source={require('../../Assets/Images/PreviousReadings.png')} style={{height: 40, width: 30}} />
+          <Image source={require('../../Assets/Images/PreviousReadings.png')} style={generatePreviousReadingsIconStyle()} />
         </TouchableOpacity>
       </View>
     </View>
@@ -48,6 +55,14 @@ const Styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     alignItems: 'center'
+  },
+  backIcon: {
+    height: 30,
+    width: 30
+  },
+  previousReadingsIcon: {
+    height: 40,
+    width: 30
   },
   textContainer: {
     flex: 4
