@@ -5,18 +5,19 @@ import GradientBorder from './GradientBorder'
 
 type NewReadingHeaderProps = {
   text: string,
-  onBack: () => void
+  onBack: () => void,
+  onShowPrevious: () => void
 }
 
 const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHeaderProps) => {
-  const { text, onBack } = props
+  const { text, onBack, onShowPrevious } = props
 
   return(
     <>
     <View style={Styles.header}>
       <TouchableOpacity onPress={onBack}><Image source={require('../../Assets/Images/BackArrow.png')} style={{height: 30, width: 30}} /></TouchableOpacity>
       <Text style={Styles.text}>{text}</Text>
-      <TouchableOpacity><Image source={require('../../Assets/Images/PreviousReadings.png')} style={{height: 40, width: 30}} /></TouchableOpacity>
+      <TouchableOpacity onPress={onShowPrevious}><Image source={require('../../Assets/Images/PreviousReadings.png')} style={{height: 40, width: 30}} /></TouchableOpacity>
     </View>
     <GradientBorder x={1.0} y={1.0} />
     </>
