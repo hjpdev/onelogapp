@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react'
 import { BackHandler, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
+import PreviousReadings from '../PreviousReadings'
 import { NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '../NewReading'
 
 import { ScreenStyles } from '../../Assets/Styles/Screen'
@@ -10,10 +11,11 @@ const NewReadingScreen: React.FC = () => {
   const [newReadingType, setNewReadingType] = useState('')
 
   const newReadingTypeMap: { [key: string]: ReactElement } = {
-    bg: <NewBgReading onBack={() => setNewReadingType('')} />,
+    bg: <NewBgReading onBack={() => setNewReadingType('')} onShowPrevious={() => setNewReadingType('previous')} />,
     dose: <NewDoseReading onBack={() => setNewReadingType('')} />,
     macro: <NewMacroReading onBack={() => setNewReadingType('')} />,
-    keto: <NewKetoReading onBack={() => setNewReadingType('')} />
+    keto: <NewKetoReading onBack={() => setNewReadingType('')} />,
+    previous: <PreviousReadings onBack={() => setNewReadingType('bg')} />
   }
 
   useEffect(() => {
