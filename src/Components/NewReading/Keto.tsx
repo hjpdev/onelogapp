@@ -54,17 +54,21 @@ const Styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '90%'
+    height: '92%'
   },
   unit: {
     fontSize: 20
   },
   submit: {
-    padding: 20,
-    backgroundColor: '#c4c4c4'
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 2,
+    padding: 16,
+    backgroundColor: '#b8b8b8'
   },
   submitText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold'
-  }
+  },
 })
