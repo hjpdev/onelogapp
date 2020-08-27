@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
+import PreviousBgReading from './PreviousBgReading'
 
 type PreviousReadingsForDateProps = {
   date: string,
@@ -13,6 +14,12 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
 
   const [isOpen, setIsOpen] = useState(false)
 
+  const generateList = () => {
+    return readings.map(reading => {
+      return <PreviousBgReading created={reading.created} reading={reading.reading} key={reading.created} />
+    })
+  }
+
   return(
     <View>
       <View style={Styles.header}>
@@ -21,9 +28,12 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
             <Text style={Styles.text}>{date}</Text>
           </TouchableOpacity>
           {isOpen &&
+          <>
+          <GradientBorder x={1.0} y={1.0} />
           <ScrollView horizontal>
-
-          </ScrollView>}
+            {generateList()}
+          </ScrollView>
+          </>}
         <GradientBorder x={1.0} y={1.0} />
       </View>
     </View>

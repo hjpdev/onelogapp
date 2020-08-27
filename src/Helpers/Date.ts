@@ -1,4 +1,3 @@
-import { IStatsReading } from '../Components/Carousel/Readings/Stats'
 import { padLeft } from './General'
 
 export const newDate = ({ m, d, h, min }: {[key: string]: number}): Date => {
@@ -28,6 +27,13 @@ export const generateCreatedDate = (date: string): string => {
   return (month === todayMonth && day === todayDay)
     ? `${hours}:${minutes}`
     : `${padLeft(day)}/${padLeft(month)} ${hours}:${minutes}`
+}
+
+export const generateCreatedTime = (date: string): string => {
+  const hours = padLeft(new Date(date).getHours())
+  const minutes = padLeft(new Date(date).getMinutes())
+
+  return `${hours}:${minutes}`
 }
 
 export const statsDateTitleCompare = ( a: IStatsReading, b: IStatsReading ) => {
