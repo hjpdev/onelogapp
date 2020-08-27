@@ -5,6 +5,7 @@ import GradientBorder from '../Minor/GradientBorder'
 import PreviousReadings from '../PreviousReadings'
 import { NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '../NewReading'
 
+import NavBar from '../NavBar'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
 const NewReadingScreen: React.FC = () => {
@@ -33,6 +34,7 @@ const NewReadingScreen: React.FC = () => {
   }, [])
 
   return(
+    <>
     <View style={ScreenStyles.container} testID={'new-reading-screen'}>
       {newReadingType
         ? newReadingTypeMap[newReadingType]
@@ -59,6 +61,8 @@ const NewReadingScreen: React.FC = () => {
             <GradientBorder x={1.0} y={1.0} />
           </View>}
     </View>
+    <NavBar />
+    </>
   )
 }
 

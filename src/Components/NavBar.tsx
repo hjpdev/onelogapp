@@ -2,12 +2,7 @@ import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
-type NavBarProps = {
-  setCurrentScreen: (screen: string) => void
-}
-
-const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
-  const { setCurrentScreen } = props
+const NavBar: React.FC<NavBarProps> = () => {
   const navigation = useNavigation()
 
   return (
