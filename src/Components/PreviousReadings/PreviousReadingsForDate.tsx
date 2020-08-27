@@ -48,6 +48,7 @@ const Styles = StyleSheet.create({
     width: '100%'
   },
   date: {
+    backgroundColor: '#e6e6e6',
     fontSize: 22,
     fontWeight: 'bold',
     padding: 14,
