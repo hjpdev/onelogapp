@@ -18,7 +18,7 @@ const App: React.FC = () => {
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
       <MainHeader />
-      <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown: false}}>
+      <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false, animationEnabled: false }}>
         <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="Account" component={AccountScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />

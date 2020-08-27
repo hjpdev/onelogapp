@@ -6,7 +6,7 @@ const deviceWidth = Dimensions.get('window').width
 export const ScreenStyles = StyleSheet.create({
   container: {
     backgroundColor: '#ebebeb',
-    height: deviceHeight-120,
+    height: deviceHeight-120, // 96 in reality.
     width: deviceWidth,
   },
   text: {
