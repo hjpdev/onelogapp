@@ -15,9 +15,9 @@ const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgRe
   const timeCreated = generateCreatedTime(created)
 
   const generateColor = () => {
-    if (reading < 3.9) return '#d91e1e'
+    if (reading < 3.9) return 'rgba(217, 30, 30, 0.9)' //'#d91e1e'
     if (reading >= 3.9 && reading < 8.1) return '#279621'
-    if (reading > 8.0) return '#e0dd12'
+    if (reading > 8.0) return '#deda00'
   }
 
   const color = reading && generateColor() || '#ebebeb'
@@ -27,7 +27,7 @@ const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgRe
       <View><Text style={Styles.timeCreated}>{timeCreated}</Text></View>
       <GradientBorder x={1.0} y={1.0} />
       <View>
-        <LinearGradient colors={['#ebebeb', color]} start={{ x: 0.5, y: 0.7}}>
+        <LinearGradient colors={['#ebebeb', color]} start={{ x: 0.5, y: 0.75}}>
           <Text style={Styles.reading}>{reading.toFixed(1)}</Text>
         </LinearGradient>
       </View>
