@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
-import NewReadingHeader from '../Minor/NewReadingHeader'
+import NewReadingHeader from './NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
@@ -14,8 +14,6 @@ type NewBgReadingProps = {
 }
 
 export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingProps) => {
-  const { onBack, onShowPrevious } = props
-
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -38,7 +36,7 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
 
   return(
     <>
-    <NewReadingHeader text={'New Bg Reading'} onBack={onBack} onShowPrevious={onShowPrevious} />
+    <NewReadingHeader text={'New Bg Reading'} dataKey={'bgReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
