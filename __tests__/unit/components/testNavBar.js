@@ -1,6 +1,7 @@
 import 'react-native'
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
+import { mockNavigate } from '../../../jestSetup'
 
 import NavBar from '../../../src/Components/NavBar'
 
@@ -15,31 +16,30 @@ it('renders five nav links', () => {
 })
 
 it('changes the current screen when nav link is pressed', () => {
-  const mockSetCurrentScreen = jest.fn()
-  const { getByTestId } = render(<NavBar setCurrentScreen={mockSetCurrentScreen} />)
+  const { getByTestId } = render(<NavBar />)
 
   fireEvent.press(getByTestId('nav-link-settings'))
 
-  expect(mockSetCurrentScreen.mock.calls.length).toBe(1)
-  expect(mockSetCurrentScreen.mock.calls[0][0]).toBe('settings')
+  expect(mockNavigate.mock.calls.length).toBe(1)
+  expect(mockNavigate.mock.calls[0][0]).toBe('Settings')
 
   fireEvent.press(getByTestId('nav-link-account'))
 
-  expect(mockSetCurrentScreen.mock.calls.length).toBe(2)
-  expect(mockSetCurrentScreen.mock.calls[1][0]).toBe('account')
+  expect(mockNavigate.mock.calls.length).toBe(2)
+  expect(mockNavigate.mock.calls[1][0]).toBe('Account')
 
   fireEvent.press(getByTestId('nav-link-home'))
 
-  expect(mockSetCurrentScreen.mock.calls.length).toBe(3)
-  expect(mockSetCurrentScreen.mock.calls[2][0]).toBe('home')
+  expect(mockNavigate.mock.calls.length).toBe(3)
+  expect(mockNavigate.mock.calls[2][0]).toBe('Home')
 
   fireEvent.press(getByTestId('nav-link-new-reading'))
 
-  expect(mockSetCurrentScreen.mock.calls.length).toBe(4)
-  expect(mockSetCurrentScreen.mock.calls[3][0]).toBe('newReading')
+  expect(mockNavigate.mock.calls.length).toBe(4)
+  expect(mockNavigate.mock.calls[3][0]).toBe('NewReading')
 
   fireEvent.press(getByTestId('nav-link-analytics'))
 
-  expect(mockSetCurrentScreen.mock.calls.length).toBe(5)
-  expect(mockSetCurrentScreen.mock.calls[4][0]).toBe('analytics')
+  expect(mockNavigate.mock.calls.length).toBe(5)
+  expect(mockNavigate.mock.calls[4][0]).toBe('Analytics')
 })

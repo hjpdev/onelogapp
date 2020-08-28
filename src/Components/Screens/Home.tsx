@@ -7,7 +7,13 @@ import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/
 import { checkHomeScreenData } from '../../Helpers/Data'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-const HomeScreen: React.FC = () => {
+type HomeScreenProps = {
+  navigation: any
+}
+
+const HomeScreen: React.FC<HomeScreenProps> = (props: HomeScreenProps) => {
+  const { navigation } = props
+
   useEffect(() => {
     checkHomeScreenData()
   }, [])
@@ -20,7 +26,7 @@ const HomeScreen: React.FC = () => {
       <Carousel name={'dose'} Template={DoseReading} dataKey={'doseReadings'} />
       <Carousel name={'macro'} Template={MacroReading} dataKey={'macroReadings'} />
     </View>
-    <NavBar />
+    <NavBar navigation={navigation} />
     </>
   )
 }

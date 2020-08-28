@@ -1,19 +1,18 @@
 import React from 'react'
 import { StatusBar } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native'
 
 import AccountScreen from './src/Components/Screens/Account'
 import AnalyticsScreen from './src/Components/Screens/Analytics'
 import HomeScreen from './src/Components/Screens/Home'
+import MainHeader from './src/Components/MainHeader'
 import NewReadingScreen from './src/Components/Screens/NewReading'
 import SettingsScreen from './src/Components/Screens/Settings'
 
-import MainHeader from './src/Components/MainHeader'
-
-const Stack = createStackNavigator()
-
 const App: React.FC = () => {
+  const Stack = createStackNavigator()
+
   return (
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
