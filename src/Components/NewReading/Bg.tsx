@@ -8,12 +8,7 @@ import WheelSelector from '../Minor/WheelSelector'
 import { delay } from '../../Helpers/General'
 import { submitReading, update } from '../../Helpers/Data'
 
-type NewBgReadingProps = {
-  onBack: () => void,
-  onShowPrevious: () => void
-}
-
-export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingProps) => {
+export const NewBgReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)

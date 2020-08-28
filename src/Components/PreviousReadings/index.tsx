@@ -54,8 +54,10 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
     const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i)
     const readingsByDay = sortReadingsByDay(uniqueDates)
 
-    return uniqueDates.map(date => {
-      return <PreviousReadingsForDate date={date} readings={readingsByDay[date]} key={date} />
+    return uniqueDates.map((date, index) => {
+      return index === 0
+        ? <PreviousReadingsForDate opened date={date} readings={readingsByDay[date]} key={date} />
+        : <PreviousReadingsForDate date={date} readings={readingsByDay[date]} key={date} />
     })
   }
 

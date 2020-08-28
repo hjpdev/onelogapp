@@ -6,13 +6,13 @@ import PreviousBgReading from './PreviousBgReading'
 
 type PreviousReadingsForDateProps = {
   date: string,
+  opened?: boolean
   readings: {[key: string]: any}
 }
 
 const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: PreviousReadingsForDateProps) => {
-  const { date, readings } = props
-
-  const [isOpen, setIsOpen] = useState(false)
+  const { date, opened, readings } = props
+  const [isOpen, setIsOpen] = useState(opened || false)
 
   const generateList = () => {
     return readings.map(reading => {
