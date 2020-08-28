@@ -8,13 +8,7 @@ import WheelSelector from '../Minor/WheelSelector'
 import { delay } from '../../Helpers/General'
 import { submitReading } from '../../Helpers/Data'
 
-type NewKetoReadingProps = {
-  onBack: () => void
-}
-
-export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoReadingProps) => {
-  const { onBack } = props
-
+export const NewKetoReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -35,7 +29,7 @@ export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoRead
 
   return(
     <>
-    <NewReadingHeader text={'New Ketones Reading'} onBack={onBack} />
+    <NewReadingHeader text={'New Ketones Reading'} dataKey={'ketoReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
