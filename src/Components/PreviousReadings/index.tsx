@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 
 import PreviousReadingsForDate from './PreviousReadingsForDate'
-import NewReadingHeader from '../Minor/NewReadingHeader'
+import NewReadingHeader from '../NewReading/NewReadingHeader'
 import { generateCreatedDay } from '../../Helpers/Date'
 import { getData } from '../../Store'
 
 type PreviousReadingsProps = {
-  dataKey: string,
-  onBack: () => void
+  route: {
+    params: {
+      dataKey: string
+    }
+  }
 }
 
 const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadingsProps) => {
-  const { dataKey, onBack } = props
+  const { route } = props
+  const { dataKey } = route.params
 
   const [readings, setReadings] = useState([])
 
@@ -57,7 +61,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
 
   return(
     <>
-    <NewReadingHeader text={'Previous Bg Readings'} hidePreviousIcon onBack={onBack} onShowPrevious={() => null} />
+    <NewReadingHeader text={'Previous Bg Readings'} hidePreviousReadingsIcon />
     <View style={Styles.container}>
       {generateListItems()}
     </View>

@@ -1,18 +1,19 @@
 import React from 'react'
 import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-import GradientBorder from './GradientBorder'
+import GradientBorder from '../Minor/GradientBorder'
 
 type NewReadingHeaderProps = {
   text: string,
-  hidePreviousReadingsIcon?: boolean,
-  onBack: () => void,
-  onShowPrevious: () => void
+  dataKey: string,
+  hidePreviousReadingsIcon?: boolean
 }
 
 const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHeaderProps) => {
-  const { text, hidePreviousReadingsIcon, onBack, onShowPrevious } = props
+  const { text, dataKey, hidePreviousReadingsIcon } = props
 
+  const navigation = useNavigation()
   const generatePreviousReadingsIconStyle = () => {
     return hidePreviousReadingsIcon
       ? {...Styles.previousReadingsIcon, tintColor: '#ebebeb'}
@@ -23,7 +24,7 @@ const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHead
     <>
     <View style={Styles.header}>
       <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={onBack}>
+        <TouchableOpacity onPress={() => null}>
           <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
         </TouchableOpacity>
       </View>
@@ -31,7 +32,7 @@ const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHead
         <Text style={Styles.text}>{text}</Text>
       </View>
       <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={onShowPrevious}>
+        <TouchableOpacity onPress={() => navigation.navigate('PreviousReadings', { dataKey })}>
           <Image source={require('../../Assets/Images/PreviousReadings.png')} style={generatePreviousReadingsIconStyle()} />
         </TouchableOpacity>
       </View>
