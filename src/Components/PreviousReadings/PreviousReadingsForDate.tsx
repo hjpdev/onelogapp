@@ -53,12 +53,12 @@ const Styles = StyleSheet.create({
     backgroundColor: '#e6e6e6',
     flexDirection: 'row',
     fontSize: 22,
-    fontWeight: 'bold',
     padding: 14,
     justifyContent: 'space-between'
   },
   dateText: {
     fontSize: 22,
+    fontWeight: 'bold',
   },
   placeholder: {
     paddingLeft: 8,
