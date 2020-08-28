@@ -16,7 +16,7 @@ const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHead
   const navigation = useNavigation()
   const generatePreviousReadingsIconStyle = () => {
     return hidePreviousReadingsIcon
-      ? {...Styles.previousReadingsIcon, tintColor: '#ebebeb'}
+      ? {...Styles.previousReadingsIcon, tintColor: '#ebebeb', opacity: 100}
       : Styles.previousReadingsIcon
   }
 
@@ -48,6 +48,7 @@ export default NewReadingHeader
 const Styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
+    backgroundColor: '#e8e8e8',
     width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',

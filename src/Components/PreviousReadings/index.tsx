@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, ScrollView, StyleSheet } from 'react-native'
 
 import PreviousReadingsForDate from './PreviousReadingsForDate'
 import NewReadingHeader from '../NewReading/NewReadingHeader'
@@ -64,9 +64,9 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
   return(
     <>
     <NewReadingHeader text={'Previous Bg Readings'} hidePreviousReadingsIcon />
-    <View style={Styles.container}>
+    <ScrollView style={Styles.container}>
       {generateListItems()}
-    </View>
+    </ScrollView>
     </>
   )
 }

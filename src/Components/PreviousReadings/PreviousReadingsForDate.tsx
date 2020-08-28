@@ -30,9 +30,9 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
           {isOpen &&
           <>
           <GradientBorder x={1.0} y={1.0} />
-          <ScrollView horizontal>
+          <View style={Styles.view}>
             {generateList()}
-          </ScrollView>
+          </View>
           </>}
         <GradientBorder x={1.0} y={1.0} />
       </View>
@@ -53,5 +53,10 @@ const Styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 14,
     textAlign: 'center'
+  },
+  view: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: '#dbdbdb'
   }
 })
