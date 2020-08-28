@@ -27,6 +27,7 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
 
           await submitReading('macro', data)
           await update('macro')
+          
           setShowSuccessModal(true)
           await delay(1000)
           setShowSuccessModal(false)
