@@ -51,7 +51,11 @@
   "jest": {
     "preset": "react-native",
     "setupFiles": [
-      "./jestSetup.js"
+      "./jestSetup.js",
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!native-base)/"
     ]
   }
 }

@@ -1,9 +1,14 @@
 import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 
-const NavBar: React.FC = () => {
-  const navigation = useNavigation()
+type NavBarProps = {
+  navigation: {
+    navigate: (screen: string) => void
+  }
+}
+
+const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
+  const { navigation } = props
 
   return (
     <View style={Styles.navBar} testID={"nav-bar"}>
