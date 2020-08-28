@@ -59,7 +59,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 2,
     padding: 16,
-    backgroundColor: '#b8b8b8'
+    backgroundColor: '#e6e6e6'
   },
   submitText: {
     fontSize: 18,
