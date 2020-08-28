@@ -24,7 +24,7 @@ const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHead
     <>
     <View style={Styles.header}>
       <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={() => null}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
         </TouchableOpacity>
       </View>
