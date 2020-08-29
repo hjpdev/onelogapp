@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
-import NewReadingHeader from '../Minor/NewReadingHeader'
+import NewReadingHeader from './NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
 import { delay } from '../../Helpers/General'
 import { submitReading } from '../../Helpers/Data'
 
-type NewKetoReadingProps = {
-  onBack: () => void
-}
-
-export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoReadingProps) => {
-  const { onBack } = props
-
+export const NewKetoReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -35,7 +29,7 @@ export const NewKetoReading: React.FC<NewKetoReadingProps> = (props: NewKetoRead
 
   return(
     <>
-    <NewReadingHeader text={'New Ketones Reading'} onBack={onBack} />
+    <NewReadingHeader text={'New Ketones Reading'} dataKey={'ketoReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
@@ -65,7 +59,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 2,
     padding: 16,
-    backgroundColor: '#b8b8b8'
+    backgroundColor: '#e6e6e6'
   },
   submitText: {
     fontSize: 18,

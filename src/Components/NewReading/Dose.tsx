@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native'
 
-import NewReadingHeader from '../Minor/NewReadingHeader'
+import NewReadingHeader from './NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
@@ -87,7 +87,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 2,
     padding: 16,
-    backgroundColor: '#b8b8b8'
+    backgroundColor: '#e6e6e6'
   },
   submitText: {
     fontSize: 18,

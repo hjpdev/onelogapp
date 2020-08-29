@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
-import NewReadingHeader from '../Minor/NewReadingHeader'
+import NewReadingHeader from './NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
 import { delay } from '../../Helpers/General'
 import { submitReading, update } from '../../Helpers/Data'
 
-type NewBgReadingProps = {
-  onBack: () => void
-}
-
-export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingProps) => {
-  const { onBack } = props
-
+export const NewBgReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
@@ -37,7 +31,7 @@ export const NewBgReading: React.FC<NewBgReadingProps> = (props: NewBgReadingPro
 
   return(
     <>
-    <NewReadingHeader text={'New Bg Reading'} onBack={onBack} />
+    <NewReadingHeader text={'New Bg Reading'} dataKey={'bgReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
@@ -64,7 +58,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 2,
     padding: 16,
-    backgroundColor: '#b8b8b8'
+    backgroundColor: '#e6e6e6'
   },
   submitText: {
     fontSize: 18,

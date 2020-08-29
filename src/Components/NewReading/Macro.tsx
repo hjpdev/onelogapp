@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import MacroReadingInput from '../Minor/MacroReadingInput'
-import NewReadingHeader from '../Minor/NewReadingHeader'
+import NewReadingHeader from './NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import { delay } from '../../Helpers/General'
@@ -27,6 +27,7 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
 
           await submitReading('macro', data)
           await update('macro')
+          
           setShowSuccessModal(true)
           await delay(1000)
           setShowSuccessModal(false)
@@ -67,7 +68,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 2,
     padding: 16,
-    backgroundColor: '#b8b8b8'
+    backgroundColor: '#e6e6e6'
   },
   submitText: {
     fontSize: 18,

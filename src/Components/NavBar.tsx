@@ -2,31 +2,33 @@ import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 
 type NavBarProps = {
-  setCurrentScreen: (screen: string) => void
+  navigation: {
+    navigate: (screen: string) => void
+  }
 }
 
 const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
-  const { setCurrentScreen } = props
+  const { navigation } = props
 
   return (
     <View style={Styles.navBar} testID={"nav-bar"}>
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('settings')} testID={'nav-link-settings'}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Settings')} testID={'nav-link-settings'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarSettings.png')} />
       </TouchableOpacity>        
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('account')} testID={'nav-link-account'}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Account')} testID={'nav-link-account'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarAccount.png')} />
       </TouchableOpacity>        
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('home')} testID={'nav-link-home'}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Home')} testID={'nav-link-home'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarHome.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('newReading')} testID={'nav-link-new-reading'}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('NewReading')} testID={'nav-link-new-reading'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarNewReading.png')} />
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} onPress={() => setCurrentScreen('analytics')} testID={'nav-link-analytics'}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Analytics')} testID={'nav-link-analytics'}>
         <Image style={Styles.navBarImage} source={require('../Assets/Images/NavBarAnalytics.png')} />
       </TouchableOpacity>
     </View>
