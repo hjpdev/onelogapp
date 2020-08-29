@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, TouchableOpacity, View, StyleSheet, ScrollView } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
 import PreviousBgReading from './PreviousBgReading'
