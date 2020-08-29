@@ -27,6 +27,7 @@ export const checkHomeScreenData = async (): Promise<void> => {
     if (await needsUpdating('macroReadings')) {
       await update('macro')
     }
+    await update('keto')
   } catch(err) {
     console.log('Error checkHomeScreenData: ', err.stack)
   }
