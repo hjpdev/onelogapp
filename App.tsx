@@ -10,10 +10,10 @@ import MainHeader from './src/Components/MainHeader'
 import NewReadingScreen from './src/Components/Screens/NewReading'
 import SettingsScreen from './src/Components/Screens/Settings'
 
-const App: React.FC = () => {
-  const Stack = createStackNavigator()
+const Stack = createStackNavigator()
 
-  return (
+const App: React.FC = () => {
+  return(
     <NavigationContainer>
       <StatusBar barStyle="dark-content" />
       <MainHeader />

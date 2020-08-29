@@ -1,12 +1,11 @@
 import 'react-native'
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
-import { mockNavigate } from '../../../jestSetup'
 
 import NavBar from '../../../src/Components/NavBar'
 
 it('renders five nav links', () => {
-  const { getByTestId } = render(<NavBar />)
+  const { getByTestId } = render(<NavBar navigation={{ navigate: jest.fn() }} />)
 
   expect(getByTestId('nav-link-settings')).toBeTruthy()
   expect(getByTestId('nav-link-account')).toBeTruthy()
@@ -16,7 +15,8 @@ it('renders five nav links', () => {
 })
 
 it('changes the current screen when nav link is pressed', () => {
-  const { getByTestId } = render(<NavBar />)
+  const mockNavigate = jest.fn()
+  const { getByTestId } = render(<NavBar navigation={{ navigate: mockNavigate }} />)
 
   fireEvent.press(getByTestId('nav-link-settings'))
 

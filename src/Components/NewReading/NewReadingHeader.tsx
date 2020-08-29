@@ -6,7 +6,7 @@ import GradientBorder from '../Minor/GradientBorder'
 
 type NewReadingHeaderProps = {
   text: string,
-  dataKey: string,
+  dataKey?: string,
   hidePreviousReadingsIcon?: boolean
 }
 

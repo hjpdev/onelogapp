@@ -6,8 +6,15 @@ import PreviousReadings from '../PreviousReadings'
 import { NewReadingSelection, NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '../NewReading'
 
 const Stack = createStackNavigator()
+type NewReadingScreenProps = {
+  navigation: {
+    navigate: (screen: string) => void
+  }
+}
 
-const NewReadingScreen: React.FC = () => {
+const NewReadingScreen: React.FC<NewReadingScreenProps> = (props: NewReadingScreenProps) => {
+  const { navigation } = props
+
   return(
     <>
     <Stack.Navigator initialRouteName="NewReadingSelection" screenOptions={{ headerShown: false, animationEnabled: false }}>
@@ -18,7 +25,7 @@ const NewReadingScreen: React.FC = () => {
       <Stack.Screen name="NewKetoReading" component={NewKetoReading} />
       <Stack.Screen name="PreviousReadings" component={PreviousReadings} />
     </Stack.Navigator>
-    <NavBar />
+    <NavBar navigation={navigation} />
     </>
   )
 }
