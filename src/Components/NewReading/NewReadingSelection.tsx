@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import GradientBorder from '../Minor/GradientBorder'
 
-export const NewReadingSelection: React.FC = () => {
+const NewReadingSelection: React.FC = () => {
   const navigation = useNavigation()
 
   return(
@@ -33,6 +33,8 @@ export const NewReadingSelection: React.FC = () => {
   )
 }
 
+export default NewReadingSelection
+
 
 const Styles = StyleSheet.create({
   newReadings: {
@@ -44,7 +46,7 @@ const Styles = StyleSheet.create({
   newReading: {
     alignItems: 'center',
     width: '100%',
-    padding: 40
+    padding: 42
   },
   newReadingText: {
     fontSize: 22

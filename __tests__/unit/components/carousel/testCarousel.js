@@ -2,7 +2,7 @@ import 'react-native'
 import React from 'react'
 import { render, fireEvent } from '@testing-library/react-native'
 
-import Carousel from '../../../../src/Components/Carousel'
+import Carousel from '../../../../src/Components/Carousel/Carousel'
 import { BgReading } from '../../../../src/Components/Carousel/Readings'
 
 jest.mock('../../../../src/Store/index', () => ({ getData: jest.fn() }))

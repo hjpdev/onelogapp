@@ -1,20 +1,15 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native'
 
-import NewReadingHeader from './NewReadingHeader'
-import SuccessModal from '../Minor/SuccessModal'
-import TimeSelector from '../Minor/TimeSelector'
-import WheelSelector from '../Minor/WheelSelector'
-import { delay } from '../../Helpers/General'
-import { submitReading, update } from '../../Helpers/Data'
+import { NewReadingHeader } from '../NewReadingHeader'
+import SuccessModal from '../../Minor/SuccessModal'
+import TimeSelector from '../../Minor/TimeSelector'
+import WheelSelector from '../../Minor/WheelSelector'
+import { delay } from '../../../Helpers/General'
+import { submitReading, update } from '../../../Store/Data'
 
-type NewDoseReadingProps = {
-  onBack: () => void
-}
 
-export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseReadingProps) => {
-  const { onBack } = props
-
+export const NewDoseReading: React.FC<NewDoseReadingProps> = () => {
   const [reading, setReading] = useState(0.0)
   const [long, setLong] = useState(false)
   const [dateTime, setDateTime] = useState(null)
@@ -26,8 +21,8 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
       try {
         const data = dateTime ? { reading, long, created: dateTime } : { reading, long }
 
-        await submitReading('dose', data)
-        await update('dose')
+        await submitReading({ table: 'dose', data })
+        await update({ dataKey: 'doseReadings' })
         setShowSuccessModal(true)
         await delay(1000)
         setShowSuccessModal(false)
@@ -39,7 +34,7 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
 
   return(
     <>
-    <NewReadingHeader text={'New Dose Reading'} onBack={onBack} />
+    <NewReadingHeader headerText={'Dose'} dataKey={'doseReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector isDose updateReading={setReading} />

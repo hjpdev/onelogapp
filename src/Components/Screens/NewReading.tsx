@@ -2,8 +2,9 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import NavBar from '../NavBar'
-import PreviousReadings from '../PreviousReadings'
-import { NewReadingSelection, NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '../NewReading'
+import PreviousReadings from '../PreviousReadings/PreviousReadings'
+import NewReadingSelection from '../NewReading/NewReadingSelection'
+import { NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '../NewReading/Readings'
 
 const Stack = createStackNavigator()
 type NewReadingScreenProps = {

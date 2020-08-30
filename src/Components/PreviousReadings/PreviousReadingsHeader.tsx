@@ -10,7 +10,7 @@ type NewReadingHeaderProps = {
   hidePreviousReadingsIcon?: boolean
 }
 
-export const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHeaderProps) => {
+const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHeaderProps) => {
   const { headerText, dataKey, hidePreviousReadingsIcon } = props
 
   const navigation = useNavigation()
@@ -28,19 +28,19 @@ export const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewRead
           <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
         </TouchableOpacity>
       </View>
-      <View style={Styles.headerTextContainer}>
-        <Text style={Styles.headerText}>{`New ${headerText} Reading`}</Text>
+      <View style={Styles.textContainer}>
+        <Text style={Styles.text}>{`Previous ${headerText} Readings`}</Text>
       </View>
       <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('PreviousReadings', { dataKey, headerText })}>
-          <Image source={require('../../Assets/Images/PreviousReadings.png')} style={generatePreviousReadingsIconStyle()} />
-        </TouchableOpacity>
+        <Text style={Styles.placeholder}>{' '}</Text>
       </View>
     </View>
     <GradientBorder x={1.0} y={1.0} />
     </>
   )
 }
+
+export default NewReadingHeader
 
 
 const Styles = StyleSheet.create({
@@ -64,11 +64,15 @@ const Styles = StyleSheet.create({
     height: 40,
     width: 30
   },
-  headerTextContainer: {
+  textContainer: {
     flex: 4
   },
-  headerText: {
+  text: {
     fontSize: 20,
     textAlign: 'center'
+  },
+  placeholder: {
+    height: 40,
+    width: 30
   }
 })
