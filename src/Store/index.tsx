@@ -46,5 +46,5 @@ export const needsUpdating = async (key: string): Promise<boolean> => {
     console.log('Error needsUpdating: ', err)
   }
 
-  return true
+  return false
 }
