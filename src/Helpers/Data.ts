@@ -3,7 +3,7 @@ import { needsUpdating, storeData } from '../Store'
 import { statsDateTitleCompare } from './Date'
 import { StatsReadingProps } from '../Components/Carousel/Readings'
 
-export const update = async (table: string) => {
+export const update = async (table: string): Promise<void> => {
   const readings = table === 'stats'
     ? await getStats()
     : await getReadings(table)
@@ -32,7 +32,7 @@ const generateHomeScreenQuery = async (): Promise<string> => {
   return querys.length > 0 ? `{ ${querys.join(' ')} }` : ''
 }
 
-export const checkHomeScreenData = async(): Promise<any> => {
+export const checkHomeScreenData = async(): Promise<void> => {
   try {
     const query = await generateHomeScreenQuery()
 
