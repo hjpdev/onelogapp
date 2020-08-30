@@ -1,105 +1,81 @@
 
 import { needsUpdating, storeData } from '../Store'
-import { statsDateTitleCompare } from './Date'
-import { StatsReadingProps } from '../Components/Carousel/Readings'
 
-export const update = async (table: string): Promise<void> => {
-  const readings = table === 'stats'
-    ? await getStats()
-    : await getReadings(table)
-
-  return table === 'stats'
-    ? await storeData('bgStats', { updated: Date.now(), readings })
-    : await storeData(`${table}Readings`, { updated: Date.now(), readings })
+type GenerateReadingsQueryOptions = {
+  dataKeys: string[]
+  days?: number[]
 }
 
-const generateHomeScreenQuery = async (): Promise<string> => {
-  const queryMap: {[key: string]: string} = {
-    bgReadings: 'bgReadings { created reading }',
-    bgStats: 'bgStats(days: [7, 14, 30, 90, 365]) { created avg stddev }',
-    doseReadings: 'doseReadings {created reading long}',
-    macroReadings: 'macroReadings { created kcal carbs sugar protein fat }'
+type GetReadingsOptions = {
+  queryString?: string
+  dataKeys?: string[] | undefined
+  days?: number[]
+}
+
+type SubmitReadingOptions = {
+  table: string
+  data: {
+    reading: number | {[key: string]: number}
+    created?: Date | undefined | null
   }
-  const keys = ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings']
+}
+
+type UpdateOptions = {
+  dataKey: string
+  days?: number[]
+}
+
+export const update = async (options: UpdateOptions): Promise<void> => {
+  const { dataKey, days } = options
+
+  const readings = await getReadings({ dataKeys: [dataKey], days })
+  await storeData(dataKey, { updated: Date.now(), readings })
+}
+
+const generateReadingsQuery = (options: GenerateReadingsQueryOptions): string => {
+  const { dataKeys, days } = options
+  const queryMap: {[key: string]: string} = {
+    bgReadings: 'bgReadings { id, created reading }',
+    bgStats: `bgStats(days: [${days}]) { created avg stddev }`,
+    doseReadings: 'doseReadings { id, created reading long }',
+    macroReadings: 'macroReadings { id, created kcal carbs sugar protein fat }'
+  }
   const querys: string[] = []
 
-  for (const key of keys) {
-    if (await needsUpdating(key)) {
-      querys.push(queryMap[key])
-    }
+  for (const key of dataKeys) {
+    querys.push(queryMap[key])
   }
 
   return querys.length > 0 ? `{ ${querys.join(' ')} }` : ''
 }
 
-export const checkHomeScreenData = async(): Promise<void> => {
-  try {
-    const query = await generateHomeScreenQuery()
-
-    if (query) {
-      const url = 'http://localhost:8088/graphql'
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ query })
-      })
-
-      const { data } = await response.json()
-
-      for (const key of Object.keys(data)) {
-        await storeData(key, { updated: Date.now(), readings: data[key] })
-      }
-    }
-  } catch (err) {
-    console.log('Error checkHomeScreenData: ', err.stack)
+export const getReadings = async(options: GetReadingsOptions): Promise<any> => {
+  const { queryString, dataKeys, days } = options
+  if (!queryString && !dataKeys && ! days) {
+    throw new Error('Error getReadings: Must provide either query or, dataKeys to query (& array of days if relevent).')
   }
-}
-
-export const getReadings = async (table: string): Promise<any> => {
-  const url = `http://localhost:8088/readings/${table}`
-  let readings
+  const query = queryString || generateReadingsQuery({ dataKeys, days })
+  const url = 'http://localhost:8088/graphql'
 
   try {
-    readings = await fetch(url, {
-      method: 'GET',
+    const response = await fetch(url, {
+      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify({ query })
     })
-  } catch(err) {
+    const { data } = await response.json()
+    console.log('HERE IT IS => ', JSON.stringify(data))
+    return data
+  } catch (err) {
     console.log('Error getReadings: ', err)
   }
-
-  return readings && readings.json()
 }
 
-export const getStats = async (): Promise<StatsReadingProps[]> => {
-  const days = [7, 30, 90, 180, 365]
-  const tmpArr: Array<StatsReadingProps> = []
-
-  try {
-    for (const day of days) {
-    const stats = await getReadings(`bg/stats/${day})`)
-    tmpArr.push({ created: `${day} Day` , ...stats })
-    }
-  } catch(err) {
-      console.log('Error getStats: ', err)
-  }
-
-  return tmpArr.sort(statsDateTitleCompare)
-}
-
-type submitReadingData = {
-  reading: number | {[key: string]: number},
-  created?: Date | undefined | null
-}
-
-export const submitReading = async (table: string, data: submitReadingData): Promise<any> => {
+export const submitReading = async (options: SubmitReadingOptions): Promise<any> => {
+  const { table, data } = options
   const url = `http://localhost:8088/readings/${table}`
 
   try {
@@ -113,5 +89,26 @@ export const submitReading = async (table: string, data: submitReadingData): Pro
     })
   } catch (err) {
     console.log('Error submitReading: ', err)
+  }
+}
+
+export const checkHomeScreenData = async (): Promise<void> => {
+  const dataKeys: string[] = []
+  for (const key of ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings']) {
+    if (await needsUpdating(key)) {
+      dataKeys.push(key)
+    }
+  }
+
+  try {
+    const queryString = generateReadingsQuery({ dataKeys, days: [7, 14, 30, 90, 365] })
+    if (queryString) {
+      const data = await getReadings({ queryString })
+      for (const key of Object.keys(data)) {
+        await storeData(key, { updated: Date.now(), readings: data[key] })
+      }
+    }
+  } catch (err) {
+    console.log('Error checkHomeScreenData: ', err.stack)
   }
 }
