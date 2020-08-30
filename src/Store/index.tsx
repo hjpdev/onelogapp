@@ -11,6 +11,7 @@ export const storeData = async (key: string, data: StoreData | StatsReadingProps
   try {
     const value = JSON.stringify(data)
     await AsyncStorage.setItem(key, value)
+    console.log(`${key} updated`)
   } catch(err) {
     console.log('Error storeData: ', err)
   }
@@ -39,7 +40,6 @@ export const needsUpdating = async (key: string): Promise<boolean> => {
     console.log(`${key} last Updated: ${(diff / 60000).toFixed(1)} minutes ago.`)
 
     if (data && (Date.now() - lastUpdated) > 3600000) {
-      console.log(`${key} updated`)
       return true
     }
   } catch(err) {

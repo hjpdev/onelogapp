@@ -13,27 +13,31 @@ export const update = async (table: string) => {
     : await storeData(`${table}Readings`, { updated: Date.now(), readings })
 }
 
-export const checkHomeScreenData = async(): Promise<any> => {
+const generateHomeScreenQuery = async (): Promise<string> => {
   const queryMap: {[key: string]: string} = {
     bgReadings: 'bgReadings { created reading }',
     bgStats: 'bgStats(days: [7, 14, 30, 90, 365]) { created avg stddev }',
     doseReadings: 'doseReadings {created reading long}',
     macroReadings: 'macroReadings { created kcal carbs sugar protein fat }'
   }
+  const keys = ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings']
+  const querys: string[] = []
 
-  try {
-    const keys = ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings']
-    const querys: string[] = []
-
-    for (const key of keys) {
-      if (await needsUpdating(key)) {
-        querys.push(queryMap[key])
-      }
+  for (const key of keys) {
+    if (await needsUpdating(key)) {
+      querys.push(queryMap[key])
     }
+  }
 
-    if (querys.length > 0) {
+  return querys.length > 0 ? `{ ${querys.join(' ')} }` : ''
+}
+
+export const checkHomeScreenData = async(): Promise<any> => {
+  try {
+    const query = await generateHomeScreenQuery()
+
+    if (query) {
       const url = 'http://localhost:8088/graphql'
-      const query = `{ ${querys.join(' ')} }`
 
       const response = await fetch(url, {
         method: 'POST',
