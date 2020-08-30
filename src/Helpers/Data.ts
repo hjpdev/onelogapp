@@ -13,22 +13,44 @@ export const update = async (table: string) => {
     : await storeData(`${table}Readings`, { updated: Date.now(), readings })
 }
 
-export const checkHomeScreenData = async (): Promise<void> => {
+export const checkHomeScreenData = async(): Promise<any> => {
+  const queryMap: {[key: string]: string} = {
+    bgReadings: 'bgReadings { created reading }',
+    bgStats: 'bgStats(days: [7, 14, 30, 90, 365]) { created avg stddev }',
+    doseReadings: 'doseReadings {created reading long}',
+    macroReadings: 'macroReadings { created kcal carbs sugar protein fat }'
+  }
+
   try {
-    if (await needsUpdating('bgReadings')) {
-      await update('bg')
+    const keys = ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings']
+    const querys: string[] = []
+
+    for (const key of keys) {
+      if (await needsUpdating(key)) {
+        querys.push(queryMap[key])
+      }
     }
-    if (await needsUpdating('bgStats')) {
-      await update('stats')
+
+    if (querys.length > 0) {
+      const url = 'http://localhost:8088/graphql'
+      const query = `{ ${querys.join(' ')} }`
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ query })
+      })
+
+      const { data } = await response.json()
+
+      for (const key of Object.keys(data)) {
+        await storeData(key, { updated: Date.now(), readings: data[key] })
+      }
     }
-    if (await needsUpdating('doseReadings')) {
-      await update('dose')
-    }
-    if (await needsUpdating('macroReadings')) {
-      await update('macro')
-    }
-    await update('keto')
-  } catch(err) {
+  } catch (err) {
     console.log('Error checkHomeScreenData: ', err.stack)
   }
 }
