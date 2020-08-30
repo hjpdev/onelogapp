@@ -4,7 +4,7 @@ import { render } from '@testing-library/react-native'
 
 import HomeScreen from '../../../../src/Components/Screens/Home'
 
-jest.mock('../../../../src/Helpers/Data', () => ({ checkHomeScreenData: jest.fn() }))
+jest.mock('../../../../src/Store/Data', () => ({ checkHomeScreenData: jest.fn() }))
 import { checkHomeScreenData } from '../../../../src/Store/Data'
 
 it('renders four Carousels', async () => {
