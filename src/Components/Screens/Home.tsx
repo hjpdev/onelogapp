@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import Carousel from '../Carousel'
 import NavBar from '../NavBar'
 import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/Readings'
-import { checkHomeScreenData } from '../../Helpers/Data'
+import { checkHomeScreenData } from '../../Store/Data'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
 type HomeScreenProps = {

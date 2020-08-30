@@ -6,7 +6,7 @@ import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import WheelSelector from '../Minor/WheelSelector'
 import { delay } from '../../Helpers/General'
-import { submitReading } from '../../Helpers/Data'
+import { submitReading } from '../../Store/Data'
 
 export const NewKetoReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)

@@ -6,7 +6,7 @@ import NewReadingHeader from './NewReadingHeader'
 import SuccessModal from '../Minor/SuccessModal'
 import TimeSelector from '../Minor/TimeSelector'
 import { delay } from '../../Helpers/General'
-import { submitReading, update } from '../../Helpers/Data'
+import { submitReading, update } from '../../Store/Data'
 
 type NewMacroReadingProps = {
   onBack: () => void
