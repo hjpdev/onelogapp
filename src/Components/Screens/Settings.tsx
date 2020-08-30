@@ -4,7 +4,13 @@ import { Text, View } from 'react-native'
 import NavBar from '../NavBar'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-const SettingsScreen: React.FC = () => {
+type SettingsScreenProps = {
+  navigation: any
+}
+
+const SettingsScreen: React.FC<SettingsScreenProps> = (props: SettingsScreenProps) => {
+  const { navigation } = props
+
   return(
     <>
     <View style={ScreenStyles.container} testID={'settings-screen'}>
@@ -12,7 +18,7 @@ const SettingsScreen: React.FC = () => {
         {'Settings'}
       </Text>
     </View>
-    <NavBar />
+    <NavBar navigation={navigation} />
     </>
   )
 }

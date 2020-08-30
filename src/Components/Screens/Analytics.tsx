@@ -4,7 +4,13 @@ import { Text, View } from 'react-native'
 import NavBar from '../NavBar'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
 
-const AnalyticsScreen: React.FC = () => {
+type AnalyticsScreenProps = {
+  navigation: any
+}
+
+const AnalyticsScreen: React.FC<AnalyticsScreenProps> = (props: AnalyticsScreenProps) => {
+  const { navigation } = props
+
   return(
     <>
     <View style={ScreenStyles.container} testID={'analytics-screen'}>
@@ -12,7 +18,7 @@ const AnalyticsScreen: React.FC = () => {
         {'Analytics'}
       </Text>
     </View>
-    <NavBar />
+    <NavBar navigation={navigation} />
     </>
   )
 }
