@@ -6,12 +6,15 @@ import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime } from '../../../Helpers/Date'
 
 type PreviousKetoReadingProps = {
-  created: string,
-  reading: number
+  data: {
+    created: string,
+    reading: number
+  }
 }
 
 export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: PreviousKetoReadingProps) => {
-  const { created, reading } = props
+  const { data } = props
+  const { created, reading } = data
   const timeCreated = generateCreatedTime(created)
 
   return(

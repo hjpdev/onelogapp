@@ -94,7 +94,7 @@ export const submitReading = async (options: SubmitReadingOptions): Promise<any>
 
 export const checkHomeScreenData = async (): Promise<void> => {
   const dataKeys: string[] = []
-  for (const key of ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings']) {
+  for (const key of ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings', 'ketoReadings']) {
     if (await needsUpdating(key)) {
       dataKeys.push(key)
     }
