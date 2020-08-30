@@ -2,21 +2,21 @@ import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
-import PreviousBgReading from './PreviousBgReading'
 
 type PreviousReadingsForDateProps = {
-  date: string,
+  date: string
   opened?: boolean
   readings: {[key: string]: any}
+  Template: any
 }
 
 const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: PreviousReadingsForDateProps) => {
-  const { date, opened, readings } = props
+  const { date, opened, readings, Template } = props
   const [isOpen, setIsOpen] = useState(opened || false)
 
   const generateList = () => {
     return readings.map(reading => {
-      return <PreviousBgReading created={reading.created} reading={reading.reading} key={reading.created} />
+      return <Template key={reading.id} data={reading} />
     })
   }
 

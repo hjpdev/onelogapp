@@ -1,5 +1,5 @@
 
-import { needsUpdating, storeData } from '../Store'
+import { needsUpdating, storeData } from '.'
 
 type GenerateReadingsQueryOptions = {
   dataKeys: string[]
