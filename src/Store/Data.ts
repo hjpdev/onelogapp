@@ -38,7 +38,8 @@ const generateReadingsQuery = (options: GenerateReadingsQueryOptions): string =>
     bgReadings: 'bgReadings { id, created reading }',
     bgStats: `bgStats(days: [${days}]) { created avg stddev }`,
     doseReadings: 'doseReadings { id, created reading long }',
-    macroReadings: 'macroReadings { id, created kcal carbs sugar protein fat }'
+    macroReadings: 'macroReadings { id, created kcal carbs sugar protein fat }',
+    ketoReadings: 'ketoReadings { id, created reading }'
   }
   const querys: string[] = []
 
@@ -67,7 +68,6 @@ export const getReadings = async(options: GetReadingsOptions): Promise<any> => {
       body: JSON.stringify({ query })
     })
     const { data } = await response.json()
-    console.log('HERE IT IS => ', JSON.stringify(data))
     return data
   } catch (err) {
     console.log('Error getReadings: ', err)

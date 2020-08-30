@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
-import NewReadingHeader from './NewReadingHeader'
-import SuccessModal from '../Minor/SuccessModal'
-import TimeSelector from '../Minor/TimeSelector'
-import WheelSelector from '../Minor/WheelSelector'
-import { delay } from '../../Helpers/General'
-import { submitReading, update } from '../../Store/Data'
+import NewReadingHeader from '../NewReadingHeader'
+import SuccessModal from '../../Minor/SuccessModal'
+import TimeSelector from '../../Minor/TimeSelector'
+import WheelSelector from '../../Minor/WheelSelector'
+import { delay } from '../../../Helpers/General'
+import { submitReading, update } from '../../../Store/Data'
 
 export const NewBgReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
@@ -31,7 +31,7 @@ export const NewBgReading: React.FC = () => {
 
   return(
     <>
-    <NewReadingHeader text={'New Bg Reading'} dataKey={'bgReadings'} />
+    <NewReadingHeader headerText={'Bg'} dataKey={'bgReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />

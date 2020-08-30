@@ -85,6 +85,9 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   )
 }
 
+export default Carousel
+
+
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -132,5 +135,3 @@ const Styles = StyleSheet.create({
     justifyContent: 'center'
   }
 })
-
-export default Carousel

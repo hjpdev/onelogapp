@@ -1,4 +1,3 @@
-export * from './NewReadingSelection'
 export * from './Bg'
 export * from './Dose'
 export * from './Macro'
