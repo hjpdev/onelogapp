@@ -2,16 +2,19 @@ import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-import GradientBorder from '../Minor/GradientBorder'
-import { generateCreatedTime } from '../../Helpers/Date'
+import GradientBorder from '../../Minor/GradientBorder'
+import { generateCreatedTime } from '../../../Helpers/Date'
 
 type PreviousBgReadingProps = {
-  created: string,
-  reading: number
+  data: {
+    created: string
+    reading: number
+  }
 }
 
-const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgReadingProps) => {
-  const { created, reading } = props
+export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgReadingProps) => {
+  const { data } = props
+  const { reading, created } = data
   const timeCreated = generateCreatedTime(created)
 
   const generateColor = () => {
@@ -34,8 +37,6 @@ const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgRe
     </View>
   )
 }
-
-export default PreviousBgReading
 
 
 const Styles = StyleSheet.create({
