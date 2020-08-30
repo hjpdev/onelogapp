@@ -6,7 +6,7 @@ import { DoseReading } from '../../../../../src/Components/Carousel/Readings'
 
 const testData = {
   reading: 5.5,
-  islong: false
+  long: false
 }
 
 it('renders correct tag for dose type', () => {
@@ -15,6 +15,6 @@ it('renders correct tag for dose type', () => {
   expect(getByTestId('carousel-dose')).toBeTruthy()
   expect(getByText('Short')).toBeTruthy()
 
-  rerender(<DoseReading data={{ ...testData, islong: true }} />)
+  rerender(<DoseReading data={{ ...testData, long: true }} />)
   expect(getByText('Long')).toBeTruthy()
 })
