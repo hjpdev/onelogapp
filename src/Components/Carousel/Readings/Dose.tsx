@@ -4,12 +4,12 @@ import { StyleSheet, Text, View } from 'react-native'
 export type DoseReadingProps = {
   data: {
     reading: number,
-    islong: boolean
+    long: boolean
   }
 }
 
-const generateStyle = (isLong: boolean) => {
-  return isLong === true 
+const generateStyle = (long: boolean) => {
+  return long === true 
     ? { ...Styles.type, backgroundColor: '#c4c4c4' }
     : Styles.type
 }
@@ -17,23 +17,23 @@ const generateStyle = (isLong: boolean) => {
 
 export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
   const { data } = props
-  const { reading, islong } = data
+  const { reading, long } = data
 
   return(
-      <View style={Styles.container} testID={'carousel-dose'}>
-        <View style={Styles.readingContainer}>
-          <Text style={Styles.reading}>
-            { reading.toFixed(1) }
-          </Text>
-          <Text style={Styles.unit}>
-          { 'Units' }
-          </Text>
-        </View>
-
-        <Text style={generateStyle(islong)}>
-        { islong === true ? 'Long' : 'Short' }
-       </Text>
+    <View style={Styles.container} testID={'carousel-dose'}>
+      <View style={Styles.readingContainer}>
+        <Text style={Styles.reading}>
+          { reading.toFixed(1) }
+        </Text>
+        <Text style={Styles.unit}>
+        { 'Units' }
+        </Text>
       </View>
+
+      <Text style={generateStyle(long)}>
+      { long === true ? 'Long' : 'Short' }
+      </Text>
+    </View>
   )
 }
 

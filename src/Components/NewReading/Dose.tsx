@@ -16,7 +16,7 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
   const { onBack } = props
 
   const [reading, setReading] = useState(0.0)
-  const [isLong, setIsLong] = useState(false)
+  const [long, setLong] = useState(false)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
@@ -24,7 +24,7 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
     if (reading > 0) {
       if (reading < 1) { delay(500) }
       try {
-        const data = dateTime ? { reading, isLong, created: dateTime } : { reading, isLong }
+        const data = dateTime ? { reading, long, created: dateTime } : { reading, long }
 
         await submitReading('dose', data)
         await update('dose')
@@ -48,8 +48,8 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = (props: NewDoseRead
         <Text style={Styles.switchText}>Short</Text>
         <Switch
           testID={'doseReading_toggleSwitch'}
-          onValueChange={() => setIsLong(!isLong)}
-          value={isLong}
+          onValueChange={() => setLong(!long)}
+          value={long}
         />
         <Text style={Styles.switchText}>Long</Text>
       </View>

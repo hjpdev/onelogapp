@@ -3,7 +3,7 @@ import { needsUpdating, storeData } from '../Store'
 import { statsDateTitleCompare } from './Date'
 import { StatsReadingProps } from '../Components/Carousel/Readings'
 
-export const update = async (table: string) => {
+export const update = async (table: string): Promise<void> => {
   const readings = table === 'stats'
     ? await getStats()
     : await getReadings(table)
@@ -13,22 +13,48 @@ export const update = async (table: string) => {
     : await storeData(`${table}Readings`, { updated: Date.now(), readings })
 }
 
-export const checkHomeScreenData = async (): Promise<void> => {
+const generateHomeScreenQuery = async (): Promise<string> => {
+  const queryMap: {[key: string]: string} = {
+    bgReadings: 'bgReadings { created reading }',
+    bgStats: 'bgStats(days: [7, 14, 30, 90, 365]) { created avg stddev }',
+    doseReadings: 'doseReadings {created reading long}',
+    macroReadings: 'macroReadings { created kcal carbs sugar protein fat }'
+  }
+  const keys = ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings']
+  const querys: string[] = []
+
+  for (const key of keys) {
+    if (await needsUpdating(key)) {
+      querys.push(queryMap[key])
+    }
+  }
+
+  return querys.length > 0 ? `{ ${querys.join(' ')} }` : ''
+}
+
+export const checkHomeScreenData = async(): Promise<void> => {
   try {
-    if (await needsUpdating('bgReadings')) {
-      await update('bg')
+    const query = await generateHomeScreenQuery()
+
+    if (query) {
+      const url = 'http://localhost:8088/graphql'
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ query })
+      })
+
+      const { data } = await response.json()
+
+      for (const key of Object.keys(data)) {
+        await storeData(key, { updated: Date.now(), readings: data[key] })
+      }
     }
-    if (await needsUpdating('bgStats')) {
-      await update('stats')
-    }
-    if (await needsUpdating('doseReadings')) {
-      await update('dose')
-    }
-    if (await needsUpdating('macroReadings')) {
-      await update('macro')
-    }
-    await update('keto')
-  } catch(err) {
+  } catch (err) {
     console.log('Error checkHomeScreenData: ', err.stack)
   }
 }
