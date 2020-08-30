@@ -1,21 +1,15 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import MacroReadingInput from '../Minor/MacroReadingInput'
-import NewReadingHeader from './NewReadingHeader'
-import SuccessModal from '../Minor/SuccessModal'
-import TimeSelector from '../Minor/TimeSelector'
-import { delay } from '../../Helpers/General'
-import { submitReading, update } from '../../Store/Data'
+import MacroReadingInput from '../../Minor/MacroReadingInput'
+import NewReadingHeader from '../NewReadingHeader'
+import SuccessModal from '../../Minor/SuccessModal'
+import TimeSelector from '../../Minor/TimeSelector'
+import { delay } from '../../../Helpers/General'
+import { submitReading, update } from '../../../Store/Data'
 
-type NewMacroReadingProps = {
-  onBack: () => void
-}
-
-export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroReadingProps) => {
-  const { onBack } = props
-
-  const [reading, setReading] = useState({})
+export const NewMacroReading: React.FC = () => {
+  const [reading, setReading] = useState<{[key: string]: string | number}>({})
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
@@ -25,8 +19,8 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
         try {
           const data = dateTime ? { ...reading, created: dateTime } : { ...reading }
 
-          await submitReading('macro', data)
-          await update('macro')
+          await submitReading({ table: 'macro', data })
+          await update({ dataKey: 'macroReadings' })
           
           setShowSuccessModal(true)
           await delay(1000)
@@ -40,7 +34,7 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
 
   return(
     <>
-    <NewReadingHeader text={'New Macro Reading'} onBack={onBack} />
+    <NewReadingHeader headerText={'Macro'} dataKey={'macroReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <MacroReadingInput updateReading={setReading} />

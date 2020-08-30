@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 
-import NewReadingHeader from '../NewReading/NewReadingHeader'
+import PreviousReadingsHeader from './PreviousReadingsHeader'
 import PreviousReadingsForDate from './PreviousReadingsForDate'
-import PreviousBgReading from './PreviousBgReading'
-import PreviousKetoReading from './PreviousBgReading'
+import { PreviousBgReading, PreviousKetoReading } from './Readings'
 import { generateCreatedDay } from '../../Helpers/Date'
 import { getData } from '../../Store'
 import { update } from '../../Store/Data'
@@ -13,6 +12,7 @@ type PreviousReadingsProps = {
   route: {
     params: {
       dataKey: string
+      headerText: string
     }
   }
 }
@@ -21,6 +21,7 @@ type PreviousReading = {
   id: string
   created: Date
   reading: number
+  Template: React.FC
 }
 
 const templateMap: {[key: string]: any} = {
@@ -30,7 +31,7 @@ const templateMap: {[key: string]: any} = {
 
 const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadingsProps) => {
   const { route } = props
-  const { dataKey } = route.params
+  const { dataKey, headerText } = route.params
 
   const [readings, setReadings] = useState([])
 
@@ -79,7 +80,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
 
   return(
     <>
-    <NewReadingHeader text={'Previous Bg Readings'} hidePreviousReadingsIcon />
+    <PreviousReadingsHeader headerText={headerText} />
     <ScrollView style={Styles.container}>
       {generateListItems()}
     </ScrollView>

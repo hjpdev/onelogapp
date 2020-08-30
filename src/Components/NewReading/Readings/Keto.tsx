@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 
-import NewReadingHeader from './NewReadingHeader'
-import SuccessModal from '../Minor/SuccessModal'
-import TimeSelector from '../Minor/TimeSelector'
-import WheelSelector from '../Minor/WheelSelector'
-import { delay } from '../../Helpers/General'
-import { submitReading } from '../../Store/Data'
+import NewReadingHeader from '../NewReadingHeader'
+import SuccessModal from '../../Minor/SuccessModal'
+import TimeSelector from '../../Minor/TimeSelector'
+import WheelSelector from '../../Minor/WheelSelector'
+import { delay } from '../../../Helpers/General'
+import { submitReading } from '../../../Store/Data'
 
 export const NewKetoReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
@@ -29,7 +29,7 @@ export const NewKetoReading: React.FC = () => {
 
   return(
     <>
-    <NewReadingHeader text={'New Ketones Reading'} dataKey={'ketoReadings'} />
+    <NewReadingHeader headerText={'Ketones'} dataKey={'ketoReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
       <WheelSelector updateReading={setReading} />
