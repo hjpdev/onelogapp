@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import MacroReadingInput from '../../Minor/MacroReadingInput'
-import NewReadingHeader from '../NewReadingHeader'
+import { NewReadingHeader } from '../NewReadingHeader'
 import SuccessModal from '../../Minor/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import { delay } from '../../../Helpers/General'
