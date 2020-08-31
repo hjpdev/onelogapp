@@ -45,9 +45,10 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#ebebeb',
     borderWidth: 0.5,
-    paddingLeft: 5,
-    paddingRight: 5,
-    margin: 4
+    paddingLeft: 6,
+    paddingRight: 6,
+    margin: 4,
+    width: '18%'
   },
   timeCreated: {
     fontSize: 16
