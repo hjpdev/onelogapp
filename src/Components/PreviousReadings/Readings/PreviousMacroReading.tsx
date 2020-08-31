@@ -27,11 +27,11 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
       <GradientBorder x={1.0} y={1.0} />
       <View style={Styles.readingContainer}>
         <View style={Styles.labels}>
-          <Text style={Styles.label}>{'Kcal'}</Text>
-          <Text style={Styles.label}>{'Carbs'}</Text>
-          <Text style={Styles.label}>{'Sugar'}</Text>
-          <Text style={Styles.label}>{'Protein'}</Text>
-          <Text style={Styles.label}>{'Fat'}</Text>
+          <Text style={Styles.label}>{'Kcal:'}</Text>
+          <Text style={Styles.label}>{'Carbs:'}</Text>
+          <Text style={Styles.label}>{'Sugar:'}</Text>
+          <Text style={Styles.label}>{'Protein:'}</Text>
+          <Text style={Styles.label}>{'Fat:'}</Text>
         </View>
 
         <View style={Styles.values}>
@@ -55,7 +55,7 @@ const Styles = StyleSheet.create({
     borderWidth: 0.5,
     paddingLeft: 6,
     paddingRight: 6,
-    margin: 5,
+    margin: '1.1%',
     width: '31%'
   },
   timeCreated: {
@@ -85,6 +85,7 @@ const Styles = StyleSheet.create({
   value: {
     fontSize: 14,
     alignSelf: 'flex-end',
+    fontWeight: 'bold',
     color: 'black'
   }
 })
