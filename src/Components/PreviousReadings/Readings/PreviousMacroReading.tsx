@@ -56,6 +56,7 @@ const Styles = StyleSheet.create({
     paddingLeft: 6,
     paddingRight: 6,
     margin: 5,
+    width: '31%'
   },
   timeCreated: {
     fontSize: 16
@@ -68,8 +69,6 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingBottom: 10,
-    backgroundColor: '#ebebeb',
-    // width: '100%'
   },
   labels: {
     flexDirection: 'column',
