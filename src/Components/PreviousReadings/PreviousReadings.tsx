@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from 'react-native'
 
 import PreviousReadingsHeader from './PreviousReadingsHeader'
 import PreviousReadingsForDate from './PreviousReadingsForDate'
-import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading } from './Readings'
+import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMacroReading } from './Readings'
 import { generateCreatedDay } from '../../Helpers/Date'
 import { getData } from '../../Store'
 import { update } from '../../Store/Data'
@@ -27,7 +27,8 @@ type PreviousReading = {
 const templateMap: {[key: string]: any} = {
   bgReadings: PreviousBgReading,
   ketoReadings: PreviousKetoReading,
-  doseReadings: PreviousDoseReading
+  doseReadings: PreviousDoseReading,
+  macroReadings: PreviousMacroReading
 }
 
 const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadingsProps) => {
