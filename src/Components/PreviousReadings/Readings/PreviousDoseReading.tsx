@@ -18,13 +18,17 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   const { created, reading, long } = data
   const timeCreated = generateCreatedTime(created)
 
+  const generateStartPoint = () => {
+    return long ? { x: 0.5, y: 0.25} : { x: 0.5, y: 0.75}
+  }
+
   return(
     <View style={Styles.container}>
       <View><Text style={Styles.timeCreated}>{timeCreated}</Text></View>
       <GradientBorder x={1.0} y={1.0} />
-      <View>
-        <LinearGradient colors={['#ebebeb', 'grey']} start={{ x: 0.5, y: 0.75}}>
-          <Text style={Styles.reading}>{reading}</Text>
+      <View style={Styles.reading}>
+        <LinearGradient colors={['#ebebeb', '#b8b8b8']} start={generateStartPoint()}>
+          <Text style={Styles.readingText}>{reading}</Text>
         </LinearGradient>
       </View>
       <View><Text>{long ? 'Long' : 'Short'}</Text></View>
@@ -48,6 +52,10 @@ const Styles = StyleSheet.create({
     fontSize: 16
   },
   reading: {
-    fontSize: 38
+    width: '90%',
+  },
+  readingText: {
+    fontSize: 38,
+    textAlign: 'center'
   }
 })
