@@ -5,8 +5,8 @@ import PreviousReadingsHeader from './PreviousReadingsHeader'
 import PreviousReadingsForDate from './PreviousReadingsForDate'
 import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMacroReading } from './Readings'
 import { generateCreatedDay } from '../../Helpers/Date'
-import { getData } from '../../Store'
-import { update } from '../../Store/Data'
+import { getData, storeData } from '../../Store'
+import { getReadings } from '../../Store/Data'
 
 type PreviousReadingsProps = {
   route: {
@@ -42,10 +42,13 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
       try {
         let data = await getData(dataKey)
         if (!data || !data.readings) {
-          await update({ dataKey })
+          const readings = await getReadings({ dataKeys: [dataKey] })
+          await storeData(dataKey, readings)
           data = await getData(dataKey)
         }
-        setReadings(data.readings)
+        if (data && data.readings) {
+          setReadings(data.readings)
+        }
       } catch(err) {
         console.log('Error PreviousReadings.fetchReadings: ', err)
       }
