@@ -73,6 +73,7 @@ const Styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'flex-start',
     backgroundColor: '#dbdbdb'
   }
 })

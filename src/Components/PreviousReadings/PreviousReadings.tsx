@@ -3,10 +3,10 @@ import { ScrollView, StyleSheet } from 'react-native'
 
 import PreviousReadingsHeader from './PreviousReadingsHeader'
 import PreviousReadingsForDate from './PreviousReadingsForDate'
-import { PreviousBgReading, PreviousKetoReading } from './Readings'
+import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMacroReading } from './Readings'
 import { generateCreatedDay } from '../../Helpers/Date'
-import { getData } from '../../Store'
-import { update } from '../../Store/Data'
+import { getData, storeData } from '../../Store'
+import { getReadings } from '../../Store/Data'
 
 type PreviousReadingsProps = {
   route: {
@@ -26,7 +26,9 @@ type PreviousReading = {
 
 const templateMap: {[key: string]: any} = {
   bgReadings: PreviousBgReading,
-  ketoReadings: PreviousKetoReading
+  ketoReadings: PreviousKetoReading,
+  doseReadings: PreviousDoseReading,
+  macroReadings: PreviousMacroReading
 }
 
 const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadingsProps) => {
@@ -39,11 +41,14 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
     const fetchReadings = async (dataKey: string) => {
       try {
         let data = await getData(dataKey)
-        if (!data) {
-          await update({ dataKey })
+        if (!data || !data.readings) {
+          const readings = await getReadings({ dataKeys: [dataKey] })
+          await storeData(dataKey, readings)
           data = await getData(dataKey)
         }
-        setReadings(data.readings)
+        if (data && data.readings) {
+          setReadings(data.readings)
+        }
       } catch(err) {
         console.log('Error PreviousReadings.fetchReadings: ', err)
       }

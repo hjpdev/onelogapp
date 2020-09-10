@@ -1,39 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import GestureRecognizer from 'react-native-swipe-gestures';
 
 import Chevron from '../Minor/Chevron'
 import GradientBorder from '../Minor/GradientBorder'
 import { capitalise } from '../../Helpers/General'
-import { getData } from '../../Store/index'
 import { generateCreatedDate } from '../../Helpers/Date'
 import { BgReadingProps, StatsReadingProps, DoseReadingProps, MacroReadingProps } from './Readings'
 
 type CarouselProps = {
-  name: string,
-  Template: React.FC<BgReadingProps> | React.FC<StatsReadingProps> | React.FC<DoseReadingProps> | React.FC<MacroReadingProps>,
-  dataKey: string,
+  name: string
+  Template: React.FC<BgReadingProps> | React.FC<StatsReadingProps> | React.FC<DoseReadingProps> | React.FC<MacroReadingProps>
+  data: any[]
   i?: number
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { name, Template, dataKey, i } = props
-  const [readings, setReadings] = useState([] as any)
+  const { name, Template, data, i } = props
+  const readings = data
   const [index, setIndex] = useState(i || 0)
-
-  useEffect(() => {
-    const fetchReadings = async (key: string) => {
-      try {
-        const data = await getData(key)
-        if (data && data.readings) {
-          setReadings(data.readings)
-        }
-      } catch(err) {
-        console.log('Error fetchReadings: ', err)
-      }
-    }
-    fetchReadings(dataKey)
-  }, [])
 
   const handleSwipeLeft = () => {
     if (index < readings.length - 1) setIndex(index + 1)

@@ -7,7 +7,7 @@ export type StoreData = {
   readings: BgReadingProps[] | StatsReadingProps[] | DoseReadingProps[] | MacroReadingProps[]
 }
 
-export const storeData = async (key: string, data: StoreData | StatsReadingProps): Promise<void> => {
+export const storeData = async (key: string, data: StoreData | StatsReadingProps | any): Promise<void> => {
   try {
     const value = JSON.stringify(data)
     await AsyncStorage.setItem(key, value)
@@ -25,6 +25,21 @@ export const getData = async (key: string): Promise<StoreData> => {
     console.log('Error getData: ', err)
   }
   return value && JSON.parse(value)
+}
+
+export const addReading = async (key: string, reading: any): Promise<any> => {
+  console.log('IN addReading ', reading)
+  const data = await getData(key)
+  console.log('addReading data BEFORE => ', data.readings[0])
+  const currentReadings = data.readings
+  const updatedData = { updated: Date.now(), readings: [reading, ...currentReadings] }
+  console.log('addReading data AFTER => ', updatedData.readings[0])
+
+  try {
+    return storeData(key, updatedData)
+  } catch (err) {
+    console.log(`Error addReading(${key}, ${reading})`)
+  }
 }
 
 export const needsUpdating = async (key: string): Promise<boolean> => {
