@@ -6,23 +6,33 @@ import SuccessModal from '../../Minor/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import WheelSelector from '../../Minor/WheelSelector'
 import { delay } from '../../../Helpers/General'
-import { submitReading, update } from '../../../Store/Data'
+import { submitReading } from '../../../Store/Data'
+import { addReading } from '../../../Store/index'
 
 export const NewBgReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
+  const handleSuccessfulSubmit = async (dataKey: string, response: {[key: string]: any}, modalSwitchFunction: (isVisible: boolean) => void) => {
+    try {
+      await addReading(dataKey, response)
+      modalSwitchFunction(true)
+      await delay(1000)
+      modalSwitchFunction(false)
+    } catch (err) {
+      console.log('Error bg handleSuccessfulSubmit: ', err)
+    }
+  }
+
   const handleSubmit = async () => {
     if (reading > 0) {
       if (reading < 1) { delay(500) }
       try {
         const data = dateTime ? { reading, created: dateTime } : { reading }
-        await submitReading({ table: 'bg', data })
-        await update({ dataKey: 'bgReadings' })
-        setShowSuccessModal(true)
-        await delay(1000)
-        setShowSuccessModal(false)
+        const response = await submitReading({ table: 'bg', data })
+
+        await handleSuccessfulSubmit('bgReadings', response, setShowSuccessModal)
       } catch (err) {
         console.log('Error bg handleSubmit: ', err)
       }

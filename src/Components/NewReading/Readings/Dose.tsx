@@ -22,7 +22,7 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = () => {
         const data = dateTime ? { reading, long, created: dateTime } : { reading, long }
 
         await submitReading({ table: 'dose', data })
-        await update({ dataKey: 'doseReadings' })
+        await update({ dataKeys: ['doseReadings'] })
         setShowSuccessModal(true)
         await delay(1000)
         setShowSuccessModal(false)

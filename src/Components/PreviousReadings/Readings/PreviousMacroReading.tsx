@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
 
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime } from '../../../Helpers/Date'
@@ -68,7 +67,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingBottom: 10,
+    paddingBottom: 8,
   },
   labels: {
     flexDirection: 'column',

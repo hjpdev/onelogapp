@@ -16,23 +16,23 @@ export const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingPro
   const { kcal, carbs, sugar, protein, fat } = data
 
   return(
-      <View style={Styles.container} testID={'carousel-macro'}>
-          <View style={Styles.labels}>
-            <Text style={Styles.label}>{'Kcal'}</Text>
-            <Text style={Styles.label}>{'Carbs'}</Text>
-            <Text style={Styles.label}>{'Sugar'}</Text>
-            <Text style={Styles.label}>{'Protein'}</Text>
-            <Text style={Styles.label}>{'Fat'}</Text>
-          </View>
-
-          <View style={Styles.values}>
-            <Text style={Styles.value}>{ kcal.toFixed(1) }</Text>
-            <Text style={Styles.value}>{ carbs.toFixed(1) }</Text>
-            <Text style={Styles.value}>{ sugar.toFixed(1) }</Text>
-            <Text style={Styles.value}>{ protein.toFixed(1) }</Text>
-            <Text style={Styles.value}>{ fat.toFixed(1) }</Text>
-          </View>
+    <View style={Styles.container} testID={'carousel-macro'}>
+      <View style={Styles.labels}>
+        <Text style={Styles.label}>{'Kcal:'}</Text>
+        <Text style={Styles.label}>{'Carbs:'}</Text>
+        <Text style={Styles.label}>{'Sugar:'}</Text>
+        <Text style={Styles.label}>{'Protein:'}</Text>
+        <Text style={Styles.label}>{'Fat:'}</Text>
       </View>
+
+      <View style={Styles.values}>
+        <Text style={Styles.value}>{ kcal.toFixed(1) }</Text>
+        <Text style={Styles.value}>{ carbs.toFixed(1) }</Text>
+        <Text style={Styles.value}>{ sugar.toFixed(1) }</Text>
+        <Text style={Styles.value}>{ protein.toFixed(1) }</Text>
+        <Text style={Styles.value}>{ fat.toFixed(1) }</Text>
+      </View>
+    </View>
   )
 }
 
@@ -59,6 +59,7 @@ const Styles = StyleSheet.create({
   },
   value: {
     fontSize: 16,
+    fontWeight: 'bold',
     alignSelf: 'flex-end',
     color: 'black'
   }
