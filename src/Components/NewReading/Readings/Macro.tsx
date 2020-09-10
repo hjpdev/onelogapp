@@ -5,8 +5,7 @@ import MacroReadingInput from '../../Minor/MacroReadingInput'
 import { NewReadingHeader } from '../NewReadingHeader'
 import SuccessModal from '../../Minor/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
-import { delay } from '../../../Helpers/General'
-import { submitReading, update } from '../../../Store/Data'
+import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
 
 export const NewMacroReading: React.FC = () => {
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
@@ -18,13 +17,9 @@ export const NewMacroReading: React.FC = () => {
       if (!Object.keys(reading).every(macro => { return reading[macro] === 0 })) {
         try {
           const data = dateTime ? { ...reading, created: dateTime } : { ...reading }
+          const response = await submitReading({ table: 'macro', data })
 
-          await submitReading({ table: 'macro', data })
-          await update({ dataKey: 'macroReadings' })
-          
-          setShowSuccessModal(true)
-          await delay(1000)
-          setShowSuccessModal(false)
+          return handleSuccessfulSubmit('macroReadings', response, setShowSuccessModal)
         } catch(err) {
           console.log('Error macro handleSubmit: ', err)
         }

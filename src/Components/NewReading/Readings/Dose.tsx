@@ -6,7 +6,7 @@ import SuccessModal from '../../Minor/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import WheelSelector from '../../Minor/WheelSelector'
 import { delay } from '../../../Helpers/General'
-import { submitReading, update } from '../../../Store/Data'
+import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
 
 
 export const NewDoseReading: React.FC<NewDoseReadingProps> = () => {
@@ -20,12 +20,9 @@ export const NewDoseReading: React.FC<NewDoseReadingProps> = () => {
       if (reading < 1) { delay(500) }
       try {
         const data = dateTime ? { reading, long, created: dateTime } : { reading, long }
+        const response = await submitReading({ table: 'dose', data })
 
-        await submitReading({ table: 'dose', data })
-        await update({ dataKey: 'doseReadings' })
-        setShowSuccessModal(true)
-        await delay(1000)
-        setShowSuccessModal(false)
+        return handleSuccessfulSubmit('doseReadings', response, setShowSuccessModal)
       } catch(err) {
         console.log('Error dose handleSubmit: ', err)
       }
