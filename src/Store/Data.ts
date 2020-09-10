@@ -1,5 +1,7 @@
 import { needsUpdating, storeData, getData } from '.'
 import { generateCreatedTime } from '../Helpers/Date'
+import { addReading } from '../Store/index'
+import { delay } from '../Helpers/General'
 
 type GenerateReadingsQueryOptions = {
   dataKeys: string[]
@@ -118,6 +120,17 @@ export const submitReading = async (options: SubmitReadingOptions): Promise<any>
     return result.json()
   } catch (err) {
     console.log('Error submitReading: ', err)
+  }
+}
+
+export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: string]: any}, modalSwitchFunction: (isVisible: boolean) => void): Promise<void> => {
+  try {
+    await addReading(dataKey, response)
+    modalSwitchFunction(true)
+    await delay(1000)
+    modalSwitchFunction(false)
+  } catch (err) {
+    console.log('Error bg handleSuccessfulSubmit: ', err)
   }
 }
 
