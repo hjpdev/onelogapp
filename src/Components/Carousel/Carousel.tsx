@@ -17,7 +17,6 @@ type CarouselProps = {
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   const { name, Template, data, i } = props
-  console.log('HERE YOU GO => ', data)
   const readings = data
   const [index, setIndex] = useState(i || 0)
 
