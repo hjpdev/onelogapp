@@ -14,20 +14,20 @@ export const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingPro
   const { avg, stddev } = data
 
   return(
-      <View style={Styles.container} testID={'carousel-bg-stats'}>
-        <View style={Styles.readingContainer}>
-          <Text style={Styles.reading}>
-            { avg && avg.toFixed(1) }
-          </Text>
-          <Text style={Styles.unit}>
-          { 'mmol/L' }
-          </Text>
-        </View>
-
-        <Text style={Styles.type}>
-        { `±${stddev && stddev.toFixed(1)}` }
-       </Text>
+    <View style={Styles.container} testID={'carousel-bg-stats'}>
+      <View style={Styles.readingContainer}>
+        <Text style={Styles.reading}>
+          { avg && avg.toFixed(1) }
+        </Text>
+        <Text style={Styles.unit}>
+        { 'mmol/L' }
+        </Text>
       </View>
+
+      <Text style={Styles.type}>
+      { `±${stddev && stddev.toFixed(1)}` }
+      </Text>
+    </View>
   )
 }
 
