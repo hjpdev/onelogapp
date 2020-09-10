@@ -39,10 +39,11 @@ const HomeScreen: React.FC<HomeScreenProps> = (props: HomeScreenProps) => {
   }, []))
 
   const { bgReadings, bgStats, doseReadings, macroReadings } = data
+  const allReadingsAvailable = bgReadings && bgStats && doseReadings && macroReadings
 
   return(
     <>
-    {bgReadings && bgStats && doseReadings && macroReadings &&
+    {allReadingsAvailable &&
     <View style={ScreenStyles.container} testID={'home-screen'}>
       <Carousel name={'bg'} Template={BgReading} data={bgReadings['readings']} />
       <Carousel name={'stats'} Template={StatsReading} data={bgStats['readings']} />
