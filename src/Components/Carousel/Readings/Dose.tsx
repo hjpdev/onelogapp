@@ -8,13 +8,6 @@ export type DoseReadingProps = {
   }
 }
 
-const generateStyle = (long: boolean) => {
-  return long === true 
-    ? { ...Styles.type, backgroundColor: '#c4c4c4' }
-    : Styles.type
-}
-
-
 export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
   const { data } = props
   const { reading, long } = data
@@ -36,6 +29,13 @@ export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps)
     </View>
   )
 }
+
+const generateStyle = (long: boolean) => {
+  return long === true 
+    ? { ...Styles.type, backgroundColor: '#c4c4c4' }
+    : Styles.type
+}
+
 
 const Styles = StyleSheet.create({
   container: {

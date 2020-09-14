@@ -9,7 +9,7 @@ export type BgReadingProps = {
 
 export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {
   const { data } = props
-  const reading = data.reading
+  const { reading } = data
 
   return(
     <View style={Styles.container} testID={'carousel-bg'}>
@@ -27,6 +27,7 @@ export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {
     </View>
   )
 }
+
 
 const Styles = StyleSheet.create({
   container: {

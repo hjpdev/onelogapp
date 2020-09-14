@@ -5,9 +5,9 @@ import { WheelPicker } from "../../react-native-wheel-picker-android"
 import {
   bgIntegerOptions,
   ketoIntegerOptions,
-  defaultOptions,
+  defaultNumSelectorOptions,
   doseFractionOptions
-} from '../../Helpers/General'
+} from '../../Helpers'
 
 type WheelSelectorProps = {
   updateReading: (reading: number) => void,
@@ -42,7 +42,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   }
  
   const integerOptions = isKeto ? ketoIntegerOptions : bgIntegerOptions
-  const fractionalOptions = isDose ? doseFractionOptions : defaultOptions
+  const fractionalOptions = isDose ? doseFractionOptions : defaultNumSelectorOptions
 
   return (
     <View style={Styles.container}>

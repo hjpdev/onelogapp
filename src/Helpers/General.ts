@@ -15,7 +15,7 @@ export const capitalise = (word: string): string => {
   return`${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`
 }
 
-export const defaultOptions = [
+export const defaultNumSelectorOptions = [
   '0','1','2','3','4','5','6','7','8','9'
 ]
 
