@@ -4,21 +4,13 @@ import { useNavigation } from '@react-navigation/native'
 
 import GradientBorder from '../Minor/GradientBorder'
 
-type NewReadingHeaderProps = {
-  headerText: string,
-  dataKey?: string,
-  hidePreviousReadingsIcon?: boolean
+type PreviousReadingsHeaderProps = {
+  headerText: string
 }
 
-const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHeaderProps) => {
-  const { headerText, dataKey, hidePreviousReadingsIcon } = props
-
+const PreviousReadingsHeader: React.FC<PreviousReadingsHeaderProps> = (props: PreviousReadingsHeaderProps) => {
+  const { headerText } = props
   const navigation = useNavigation()
-  const generatePreviousReadingsIconStyle = () => {
-    return hidePreviousReadingsIcon
-      ? {...Styles.previousReadingsIcon, tintColor: '#ebebeb', opacity: 100}
-      : Styles.previousReadingsIcon
-  }
 
   return(
     <>
@@ -40,7 +32,7 @@ const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHead
   )
 }
 
-export default NewReadingHeader
+export default PreviousReadingsHeader
 
 
 const Styles = StyleSheet.create({

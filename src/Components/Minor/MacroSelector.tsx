@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 import { WheelPicker } from '../../react-native-wheel-picker-android'
 
-import { defaultOptions } from '../../Helpers/General'
+import { defaultNumSelectorOptions } from '../../Helpers'
 
 type MacroSelectorProps = {
   hasThousands: boolean,
@@ -41,7 +41,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
       <View>
         <WheelPicker
           selectedItem={0}
-          data={defaultOptions}
+          data={defaultNumSelectorOptions}
           onItemSelected={int => onSelection(setThousands, int)}
           isCyclic={true}
           selectedItemTextSize={12}
@@ -54,7 +54,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
       <View>
         <WheelPicker
           selectedItem={0}
-          data={defaultOptions}
+          data={defaultNumSelectorOptions}
           onItemSelected={int => onSelection(setHundreds, int)}
           isCyclic={true}
           selectedItemTextSize={12}
@@ -67,7 +67,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
       <View>
         <WheelPicker
           selectedItem={0}
-          data={defaultOptions}
+          data={defaultNumSelectorOptions}
           onItemSelected={int => onSelection(setTens, int)}
           isCyclic={true}
           selectedItemTextSize={12}
@@ -80,7 +80,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
       <View>
         <WheelPicker
           selectedItem={0}
-          data={defaultOptions}
+          data={defaultNumSelectorOptions}
           onItemSelected={int => onSelection(setOnes, int)}
           isCyclic={true}
           selectedItemTextSize={12}
@@ -94,7 +94,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
       <View>
         <WheelPicker
           selectedItem={0}
-          data={defaultOptions}
+          data={defaultNumSelectorOptions}
           onItemSelected={int => onSelection(setDecimal, int)}
           isCyclic={true}
           selectedItemTextSize={12}

@@ -1,7 +1,6 @@
 import { needsUpdating, storeData, getData } from '.'
-import { generateCreatedTime } from '../Helpers/Date'
 import { addReading } from '../Store/index'
-import { delay } from '../Helpers/General'
+import { delay } from '../Helpers'
 
 type GenerateReadingsQueryOptions = {
   dataKeys: string[]
@@ -19,24 +18,6 @@ type SubmitReadingOptions = {
   data: {
     reading: number | {[key: string]: number}
     created?: Date | undefined | null
-  }
-}
-
-type UpdateOptions = {
-  dataKeys: string[]
-  days?: number[]
-}
-
-export const update = async (options: UpdateOptions): Promise<void> => {
-  const { dataKeys, days } = options
-  try {
-    const data = await getReadings({ dataKeys, days })
-    for (const dataKey of Object.keys(data)) {
-      await storeData(dataKey, { updated: Date.now(), readings: data[dataKey] })
-      console.log(`Updated ${dataKey} at ${generateCreatedTime(new Date().toLocaleString())}`)
-    }
-  } catch (err) {
-    console.log(`Error update(${options}): `, err)
   }
 }
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 import MacroSelector from './MacroSelector'
+import GradientBorder from '../Minor/GradientBorder'
 
 type MacroReadingInputProps = {
   updateReading: (reading: {[macro: string]: number}) => any
@@ -42,6 +43,18 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
       <View style={Styles.input}>
         <Text style={Styles.label}>{'Fat (g):'}</Text>
         <MacroSelector hasThousands={false} updateMacro={setFat} />
+      </View>
+      <View style={{ ...Styles.input, marginTop: 24, justifyContent: 'space-around' }}>
+        <TouchableOpacity style={{ width: '50%' }}>
+          <GradientBorder x={1.0} y={1.0} />
+          <Text style={{ fontSize: 16, textAlign: 'center' }}>Save as</Text>
+          <GradientBorder x={1.0} y={1.0} />
+        </TouchableOpacity>
+        <TouchableOpacity style={{ width: '50%' }}>
+          <GradientBorder x={1.0} y={1.0} />
+          <Text style={{ fontSize: 16, textAlign: 'center' }}>Saved</Text>
+          <GradientBorder x={1.0} y={1.0} />
+        </TouchableOpacity>
       </View>
     </View>
   )

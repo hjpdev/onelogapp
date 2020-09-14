@@ -36,6 +36,7 @@ export const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingPro
   )
 }
 
+
 const Styles = StyleSheet.create({
   container: {
     flex: 1,

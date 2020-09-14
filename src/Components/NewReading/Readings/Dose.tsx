@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native'
 
-import { NewReadingHeader } from '../NewReadingHeader'
 import SuccessModal from '../../Minor/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import WheelSelector from '../../Minor/WheelSelector'
 import { delay } from '../../../Helpers/General'
 import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
+import { NewReadingHeader } from '../NewReadingHeader'
 
 
 export const NewDoseReading: React.FC<NewDoseReadingProps> = () => {
