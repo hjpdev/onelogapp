@@ -47,12 +47,12 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
       <View style={{ ...Styles.input, marginTop: 24, justifyContent: 'space-around' }}>
         <TouchableOpacity style={{ width: '50%' }}>
           <GradientBorder x={1.0} y={1.0} />
-          <Text style={{ fontSize: 16, textAlign: 'center' }}>Save as</Text>
+          <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Save as</Text>
           <GradientBorder x={1.0} y={1.0} />
         </TouchableOpacity>
         <TouchableOpacity style={{ width: '50%' }}>
           <GradientBorder x={1.0} y={1.0} />
-          <Text style={{ fontSize: 16, textAlign: 'center' }}>Saved</Text>
+          <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Saved</Text>
           <GradientBorder x={1.0} y={1.0} />
         </TouchableOpacity>
       </View>
