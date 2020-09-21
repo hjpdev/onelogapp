@@ -18,9 +18,19 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { data } = props
   const { name, kcal, carbs, sugar, protein, fat } = data
 
+  const titleCase = (name: string) => {
+    return name.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    }
+  )}
+
+  const formatName = (name: string) => {
+    return titleCase(name.replace(/_/g, ' '))
+  }
+
   return(
     <View style={Styles.container}>
-      <View><Text style={Styles.timeCreated}>{name}</Text></View>
+      <View><Text style={Styles.name}>{formatName(name)}</Text></View>
       <GradientBorder x={1.0} y={1.0} />
       <View style={Styles.readingContainer}>
         <View style={Styles.labels}>
@@ -57,8 +67,9 @@ const Styles = StyleSheet.create({
     margin: '1.1%',
     width: '31%'
   },
-  timeCreated: {
-    fontSize: 16
+  name: {
+    fontSize: 16,
+    textAlign: 'center'
   },
   reading: {
     fontSize: 38

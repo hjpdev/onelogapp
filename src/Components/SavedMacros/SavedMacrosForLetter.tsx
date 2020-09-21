@@ -25,7 +25,7 @@ const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedM
         <GradientBorder x={1.0} y={1.0} />
           <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.date}>
             <Text style={Styles.placeholder}>{'▶︎'}</Text>
-            <Text style={Styles.dateText}>{letter}</Text>
+            <Text style={Styles.letterText}>{letter.toUpperCase()}</Text>
             <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
           </TouchableOpacity>
           {isOpen &&
@@ -55,7 +55,7 @@ const Styles = StyleSheet.create({
     padding: 14,
     justifyContent: 'space-between'
   },
-  dateText: {
+  letterText: {
     fontSize: 22,
     fontWeight: 'bold',
   },
