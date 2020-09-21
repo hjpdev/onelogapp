@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import NavBar from '../NavBar'
 import PreviousReadings from '../PreviousReadings/PreviousReadings'
+import SavedMacros from '../SavedMacros/SavedMacros'
 import NewReadingSelection from '../NewReading/NewReadingSelection'
 import { NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '../NewReading/Readings'
 
@@ -25,6 +26,7 @@ const NewReadingScreen: React.FC<NewReadingScreenProps> = (props: NewReadingScre
       <Stack.Screen name="NewMacroReading" component={NewMacroReading} />
       <Stack.Screen name="NewKetoReading" component={NewKetoReading} />
       <Stack.Screen name="PreviousReadings" component={PreviousReadings} />
+      <Stack.Screen name="SavedMacros" component={SavedMacros} />
     </Stack.Navigator>
     <NavBar navigation={navigation} />
     </>

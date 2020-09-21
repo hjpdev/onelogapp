@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import MacroSelector from './MacroSelector'
 import GradientBorder from '../Minor/GradientBorder'
@@ -16,6 +17,8 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   const [sugar, setSugar] = useState(0)
   const [protein, setProtein] = useState(0)
   const [fat, setFat] = useState(0)
+
+  const navigation = useNavigation()
 
   useEffect(() => {
     const reading = { kcal, carbs, sugar, protein, fat }
@@ -50,7 +53,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
           <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Save as</Text>
           <GradientBorder x={1.0} y={1.0} />
         </TouchableOpacity>
-        <TouchableOpacity style={{ width: '50%' }}>
+        <TouchableOpacity style={{ width: '50%' }} onPress={() => navigation.navigate('SavedMacros')}>
           <GradientBorder x={1.0} y={1.0} />
           <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Saved</Text>
           <GradientBorder x={1.0} y={1.0} />
