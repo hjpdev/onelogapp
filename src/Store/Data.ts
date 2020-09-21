@@ -49,7 +49,8 @@ const generateReadingsQuery = (options: GenerateReadingsQueryOptions): string =>
     bgStats: `bgStats(days: [${days}]) { created avg stddev }`,
     doseReadings: 'doseReadings { id, created reading long }',
     macroReadings: 'macroReadings { id, created kcal carbs sugar protein fat }',
-    ketoReadings: 'ketoReadings { id, created reading }'
+    ketoReadings: 'ketoReadings { id, created reading }',
+    savedMacros: 'savedMacros { id, created, name, kcal, carbs, sugar, protein, fat, amount, unit, times_added }'
   }
   const querys: string[] = []
 

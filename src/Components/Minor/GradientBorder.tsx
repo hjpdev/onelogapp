@@ -20,8 +20,7 @@ const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBorderProp
       start={{ x: 0.0, y: 1.0 }} end={{ x, y }}
       colors={ colors }
       style={{ height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center' }}
-      >
-    </LinearGradient>
+    />
   )
 }
 
