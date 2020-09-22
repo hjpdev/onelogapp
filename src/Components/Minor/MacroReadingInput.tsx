@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import MacroSelector from './MacroSelector'
+import NewSavedMacroModal from '../Minor/NewSavedMacroModal'
 import GradientBorder from '../Minor/GradientBorder'
 
 type MacroReadingInputProps = {
@@ -17,6 +18,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   const [sugar, setSugar] = useState(0)
   const [protein, setProtein] = useState(0)
   const [fat, setFat] = useState(0)
+  const [showNewSavedMacroModal, setShowNewSavedMacroModal] = useState(false)
 
   const navigation = useNavigation()
 
@@ -26,6 +28,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   }, [kcal, carbs, sugar, protein, fat])
 
   return(
+    <>
     <View style={Styles.container}>
       <View style={Styles.input}>
         <Text style={Styles.label}>{'Kcal:'}</Text>
@@ -47,8 +50,8 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
         <Text style={Styles.label}>{'Fat (g):'}</Text>
         <MacroSelector hasThousands={false} updateMacro={setFat} />
       </View>
-      <View style={{ ...Styles.input, marginTop: 24, justifyContent: 'space-around' }}>
-        <TouchableOpacity style={{ width: '50%' }}>
+      <View style={{ ...Styles.input, marginTop: 24 }}>
+        <TouchableOpacity style={{ width: '50%' }} onPress={() => setShowNewSavedMacroModal(true)} >
           <GradientBorder x={1.0} y={1.0} />
           <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Save as</Text>
           <GradientBorder x={1.0} y={1.0} />
@@ -60,6 +63,8 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
         </TouchableOpacity>
       </View>
     </View>
+    <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} />
+    </>
   )
 }
 
