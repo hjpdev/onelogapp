@@ -23,9 +23,9 @@ it('pressing right chevron shows the next reading', async () => {
 })
 
 it('pressing left chevron shows the previous reading', async () => {
-  const { findByText, getByText } = render(<Carousel name={'bg'} Template={BgReading} data={testData} i={1} />)
+  const { findByText, getByText } = render(<Carousel name={'bg'} Template={BgReading} data={testData} startingIndex={1} />)
 
-  fireEvent.press( await findByText('<'))
+  fireEvent.press(await findByText('<'))
 
   expect(getByText('7.2')).toBeTruthy()
 })

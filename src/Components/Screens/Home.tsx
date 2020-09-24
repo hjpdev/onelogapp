@@ -3,7 +3,6 @@ import { View } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 
 import Carousel from '../Carousel/Carousel'
-import NavBar from '../NavBar'
 import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/Readings'
 import { getHomeScreenData } from '../../Store/Data'
 import { ScreenStyles } from '../../Assets/Styles/Screen'
@@ -15,14 +14,7 @@ const deafultHomeScreenData = {
   macroReadings: { readings: [] },
 }
 
-type HomeScreenProps = {
-  navigation: {
-    navigate: (screen: string) => void
-  }
-}
-
-const HomeScreen: React.FC<HomeScreenProps> = (props: HomeScreenProps) => {
-  const { navigation } = props
+const HomeScreen: React.FC = () => {
   const [ data, setData ] = useState(deafultHomeScreenData)
 
   const getHomeData = async () =>  {
@@ -51,7 +43,6 @@ const HomeScreen: React.FC<HomeScreenProps> = (props: HomeScreenProps) => {
       <Carousel name={'macro'} Template={MacroReading} data={macroReadings['readings']} />
     </View>
     }
-    <NavBar navigation={navigation} />
     </>
   )
 }

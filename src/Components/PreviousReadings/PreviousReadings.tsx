@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native'
 
 import PreviousReadingsHeader from './PreviousReadingsHeader'
 import PreviousReadingsForDate from './PreviousReadingsForDate'
@@ -35,20 +35,18 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
   const { route } = props
   const { dataKey, headerText } = route.params
 
-  const [readings, setReadings] = useState([])
+  const [readings, setReadings] = useState([] as any)
 
   useEffect(() => {
     const fetchReadings = async (dataKey: string) => {
       try {
-        let data = await getData(dataKey)
-        if (!data || !data.readings) {
-          const readings = await getReadings({ dataKeys: [dataKey] })
-          await storeData(dataKey, readings)
-          data = await getData(dataKey)
+        let { readings } = await getData(dataKey)
+        if (!readings) {
+          const response = await getReadings({ dataKeys: [dataKey] })
+          readings = response[dataKey]
+          await storeData(dataKey, { readings })
         }
-        if (data && data.readings) {
-          setReadings(data.readings)
-        }
+        setReadings(readings)
       } catch(err) {
         console.log('Error PreviousReadings.fetchReadings: ', err)
       }
@@ -86,7 +84,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
   return(
     <>
     <PreviousReadingsHeader headerText={headerText} />
-    <ScrollView style={Styles.container}>
+    <ScrollView>
       {generateListItems()}
     </ScrollView>
     </>
@@ -94,10 +92,3 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
 }
 
 export default PreviousReadings
-
-
-const Styles = StyleSheet.create({
-  container: {
-    height: '92%'
-  }
-})

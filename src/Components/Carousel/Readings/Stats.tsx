@@ -31,6 +31,7 @@ export const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingPro
   )
 }
 
+
 const Styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
