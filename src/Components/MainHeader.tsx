@@ -26,6 +26,7 @@ const Styles = StyleSheet.create({
     padding: 10,
     color: 'white',
     fontSize: 24,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
+    fontWeight: 'bold'
   }
 })

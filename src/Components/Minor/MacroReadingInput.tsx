@@ -63,7 +63,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
         </TouchableOpacity>
       </View>
     </View>
-    <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} />
+    <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }}/>
     </>
   )
 }

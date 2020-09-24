@@ -12,11 +12,11 @@ const Tab = createBottomTabNavigator()
 
 const TabNavigator: React.FC = () => {
   return (
-    <Tab.Navigator initialRouteName="Home" tabBarOptions={{ activeTintColor: 'tomato', inactiveTintColor: 'gray', style: { backgroundColor: 'black' } }}>
+    <Tab.Navigator initialRouteName="Home" tabBarOptions={{ activeTintColor: 'tomato', inactiveTintColor: '#ebebeb', style: { backgroundColor: 'black' } }}>
       <Tab.Screen name="Settings" component={SettingsScreen} options={{ tabBarIcon: getSettingsIcon }} />
       <Tab.Screen name="Account" component={AccountScreen} options={{ tabBarIcon: getAccountIcon }} />
       <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: getHomeIcon }} />
-      <Tab.Screen name="NewReading" component={NewReadingScreen} options={{ tabBarIcon: getNewReadingIcon }} />
+      <Tab.Screen name="New Reading" component={NewReadingScreen} options={{ tabBarIcon: getNewReadingIcon }} />
       <Tab.Screen name="Analytics" component={AnalyticsScreen} options={{ tabBarIcon: getAnalyticsIcon }} />
     </Tab.Navigator>
   )
@@ -25,7 +25,13 @@ const TabNavigator: React.FC = () => {
 export default TabNavigator
 
 
-const getSettingsIcon = ({ size, focused, color }) => {
+type tabIconOptions = {
+  size: number
+  focused: boolean
+  color: string
+}
+
+const getSettingsIcon = (options: tabIconOptions) => {
   return (
     <Image
       style={Styles.icon}
@@ -34,7 +40,7 @@ const getSettingsIcon = ({ size, focused, color }) => {
   )
 }
 
-const getAccountIcon = ({ size, focused, color }) => {
+const getAccountIcon = (options: tabIconOptions) => {
   return (
     <Image
       style={Styles.icon}
@@ -43,7 +49,7 @@ const getAccountIcon = ({ size, focused, color }) => {
   )
 }
 
-const getHomeIcon = ({ size, focused, color }) => {
+const getHomeIcon = (options: tabIconOptions) => {
   return (
     <Image
       style={Styles.icon}
@@ -52,7 +58,7 @@ const getHomeIcon = ({ size, focused, color }) => {
   )
 }
 
-const getNewReadingIcon = ({ size, focused, color }) => {
+const getNewReadingIcon = (options: tabIconOptions) => {
   return (
     <Image
       style={Styles.icon}
@@ -61,7 +67,7 @@ const getNewReadingIcon = ({ size, focused, color }) => {
   )
 }
 
-const getAnalyticsIcon = ({ size, focused, color }) => {
+const getAnalyticsIcon = (options: tabIconOptions) => {
   return (
     <Image
       style={Styles.icon}
@@ -69,7 +75,6 @@ const getAnalyticsIcon = ({ size, focused, color }) => {
     />
   )
 }
-
 
 const Styles = StyleSheet.create({
   icon: {
