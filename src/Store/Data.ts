@@ -16,7 +16,7 @@ type GetReadingsOptions = {
 type SubmitReadingOptions = {
   table: string
   data: {
-    reading: number | {[key: string]: number}
+    reading: number | {[key: string]: number | string}
     created?: Date | undefined | null
   }
 }

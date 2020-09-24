@@ -4,6 +4,8 @@ import Modal from 'react-native-modal'
 
 import MacroAmountSelector from './MacroAmountSelector'
 import GradientBorder from './GradientBorder'
+import SuccessModal from './SuccessModal'
+import { handleSuccessfulSubmit, submitReading } from '../../Store/Data'
 
 type NewSavedMacroModalProps = {
   isVisible: boolean
@@ -22,26 +24,38 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
   const [name, setName] = useState('')
   const [amount, setAmount] = useState(0)
   const [unit, setUnit] = useState('')
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
-  console.log('AMOUNT => ', amount)
-  console.log('UNIT => ', unit)
+  const handleSubmit = async () => {
+    const data = { ...macros, name, amount, unit }
+    try {
+      const response = await submitReading({ table: 'macro/saved', data })
+      onClose()
+      return handleSuccessfulSubmit('macroReadings', response, setShowSuccessModal)
+    } catch (err) {
+      console.log('Error NewSavedMacroModal handleSubmit: ', err)
+    }
+  }
 
   return(
+    <>
     <Modal isVisible={isVisible} animationIn='fadeInUp' animationOut='fadeOutDown' animationInTiming={500} animationOutTiming={500} style={Styles.modal}>
       <View style={Styles.container}>
         <TextInput placeholder={'Name'} onChangeText={setName} style={Styles.textInput} />
         <GradientBorder x={1.0} y={1.0} />
         <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} />
         <View style={Styles.buttons}>
-          <TouchableOpacity onPress={onClose} style={Styles.button}>
+          <TouchableOpacity onPress={onClose}>
             <Text style={Styles.buttonText}>{'Cancel'}</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log(name)} style={Styles.button}>
+          <TouchableOpacity onPress={async () => await handleSubmit()}>
             <Text style={Styles.buttonText}>{'Submit'}</Text>
           </TouchableOpacity>
         </View>
       </View>
     </Modal>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    </>
   )
 }
 
@@ -50,15 +64,12 @@ export default NewSavedMacroModal
 
 const Styles = StyleSheet.create({
   container: {
-    // height: '20%',
     width: '50%',
     backgroundColor: 'white',
     borderRadius: 2
   },
   modal: {
-    // backgroundColor: '#ebebeb',
-    alignItems: 'center',
-    // justifyContent: 'center'
+    alignItems: 'center'
   },
   textInput: {
     width: '100%',
@@ -73,9 +84,6 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: 10,
     borderRadius: 2
-  },
-  button: {
-    // backgroundColor: 'red'
   },
   buttonText: {
     padding: 6
