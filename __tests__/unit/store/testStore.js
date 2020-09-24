@@ -8,7 +8,10 @@ import AsyncStorage from '@react-native-community/async-storage'
 it('stores data', async () => {
   await storeData('testKey', { test: "value" })
 
-  expect(AsyncStorage.setItem).toBeCalledWith('testKey', JSON.stringify({ test: "value" }))
+  expect(AsyncStorage.setItem).toBeCalled()
+  expect(AsyncStorage.setItem.mock.calls[0][0]).toEqual('testKey')
+  const argsCalledWith = JSON.parse(AsyncStorage.setItem.mock.calls[0][1])
+  expect(argsCalledWith.test).toEqual('value')
 })
 
 it('gets data', async () => {

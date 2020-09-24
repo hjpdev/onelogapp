@@ -1,13 +1,10 @@
-import { Dimensions, StyleSheet } from 'react-native'
-
-const deviceHeight = Dimensions.get('window').height
-const deviceWidth = Dimensions.get('window').width
+import { StyleSheet } from 'react-native'
 
 export const ScreenStyles = StyleSheet.create({
   container: {
     backgroundColor: '#ebebeb',
-    height: deviceHeight-120, // 96 in reality.
-    width: deviceWidth,
+    height: '100%',
+    width: '100%',
   },
   text: {
     fontSize: 28,

@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import MacroReadingInput from '../../Minor/MacroReadingInput'
-import { NewReadingHeader } from '../NewReadingHeader'
 import SuccessModal from '../../Minor/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
+import { NewReadingHeader } from '../NewReadingHeader'
 
 export const NewMacroReading: React.FC = () => {
   const [reading, setReading] = useState<{[key: string]: string | number}>({})

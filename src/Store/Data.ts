@@ -1,7 +1,6 @@
 import { needsUpdating, storeData, getData } from '.'
-import { generateCreatedTime } from '../Helpers/Date'
 import { addReading } from '../Store/index'
-import { delay } from '../Helpers/General'
+import { delay } from '../Helpers'
 
 type GenerateReadingsQueryOptions = {
   dataKeys: string[]
@@ -17,26 +16,8 @@ type GetReadingsOptions = {
 type SubmitReadingOptions = {
   table: string
   data: {
-    reading: number | {[key: string]: number}
+    reading: number | {[key: string]: number | string}
     created?: Date | undefined | null
-  }
-}
-
-type UpdateOptions = {
-  dataKeys: string[]
-  days?: number[]
-}
-
-export const update = async (options: UpdateOptions): Promise<void> => {
-  const { dataKeys, days } = options
-  try {
-    const data = await getReadings({ dataKeys, days })
-    for (const dataKey of Object.keys(data)) {
-      await storeData(dataKey, { updated: Date.now(), readings: data[dataKey] })
-      console.log(`Updated ${dataKey} at ${generateCreatedTime(new Date().toLocaleString())}`)
-    }
-  } catch (err) {
-    console.log(`Error update(${options}): `, err)
   }
 }
 
@@ -68,7 +49,8 @@ const generateReadingsQuery = (options: GenerateReadingsQueryOptions): string =>
     bgStats: `bgStats(days: [${days}]) { created avg stddev }`,
     doseReadings: 'doseReadings { id, created reading long }',
     macroReadings: 'macroReadings { id, created kcal carbs sugar protein fat }',
-    ketoReadings: 'ketoReadings { id, created reading }'
+    ketoReadings: 'ketoReadings { id, created reading }',
+    savedMacros: 'savedMacros { id, created, name, kcal, carbs, sugar, protein, fat, amount, unit, times_added }'
   }
   const querys: string[] = []
 
@@ -130,7 +112,7 @@ export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: s
     await delay(1000)
     modalSwitchFunction(false)
   } catch (err) {
-    console.log('Error bg handleSuccessfulSubmit: ', err)
+    console.log('Error handleSuccessfulSubmit: ', err)
   }
 }
 

@@ -4,12 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import GradientBorder from '../Minor/GradientBorder'
 
-type PreviousReadingsHeaderProps = {
-  headerText: string
-}
-
-const PreviousReadingsHeader: React.FC<PreviousReadingsHeaderProps> = (props: PreviousReadingsHeaderProps) => {
-  const { headerText } = props
+const SavedMacrosHeader: React.FC = () => {
   const navigation = useNavigation()
 
   return(
@@ -21,7 +16,7 @@ const PreviousReadingsHeader: React.FC<PreviousReadingsHeaderProps> = (props: Pr
         </TouchableOpacity>
       </View>
       <View style={Styles.textContainer}>
-        <Text style={Styles.text}>{`Previous ${headerText} Readings`}</Text>
+        <Text style={Styles.text}>{`Saved Macros`}</Text>
       </View>
       <View style={Styles.iconContainer}>
         <Text style={Styles.placeholder}>{' '}</Text>
@@ -32,7 +27,7 @@ const PreviousReadingsHeader: React.FC<PreviousReadingsHeaderProps> = (props: Pr
   )
 }
 
-export default PreviousReadingsHeader
+export default SavedMacrosHeader
 
 
 const Styles = StyleSheet.create({

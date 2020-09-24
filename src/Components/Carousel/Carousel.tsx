@@ -4,21 +4,20 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 
 import Chevron from '../Minor/Chevron'
 import GradientBorder from '../Minor/GradientBorder'
-import { capitalise } from '../../Helpers/General'
-import { generateCreatedDate } from '../../Helpers/Date'
+import { capitalise, generateCreatedDate } from '../../Helpers'
 import { BgReadingProps, StatsReadingProps, DoseReadingProps, MacroReadingProps } from './Readings'
 
 type CarouselProps = {
   name: string
   Template: React.FC<BgReadingProps> | React.FC<StatsReadingProps> | React.FC<DoseReadingProps> | React.FC<MacroReadingProps>
   data: any[]
-  i?: number
+  startingIndex?: number
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { name, Template, data, i } = props
+  const { name, Template, data, startingIndex } = props
   const readings = data
-  const [index, setIndex] = useState(i || 0)
+  const [index, setIndex] = useState(startingIndex || 0)
 
   const handleSwipeLeft = () => {
     if (index < readings.length - 1) setIndex(index + 1)
