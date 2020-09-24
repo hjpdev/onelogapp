@@ -8,11 +8,18 @@ import HomeScreen from './Screens/Home'
 import NewReadingScreen from './Screens/NewReading'
 import SettingsScreen from './Screens/Settings'
 
-const Tab = createBottomTabNavigator()
+const tabBarOptions = {
+  activeTintColor: 'tomato',
+  inactiveTintColor: '#ebebeb',
+  style: { backgroundColor: 'black' },
+  labelStyle: { fontSize: 12 }
+}
 
 const TabNavigator: React.FC = () => {
+  const Tab = createBottomTabNavigator()
+
   return (
-    <Tab.Navigator initialRouteName="Home" tabBarOptions={{ activeTintColor: 'tomato', inactiveTintColor: '#ebebeb', style: { backgroundColor: 'black' } }}>
+    <Tab.Navigator initialRouteName="Home" tabBarOptions={tabBarOptions}>
       <Tab.Screen name="Settings" component={SettingsScreen} options={{ tabBarIcon: getSettingsIcon }} />
       <Tab.Screen name="Account" component={AccountScreen} options={{ tabBarIcon: getAccountIcon }} />
       <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarIcon: getHomeIcon }} />
@@ -78,8 +85,8 @@ const getAnalyticsIcon = (options: tabIconOptions) => {
 
 const Styles = StyleSheet.create({
   icon: {
-    width: 24,
-    height: 24,
+    width: 22,
+    height: 22,
     tintColor: '#ebebeb'
   }
 })
