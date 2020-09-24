@@ -112,7 +112,7 @@ export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: s
     await delay(1000)
     modalSwitchFunction(false)
   } catch (err) {
-    console.log('Error bg handleSuccessfulSubmit: ', err)
+    console.log('Error handleSuccessfulSubmit: ', err)
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native'
 
 import SavedMacrosHeader from './SavedMacrosHeader'
 import SavedMacrosForLetter from './SavedMacrosForLetter'
@@ -23,25 +23,24 @@ type SavedMacro = {
 }
 
 const SavedMacros: React.FC = () => {
-  const [savedMacros, setSavedMacros] = useState([])
+  const [savedMacros, setSavedMacros] = useState([] as any)
 
   useEffect(() => {
-    const fetchReadings = async () => {
+    const fetchSavedMacros = async () => {
       try {
-        let data = await getData('savedMacros')
-        if (!data || !data.savedMacros) {
-          const savedMacros = await getReadings({ dataKeys: ['savedMacros'] })
-          await storeData('savedMacros', savedMacros)
-          data = await getData('savedMacros')
+        const data = await getData('savedMacros')
+        let { readings } = data
+        if (!readings) {
+          const response = await getReadings({ dataKeys: ['savedMacros'] })
+          readings = response['savedMacros']
+          await storeData('savedMacros', { readings })
         }
-        if (data && data.savedMacros) {
-          setSavedMacros(data.savedMacros)
-        }
+        setSavedMacros(readings)
       } catch(err) {
-        console.log('Error PreviousReadings.fetchReadings: ', err)
+        console.log('Error SavedMacros.fetchSavedMacros: ', err)
       }
     }
-    fetchReadings()
+    fetchSavedMacros()
   }, [])
 
   const sortSavedMacrosByLetter = () => {
@@ -68,7 +67,7 @@ const SavedMacros: React.FC = () => {
   return(
     <>
     <SavedMacrosHeader />
-    <ScrollView style={Styles.container}>
+    <ScrollView>
       {generateListItems()}
     </ScrollView>
     </>
@@ -76,10 +75,3 @@ const SavedMacros: React.FC = () => {
 }
 
 export default SavedMacros
-
-
-const Styles = StyleSheet.create({
-  container: {
-    height: '92%'
-  }
-})
