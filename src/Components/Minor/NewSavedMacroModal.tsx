@@ -31,7 +31,7 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
     try {
       const response = await submitReading({ table: 'macro/saved', data })
       onClose()
-      return handleSuccessfulSubmit('macroReadings', response, setShowSuccessModal)
+      return handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)
     } catch (err) {
       console.log('Error NewSavedMacroModal handleSubmit: ', err)
     }
