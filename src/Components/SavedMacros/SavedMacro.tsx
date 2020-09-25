@@ -1,22 +1,28 @@
-import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
+import ModifyReadingModal from '../Minor/ModifyReadingModal'
 import GradientBorder from '../Minor/GradientBorder'
 
 type SavedMacroProps = {
   data: {
+    id: number
     name: string
     kcal: number
     carbs: number
     sugar: number
     protein: number
     fat: number
+    amount: number
+    unit: string
   }
 }
 
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { data } = props
-  const { name, kcal, carbs, sugar, protein, fat } = data
+  const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
+
+  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
 
   const titleCase = (name: string) => {
     return name.replace(/\w\S*/g, (txt) => {
@@ -29,8 +35,19 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   }
 
   return(
+    <>
     <View style={Styles.container}>
-      <View><Text style={Styles.name}>{formatName(name)}</Text></View>
+      <View style={Styles.title}>
+        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+          <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+        </TouchableOpacity>
+        <Text style={Styles.name}>{formatName(name)}</Text>
+        <TouchableOpacity>
+          <Image source={require('../../Assets/Images/NavBarNewReading.png')} style={Styles.icon} />
+        </TouchableOpacity>
+      </View>
+      <GradientBorder x={1.0} y={1.0} />
+      <Text>{amount} {unit}</Text>
       <GradientBorder x={1.0} y={1.0} />
       <View style={Styles.readingContainer}>
         <View style={Styles.labels}>
@@ -50,6 +67,8 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
       </View>
     </View>
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} type={'savedMacro'} />
+    </>
   )
 }
 
@@ -67,7 +86,22 @@ const Styles = StyleSheet.create({
     margin: '1.1%',
     width: '31%'
   },
+  title: {
+    width: '100%',
+    // backgroundColor: 'red',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'stretch'
+  },
+  icon: {
+    tintColor: 'black',
+    height: 14,
+    width: 14,
+    padding: 4,
+    marginTop: 4
+  },
   name: {
+    flex: 5,
     fontSize: 16,
     textAlign: 'center'
   },
