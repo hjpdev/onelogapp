@@ -29,7 +29,7 @@ export const getData = async (key: string): Promise<StoreData> => {
 
 export const addReading = async (key: string, reading: any): Promise<any> => {
   const data = await getData(key)
-  const currentReadings = data.readings
+  const currentReadings = (data && data.readings) || []
   const updatedData = { updated: Date.now(), readings: [reading, ...currentReadings] }
 
   try {
