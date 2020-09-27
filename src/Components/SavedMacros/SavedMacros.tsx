@@ -48,7 +48,7 @@ const SavedMacros: React.FC = () => {
     letters.forEach(letter => {
       savedMacrosByLetter[letter] = []
     })
-    savedMacros.forEach(reading => {
+    savedMacros.forEach((reading: SavedMacro) => {
       const firstLetter = reading['name'][0]
       savedMacrosByLetter[firstLetter].push(reading)
     })

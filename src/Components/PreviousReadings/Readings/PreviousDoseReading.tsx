@@ -51,7 +51,7 @@ const Styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     margin: 4,
-    width: '18%'
+    width: '19%'
   },
   timeCreated: {
     fontSize: 16
