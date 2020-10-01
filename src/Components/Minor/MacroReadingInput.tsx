@@ -30,27 +30,12 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   return(
     <>
     <View style={Styles.container}>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Kcal:'}</Text>
-        <MacroSelector hasThousands updateMacro={setKcal} />
-      </View>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Carbs (g):'}</Text>
-        <MacroSelector hasThousands={false} updateMacro={setCarbs} />
-      </View>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Sugar (g):'}</Text>
-        <MacroSelector hasThousands={false} updateMacro={setSugar} />
-      </View>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Protein (g):'}</Text>
-        <MacroSelector hasThousands={false} updateMacro={setProtein} />
-      </View>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Fat (g):'}</Text>
-        <MacroSelector hasThousands={false} updateMacro={setFat} />
-      </View>
-      <View style={{ ...Styles.input, marginTop: 24 }}>
+      <MacroSelector hasThousands label={'Kcal:'} updateMacro={setKcal} />
+      <MacroSelector hasThousands={false} label={'Carbs (g):'} updateMacro={setCarbs} />
+      <MacroSelector hasThousands={false} label={'Sugar (g):'} updateMacro={setSugar} />
+      <MacroSelector hasThousands={false} label={'Protein (g):'} updateMacro={setProtein} />
+      <MacroSelector hasThousands={false} label={'Fat (g):'} updateMacro={setFat} />
+      <View style={Styles.savedMacroOptions}>
         <TouchableOpacity style={{ width: '50%' }} onPress={() => setShowNewSavedMacroModal(true)} >
           <GradientBorder x={1.0} y={1.0} />
           <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Save as</Text>
@@ -63,7 +48,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
         </TouchableOpacity>
       </View>
     </View>
-    <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }}/>
+    <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }} />
     </>
   )
 }
@@ -73,15 +58,18 @@ export default MacroReadingInput
 
 const Styles = StyleSheet.create({
   container: {
-    width: '60%'
+    width: '67%',
   },
-  input: {
+  labels: {
+    backgroundColor: 'green',
+    justifyContent: 'space-evenly'
+  },
+  savedMacroOptions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginTop: 24
   },
   label: {
     fontSize: 16,
-    textAlignVertical: 'bottom',
-    paddingBottom: 6
+    backgroundColor: 'yellow'
   }
 })

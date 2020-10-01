@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
 import ModifyReadingModal from '../Minor/ModifyReadingModal'
+import ModifyMacroModal from '../Minor/ModifyMacroModal'
 import GradientBorder from '../Minor/GradientBorder'
 
 type SavedMacroProps = {
@@ -23,6 +24,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
   const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
+  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
 
   const titleCase = (name: string) => {
     return name.replace(/\w\S*/g, (txt) => {
@@ -67,7 +69,8 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
       </View>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} type={'savedMacro'} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} showReadingModal={() => setShowModifyMacroModal(true)} />
+    <ModifyMacroModal isVisible={showModifyMacroModal} onClose={() => setShowModifyMacroModal(false)} />
     </>
   )
 }

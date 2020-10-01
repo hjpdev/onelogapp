@@ -6,11 +6,12 @@ import { defaultNumSelectorOptions } from '../../Helpers'
 
 type MacroSelectorProps = {
   hasThousands: boolean,
+  label: string
   updateMacro: Dispatch<SetStateAction<number>>
 }
 
 const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
-  const { hasThousands, updateMacro } = props
+  const { hasThousands, label, updateMacro } = props
 
   const [thousands, setThousands] = useState(0)
   const [hundreds, setHundreds] = useState(0)
@@ -37,72 +38,75 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
 
   return(
     <View style={Styles.container}>
-      {hasThousands &&
-      <View>
-        <WheelPicker
-          selectedItem={0}
-          data={defaultNumSelectorOptions}
-          onItemSelected={int => onSelection(setThousands, int)}
-          isCyclic={true}
-          selectedItemTextSize={12}
-          itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
-          style={generateStyle()}
-        />
-      </View>}
-      <View>
-        <WheelPicker
-          selectedItem={0}
-          data={defaultNumSelectorOptions}
-          onItemSelected={int => onSelection(setHundreds, int)}
-          isCyclic={true}
-          selectedItemTextSize={12}
-          itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
-          style={generateStyle()}
-        />
-      </View>
-      <View>
-        <WheelPicker
-          selectedItem={0}
-          data={defaultNumSelectorOptions}
-          onItemSelected={int => onSelection(setTens, int)}
-          isCyclic={true}
-          selectedItemTextSize={12}
-          itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
-          style={generateStyle()}
-        />
-      </View>
-      <View>
-        <WheelPicker
-          selectedItem={0}
-          data={defaultNumSelectorOptions}
-          onItemSelected={int => onSelection(setOnes, int)}
-          isCyclic={true}
-          selectedItemTextSize={12}
-          itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
-          style={generateStyle()}
-        />
-      </View>
-      <Text style={Styles.decimalPoint}>{'.'}</Text>
-      <View>
-        <WheelPicker
-          selectedItem={0}
-          data={defaultNumSelectorOptions}
-          onItemSelected={int => onSelection(setDecimal, int)}
-          isCyclic={true}
-          selectedItemTextSize={12}
-          itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
-          style={generateStyle()}
-        />
+      <Text style={Styles.label}>{label}</Text>
+      <View style={Styles.selectors}>
+        {hasThousands &&
+        <View>
+          <WheelPicker
+            selectedItem={0}
+            data={defaultNumSelectorOptions}
+            onItemSelected={int => onSelection(setThousands, int)}
+            isCyclic={true}
+            selectedItemTextSize={12}
+            itemTextSize={8}
+            selectedItemTextFontFamily={'roboto'}
+            itemTextFontFamily={'roboto'}
+            style={generateStyle()}
+          />
+        </View>}
+        <View>
+          <WheelPicker
+            selectedItem={0}
+            data={defaultNumSelectorOptions}
+            onItemSelected={int => onSelection(setHundreds, int)}
+            isCyclic={true}
+            selectedItemTextSize={12}
+            itemTextSize={8}
+            selectedItemTextFontFamily={'roboto'}
+            itemTextFontFamily={'roboto'}
+            style={generateStyle()}
+          />
+        </View>
+        <View>
+          <WheelPicker
+            selectedItem={0}
+            data={defaultNumSelectorOptions}
+            onItemSelected={int => onSelection(setTens, int)}
+            isCyclic={true}
+            selectedItemTextSize={12}
+            itemTextSize={8}
+            selectedItemTextFontFamily={'roboto'}
+            itemTextFontFamily={'roboto'}
+            style={generateStyle()}
+          />
+        </View>
+        <View>
+          <WheelPicker
+            selectedItem={0}
+            data={defaultNumSelectorOptions}
+            onItemSelected={int => onSelection(setOnes, int)}
+            isCyclic={true}
+            selectedItemTextSize={12}
+            itemTextSize={8}
+            selectedItemTextFontFamily={'roboto'}
+            itemTextFontFamily={'roboto'}
+            style={generateStyle()}
+          />
+        </View>
+        <Text style={Styles.decimalPoint}>{'.'}</Text>
+        <View>
+          <WheelPicker
+            selectedItem={0}
+            data={defaultNumSelectorOptions}
+            onItemSelected={int => onSelection(setDecimal, int)}
+            isCyclic={true}
+            selectedItemTextSize={12}
+            itemTextSize={8}
+            selectedItemTextFontFamily={'roboto'}
+            itemTextFontFamily={'roboto'}
+            style={generateStyle()}
+          />
+        </View>
       </View>
     </View>
   )
@@ -113,10 +117,19 @@ export default MacroSelector
 
 const Styles = StyleSheet.create({
   container: {
+    width: '100%',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     borderLeftWidth: 0.5,
     borderRightWidth: 0.5
+  },
+  selectors: {
+    flexDirection: 'row',
+  },
+  label: {
+    textAlignVertical: 'bottom',
+    paddingBottom: 8,
+    paddingLeft: 8
   },
   thousands: {
     width: 32,
