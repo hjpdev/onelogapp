@@ -5,19 +5,47 @@ import { WheelPicker } from '../../react-native-wheel-picker-android'
 import { defaultNumSelectorOptions } from '../../Helpers'
 
 type MacroSelectorProps = {
-  hasThousands: boolean,
+  hasThousands: boolean
   label: string
+  value?: number
   updateMacro: Dispatch<SetStateAction<number>>
 }
 
-const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
-  const { hasThousands, label, updateMacro } = props
+const parseValue = (value: number) => {
+  const stringValue = value.toString()
+  const integers = stringValue.split('.')[0]
+  const decimal = parseInt(stringValue.split('.')[1])
+  let thousands, hundreds, tens, ones
+  if (integers.length === 4) {
+    thousands = parseInt(integers[0])
+    hundreds = parseInt(integers[1])
+    tens = parseInt(integers[2])
+    ones = parseInt(integers[3])
+  }
+  if (integers.length === 3) {
+    hundreds = parseInt(integers[0])
+    tens = parseInt(integers[1])
+    ones = parseInt(integers[2])
+  }
+  if (integers.length === 2) {
+    tens = parseInt(integers[0])
+    ones = parseInt(integers[1])
+  }
+  if (integers.length === 1) {
+    ones = parseInt(integers[0])
+  }
 
-  const [thousands, setThousands] = useState(0)
-  const [hundreds, setHundreds] = useState(0)
-  const [tens, setTens] = useState(0)
-  const [ones, setOnes] = useState(0)
-  const [decimal, setDecimal] = useState(0)
+  return { thousands, hundreds, tens, ones, decimal }
+}
+
+const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
+  const { hasThousands, label, value, updateMacro } = props
+
+  const [thousands, setThousands] = useState((value && parseValue(value).thousands) || 0)
+  const [hundreds, setHundreds] = useState((value && parseValue(value).hundreds) || 0)
+  const [tens, setTens] = useState((value && parseValue(value).tens) || 0)
+  const [ones, setOnes] = useState((value && parseValue(value).ones) || 0)
+  const [decimal, setDecimal] = useState((value && parseValue(value).decimal) || 0)
 
   const generateValue = () => {
     return parseFloat(`${thousands}${hundreds}${tens}${ones}.${decimal}`)
@@ -43,7 +71,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
         {hasThousands &&
         <View>
           <WheelPicker
-            selectedItem={0}
+            selectedItem={thousands}
             data={defaultNumSelectorOptions}
             onItemSelected={int => onSelection(setThousands, int)}
             isCyclic={true}
@@ -56,7 +84,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
         </View>}
         <View>
           <WheelPicker
-            selectedItem={0}
+            selectedItem={hundreds}
             data={defaultNumSelectorOptions}
             onItemSelected={int => onSelection(setHundreds, int)}
             isCyclic={true}
@@ -69,7 +97,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
         </View>
         <View>
           <WheelPicker
-            selectedItem={0}
+            selectedItem={tens}
             data={defaultNumSelectorOptions}
             onItemSelected={int => onSelection(setTens, int)}
             isCyclic={true}
@@ -82,7 +110,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
         </View>
         <View>
           <WheelPicker
-            selectedItem={0}
+            selectedItem={ones}
             data={defaultNumSelectorOptions}
             onItemSelected={int => onSelection(setOnes, int)}
             isCyclic={true}
@@ -96,7 +124,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
         <Text style={Styles.decimalPoint}>{'.'}</Text>
         <View>
           <WheelPicker
-            selectedItem={0}
+            selectedItem={decimal}
             data={defaultNumSelectorOptions}
             onItemSelected={int => onSelection(setDecimal, int)}
             isCyclic={true}

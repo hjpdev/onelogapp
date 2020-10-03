@@ -6,11 +6,12 @@ import MacroReadingInput from './MacroReadingInput'
 
 type ModifyMacroModalProps = {
   isVisible: boolean
+  data: {[key: string]: number | string}
   onClose: () => void
 }
 
 const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroModalProps) => {
-  const { isVisible, onClose } = props
+  const { isVisible, data, onClose } = props
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
 
   return(
@@ -24,7 +25,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       onBackdropPress={onClose}
     >
       <View style={Styles.container}>
-        <MacroReadingInput updateReading={setReading} />
+        <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
       </View>
     </Modal>
   )
