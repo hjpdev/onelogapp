@@ -32,7 +32,7 @@ export const NewMacroReading: React.FC = () => {
     <NewReadingHeader headerText={'Macro'} dataKey={'macroReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
-      <MacroReadingInput updateReading={setReading} />
+      <MacroReadingInput showSavedMacroOptions updateReading={setReading} />
       <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>
