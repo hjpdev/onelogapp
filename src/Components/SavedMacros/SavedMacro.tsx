@@ -5,7 +5,7 @@ import ModifyReadingModal from '../Minor/ModifyReadingModal'
 import ModifyMacroModal from '../Minor/ModifyMacroModal'
 import GradientBorder from '../Minor/GradientBorder'
 
-type SavedMacroProps = {
+export type SavedMacroProps = {
   data: {
     id: number
     name: string
@@ -19,22 +19,22 @@ type SavedMacroProps = {
   }
 }
 
+const titleCase = (name: string) => {
+  return name.replace(/\w\S*/g, (txt) => {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  }
+)}
+
+export const formatName = (name: string) => {
+  return titleCase(name.replace(/_/g, ' '))
+}
+
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { data } = props
   const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
   const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
   const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
-
-  const titleCase = (name: string) => {
-    return name.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-    }
-  )}
-
-  const formatName = (name: string) => {
-    return titleCase(name.replace(/_/g, ' '))
-  }
 
   return(
     <>
@@ -91,7 +91,6 @@ const Styles = StyleSheet.create({
   },
   title: {
     width: '100%',
-    // backgroundColor: 'red',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'stretch'
