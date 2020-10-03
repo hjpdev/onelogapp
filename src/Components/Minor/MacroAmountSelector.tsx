@@ -7,14 +7,36 @@ import { defaultNumSelectorOptions } from '../../Helpers'
 type MacroSelectorProps = {
   updateAmount: Dispatch<SetStateAction<number>>
   updateUnit: Dispatch<SetStateAction<string>>
+  amount?: number
+  unit?: string
 }
 
-const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
-  const { updateAmount, updateUnit } = props
+const parseAmount = (value: number) => {
+  const stringValue = value.toString()
+  let hundreds, tens, ones
+  if (stringValue.length === 3) {
+    hundreds = parseInt(stringValue[0])
+    tens = parseInt(stringValue[1])
+    ones = parseInt(stringValue[2])
+  }
+  if (stringValue.length === 2) {
+    tens = parseInt(stringValue[0])
+    ones = parseInt(stringValue[1])
+  }
+  if (stringValue.length === 1) {
+    ones = parseInt(stringValue[0])
+  }
 
-  const [hundreds, setHundreds] = useState(0)
-  const [tens, setTens] = useState(0)
-  const [ones, setOnes] = useState(0)
+  return { hundreds, tens, ones }
+}
+
+
+const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
+  const { updateAmount, updateUnit, amount, unit } = props
+
+  const [hundreds, setHundreds] = useState((amount && parseAmount(amount).hundreds) || 0)
+  const [tens, setTens] = useState((amount && parseAmount(amount).tens) || 0)
+  const [ones, setOnes] = useState((amount && parseAmount(amount).ones) || 0)
 
   const generateAmount = () => {
     return parseFloat(`${hundreds}${tens}${ones}`)
@@ -33,7 +55,7 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
     <View style={Styles.container}>
       <View>
         <WheelPicker
-          selectedItem={0}
+          selectedItem={(amount && parseAmount(amount).hundreds) || 0}
           data={defaultNumSelectorOptions}
           onItemSelected={int => onSelection(setHundreds, int)}
           isCyclic={true}
@@ -46,7 +68,7 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
       </View>
       <View>
         <WheelPicker
-          selectedItem={0}
+          selectedItem={(amount && parseAmount(amount).tens) || 0}
           data={defaultNumSelectorOptions}
           onItemSelected={int => onSelection(setTens, int)}
           isCyclic={true}
@@ -59,7 +81,7 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
       </View>
       <View>
         <WheelPicker
-          selectedItem={0}
+          selectedItem={(amount && parseAmount(amount).ones) || 0}
           data={defaultNumSelectorOptions}
           onItemSelected={int => onSelection(setOnes, int)}
           isCyclic={true}
@@ -71,7 +93,7 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
         />
       </View>
       <View style={{ justifyContent: 'flex-end' }}>
-        <TextInput placeholder={'Unit'} onChangeText={updateUnit} style={Styles.textInput} />
+        <TextInput placeholder={unit || 'Unit'} onChangeText={updateUnit} style={Styles.textInput} />
       </View>
     </View>
   )

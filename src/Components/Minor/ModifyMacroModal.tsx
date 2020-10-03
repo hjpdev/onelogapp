@@ -1,17 +1,25 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import MacroReadingInput from './MacroReadingInput'
+import MacroAmountSelector from '../Minor/MacroAmountSelector'
+import GradientBorder from '../Minor/GradientBorder'
+
+import { SavedMacroProps, formatName } from '../SavedMacros/SavedMacro'
 
 type ModifyMacroModalProps = {
   isVisible: boolean
-  data: {[key: string]: number | string}
+  data: SavedMacroProps['data']
   onClose: () => void
 }
 
 const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroModalProps) => {
   const { isVisible, data, onClose } = props
+
+  const [name, setName] = useState(data.name)
+  const [amount, setAmount] = useState(data.amount)
+  const [unit, setUnit] = useState(data.unit)
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
 
   return(
@@ -23,9 +31,26 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       animationOutTiming={500}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      style={Styles.modal}
     >
       <View style={Styles.container}>
+        <TextInput value={formatName(name)} onChangeText={setName} style={Styles.name} />
+        <GradientBorder x={1.0} y={1.0} />
+        <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} amount={amount} unit={unit} />
+        <GradientBorder x={1.0} y={1.0} />
         <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
+        <View style={Styles.buttons}>
+          <TouchableOpacity style={Styles.button}>
+            <GradientBorder x={1.0} y={1.0} />
+            <Text style={Styles.buttonText}>{'Cancel'}</Text>
+            <GradientBorder x={1.0} y={1.0} />
+          </TouchableOpacity>
+          <TouchableOpacity style={Styles.button}>
+            <GradientBorder x={1.0} y={1.0} />
+            <Text style={Styles.buttonText}>{'Submit'}</Text>
+            <GradientBorder x={1.0} y={1.0} />
+          </TouchableOpacity>
+        </View>
       </View>
     </Modal>
   )
@@ -34,9 +59,26 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
 export default ModifyMacroModal
 
 const Styles = StyleSheet.create({
+  modal: {
+    justifyContent: 'flex-start'
+  },
   container: {
     backgroundColor: '#ebebeb',
     justifyContent: 'space-evenly',
     alignItems: 'center',
   },
+  name: {
+    fontSize: 18,
+    paddingVertical: 2
+  },
+  buttons: {
+    flexDirection: 'row'
+  },
+  button: {
+    width: '50%',
+    alignItems: 'center'
+  },
+  buttonText: {
+    padding: 6
+  }
 })
