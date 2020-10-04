@@ -4,17 +4,22 @@ import Modal from 'react-native-modal'
 
 import GradientBorder from './GradientBorder'
 import SuccessModal from './SuccessModal'
+import DeleteConfirmationModal from './DeleteConfirmationModal'
 
 type ModifyReadingModalProps = {
   isVisible: boolean
   id: number
+  name: string
+  table: string
   onClose: () => void
   showReadingModal: () => void
 }
 
 const ModifyReadingModal: React.FC<ModifyReadingModalProps> = (props: ModifyReadingModalProps) => {
-  const { isVisible, onClose, id, showReadingModal } = props
+  const { isVisible, onClose, id, name, table, showReadingModal } = props
+  
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   return(
     <>
@@ -34,13 +39,14 @@ const ModifyReadingModal: React.FC<ModifyReadingModalProps> = (props: ModifyRead
             <Text style={Styles.buttonText}>{'Edit'}</Text>
           </TouchableOpacity>
           <GradientBorder x={1.0} y={1.0} />
-          <TouchableOpacity onPress={() => null} style={Styles.button}>
+          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} style={Styles.button}>
             <Text style={Styles.buttonText}>{'Delete'}</Text>
           </TouchableOpacity>
         </View>
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={id} name={name} table={table} onClose={() => setShowDeleteConfirmationModal(false)} />
     </>
   )
 }
@@ -51,7 +57,6 @@ export default ModifyReadingModal
 const Styles = StyleSheet.create({
   container: {
     width: '30%',
-    backgroundColor: 'white',
     borderRadius: 2
   },
   modal: {
