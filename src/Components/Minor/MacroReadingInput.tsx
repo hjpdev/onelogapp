@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import MacroSelector from './MacroSelector'
-import NewSavedMacroModal from '../Minor/NewSavedMacroModal'
+import NewSavedMacroModal from '../Modals/NewSavedMacroModal'
 import GradientBorder from '../Minor/GradientBorder'
 
 type MacroReadingInputProps = {
