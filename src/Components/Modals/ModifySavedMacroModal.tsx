@@ -11,14 +11,14 @@ import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
 import { formatName } from '../../Helpers/General'
 import { TSavedMacro } from '../SavedMacros/SavedMacro'
 
-type ModifyMacroModalProps = {
+type ModifySavedMacroModalProps = {
   isVisible: boolean
   data: TSavedMacro
   onClose: () => void
   update: () => void
 }
 
-const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroModalProps) => {
+const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: ModifySavedMacroModalProps) => {
   const { isVisible, data, onClose, update } = props
 
   const [name, setName] = useState(data.name)
@@ -38,7 +38,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       update()
       onClose()
     } catch (err) {
-      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`)
+      console.log(`Error ModifySavedMacroModal.handleSubmit: ${err}`)
     }
   }
 
@@ -79,7 +79,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
   )
 }
 
-export default ModifyMacroModal
+export default ModifySavedMacroModal
 
 const Styles = StyleSheet.create({
   modal: {

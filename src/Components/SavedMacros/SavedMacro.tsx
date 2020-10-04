@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
 import ModifyReadingModal from '../Modals/ModifyReadingModal'
-import ModifyMacroModal from '../Modals/ModifyMacroModal'
+import ModifySavedMacroModal from '../Modals/ModifySavedMacroModal'
 import { formatName } from '../../Helpers/General'
 
 export type TSavedMacro = {
@@ -30,7 +30,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
   const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
-  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
+  const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState(false)
 
   return(
     <>
@@ -65,8 +65,8 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
       </View>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifyMacroModal(true)} update={update} />
-    <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifySavedMacroModal(true)} update={update} />
+    <ModifySavedMacroModal isVisible={showModifySavedMacroModal} data={data} onClose={() => setShowModifySavedMacroModal(false)} update={update} />
     </>
   )
 }

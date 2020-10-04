@@ -16,7 +16,7 @@ const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedM
 
   const generateList = () => {
     return readings.map(reading => {
-      return <SavedMacro key={reading.id} data={reading} update={update} />
+      return <SavedMacro key={reading.id} data={reading} update={() => update()} />
     })
   }
 
