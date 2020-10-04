@@ -8,12 +8,12 @@ import MacroAmountSelector from '../Minor/MacroAmountSelector'
 import SuccessModal from './SuccessModal'
 
 import { handleSuccessfulSubmit, putReading } from '../../Store/Data'
-import { SavedMacroProps } from '../SavedMacros/SavedMacro'
+import { TSavedMacro } from '../SavedMacros/SavedMacro'
 import { formatName } from '../../Helpers/General'
 
 type ModifyMacroModalProps = {
   isVisible: boolean
-  data: SavedMacroProps['data']
+  data: TSavedMacro
   onClose: () => void
   update: () => void
 }

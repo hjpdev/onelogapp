@@ -34,7 +34,6 @@ const Styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     backgroundColor: '#e8e8e8',
-    width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',
     padding: 8
@@ -45,10 +44,6 @@ const Styles = StyleSheet.create({
   },
   backIcon: {
     height: 30,
-    width: 30
-  },
-  previousReadingsIcon: {
-    height: 40,
     width: 30
   },
   textContainer: {
