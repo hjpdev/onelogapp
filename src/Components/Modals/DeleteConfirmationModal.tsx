@@ -5,7 +5,7 @@ import Modal from 'react-native-modal'
 import GradientBorder from '../Minor/GradientBorder'
 import SuccessModal from './SuccessModal'
 import { deleteReading, handleSuccessfulDelete } from '../../Store/Data'
-import { formatName } from '../SavedMacros/SavedMacro'
+import { formatName } from '../../Helpers/General'
 
 type DeleteConfirmationModalProps = {
   id: number
