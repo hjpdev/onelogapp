@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import GradientBorder from './GradientBorder'
+import GradientBorder from '../Minor/GradientBorder'
 import SuccessModal from './SuccessModal'
 import DeleteConfirmationModal from './DeleteConfirmationModal'
 

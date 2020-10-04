@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
-import ModifyReadingModal from '../Minor/ModifyReadingModal'
-import ModifyMacroModal from '../Minor/ModifyMacroModal'
+import ModifyReadingModal from '../Modals/ModifyReadingModal'
+import ModifyMacroModal from '../Modals/ModifyMacroModal'
 import GradientBorder from '../Minor/GradientBorder'
 
 export type SavedMacroProps = {

@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import MacroReadingInput from './MacroReadingInput'
+import MacroReadingInput from '../Minor/MacroReadingInput'
 import GradientBorder from '../Minor/GradientBorder'
 import MacroAmountSelector from '../Minor/MacroAmountSelector'
-import SuccessModal from '../Minor/SuccessModal'
+import SuccessModal from './SuccessModal'
 
 import { handleSuccessfulSubmit, putReading } from '../../Store/Data'
 import { SavedMacroProps, formatName } from '../SavedMacros/SavedMacro'

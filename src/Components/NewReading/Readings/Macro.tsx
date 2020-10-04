@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import MacroReadingInput from '../../Minor/MacroReadingInput'
 import { NewReadingHeader } from '../NewReadingHeader'
-import SuccessModal from '../../Minor/SuccessModal'
+import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
 
