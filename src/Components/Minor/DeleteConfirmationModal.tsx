@@ -4,6 +4,7 @@ import Modal from 'react-native-modal'
 
 import GradientBorder from './GradientBorder'
 import SuccessModal from './SuccessModal'
+import { deleteReading, handleSuccessfulDelete } from '../../Store/Data'
 import { formatName } from '../SavedMacros/SavedMacro'
 
 type DeleteConfirmationModalProps = {
@@ -17,7 +18,17 @@ type DeleteConfirmationModalProps = {
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: DeleteConfirmationModalProps) => {
   const { id, name, table, isVisible, onClose } = props
 
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+
   const handleDelete = async () => {
+    try {
+      const response = await deleteReading({ table, id })
+
+      await handleSuccessfulDelete('savedMacros', response, setShowSuccessModal)
+      onClose()
+    } catch (err) {
+      console.log(`Error handleDelete table: ${table}, id: ${id}: ${err}`)
+    }
   }
 
   return (
@@ -48,6 +59,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
         </View>
       </View>
     </Modal>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
