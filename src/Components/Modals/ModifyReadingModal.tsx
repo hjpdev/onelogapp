@@ -57,7 +57,7 @@ export default ModifyReadingModal
 
 const Styles = StyleSheet.create({
   container: {
-    width: '30%',
+    width: '70%',
     borderRadius: 2
   },
   modal: {

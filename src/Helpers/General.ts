@@ -15,6 +15,10 @@ export const capitalise = (word: string): string => {
   return`${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`
 }
 
+export const formatName = (name: string) => {
+  return titleCase(name.replace(/_/g, ' '))
+}
+
 export const defaultNumSelectorOptions = [
   '0','1','2','3','4','5','6','7','8','9'
 ]
@@ -41,3 +45,9 @@ export const clockMinutes = [
   '40', '41', '42', '43', '44', '45', '46', '47', '48', '49',
   '50', '51', '52', '53', '54', '55', '56', '57', '58', '59'
 ]
+
+const titleCase = (name: string) => {
+  return name.replace(/\w\S*/g, (txt) => {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  }
+)}

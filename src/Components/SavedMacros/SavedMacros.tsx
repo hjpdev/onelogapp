@@ -29,11 +29,11 @@ const SavedMacros: React.FC = () => {
     try {
       const data = await getData('savedMacros')
       let { readings } = data
-      if (!readings) {
+      // if (!readings) {
         const response = await getReadings({ dataKeys: ['savedMacros'] })
         readings = response['savedMacros']
         await storeData('savedMacros', { readings })
-      }
+      // }
       setSavedMacros(readings)
     } catch(err) {
       console.log('Error SavedMacros.fetchSavedMacros: ', err)

@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 import ModifyReadingModal from '../Modals/ModifyReadingModal'
 import ModifyMacroModal from '../Modals/ModifyMacroModal'
 import GradientBorder from '../Minor/GradientBorder'
+import { formatName } from '../../Helpers/General'
 
 export type SavedMacroProps = {
   data: {
@@ -18,16 +19,6 @@ export type SavedMacroProps = {
     unit: string
   }
   update: () => void
-}
-
-const titleCase = (name: string) => {
-  return name.replace(/\w\S*/g, (txt) => {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-  }
-)}
-
-export const formatName = (name: string) => {
-  return titleCase(name.replace(/_/g, ' '))
 }
 
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
@@ -71,7 +62,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
       </View>
     </View>
     <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifyMacroModal(true)} update={update} />
-    <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} />
+    <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
     </>
   )
 }
