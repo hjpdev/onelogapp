@@ -25,21 +25,22 @@ type SavedMacro = {
 const SavedMacros: React.FC = () => {
   const [savedMacros, setSavedMacros] = useState([] as any)
 
-  useEffect(() => {
-    const fetchSavedMacros = async () => {
-      try {
-        const data = await getData('savedMacros')
-        let { readings } = data
-        if (!readings) {
-          const response = await getReadings({ dataKeys: ['savedMacros'] })
-          readings = response['savedMacros']
-          await storeData('savedMacros', { readings })
-        }
-        setSavedMacros(readings)
-      } catch(err) {
-        console.log('Error SavedMacros.fetchSavedMacros: ', err)
+  const fetchSavedMacros = async () => {
+    try {
+      const data = await getData('savedMacros')
+      let { readings } = data
+      if (!readings) {
+        const response = await getReadings({ dataKeys: ['savedMacros'] })
+        readings = response['savedMacros']
+        await storeData('savedMacros', { readings })
       }
+      setSavedMacros(readings)
+    } catch(err) {
+      console.log('Error SavedMacros.fetchSavedMacros: ', err)
     }
+  }
+
+  useEffect(() => {
     fetchSavedMacros()
   }, [])
 
@@ -60,7 +61,7 @@ const SavedMacros: React.FC = () => {
     const savedMacrosByLetter = sortSavedMacrosByLetter()
 
     return letters.map((letter) => {
-      return <SavedMacrosForLetter letter={letter} readings={savedMacrosByLetter[letter]} key={letter} />
+      return <SavedMacrosForLetter letter={letter} readings={savedMacrosByLetter[letter]} key={letter} update={() => fetchSavedMacros()} />
     })
   }
 
@@ -68,7 +69,7 @@ const SavedMacros: React.FC = () => {
     <>
     <SavedMacrosHeader />
     <ScrollView>
-      {generateListItems()}
+      {savedMacros && generateListItems()}
     </ScrollView>
     </>
   )

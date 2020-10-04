@@ -17,6 +17,7 @@ export type SavedMacroProps = {
     amount: number
     unit: string
   }
+  update: () => void
 }
 
 const titleCase = (name: string) => {
@@ -30,7 +31,7 @@ export const formatName = (name: string) => {
 }
 
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
-  const { data } = props
+  const { data, update } = props
   const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
   const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
@@ -69,7 +70,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
       </View>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifyMacroModal(true)} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifyMacroModal(true)} update={update} />
     <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} />
     </>
   )

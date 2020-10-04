@@ -13,10 +13,11 @@ type DeleteConfirmationModalProps = {
   table: string
   isVisible: boolean
   onClose: () => void
+  update: () => void
 }
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: DeleteConfirmationModalProps) => {
-  const { id, name, table, isVisible, onClose } = props
+  const { id, name, table, isVisible, onClose, update } = props
 
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
@@ -25,6 +26,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
       const response = await deleteReading({ table, id })
 
       await handleSuccessfulDelete('savedMacros', response, setShowSuccessModal)
+      await update()
       onClose()
     } catch (err) {
       console.log(`Error handleDelete table: ${table}, id: ${id}: ${err}`)
