@@ -21,6 +21,11 @@ type SubmitReadingOptions = {
   }
 }
 
+type PutReadingOptions = {
+  table: string
+  data: any
+}
+
 const updateHomeScreenData = async () => {
   const dataKeys: string[] = []
   for (const key of ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings', 'ketoReadings']) {
@@ -113,6 +118,26 @@ export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: s
     modalSwitchFunction(false)
   } catch (err) {
     console.log('Error handleSuccessfulSubmit: ', err)
+  }
+}
+
+export const putReading = async (options: PutReadingOptions) => {
+  const { table, data } = options
+  const url = `http://localhost:8088/readings/${table}`
+
+  try {
+    const result = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+
+    return result.json()
+  } catch (err) {
+    console.log('Error putReading: ', err)
   }
 }
 

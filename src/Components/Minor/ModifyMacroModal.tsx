@@ -3,9 +3,11 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import Modal from 'react-native-modal'
 
 import MacroReadingInput from './MacroReadingInput'
-import MacroAmountSelector from '../Minor/MacroAmountSelector'
 import GradientBorder from '../Minor/GradientBorder'
+import MacroAmountSelector from '../Minor/MacroAmountSelector'
+import SuccessModal from '../Minor/SuccessModal'
 
+import { handleSuccessfulSubmit, putReading } from '../../Store/Data'
 import { SavedMacroProps, formatName } from '../SavedMacros/SavedMacro'
 
 type ModifyMacroModalProps = {
@@ -21,8 +23,23 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
   const [amount, setAmount] = useState(data.amount)
   const [unit, setUnit] = useState(data.unit)
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+
+  const id = data.id
+
+  const handleSubmit = async () => {
+    try {
+      const data = { name, ...reading, amount, unit }
+      const response = await putReading({ table: `macro/saved/${id}`, data })
+
+      return handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)
+    } catch (err) {
+      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`)
+    }
+  }
 
   return(
+    <>
     <Modal
       isVisible={isVisible}
       animationIn='fadeInUp'
@@ -40,12 +57,12 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
         <GradientBorder x={1.0} y={1.0} />
         <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
         <View style={Styles.buttons}>
-          <TouchableOpacity style={Styles.button}>
+          <TouchableOpacity onPress={onClose} style={Styles.button}>
             <GradientBorder x={1.0} y={1.0} />
             <Text style={Styles.buttonText}>{'Cancel'}</Text>
             <GradientBorder x={1.0} y={1.0} />
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.button}>
+          <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.button}>
             <GradientBorder x={1.0} y={1.0} />
             <Text style={Styles.buttonText}>{'Submit'}</Text>
             <GradientBorder x={1.0} y={1.0} />
@@ -53,6 +70,8 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
         </View>
       </View>
     </Modal>
+    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    </>
   )
 }
 
