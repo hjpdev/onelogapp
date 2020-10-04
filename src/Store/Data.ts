@@ -125,7 +125,8 @@ export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: s
   }
 }
 
-export const handleSuccessfulDelete = async (dataKey: string, id: number, modalSwitchFunction: (isVisible: boolean) => void): Promise<void> => {
+export const handleSuccessfulDelete = async (dataKey: string, response: { id: number }, modalSwitchFunction: (isVisible: boolean) => void): Promise<void> => {
+  const { id } = response
   try {
     await removeReading(dataKey, id)
     modalSwitchFunction(true)

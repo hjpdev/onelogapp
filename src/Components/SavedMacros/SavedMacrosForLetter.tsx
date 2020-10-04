@@ -7,15 +7,16 @@ import GradientBorder from '../Minor/GradientBorder'
 type SavedMacrosForLetterProps = {
   letter: string
   readings: {[key: string]: any}
+  update: () => void
 }
 
 const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedMacrosForLetterProps) => {
-  const { letter, readings } = props
+  const { letter, readings, update } = props
   const [isOpen, setIsOpen] = useState(false)
 
   const generateList = () => {
     return readings.map(reading => {
-      return <SavedMacro key={reading.id} data={reading} />
+      return <SavedMacro key={reading.id} data={reading} update={update} />
     })
   }
 
