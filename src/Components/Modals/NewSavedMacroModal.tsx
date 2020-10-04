@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Text, TextInput, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import MacroAmountSelector from './MacroAmountSelector'
-import GradientBorder from './GradientBorder'
+import GradientBorder from '../Minor/GradientBorder'
+import MacroAmountSelector from '../Minor/MacroAmountSelector'
 import SuccessModal from './SuccessModal'
 import { handleSuccessfulSubmit, submitReading } from '../../Store/Data'
 
@@ -21,6 +21,7 @@ type NewSavedMacroModalProps = {
 
 const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMacroModalProps) => {
   const { isVisible, onClose, macros } = props
+
   const [name, setName] = useState('')
   const [amount, setAmount] = useState(0)
   const [unit, setUnit] = useState('')
@@ -39,7 +40,15 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
 
   return(
     <>
-    <Modal isVisible={isVisible} animationIn='fadeInUp' animationOut='fadeOutDown' animationInTiming={500} animationOutTiming={500} style={Styles.modal}>
+    <Modal
+      isVisible={isVisible}
+      animationIn='fadeInUp'
+      animationOut='fadeOutDown'
+      animationInTiming={500}
+      animationOutTiming={500}
+      onBackButtonPress={onClose}
+      onBackdropPress={onClose}
+      style={Styles.modal}>
       <View style={Styles.container}>
         <TextInput placeholder={'Name'} onChangeText={setName} style={Styles.textInput} />
         <GradientBorder x={1.0} y={1.0} />

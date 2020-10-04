@@ -3,21 +3,37 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import MacroSelector from './MacroSelector'
-import NewSavedMacroModal from '../Minor/NewSavedMacroModal'
+import NewSavedMacroModal from '../Modals/NewSavedMacroModal'
 import GradientBorder from '../Minor/GradientBorder'
 
 type MacroReadingInputProps = {
+  showSavedMacroOptions: boolean
   updateReading: (reading: {[macro: string]: number}) => any
+  data?: {[key: string]: number | string}
+}
+
+const parseData = (data: {[key: string]: any} | undefined) => {
+  if (!data) {
+    return { kcal: 0, carbs: 0, sugar: 0, protein: 0, fat: 0 }
+  }
+
+  const k = parseFloat(data.kcal)
+  const c = parseFloat(data.carbs)
+  const s = parseFloat(data.sugar)
+  const p = parseFloat(data.protein)
+  const f = parseFloat(data.fat)
+
+  return { kcal: k, carbs: c, sugar: s, protein: p, fat: f }
 }
 
 const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReadingInputProps) => {
-  const { updateReading } = props
+  const { showSavedMacroOptions, data, updateReading } = props
 
-  const [kcal, setKcal] = useState(0)
-  const [carbs, setCarbs] = useState(0)
-  const [sugar, setSugar] = useState(0)
-  const [protein, setProtein] = useState(0)
-  const [fat, setFat] = useState(0)
+  const [kcal, setKcal] = useState(parseData(data).kcal)
+  const [carbs, setCarbs] = useState(parseData(data).carbs)
+  const [sugar, setSugar] = useState(parseData(data).sugar)
+  const [protein, setProtein] = useState(parseData(data).protein)
+  const [fat, setFat] = useState(parseData(data).fat)
   const [showNewSavedMacroModal, setShowNewSavedMacroModal] = useState(false)
 
   const navigation = useNavigation()
@@ -30,40 +46,27 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   return(
     <>
     <View style={Styles.container}>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Kcal:'}</Text>
-        <MacroSelector hasThousands updateMacro={setKcal} />
-      </View>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Carbs (g):'}</Text>
-        <MacroSelector hasThousands={false} updateMacro={setCarbs} />
-      </View>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Sugar (g):'}</Text>
-        <MacroSelector hasThousands={false} updateMacro={setSugar} />
-      </View>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Protein (g):'}</Text>
-        <MacroSelector hasThousands={false} updateMacro={setProtein} />
-      </View>
-      <View style={Styles.input}>
-        <Text style={Styles.label}>{'Fat (g):'}</Text>
-        <MacroSelector hasThousands={false} updateMacro={setFat} />
-      </View>
-      <View style={{ ...Styles.input, marginTop: 24 }}>
-        <TouchableOpacity style={{ width: '50%' }} onPress={() => setShowNewSavedMacroModal(true)} >
-          <GradientBorder x={1.0} y={1.0} />
-          <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Save as</Text>
-          <GradientBorder x={1.0} y={1.0} />
-        </TouchableOpacity>
-        <TouchableOpacity style={{ width: '50%' }} onPress={() => navigation.navigate('SavedMacros')}>
-          <GradientBorder x={1.0} y={1.0} />
-          <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Saved</Text>
-          <GradientBorder x={1.0} y={1.0} />
-        </TouchableOpacity>
-      </View>
+      <MacroSelector hasThousands label={'Kcal:'} value={kcal} updateMacro={setKcal} />
+      <MacroSelector hasThousands={false} value={carbs} label={'Carbs (g):'} updateMacro={setCarbs} />
+      <MacroSelector hasThousands={false} value={sugar} label={'Sugar (g):'} updateMacro={setSugar} />
+      <MacroSelector hasThousands={false} value={protein} label={'Protein (g):'} updateMacro={setProtein} />
+      <MacroSelector hasThousands={false} value={fat} label={'Fat (g):'} updateMacro={setFat} />
+      {showSavedMacroOptions &&
+        <View style={Styles.savedMacroOptions}>
+          <TouchableOpacity style={{ width: '50%' }} onPress={() => setShowNewSavedMacroModal(true)} >
+            <GradientBorder x={1.0} y={1.0} />
+            <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Save as</Text>
+            <GradientBorder x={1.0} y={1.0} />
+          </TouchableOpacity>
+          <TouchableOpacity style={{ width: '50%' }} onPress={() => navigation.navigate('SavedMacros')}>
+            <GradientBorder x={1.0} y={1.0} />
+            <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Saved</Text>
+            <GradientBorder x={1.0} y={1.0} />
+          </TouchableOpacity>
+        </View>
+      }
     </View>
-    <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }}/>
+    <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }} />
     </>
   )
 }
@@ -73,15 +76,10 @@ export default MacroReadingInput
 
 const Styles = StyleSheet.create({
   container: {
-    width: '60%'
+    width: '67%',
   },
-  input: {
+  savedMacroOptions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  label: {
-    fontSize: 16,
-    textAlignVertical: 'bottom',
-    paddingBottom: 6
+    marginTop: 24
   }
 })

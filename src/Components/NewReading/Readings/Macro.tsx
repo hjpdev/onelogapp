@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import MacroReadingInput from '../../Minor/MacroReadingInput'
-import SuccessModal from '../../Minor/SuccessModal'
+import { NewReadingHeader } from '../NewReadingHeader'
+import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
-import { NewReadingHeader } from '../NewReadingHeader'
 
 export const NewMacroReading: React.FC = () => {
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
@@ -32,7 +32,7 @@ export const NewMacroReading: React.FC = () => {
     <NewReadingHeader headerText={'Macro'} dataKey={'macroReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
-      <MacroReadingInput updateReading={setReading} />
+      <MacroReadingInput showSavedMacroOptions updateReading={setReading} />
       <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>

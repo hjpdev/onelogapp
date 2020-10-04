@@ -11,7 +11,15 @@ const SuccessModal: React.FC<SuccessModalProps> = (props: SuccessModalProps) => 
   const { isVisible, onPress } = props
 
   return(
-    <Modal isVisible={isVisible} animationIn='zoomIn' animationOut='zoomOut' animationInTiming={500} animationOutTiming={200} hasBackdrop={false} style={Styles.modal}>
+    <Modal
+      isVisible={isVisible}
+      animationIn='zoomIn'
+      animationOut='zoomOut'
+      animationInTiming={500}
+      animationOutTiming={200}
+      hasBackdrop={false}
+      style={Styles.modal}
+    >
       <View>
         <TouchableOpacity onPress={onPress}>
           <Image style={Styles.image} source={require('../../Assets/Images/Confirmation.png')} />

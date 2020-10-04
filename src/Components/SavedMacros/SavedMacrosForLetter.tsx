@@ -1,43 +1,42 @@
 import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
-import SavedMacro from './SavedMacro'
 import GradientBorder from '../Minor/GradientBorder'
+import SavedMacro, { TSavedMacro } from './SavedMacro'
 
 type SavedMacrosForLetterProps = {
   letter: string
-  readings: {[key: string]: any}
+  readings: TSavedMacro[]
+  update: () => void
 }
 
 const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedMacrosForLetterProps) => {
-  const { letter, readings } = props
+  const { letter, readings, update } = props
   const [isOpen, setIsOpen] = useState(false)
 
   const generateList = () => {
     return readings.map(reading => {
-      return <SavedMacro key={reading.id} data={reading} />
+      return <SavedMacro key={reading.id} data={reading} update={update} />
     })
   }
 
   return(
-    <View>
-      <View style={Styles.header}>
-        <GradientBorder x={1.0} y={1.0} />
-          <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.date}>
-            <Text style={Styles.placeholder}>{'▶︎'}</Text>
-            <Text style={Styles.letterText}>{letter.toUpperCase()}</Text>
-            <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
-          </TouchableOpacity>
-          {isOpen &&
-          <>
-          <GradientBorder x={1.0} y={1.0} />
-          <View style={Styles.view}>
-            {generateList()}
-          </View>
-          </>}
-        <GradientBorder x={1.0} y={1.0} />
+    <>
+    <GradientBorder x={1.0} y={1.0} />
+      <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.date}>
+        <Text style={Styles.placeholder}>{'▶︎'}</Text>
+        <Text style={Styles.letterText}>{letter.toUpperCase()}</Text>
+        <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
+      </TouchableOpacity>
+      {isOpen &&
+      <>
+      <GradientBorder x={1.0} y={1.0} />
+      <View style={Styles.view}>
+        {generateList()}
       </View>
-    </View>
+      </>}
+    <GradientBorder x={1.0} y={1.0} />
+    </>
   )
 }
 
@@ -45,9 +44,6 @@ export default SavedMacrosForLetter
 
 
 const Styles = StyleSheet.create({
-  header: {
-    width: '100%'
-  },
   date: {
     backgroundColor: '#e6e6e6',
     flexDirection: 'row',

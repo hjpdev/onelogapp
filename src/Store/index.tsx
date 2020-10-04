@@ -27,9 +27,18 @@ export const getData = async (key: string): Promise<StoreData> => {
   return value && JSON.parse(value)
 }
 
+export const deleteData = async (key: string): Promise<void> => {
+  try {
+    await AsyncStorage.removeItem(key)
+    console.log(`Succes, deleted data for ${key}`)
+  } catch (err) {
+    console.log('Error deleteData: ', err)
+  }
+}
+
 export const addReading = async (key: string, reading: any): Promise<any> => {
   const data = await getData(key)
-  const currentReadings = data.readings
+  const currentReadings = (data && data.readings) || []
   const updatedData = { updated: Date.now(), readings: [reading, ...currentReadings] }
 
   try {
@@ -39,12 +48,25 @@ export const addReading = async (key: string, reading: any): Promise<any> => {
   }
 }
 
-export const deleteData = async (key: string): Promise<void> => {
+export const removeReading = async (key: string, id: number): Promise<any> => {
+  const data = await getData(key)
+  if (!data) {
+    return
+  }
+  const currentReadings = (data && data.readings) || []
+  if (!currentReadings) {
+    return
+  }
+
+  const updatedReadings = currentReadings.filter((reading: any) => {
+    return reading.id !== id
+  })
+  const updatedData = { updated: Date.now(), readings: updatedReadings}
+
   try {
-    await AsyncStorage.removeItem(key)
-    console.log(`Succes, deleted data for ${key}`)
+    return storeData(key, updatedData)
   } catch (err) {
-    console.log('Error deleteData: ', err)
+    console.log(`Error removeReading(${key}, ${id})`)
   }
 }
 

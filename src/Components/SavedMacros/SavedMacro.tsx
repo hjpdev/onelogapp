@@ -1,36 +1,49 @@
-import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
+import ModifyReadingModal from '../Modals/ModifyReadingModal'
+import ModifyMacroModal from '../Modals/ModifyMacroModal'
+import { formatName } from '../../Helpers/General'
+
+export type TSavedMacro = {
+  id: number
+  name: string
+  kcal: number
+  carbs: number
+  sugar: number
+  protein: number
+  fat: number
+  amount: number
+  unit: string
+}
 
 type SavedMacroProps = {
-  data: {
-    name: string
-    kcal: number
-    carbs: number
-    sugar: number
-    protein: number
-    fat: number
-  }
+  data: TSavedMacro
+  update: () => void
 }
 
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
-  const { data } = props
-  const { name, kcal, carbs, sugar, protein, fat } = data
+  const { data, update } = props
+  const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
-  const titleCase = (name: string) => {
-    return name.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-    }
-  )}
-
-  const formatName = (name: string) => {
-    return titleCase(name.replace(/_/g, ' '))
-  }
+  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
+  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
 
   return(
+    <>
     <View style={Styles.container}>
-      <View><Text style={Styles.name}>{formatName(name)}</Text></View>
+      <View style={Styles.title}>
+        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+          <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+        </TouchableOpacity>
+        <Text style={Styles.name}>{formatName(name)}</Text>
+        <TouchableOpacity>
+          <Image source={require('../../Assets/Images/NavBarNewReading.png')} style={Styles.icon} />
+        </TouchableOpacity>
+      </View>
+      <GradientBorder x={1.0} y={1.0} />
+      <Text>{amount} {unit}</Text>
       <GradientBorder x={1.0} y={1.0} />
       <View style={Styles.readingContainer}>
         <View style={Styles.labels}>
@@ -50,6 +63,9 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
       </View>
     </View>
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifyMacroModal(true)} update={update} />
+    <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
+    </>
   )
 }
 
@@ -67,12 +83,23 @@ const Styles = StyleSheet.create({
     margin: '1.1%',
     width: '31%'
   },
+  title: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'stretch'
+  },
+  icon: {
+    tintColor: 'black',
+    height: 14,
+    width: 14,
+    padding: 4,
+    marginTop: 4
+  },
   name: {
+    flex: 5,
     fontSize: 16,
     textAlign: 'center'
-  },
-  reading: {
-    fontSize: 38
   },
   readingContainer: {
     flex: 1,

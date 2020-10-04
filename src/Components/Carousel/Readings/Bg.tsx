@@ -34,22 +34,21 @@ const Styles = StyleSheet.create({
     flex: 5,
     paddingBottom: 10,
     backgroundColor: '#ebebeb',
-    width: '100%'
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   reading: {
-    alignSelf: 'center',
     justifyContent: 'center',
     color: 'black',
     fontSize: 54,
     paddingTop: 8,
   },
   unit: {
-    alignSelf: 'center',
     fontSize: 12,
     paddingBottom: 10
   },
   image: {
-    alignSelf: 'center',
     height: 30,
     width: 30
   }
