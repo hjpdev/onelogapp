@@ -8,8 +8,8 @@ import MacroAmountSelector from '../Minor/MacroAmountSelector'
 import SuccessModal from './SuccessModal'
 
 import { handleSuccessfulSubmit, putReading } from '../../Store/Data'
-import { TSavedMacro } from '../SavedMacros/SavedMacro'
 import { formatName } from '../../Helpers/General'
+import { TSavedMacro } from '../SavedMacros/SavedMacro'
 
 type ModifyMacroModalProps = {
   isVisible: boolean
