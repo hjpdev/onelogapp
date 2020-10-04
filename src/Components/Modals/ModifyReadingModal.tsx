@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
+import DeleteConfirmationModal from './DeleteConfirmationModal'
 import GradientBorder from '../Minor/GradientBorder'
 import SuccessModal from './SuccessModal'
-import DeleteConfirmationModal from './DeleteConfirmationModal'
 
 type ModifyReadingModalProps = {
   isVisible: boolean
