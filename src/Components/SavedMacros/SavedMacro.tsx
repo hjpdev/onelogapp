@@ -1,23 +1,25 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
+import GradientBorder from '../Minor/GradientBorder'
 import ModifyReadingModal from '../Modals/ModifyReadingModal'
 import ModifyMacroModal from '../Modals/ModifyMacroModal'
-import GradientBorder from '../Minor/GradientBorder'
 import { formatName } from '../../Helpers/General'
 
-export type SavedMacroProps = {
-  data: {
-    id: number
-    name: string
-    kcal: number
-    carbs: number
-    sugar: number
-    protein: number
-    fat: number
-    amount: number
-    unit: string
-  }
+export type TSavedMacro = {
+  id: number
+  name: string
+  kcal: number
+  carbs: number
+  sugar: number
+  protein: number
+  fat: number
+  amount: number
+  unit: string
+}
+
+type SavedMacroProps = {
+  data: TSavedMacro
   update: () => void
 }
 
@@ -98,9 +100,6 @@ const Styles = StyleSheet.create({
     flex: 5,
     fontSize: 16,
     textAlign: 'center'
-  },
-  reading: {
-    fontSize: 38
   },
   readingContainer: {
     flex: 1,
