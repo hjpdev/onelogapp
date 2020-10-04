@@ -6,20 +6,7 @@ import SavedMacrosHeader from './SavedMacrosHeader'
 import { ALPHABET } from '../../Helpers/General'
 import { getData, storeData } from '../../Store'
 import { getReadings } from '../../Store/Data'
-
-type SavedMacro = {
-  id: string
-  created: Date
-  name: string
-  kcal: number
-  carbs: number
-  sugar: number
-  protein: number
-  fat: number
-  unit: string
-  amount: number
-  times_added: number
-}
+import { TSavedMacro } from './SavedMacro'
 
 const SavedMacros: React.FC = () => {
   const [savedMacros, setSavedMacros] = useState([] as any)
@@ -44,11 +31,11 @@ const SavedMacros: React.FC = () => {
   }, [])
 
   const sortSavedMacrosByLetter = () => {
-    const savedMacrosByLetter: {[day: string]: SavedMacro[]} = {} as any
+    const savedMacrosByLetter: {[day: string]: TSavedMacro[]} = {} as any
     ALPHABET.forEach(letter => {
       savedMacrosByLetter[letter] = []
     })
-    savedMacros.forEach((reading: SavedMacro) => {
+    savedMacros.forEach((reading: TSavedMacro) => {
       const firstLetter = reading['name'][0]
       savedMacrosByLetter[firstLetter].push(reading)
     })

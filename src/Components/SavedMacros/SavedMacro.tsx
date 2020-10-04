@@ -7,15 +7,17 @@ import ModifyMacroModal from '../Modals/ModifyMacroModal'
 import { formatName } from '../../Helpers/General'
 
 export type TSavedMacro = {
-  id: number
+  id: string
+  created: Date
   name: string
   kcal: number
   carbs: number
   sugar: number
   protein: number
   fat: number
-  amount: number
   unit: string
+  amount: number
+  times_added: number
 }
 
 type SavedMacroProps = {

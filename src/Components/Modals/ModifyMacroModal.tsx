@@ -7,7 +7,7 @@ import GradientBorder from '../Minor/GradientBorder'
 import MacroAmountSelector from '../Minor/MacroAmountSelector'
 import SuccessModal from './SuccessModal'
 
-import { handleSuccessfulSubmit, putReading } from '../../Store/Data'
+import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
 import { formatName } from '../../Helpers/General'
 import { TSavedMacro } from '../SavedMacros/SavedMacro'
 
@@ -34,7 +34,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       const data = { name, ...reading, amount, unit }
       const response = await putReading({ table: `macro/saved/${id}`, data })
 
-      await handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)
+      await handleSuccessfulUpdate('savedMacros', response, setShowSuccessModal)
       update()
       onClose()
     } catch (err) {

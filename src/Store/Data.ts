@@ -1,5 +1,5 @@
 import { needsUpdating, storeData, getData } from '.'
-import { addReading, removeReading } from '../Store/index'
+import { addReading, removeReading, updateReadings } from '../Store/index'
 import { delay } from '../Helpers'
 
 type GenerateReadingsQueryOptions = {
@@ -117,6 +117,17 @@ export const deleteReading = async (options: DeleteReadingOptions) => {
 export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: string]: any}, modalSwitchFunction: (isVisible: boolean) => void): Promise<void> => {
   try {
     await addReading(dataKey, response)
+    modalSwitchFunction(true)
+    await delay(1000)
+    modalSwitchFunction(false)
+  } catch (err) {
+    console.log('Error handleSuccessfulSubmit: ', err)
+  }
+}
+
+export const handleSuccessfulUpdate = async(dataKey: string, updatedReading: any, modalSwitchFunction: (isVisible: boolean) => void) => {
+  try {
+    await updateReadings(dataKey, updatedReading)
     modalSwitchFunction(true)
     await delay(1000)
     modalSwitchFunction(false)

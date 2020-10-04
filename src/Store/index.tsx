@@ -48,6 +48,31 @@ export const addReading = async (key: string, reading: any): Promise<any> => {
   }
 }
 
+export const updateReadings = async (key: string, updatedReading: any) => {
+  const data = await getData(key)
+  if (!data) {
+    return
+  }
+  const currentReadings = (data && data.readings) || []
+  if (!currentReadings) {
+    return
+  }
+
+  const updatedReadings = currentReadings.map((reading: any) => {
+    if (reading.id === updatedReading.id) {
+      return {  ...reading, ...updatedReading }
+    }
+    return reading
+  })
+  const updatedData = { updated: Date.now(), readings: updatedReadings }
+
+  try {
+    return storeData(key, updatedData)
+  } catch (err) {
+    console.log(`Error addReading(${key}, ${updatedReading})`)
+  }
+}
+
 export const removeReading = async (key: string, id: number): Promise<any> => {
   const data = await getData(key)
   if (!data) {
