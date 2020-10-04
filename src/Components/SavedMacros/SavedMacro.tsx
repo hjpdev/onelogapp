@@ -69,7 +69,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
       </View>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} showReadingModal={() => setShowModifyMacroModal(true)} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifyMacroModal(true)} />
     <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} />
     </>
   )
