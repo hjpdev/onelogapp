@@ -10,10 +10,11 @@ type PreviousBgReadingProps = {
     created: string
     reading: number
   }
+  update: () => void
 }
 
 export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgReadingProps) => {
-  const { data } = props
+  const { data, update } = props
   const { reading, created } = data
   const timeCreated = generateCreatedTime(created)
 

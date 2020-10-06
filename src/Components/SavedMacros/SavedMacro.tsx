@@ -86,10 +86,8 @@ const Styles = StyleSheet.create({
     width: '31%'
   },
   title: {
-    width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'stretch'
+    justifyContent: 'space-around'
   },
   icon: {
     tintColor: 'black',

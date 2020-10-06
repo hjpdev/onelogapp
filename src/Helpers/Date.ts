@@ -12,6 +12,15 @@ export const newDate = ({ m, d, h, min }: {[key: string]: number}): Date => {
   return new Date([dateString, timeString].join('T'))
 }
 
+export const generateCreatedDateTime = (date: string) => {
+  const month: (string | number) = new Date(date).getMonth() + 1
+  const day: (string | number) = new Date(date).getDate()
+  const hours: (string | number) = new Date(date).getHours()
+  const minutes: (string | number) = new Date(date).getMinutes()
+
+  return { month, day, hours, minutes }
+}
+
 export const generateCreatedDate = (date: string): string => {
   if (date.split(' ')[1] === 'Day') return date
 

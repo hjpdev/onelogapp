@@ -37,20 +37,21 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
 
   const [readings, setReadings] = useState([] as any)
 
-  useEffect(() => {
-    const fetchReadings = async (dataKey: string) => {
-      try {
-        let { readings } = await getData(dataKey)
-        if (!readings) {
-          const response = await getReadings({ dataKeys: [dataKey] })
-          readings = response[dataKey]
-          await storeData(dataKey, { readings })
-        }
-        setReadings(readings)
-      } catch(err) {
-        console.log('Error PreviousReadings.fetchReadings: ', err)
+  const fetchReadings = async (dataKey: string) => {
+    try {
+      let { readings } = await getData(dataKey)
+      if (!readings) {
+        const response = await getReadings({ dataKeys: [dataKey] })
+        readings = response[dataKey]
+        await storeData(dataKey, { readings })
       }
+      setReadings(readings)
+    } catch(err) {
+      console.log('Error PreviousReadings.fetchReadings: ', err)
     }
+  }
+
+  useEffect(() => {
     fetchReadings(dataKey)
   }, [])
 
@@ -76,8 +77,8 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
 
     return uniqueDates.map((date, index) => {
       return index === 0
-        ? <PreviousReadingsForDate opened date={date} readings={readingsByDay[date]} key={date} Template={templateMap[dataKey]} />
-        : <PreviousReadingsForDate date={date} readings={readingsByDay[date]} key={date} Template={templateMap[dataKey]} />
+        ? <PreviousReadingsForDate opened date={date} readings={readingsByDay[date]} key={date} Template={templateMap[dataKey]} update={(dataKey: string) => fetchReadings(dataKey)} />
+        : <PreviousReadingsForDate date={date} readings={readingsByDay[date]} key={date} Template={templateMap[dataKey]} update={(dataKey: string) => fetchReadings(dataKey)} />
     })
   }
 

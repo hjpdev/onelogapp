@@ -1,11 +1,14 @@
-import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import React, { useState } from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import GradientBorder from '../../Minor/GradientBorder'
+import ModifyReadingModal from '../../Modals/ModifyReadingModal'
 import { generateCreatedTime } from '../../../Helpers/Date'
+import ModifyMacroModal from '../../Modals/ModifyMacroModal'
 
 type PreviousMacroReadingProps = {
   data: {
+    id: number
     created: string
     kcal: number
     carbs: number
@@ -13,16 +16,30 @@ type PreviousMacroReadingProps = {
     protein: number
     fat: number
   }
+  update: (dataKey: string) => void
 }
 
 export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props: PreviousMacroReadingProps) => {
-  const { data } = props
-  const { created, kcal, carbs, sugar, protein, fat } = data
+  const { data, update } = props
+
+  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
+  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
+
+  const { id, created, kcal, carbs, sugar, protein, fat } = data
   const timeCreated = generateCreatedTime(created)
 
   return(
+    <>
     <View style={Styles.container}>
-      <View><Text style={Styles.timeCreated}>{timeCreated}</Text></View>
+      <View style={Styles.header}>
+        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+        </TouchableOpacity>
+        <Text style={Styles.timeCreated}>{timeCreated}</Text>
+        <TouchableOpacity>
+          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+        </TouchableOpacity>
+      </View>
       <GradientBorder x={1.0} y={1.0} />
       <View style={Styles.readingContainer}>
         <View style={Styles.labels}>
@@ -42,6 +59,9 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
         </View>
       </View>
     </View>
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={created} table={'macro'} showReadingModal={() => setShowModifyMacroModal(true)} update={() => update('macroReadings')} />
+    <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
+    </>
   )
 }
 
@@ -57,8 +77,27 @@ const Styles = StyleSheet.create({
     margin: '1.1%',
     width: '31%'
   },
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   timeCreated: {
     fontSize: 16
+  },
+  icon: {
+    tintColor: 'black',
+    height: 14,
+    width: 14,
+    padding: 4,
+    marginTop: 4
+  },
+  placeholder: {
+    tintColor: '#ebebeb',
+    height: 14,
+    width: 14,
+    padding: 4,
+    marginTop: 4
   },
   reading: {
     fontSize: 38

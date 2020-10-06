@@ -10,10 +10,11 @@ type PreviousKetoReadingProps = {
     created: string,
     reading: number
   }
+  update: () => void
 }
 
 export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: PreviousKetoReadingProps) => {
-  const { data } = props
+  const { data, update } = props
   const { created, reading } = data
   const timeCreated = generateCreatedTime(created)
 

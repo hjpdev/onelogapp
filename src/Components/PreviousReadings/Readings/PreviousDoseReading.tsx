@@ -11,10 +11,11 @@ type PreviousDoseReadingProps = {
     reading: number
     long: boolean
   }
+  update: () => void
 }
 
 export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: PreviousDoseReadingProps) => {
-  const { data } = props
+  const { data, update } = props
   const { created, reading, long } = data
   const timeCreated = generateCreatedTime(created)
 
