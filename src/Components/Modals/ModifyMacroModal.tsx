@@ -24,8 +24,6 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
-  console.log('HERE IT IS => ', created)
-
   const id = data.id
 
   const handleSubmit = async () => {

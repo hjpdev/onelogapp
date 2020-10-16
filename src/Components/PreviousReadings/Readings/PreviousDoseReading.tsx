@@ -24,7 +24,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   }
 
   const generateStartPoint = () => {
-    const y = long ? (reading / 60) : 1 - (reading / 25)
+    const y = long ? (reading / 60) : 1 - (reading / 10)
     return { x: 0.5, y}
   }
 
@@ -41,6 +41,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
           <Text style={Styles.readingText}>{formatReading(reading)}</Text>
         </LinearGradient>
       </View>
+      <GradientBorder x={1.0} y={1.0} />
       <View><Text>{long ? 'Long' : 'Short'}</Text></View>
     </View>
   )
