@@ -35,7 +35,7 @@ export const generateCreatedDate = (date: string): string => {
   
   return (month === todayMonth && day === todayDay)
     ? `${hours}:${minutes}`
-    : `${padLeft(day)}/${padLeft(month)} ${hours}:${minutes}`
+    : `${hours}:${minutes}  ${padLeft(day)}/${padLeft(month)} `
 }
 
 export const generateCreatedDay = (date: string): string => {

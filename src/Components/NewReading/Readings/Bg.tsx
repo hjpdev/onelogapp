@@ -56,11 +56,10 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 2,
     padding: 16,
-    backgroundColor: '#e6e6e6'
+    backgroundColor: '#d6d6d6'
   },
   submitText: {
-    fontSize: 18,
-    fontWeight: 'bold'
+    fontSize: 18
   },
   unit: {
     fontSize: 20

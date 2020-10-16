@@ -24,8 +24,12 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   }
 
   const generateStartPoint = () => {
-    const y = long ? 0 + reading / 15 : 1 - reading / 15
+    const y = long ? (reading / 60) : 1 - (reading / 25)
     return { x: 0.5, y}
+  }
+
+  const formatReading = (reading: number) => {
+    return `${reading}`.length < 2 ? reading.toFixed(1) : reading
   }
 
   return(
@@ -34,7 +38,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
       <GradientBorder x={1.0} y={1.0} />
       <View style={Styles.reading}>
         <LinearGradient colors={generateColors()} start={generateStartPoint()}>
-          <Text style={Styles.readingText}>{reading}</Text>
+          <Text style={Styles.readingText}>{formatReading(reading)}</Text>
         </LinearGradient>
       </View>
       <View><Text>{long ? 'Long' : 'Short'}</Text></View>
@@ -52,7 +56,7 @@ const Styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     margin: 4,
-    width: '19%'
+    width: '23%'
   },
   timeCreated: {
     fontSize: 16

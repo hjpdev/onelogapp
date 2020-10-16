@@ -12,6 +12,8 @@ target 'onelogapp' do
 
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
   target 'onelogappTests' do
     inherit! :complete
     # Pods for testing

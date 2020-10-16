@@ -52,8 +52,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   letterText: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 20,
   },
   placeholder: {
     paddingLeft: 8,

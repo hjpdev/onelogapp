@@ -103,6 +103,6 @@ const Styles = StyleSheet.create({
   decimalText: {
     fontWeight: 'bold',
     fontSize: 26,
-    paddingBottom: 6
+    paddingBottom: 18
   }
 })
