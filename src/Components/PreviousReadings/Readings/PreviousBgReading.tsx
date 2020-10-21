@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient'
 
 import ModifyReadingModal from '../../Modals/ModifyReadingModal'
 import GradientBorder from '../../Minor/GradientBorder'
-import { generateCreatedTime } from '../../../Helpers/Date'
+import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
 type PreviousBgReadingProps = {
   data: {
@@ -44,13 +44,15 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
         </TouchableOpacity>
       </View>
       <GradientBorder x={1.0} y={1.0} />
-      <View>
-        <LinearGradient colors={['#ebebeb', color]} start={{ x: 0.5, y: 0.75}}>
-          <Text style={Styles.reading}>{reading.toFixed(1)}</Text>
-        </LinearGradient>
-      </View>
+      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+        <View>
+          <LinearGradient colors={['#ebebeb', color]} start={{ x: 0.5, y: 0.75}}>
+            <Text style={Styles.reading}>{reading.toFixed(1)}</Text>
+          </LinearGradient>
+        </View>
+      </TouchableOpacity>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={created} table={'bg'} dataKey={'bgReadings'} showReadingModal={() => {}} update={() => update('bgReadings')} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'bg'} dataKey={'bgReadings'} showReadingModal={() => {}} update={() => update('bgReadings')} />
     </>
   )
 }
@@ -87,7 +89,7 @@ const Styles = StyleSheet.create({
     fontSize: 14
   },
   reading: {
-    fontSize: 30,
+    fontSize: 28,
     paddingVertical: 6
   }
 })

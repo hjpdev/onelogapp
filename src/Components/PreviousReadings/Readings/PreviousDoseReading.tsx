@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient'
 
 import ModifyReadingModal from '../../Modals/ModifyReadingModal'
 import GradientBorder from '../../Minor/GradientBorder'
-import { generateCreatedTime } from '../../../Helpers/Date'
+import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
 type PreviousDoseReadingProps = {
   data: {
@@ -33,6 +33,10 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
     return { x: 0.5, y}
   }
 
+  const generateReading = () => {
+    return `${reading}`.length < 2 ? reading.toFixed(1) : reading
+  }
+
   return(
     <>
     <View style={Styles.container}>
@@ -46,15 +50,17 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
         </TouchableOpacity>
       </View>
       <GradientBorder x={1.0} y={1.0} />
-      <View style={Styles.reading}>
-        <LinearGradient colors={generateColors()} start={generateStartPoint()}>
-          <Text style={Styles.readingText}>{reading}</Text>
-        </LinearGradient>
-      </View>
-      <GradientBorder x={1.0} y={1.0} />
-      <View><Text>{long ? 'Long' : 'Short'}</Text></View>
+      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+        <View style={Styles.reading}>
+          <LinearGradient colors={generateColors()} start={generateStartPoint()}>
+            <Text style={Styles.readingText}>{generateReading()}</Text>
+          </LinearGradient>
+        </View>
+        <GradientBorder x={1.0} y={1.0} />
+        <View><Text>{long ? 'Long' : 'Short'}</Text></View>
+      </TouchableOpacity>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={created} table={'dose'} dataKey={'doseReadings'} showReadingModal={() => {}} update={() => update('doseReadings')} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'dose'} dataKey={'doseReadings'} showReadingModal={() => {}} update={() => update('doseReadings')} />
     </>
   )
 }

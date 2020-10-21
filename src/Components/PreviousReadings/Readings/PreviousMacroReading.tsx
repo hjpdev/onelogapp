@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import GradientBorder from '../../Minor/GradientBorder'
 import ModifyReadingModal from '../../Modals/ModifyReadingModal'
-import { generateCreatedTime } from '../../../Helpers/Date'
+import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 import ModifyMacroModal from '../../Modals/ModifyMacroModal'
 
 type PreviousMacroReadingProps = {
@@ -41,25 +41,27 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
         </TouchableOpacity>
       </View>
       <GradientBorder x={1.0} y={1.0} />
-      <View style={Styles.readingContainer}>
-        <View style={Styles.labels}>
-          <Text style={Styles.label}>{'Kcal:'}</Text>
-          <Text style={Styles.label}>{'Carbs:'}</Text>
-          <Text style={Styles.label}>{'Sugar:'}</Text>
-          <Text style={Styles.label}>{'Protein:'}</Text>
-          <Text style={Styles.label}>{'Fat:'}</Text>
-        </View>
+      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={Styles.readingContainer}>
+        <View style={Styles.readingContainer}>
+          <View style={Styles.labels}>
+            <Text style={Styles.label}>{'Kcal:'}</Text>
+            <Text style={Styles.label}>{'Carbs:'}</Text>
+            <Text style={Styles.label}>{'Sugar:'}</Text>
+            <Text style={Styles.label}>{'Protein:'}</Text>
+            <Text style={Styles.label}>{'Fat:'}</Text>
+          </View>
 
-        <View style={Styles.values}>
-          <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
-          <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
-          <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
-          <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
-          <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
+          <View style={Styles.values}>
+            <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
+            <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
+            <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
+            <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
+            <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={created} table={'macro'} dataKey={'macroReadings'} showReadingModal={() => setShowModifyMacroModal(true)} update={() => update('macroReadings')} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'macro'} dataKey={'macroReadings'} showReadingModal={() => setShowModifyMacroModal(true)} update={() => update('macroReadings')} />
     <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
     </>
   )
@@ -105,8 +107,7 @@ const Styles = StyleSheet.create({
   readingContainer: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingBottom: 8,
+    justifyContent: 'space-around'
   },
   labels: {
     flexDirection: 'column',
