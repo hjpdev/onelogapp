@@ -10,16 +10,24 @@ import {
 } from '../../Helpers'
 
 type WheelSelectorProps = {
-  updateReading: (reading: number) => void,
-  isDose?: boolean,
+  updateReading: (reading: number) => void
+  reading?: number
+  isDose?: boolean
   isKeto?: boolean
 }
 
 const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
-  const { updateReading, isDose, isKeto } = props
+  const { updateReading, reading, isDose, isKeto } = props
 
-  const [integerPart, setIntegerPart] = useState(0)
-  const [fractionalPart, setFractionalPart] = useState(0)
+  let integer, fraction
+  if (reading) {
+    const parts = `${reading.toFixed(1)}`.split('.')
+    integer = parseInt(parts[0])
+    fraction = parseInt(parts[1])
+  }
+  
+  const [integerPart, setIntegerPart] = useState(integer || 0)
+  const [fractionalPart, setFractionalPart] = useState(fraction || 0)
 
   const onIntegerPartSelected = (integer: number) => {
     setIntegerPart(integer)
