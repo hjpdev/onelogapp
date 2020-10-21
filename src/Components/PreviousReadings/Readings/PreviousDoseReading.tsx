@@ -25,7 +25,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   const timeCreated = generateCreatedTime(created)
 
   const generateColors = () => {
-    return long ? ['#c9c9c9', '#ebebeb'] : ['#ebebeb', '#c9c9c9']
+    return long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#c9d8cf']
   }
 
   const generateStartPoint = () => {
@@ -50,7 +50,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
         </TouchableOpacity>
       </View>
       <GradientBorder x={1.0} y={1.0} />
-      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={{ width: '100%' }}>
         <View style={Styles.reading}>
           <LinearGradient colors={generateColors()} start={generateStartPoint()}>
             <Text style={Styles.readingText}>{generateReading()}</Text>
@@ -97,9 +97,10 @@ const Styles = StyleSheet.create({
     fontSize: 14
   },
   reading: {
-    width: '90%',
+    width: '100%'
   },
   readingText: {
+    width: '100%',
     fontSize: 34,
     textAlign: 'center'
   }
