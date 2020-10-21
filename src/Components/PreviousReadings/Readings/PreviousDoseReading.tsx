@@ -25,7 +25,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   const timeCreated = generateCreatedTime(created)
 
   const generateColors = () => {
-    return long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#c9d8cf']
+    return long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#b2bfaa']
   }
 
   const generateStartPoint = () => {

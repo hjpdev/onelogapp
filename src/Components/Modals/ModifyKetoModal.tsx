@@ -9,14 +9,14 @@ import WheelSelector from '../Minor/WheelSelector'
 
 import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
 
-type ModifyBgModalProps = {
+type ModifyKetoModalProps = {
   isVisible: boolean
   data: any
   onClose: () => void
   update: (dataKey: string) => void
 }
 
-const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) => {
+const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalProps) => {
   const { isVisible, data, onClose, update } = props
 
   const [created, setCreated] = useState(data.created)
@@ -28,13 +28,13 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   const handleSubmit = async () => {
     try {
       const body = created !== data.created ? { created, reading } : { reading }
-      const response = await putReading({ table: `bg/${id}`, data: body })
+      const response = await putReading({ table: `keto/${id}`, data: body })
 
-      await handleSuccessfulUpdate('bgReadings', response, setShowSuccessModal)
-      update('bgReadings')
+      await handleSuccessfulUpdate('ketoReadings', response, setShowSuccessModal)
+      update('ketoReadings')
       onClose()
     } catch (err) {
-      console.log(`Error ModifyBgModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyKetoModal.handleSubmit: ${err}`)
     }
   }
 
@@ -72,7 +72,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   )
 }
 
-export default ModifyBgModal
+export default ModifyKetoModal
 
 const Styles = StyleSheet.create({
   modal: {

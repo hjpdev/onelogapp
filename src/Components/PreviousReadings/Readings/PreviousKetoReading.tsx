@@ -3,6 +3,7 @@ import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import ModifyReadingModal from '../../Modals/ModifyReadingModal'
+import ModifyKetoModal from '../../Modals/ModifyKetoModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
@@ -19,6 +20,7 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
   const { data, update } = props
 
   const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
+  const [showModifyKetoModal, setShowModifyKetoModal] = useState(false)
 
   const { id, created, reading } = data
   const timeCreated = generateCreatedTime(created)
@@ -38,13 +40,14 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
       <GradientBorder x={1.0} y={1.0} />
       <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={{ backgroundColor: 'black' }} activeOpacity={50}>
       <View>
-        <LinearGradient colors={['#ebebeb', '#b8b8b8']} start={{ x: 0.5, y: 0.75}}>
+        <LinearGradient colors={['#ebebeb', '#b8b884']} start={{ x: 0.5, y: 0.75}}>
           <Text style={Styles.reading}>{reading.toFixed(1)}</Text>
         </LinearGradient>
       </View>
     </TouchableOpacity>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'keto'} dataKey={'ketoReadings'} showReadingModal={() => {}} update={() => update('ketoReadings')} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'keto'} dataKey={'ketoReadings'} showReadingModal={() => setShowModifyKetoModal(true)} update={() => update('ketoReadings')} />
+    <ModifyKetoModal isVisible={showModifyKetoModal} data={data} onClose={() => setShowModifyKetoModal(false)} update={update} />
     </>
   )
 }
