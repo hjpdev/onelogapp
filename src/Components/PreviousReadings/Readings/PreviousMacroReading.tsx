@@ -59,7 +59,7 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
         </View>
       </View>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={created} table={'macro'} showReadingModal={() => setShowModifyMacroModal(true)} update={() => update('macroReadings')} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={created} table={'macro'} dataKey={'macroReadings'} showReadingModal={() => setShowModifyMacroModal(true)} update={() => update('macroReadings')} />
     <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
     </>
   )

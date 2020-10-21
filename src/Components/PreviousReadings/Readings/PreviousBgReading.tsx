@@ -1,21 +1,26 @@
-import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import React, { useState } from 'react'
+import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
+import ModifyReadingModal from '../../Modals/ModifyReadingModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime } from '../../../Helpers/Date'
 
 type PreviousBgReadingProps = {
   data: {
+    id: number,
     created: string
     reading: number
   }
-  update: () => void
+  update: (dataKey: string) => void
 }
 
 export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgReadingProps) => {
   const { data, update } = props
-  const { reading, created } = data
+  
+  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
+  
+  const { id, created, reading } = data
   const timeCreated = generateCreatedTime(created)
 
   const generateColor = () => {
@@ -27,8 +32,17 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
   const color = reading && generateColor() || '#ebebeb'
 
   return(
+    <>
     <View style={Styles.container}>
-      <View><Text style={Styles.timeCreated}>{timeCreated}</Text></View>
+      <View style={Styles.header}>
+        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+        </TouchableOpacity>
+        <Text style={Styles.timeCreated}>{timeCreated}</Text>
+        <TouchableOpacity>
+          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+        </TouchableOpacity>
+      </View>
       <GradientBorder x={1.0} y={1.0} />
       <View>
         <LinearGradient colors={['#ebebeb', color]} start={{ x: 0.5, y: 0.75}}>
@@ -36,6 +50,8 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
         </LinearGradient>
       </View>
     </View>
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={created} table={'bg'} dataKey={'bgReadings'} showReadingModal={() => {}} update={() => update('bgReadings')} />
+    </>
   )
 }
 
@@ -51,8 +67,24 @@ const Styles = StyleSheet.create({
     margin: 4,
     width: '18%'
   },
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  icon: {
+    tintColor: 'black',
+    height: 10,
+    width: 10
+  },
+  placeholder: {
+    tintColor: '#ebebeb',
+    height: 10,
+    width: 10
+  },
   timeCreated: {
-    fontSize: 16
+    fontSize: 14
   },
   reading: {
     fontSize: 38

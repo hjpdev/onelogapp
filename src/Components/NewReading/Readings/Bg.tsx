@@ -20,7 +20,7 @@ export const NewBgReading: React.FC = () => {
         const data = dateTime ? { reading, created: dateTime } : { reading }
         const response = await submitReading({ table: 'bg', data })
 
-        return handleSuccessfulSubmit('bgReadings', response, setShowSuccessModal)
+        return response && handleSuccessfulSubmit('bgReadings', response, setShowSuccessModal)
       } catch (err) {
         console.log('Error bg handleSubmit: ', err)
       }

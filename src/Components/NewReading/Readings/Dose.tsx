@@ -9,7 +9,7 @@ import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
 import { NewReadingHeader } from '../NewReadingHeader'
 
 
-export const NewDoseReading: React.FC<NewDoseReadingProps> = () => {
+export const NewDoseReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
   const [long, setLong] = useState(false)
   const [dateTime, setDateTime] = useState(null)

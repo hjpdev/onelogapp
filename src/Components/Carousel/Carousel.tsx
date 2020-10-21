@@ -37,7 +37,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
               { capitalise(name) }
             </Text>
             <Text style={Styles.time}>
-              {generateCreatedDate(reading['created']) || ''}
+              {reading && generateCreatedDate(reading['created']) || ''}
             </Text>
           </View>
           <GradientBorder x={0.4} y={1.0} colors={['grey', '#ebebeb']} />

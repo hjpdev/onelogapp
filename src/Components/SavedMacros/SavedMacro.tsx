@@ -7,7 +7,7 @@ import ModifySavedMacroModal from '../Modals/ModifySavedMacroModal'
 import { formatName } from '../../Helpers/General'
 
 export type TSavedMacro = {
-  id: string
+  id: number
   created: Date
   name: string
   kcal: number
@@ -65,7 +65,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
       </View>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifySavedMacroModal(true)} update={update} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} dataKey={'savedMacros'} showReadingModal={() => setShowModifySavedMacroModal(true)} update={update} />
     <ModifySavedMacroModal isVisible={showModifySavedMacroModal} data={data} onClose={() => setShowModifySavedMacroModal(false)} update={update} />
     </>
   )

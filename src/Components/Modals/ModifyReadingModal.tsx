@@ -11,13 +11,14 @@ type ModifyReadingModalProps = {
   id: number
   name: string
   table: string
+  dataKey: string
   onClose: () => void
   showReadingModal: () => void
   update: () => void
 }
 
 const ModifyReadingModal: React.FC<ModifyReadingModalProps> = (props: ModifyReadingModalProps) => {
-  const { isVisible, onClose, id, name, table, showReadingModal, update } = props
+  const { isVisible, onClose, id, name, table, dataKey, showReadingModal, update } = props
   
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
@@ -47,7 +48,7 @@ const ModifyReadingModal: React.FC<ModifyReadingModalProps> = (props: ModifyRead
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={id} name={name} table={table} onClose={() => setShowDeleteConfirmationModal(false)} update={update} />
+    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={id} name={name} table={table} dataKey={dataKey} onClose={() => setShowDeleteConfirmationModal(false)} update={update} />
     </>
   )
 }
