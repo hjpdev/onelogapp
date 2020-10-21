@@ -1,22 +1,27 @@
-import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import React, { useState } from 'react'
+import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
+import ModifyReadingModal from '../../Modals/ModifyReadingModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime } from '../../../Helpers/Date'
 
 type PreviousDoseReadingProps = {
   data: {
+    id: number
     created: string
     reading: number
     long: boolean
   }
-  update: () => void
+  update: (dataKay: string) => void
 }
 
 export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: PreviousDoseReadingProps) => {
   const { data, update } = props
-  const { created, reading, long } = data
+
+  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
+
+  const { id, created, reading, long } = data
   const timeCreated = generateCreatedTime(created)
 
   const generateColors = () => {
@@ -28,22 +33,29 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
     return { x: 0.5, y}
   }
 
-  const formatReading = (reading: number) => {
-    return `${reading}`.length < 2 ? reading.toFixed(1) : reading
-  }
-
   return(
+    <>
     <View style={Styles.container}>
-      <View><Text style={Styles.timeCreated}>{timeCreated}</Text></View>
+      <View style={Styles.header}>
+        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+        </TouchableOpacity>
+        <Text style={Styles.timeCreated}>{timeCreated}</Text>
+        <TouchableOpacity>
+          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+        </TouchableOpacity>
+      </View>
       <GradientBorder x={1.0} y={1.0} />
       <View style={Styles.reading}>
         <LinearGradient colors={generateColors()} start={generateStartPoint()}>
-          <Text style={Styles.readingText}>{formatReading(reading)}</Text>
+          <Text style={Styles.readingText}>{reading}</Text>
         </LinearGradient>
       </View>
       <GradientBorder x={1.0} y={1.0} />
       <View><Text>{long ? 'Long' : 'Short'}</Text></View>
     </View>
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={created} table={'dose'} dataKey={'doseReadings'} showReadingModal={() => {}} update={() => update('doseReadings')} />
+    </>
   )
 }
 
@@ -59,14 +71,30 @@ const Styles = StyleSheet.create({
     margin: 4,
     width: '23%'
   },
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  icon: {
+    tintColor: 'black',
+    height: 10,
+    width: 10
+  },
+  placeholder: {
+    tintColor: '#ebebeb',
+    height: 10,
+    width: 10
+  },
   timeCreated: {
-    fontSize: 16
+    fontSize: 14
   },
   reading: {
     width: '90%',
   },
   readingText: {
-    fontSize: 38,
+    fontSize: 34,
     textAlign: 'center'
   }
 })

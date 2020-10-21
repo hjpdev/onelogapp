@@ -79,6 +79,6 @@ const Styles = StyleSheet.create({
     fontSize: 14
   },
   reading: {
-    fontSize: 38
+    fontSize: 30
   }
 })
