@@ -11,9 +11,15 @@ import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
 
 type ModifyKetoModalProps = {
   isVisible: boolean
-  data: any
+  data: KetoReading
   onClose: () => void
   update: (dataKey: string) => void
+}
+
+type KetoReading = {
+  id: number
+  created: string
+  reading: number
 }
 
 const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalProps) => {
@@ -23,12 +29,10 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
   const [reading, setReading] = useState<number>(data.reading || 0.0)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
-  const id = data.id
-
   const handleSubmit = async () => {
     try {
       const body = created !== data.created ? { created, reading } : { reading }
-      const response = await putReading({ table: `keto/${id}`, data: body })
+      const response = await putReading({ table: 'keto', data: body, id: data.id })
 
       await handleSuccessfulUpdate('ketoReadings', response, setShowSuccessModal)
       update('ketoReadings')

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import { Text, View, StyleSheet } from "react-native"
 import { WheelPicker } from "../../react-native-wheel-picker-android"
 
@@ -10,7 +10,7 @@ import {
 } from '../../Helpers'
 
 type WheelSelectorProps = {
-  updateReading: (reading: number) => void
+  updateReading: Dispatch<SetStateAction<number>>
   reading?: number
   isDose?: boolean
   isKeto?: boolean

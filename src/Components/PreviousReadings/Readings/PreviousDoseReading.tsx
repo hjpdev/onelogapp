@@ -3,6 +3,7 @@ import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import ModifyReadingModal from '../../Modals/ModifyReadingModal'
+import ModifyDoseModal from '../../Modals/ModifyDoseModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
@@ -20,6 +21,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   const { data, update } = props
 
   const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
+  const [showModifyDoseModal, setShowModifyDoseModal] = useState(false)
 
   const { id, created, reading, long } = data
   const timeCreated = generateCreatedTime(created)
@@ -57,10 +59,11 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
           </LinearGradient>
         </View>
         <GradientBorder x={1.0} y={1.0} />
-        <View><Text>{long ? 'Long' : 'Short'}</Text></View>
+        <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
       </TouchableOpacity>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'dose'} dataKey={'doseReadings'} showReadingModal={() => {}} update={() => update('doseReadings')} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'dose'} dataKey={'doseReadings'} showReadingModal={() => setShowModifyDoseModal(true)} update={() => update('doseReadings')} />
+    <ModifyDoseModal isVisible={showModifyDoseModal} data={data} onClose={() => setShowModifyDoseModal(false)} update={update} />
     </>
   )
 }
@@ -102,6 +105,9 @@ const Styles = StyleSheet.create({
   readingText: {
     width: '100%',
     fontSize: 34,
+    textAlign: 'center'
+  },
+  typeText: {
     textAlign: 'center'
   }
 })

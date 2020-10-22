@@ -6,7 +6,7 @@ import { clockHours, clockMinutes, generateCreatedDateTime, newDate } from '../.
 
 type ModifyTimeSelectorProps = {
   created: string
-  setDateTime: Dispatch<SetStateAction<Date | null>>
+  setDateTime: (Dispatch<SetStateAction<Date | null>>)
 }
 
 const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: ModifyTimeSelectorProps) => {

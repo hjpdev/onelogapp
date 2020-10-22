@@ -11,9 +11,15 @@ import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
 
 type ModifyBgModalProps = {
   isVisible: boolean
-  data: any
+  data: BgReading
   onClose: () => void
   update: (dataKey: string) => void
+}
+
+type BgReading = {
+  id: number
+  created: string
+  reading: number
 }
 
 const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) => {
@@ -23,12 +29,10 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   const [reading, setReading] = useState<number>(data.reading || 0.0)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
-  const id = data.id
-
   const handleSubmit = async () => {
     try {
       const body = created !== data.created ? { created, reading } : { reading }
-      const response = await putReading({ table: `bg/${id}`, data: body })
+      const response = await putReading({ table: 'bg', data: body, id: data.id })
 
       await handleSuccessfulUpdate('bgReadings', response, setShowSuccessModal)
       update('bgReadings')

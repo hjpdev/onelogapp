@@ -40,7 +40,7 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
       <GradientBorder x={1.0} y={1.0} />
       <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={{ backgroundColor: 'black' }} activeOpacity={50}>
       <View>
-        <LinearGradient colors={['#ebebeb', '#b8b884']} start={{ x: 0.5, y: 0.75}}>
+        <LinearGradient style={{ width: '100%' }} colors={['#ebebeb', '#b8b884']} start={{ x: 0.5, y: 0.75}}>
           <Text style={Styles.reading}>{reading.toFixed(1)}</Text>
         </LinearGradient>
       </View>

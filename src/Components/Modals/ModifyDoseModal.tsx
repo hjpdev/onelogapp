@@ -1,48 +1,66 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import MacroReadingInput from '../Minor/MacroReadingInput'
 import GradientBorder from '../Minor/GradientBorder'
 import ModifyTimeSelector from '../Minor/ModifyTimeSelector'
 import SuccessModal from './SuccessModal'
+import WheelSelector from '../Minor/WheelSelector'
 
 import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
 
-type ModifyMacroModalProps = {
+type ModifyDoseModalProps = {
   isVisible: boolean
-  data: MacroReading
+  data: DoseReading
   onClose: () => void
   update: (dataKey: string) => void
 }
 
-type MacroReading = {
+type DoseReading = {
   id: number
   created: string
-  kcal: number
-  carbs: number
-  sugar: number
-  protein: number
-  fat: number
+  reading: number
+  long: boolean
 }
 
-const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroModalProps) => {
+function getDoseProperties<DoseReading>(obj: DoseReading): Array<keyof DoseReading> {
+  const result: Array<keyof DoseReading> = []
+  for (const key in obj) {
+    result.push(key)
+  }
+  return result
+}
+
+const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalProps) => {
   const { isVisible, data, onClose, update } = props
 
   const [created, setCreated] = useState(data.created)
-  const [reading, setReading] = useState<{[key: string]: string | number}>({})
+  const [reading, setReading] = useState<number>(data.reading || 0.0)
+  const [long, setLong] = useState<boolean>(data.long)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+
+  const state: DoseReading = { id: data.id, created, reading, long }
+
+  const isPropertyUpdated = (property: keyof DoseReading) => {
+    return state[property] !== data[property]
+  }
 
   const handleSubmit = async () => {
     try {
-      const body = created !== data.created ? { ...reading, created } : { ...reading }
-      const response = await putReading({ table: 'macro', data: body, id: data.id })
+      let body = {} as any
+      const properties: Array<keyof DoseReading> = getDoseProperties(state)
+      for (const key of properties) {
+        if (isPropertyUpdated(key)) {
+          body[key] = state[key]
+        }
+      }
+      const response = await putReading({ table: 'dose', data: body, id: state.id })
 
-      await handleSuccessfulUpdate('macroReadings', response, setShowSuccessModal)
-      update('macroReadings')
+      await handleSuccessfulUpdate('doseReadings', response, setShowSuccessModal)
+      update('doseReadings')
       onClose()
     } catch (err) {
-      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`)
     }
   }
 
@@ -59,8 +77,17 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       style={Styles.modal}
     >
       <View style={Styles.container}>
-        <ModifyTimeSelector created={created} setDateTime={setCreated} />
-        <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
+        <ModifyTimeSelector created={state.created} setDateTime={setCreated} />
+        <WheelSelector reading={data.reading} updateReading={setReading} />
+        <View style={Styles.switch}>
+        <Text style={Styles.switchText}>Short</Text>
+          <Switch
+          testID={'doseReading_toggleSwitch'}
+          onValueChange={() => setLong(!long)}
+          value={state.long}
+          />
+          <Text style={Styles.switchText}>Long</Text>
+        </View>
         <View style={Styles.buttons}>
           <TouchableOpacity onPress={onClose} style={Styles.button}>
             <GradientBorder x={1.0} y={1.0} />
@@ -80,7 +107,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
   )
 }
 
-export default ModifyMacroModal
+export default ModifyDoseModal
 
 const Styles = StyleSheet.create({
   modal: {
@@ -94,6 +121,15 @@ const Styles = StyleSheet.create({
   name: {
     fontSize: 18,
     paddingVertical: 2
+  },
+  switch: {
+    width: '60%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
+  switchText: {
+    fontSize: 16
   },
   buttons: {
     flexDirection: 'row'

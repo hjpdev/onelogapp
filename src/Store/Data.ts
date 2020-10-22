@@ -27,6 +27,7 @@ type SubmitReadingOptions = {
 
 type PutReadingOptions = {
   table: string
+  id: number
   data: any
 }
 
@@ -80,8 +81,8 @@ export const submitReading = async (options: SubmitReadingOptions): Promise<any>
 }
 
 export const putReading = async (options: PutReadingOptions) => {
-  const { table, data } = options
-  const url = `${BASE_URL}/readings/${table}`
+  const { table, id, data } = options
+  const url = `${BASE_URL}/readings/${table}/${id}`
 
   try {
     const result = await fetch(url, {
