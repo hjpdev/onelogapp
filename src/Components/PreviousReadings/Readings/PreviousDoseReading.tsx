@@ -1,43 +1,70 @@
-import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import React, { useState } from 'react'
+import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
+import ModifyReadingModal from '../../Modals/ModifyReadingModal'
+import ModifyDoseModal from '../../Modals/ModifyDoseModal'
 import GradientBorder from '../../Minor/GradientBorder'
-import { generateCreatedTime } from '../../../Helpers/Date'
+import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
 type PreviousDoseReadingProps = {
   data: {
+    id: number
     created: string
     reading: number
     long: boolean
   }
+  update: (dataKay: string) => void
 }
 
 export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: PreviousDoseReadingProps) => {
-  const { data } = props
-  const { created, reading, long } = data
+  const { data, update } = props
+
+  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
+  const [showModifyDoseModal, setShowModifyDoseModal] = useState(false)
+
+  const { id, created, reading, long } = data
   const timeCreated = generateCreatedTime(created)
 
   const generateColors = () => {
-    return long ? ['#c9c9c9', '#ebebeb'] : ['#ebebeb', '#c9c9c9']
+    return long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#b2bfaa']
   }
 
   const generateStartPoint = () => {
-    const y = long ? 0 + reading / 15 : 1 - reading / 15
+    const y = long ? (reading / 60) : 1 - (reading / 10)
     return { x: 0.5, y}
   }
 
+  const generateReading = () => {
+    return `${reading}`.length < 2 ? reading.toFixed(1) : reading
+  }
+
   return(
+    <>
     <View style={Styles.container}>
-      <View><Text style={Styles.timeCreated}>{timeCreated}</Text></View>
-      <GradientBorder x={1.0} y={1.0} />
-      <View style={Styles.reading}>
-        <LinearGradient colors={generateColors()} start={generateStartPoint()}>
-          <Text style={Styles.readingText}>{reading}</Text>
-        </LinearGradient>
+      <View style={Styles.header}>
+        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+        </TouchableOpacity>
+        <Text style={Styles.timeCreated}>{timeCreated}</Text>
+        <TouchableOpacity>
+          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+        </TouchableOpacity>
       </View>
-      <View><Text>{long ? 'Long' : 'Short'}</Text></View>
+      <GradientBorder x={1.0} y={1.0} />
+      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={{ width: '100%' }}>
+        <View style={Styles.reading}>
+          <LinearGradient colors={generateColors()} start={generateStartPoint()}>
+            <Text style={Styles.readingText}>{generateReading()}</Text>
+          </LinearGradient>
+        </View>
+        <GradientBorder x={1.0} y={1.0} />
+        <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
+      </TouchableOpacity>
     </View>
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'dose'} dataKey={'doseReadings'} showReadingModal={() => setShowModifyDoseModal(true)} update={() => update('doseReadings')} />
+    <ModifyDoseModal isVisible={showModifyDoseModal} data={data} onClose={() => setShowModifyDoseModal(false)} update={update} />
+    </>
   )
 }
 
@@ -51,16 +78,36 @@ const Styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 8,
     margin: 4,
-    width: '19%'
+    width: '23%'
+  },
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  icon: {
+    tintColor: 'black',
+    height: 10,
+    width: 10
+  },
+  placeholder: {
+    tintColor: '#ebebeb',
+    height: 10,
+    width: 10
   },
   timeCreated: {
-    fontSize: 16
+    fontSize: 14
   },
   reading: {
-    width: '90%',
+    width: '100%'
   },
   readingText: {
-    fontSize: 38,
+    width: '100%',
+    fontSize: 34,
+    textAlign: 'center'
+  },
+  typeText: {
     textAlign: 'center'
   }
 })

@@ -16,7 +16,7 @@ const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedM
 
   const generateList = () => {
     return readings.map(reading => {
-      return <SavedMacro key={reading.id} data={reading} update={update} />
+      return <SavedMacro key={reading.id} data={reading} update={() => update()} />
     })
   }
 
@@ -52,8 +52,7 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   letterText: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 20,
   },
   placeholder: {
     paddingLeft: 8,

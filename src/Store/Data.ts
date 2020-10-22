@@ -1,6 +1,10 @@
+import Config from 'react-native-config'
+
 import { needsUpdating, storeData, getData } from '.'
 import { addReading, removeReading, updateReadings } from '../Store/index'
 import { delay } from '../Helpers'
+
+const BASE_URL = Config.BASE_URL
 
 type GenerateReadingsQueryOptions = {
   dataKeys: string[]
@@ -23,6 +27,7 @@ type SubmitReadingOptions = {
 
 type PutReadingOptions = {
   table: string
+  id: number
   data: any
 }
 
@@ -37,7 +42,7 @@ export const getReadings = async(options: GetReadingsOptions): Promise<any> => {
     throw new Error('Error getReadings: Must provide either query or, dataKeys to query (& array of days if relevent).')
   }
   const query = queryString || generateReadingsQuery({ dataKeys, days })
-  const url = 'http://localhost:8088/graphql'
+  const url = `${BASE_URL}/graphql`
 
   try {
     const response = await fetch(url, {
@@ -57,7 +62,7 @@ export const getReadings = async(options: GetReadingsOptions): Promise<any> => {
 
 export const submitReading = async (options: SubmitReadingOptions): Promise<any> => {
   const { table, data } = options
-  const url = `http://localhost:8088/readings/${table}`
+  const url = `${BASE_URL}/readings/${table}`
 
   try {
     const result = await fetch(url, {
@@ -76,8 +81,8 @@ export const submitReading = async (options: SubmitReadingOptions): Promise<any>
 }
 
 export const putReading = async (options: PutReadingOptions) => {
-  const { table, data } = options
-  const url = `http://localhost:8088/readings/${table}`
+  const { table, id, data } = options
+  const url = `${BASE_URL}/readings/${table}/${id}`
 
   try {
     const result = await fetch(url, {
@@ -97,7 +102,7 @@ export const putReading = async (options: PutReadingOptions) => {
 
 export const deleteReading = async (options: DeleteReadingOptions) => {
   const { table, id } = options
-  const url = `http://localhost:8088/readings/${table}/${id}`
+  const url = `${BASE_URL}/readings/${table}/${id}`
 
   try {
     const result = await fetch(url, {

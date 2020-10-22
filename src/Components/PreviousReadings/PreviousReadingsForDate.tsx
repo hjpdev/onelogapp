@@ -5,18 +5,19 @@ import GradientBorder from '../Minor/GradientBorder'
 
 type PreviousReadingsForDateProps = {
   date: string
-  opened?: boolean
   readings: {[key: string]: any}
   Template: any
+  update: (dataKey: string) => void
+  opened?: boolean
 }
 
 const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: PreviousReadingsForDateProps) => {
-  const { date, opened, readings, Template } = props
+  const { date, opened, readings, Template, update } = props
   const [isOpen, setIsOpen] = useState(opened || false)
 
   const generateList = () => {
     return readings.map(reading => {
-      return <Template key={reading.id} data={reading} />
+      return <Template key={reading.id} data={reading} update={update} />
     })
   }
 

@@ -3,7 +3,7 @@ import { Image, TouchableOpacity, View, StyleSheet } from 'react-native'
 import Modal from 'react-native-modal'
 
 type SuccessModalProps = {
-  isVisible: boolean,
+  isVisible: boolean
   onPress: () => void
 }
 

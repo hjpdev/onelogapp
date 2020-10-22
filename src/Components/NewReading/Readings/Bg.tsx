@@ -20,7 +20,7 @@ export const NewBgReading: React.FC = () => {
         const data = dateTime ? { reading, created: dateTime } : { reading }
         const response = await submitReading({ table: 'bg', data })
 
-        return handleSuccessfulSubmit('bgReadings', response, setShowSuccessModal)
+        return response && handleSuccessfulSubmit('bgReadings', response, setShowSuccessModal)
       } catch (err) {
         console.log('Error bg handleSubmit: ', err)
       }
@@ -56,11 +56,10 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 2,
     padding: 16,
-    backgroundColor: '#e6e6e6'
+    backgroundColor: '#d6d6d6'
   },
   submitText: {
-    fontSize: 18,
-    fontWeight: 'bold'
+    fontSize: 18
   },
   unit: {
     fontSize: 20

@@ -1,48 +1,44 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import MacroReadingInput from '../Minor/MacroReadingInput'
 import GradientBorder from '../Minor/GradientBorder'
-import ModifyTimeSelector from '../Minor/ModifyTimeSelector'
+import MacroAmountSelector from '../Minor/MacroAmountSelector'
 import SuccessModal from './SuccessModal'
 
 import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
+import { formatName } from '../../Helpers/General'
+import { TSavedMacro } from '../SavedMacros/SavedMacro'
 
-type ModifyMacroModalProps = {
+type ModifySavedMacroModalProps = {
   isVisible: boolean
-  data: MacroReading
+  data: TSavedMacro
   onClose: () => void
-  update: (dataKey: string) => void
+  update: () => void
 }
 
-type MacroReading = {
-  id: number
-  created: Date
-  kcal: number
-  carbs: number
-  sugar: number
-  protein: number
-  fat: number
-}
-
-const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroModalProps) => {
+const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: ModifySavedMacroModalProps) => {
   const { isVisible, data, onClose, update } = props
 
-  const [created, setCreated] = useState(data.created)
+  const [name, setName] = useState(data.name)
+  const [amount, setAmount] = useState(data.amount)
+  const [unit, setUnit] = useState(data.unit)
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
+  const id = data.id
+
   const handleSubmit = async () => {
     try {
-      const body = created !== data.created ? { ...reading, created } : { ...reading }
-      const response = await putReading({ table: 'macro', data: body, id: data.id })
+      const data = { name, ...reading, amount, unit }
+      const response = await putReading({ table: `macro/saved/${id}`, data })
 
-      await handleSuccessfulUpdate('macroReadings', response, setShowSuccessModal)
-      update('macroReadings')
+      await handleSuccessfulUpdate('savedMacros', response, setShowSuccessModal)
+      update()
       onClose()
     } catch (err) {
-      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`)
+      console.log(`Error ModifySavedMacroModal.handleSubmit: ${err}`)
     }
   }
 
@@ -59,7 +55,10 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       style={Styles.modal}
     >
       <View style={Styles.container}>
-        <ModifyTimeSelector created={created} setDateTime={setCreated} />
+        <TextInput value={formatName(name)} onChangeText={setName} style={Styles.name} />
+        <GradientBorder x={1.0} y={1.0} />
+        <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} amount={amount} unit={unit} />
+        <GradientBorder x={1.0} y={1.0} />
         <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
         <View style={Styles.buttons}>
           <TouchableOpacity onPress={onClose} style={Styles.button}>
@@ -80,7 +79,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
   )
 }
 
-export default ModifyMacroModal
+export default ModifySavedMacroModal
 
 const Styles = StyleSheet.create({
   modal: {

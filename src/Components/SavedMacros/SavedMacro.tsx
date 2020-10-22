@@ -3,11 +3,11 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
 import ModifyReadingModal from '../Modals/ModifyReadingModal'
-import ModifyMacroModal from '../Modals/ModifyMacroModal'
+import ModifySavedMacroModal from '../Modals/ModifySavedMacroModal'
 import { formatName } from '../../Helpers/General'
 
 export type TSavedMacro = {
-  id: string
+  id: number
   created: Date
   name: string
   kcal: number
@@ -30,7 +30,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
   const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
-  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
+  const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState(false)
 
   return(
     <>
@@ -57,16 +57,16 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
 
         <View style={Styles.values}>
-          <Text style={Styles.value}>{ kcal.toFixed(1) }</Text>
-          <Text style={Styles.value}>{ carbs.toFixed(1) }</Text>
-          <Text style={Styles.value}>{ sugar.toFixed(1) }</Text>
-          <Text style={Styles.value}>{ protein.toFixed(1) }</Text>
-          <Text style={Styles.value}>{ fat.toFixed(1) }</Text>
+          <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
+          <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
+          <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
+          <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
+          <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
         </View>
       </View>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} showReadingModal={() => setShowModifyMacroModal(true)} update={update} />
-    <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
+    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} dataKey={'savedMacros'} showReadingModal={() => setShowModifySavedMacroModal(true)} update={update} />
+    <ModifySavedMacroModal isVisible={showModifySavedMacroModal} data={data} onClose={() => setShowModifySavedMacroModal(false)} update={update} />
     </>
   )
 }
@@ -86,10 +86,8 @@ const Styles = StyleSheet.create({
     width: '31%'
   },
   title: {
-    width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'stretch'
+    justifyContent: 'space-around'
   },
   icon: {
     tintColor: 'black',

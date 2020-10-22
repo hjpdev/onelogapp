@@ -18,13 +18,16 @@ export const storeData = async (key: string, data: StoreData | StatsReadingProps
 }
 
 export const getData = async (key: string): Promise<StoreData> => {
-  let value
+  let rawData
   try {
-    value = await AsyncStorage.getItem(key)
+    rawData = await AsyncStorage.getItem(key)
   } catch(err) {
     console.log('Error getData: ', err)
   }
-  return value && JSON.parse(value)
+  const data = rawData && JSON.parse(rawData)
+  const readings = data && data.readings && data.readings.filter(Boolean)
+  
+  return { ...data, readings }
 }
 
 export const deleteData = async (key: string): Promise<void> => {
@@ -100,6 +103,10 @@ export const needsUpdating = async (key: string): Promise<boolean> => {
     const data = await getData(key)
 
     if (!data || !data.readings) {
+      return true
+    }
+
+    if (data.readings.some((reading: any) => !!reading)) {
       return true
     }
 

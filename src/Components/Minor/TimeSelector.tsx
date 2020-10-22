@@ -78,7 +78,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
           style={Styles.time}
         />
       </View>
-      <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14}}>{':'}</Text>
+      <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 18}}>{':'}</Text>
       <View style={Styles.wheel}>
         <WheelPicker
           selectedItem={minutes}
