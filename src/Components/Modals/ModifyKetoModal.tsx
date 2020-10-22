@@ -18,7 +18,7 @@ type ModifyKetoModalProps = {
 
 type KetoReading = {
   id: number
-  created: string
+  created: Date
   reading: number
 }
 

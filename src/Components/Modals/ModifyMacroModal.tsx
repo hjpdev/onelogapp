@@ -18,7 +18,7 @@ type ModifyMacroModalProps = {
 
 type MacroReading = {
   id: number
-  created: string
+  created: Date
   kcal: number
   carbs: number
   sugar: number

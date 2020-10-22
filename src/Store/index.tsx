@@ -25,7 +25,7 @@ export const getData = async (key: string): Promise<StoreData> => {
     console.log('Error getData: ', err)
   }
   const data = rawData && JSON.parse(rawData)
-  const readings = data.readings.filter(Boolean)
+  const readings = data && data.readings && data.readings.filter(Boolean)
   
   return { ...data, readings }
 }

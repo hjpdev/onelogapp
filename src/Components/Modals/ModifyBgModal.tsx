@@ -18,7 +18,7 @@ type ModifyBgModalProps = {
 
 type BgReading = {
   id: number
-  created: string
+  created: Date
   reading: number
 }
 

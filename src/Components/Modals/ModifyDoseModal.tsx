@@ -18,7 +18,7 @@ type ModifyDoseModalProps = {
 
 type DoseReading = {
   id: number
-  created: string
+  created: Date
   reading: number
   long: boolean
 }

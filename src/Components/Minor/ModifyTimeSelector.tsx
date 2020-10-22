@@ -5,8 +5,8 @@ import { WheelPicker } from "../../react-native-wheel-picker-android"
 import { clockHours, clockMinutes, generateCreatedDateTime, newDate } from '../../Helpers'
 
 type ModifyTimeSelectorProps = {
-  created: string
-  setDateTime: (Dispatch<SetStateAction<Date | null>>)
+  created: Date
+  setDateTime: (Dispatch<SetStateAction<Date>>)
 }
 
 const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: ModifyTimeSelectorProps) => {
