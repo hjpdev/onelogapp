@@ -7,8 +7,27 @@ import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
 
-export const NewMacroReading: React.FC = () => {
-  const [reading, setReading] = useState<{[key: string]: string | number}>({})
+type MacroReading = {
+  kcal: number,
+  carbs: number,
+  sugar: number,
+  protein: number,
+  fat: number,
+}
+
+type NewMacroReadingProps = {
+  route?: {
+    params: {
+      macros: MacroReading
+    }
+  }
+}
+
+export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroReadingProps) => {
+  const { route } = props
+  const macros = route && route.params && route.params.macros
+
+  const [reading, setReading] = useState<{[key: string]: string | number}>(macros || {})
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
@@ -32,7 +51,7 @@ export const NewMacroReading: React.FC = () => {
     <NewReadingHeader headerText={'Macro'} dataKey={'macroReadings'} />
     <View style={Styles.container}>
       <TimeSelector setDateTime={setDateTime} />
-      <MacroReadingInput showSavedMacroOptions updateReading={setReading} />
+      <MacroReadingInput showSavedMacroOptions data={macros} updateReading={setReading} />
       <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
         <Text style={Styles.submitText}>{'Submit'}</Text>
       </TouchableOpacity>

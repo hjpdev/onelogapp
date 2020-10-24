@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import DeleteConfirmationModal from './DeleteConfirmationModal'
-import GradientBorder from '../Minor/GradientBorder'
-import SuccessModal from './SuccessModal'
+import DeleteConfirmationModal from '../DeleteConfirmationModal'
+import GradientBorder from '../../Minor/GradientBorder'
+import SuccessModal from '../SuccessModal'
 
 type ModifyReadingModalProps = {
   isVisible: boolean
@@ -59,7 +59,8 @@ export default ModifyReadingModal
 const Styles = StyleSheet.create({
   container: {
     width: '70%',
-    borderRadius: 2
+    borderRadius: 2,
+    borderWidth: 1
   },
   modal: {
     alignItems: 'center'

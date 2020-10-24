@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import MacroReadingInput from '../Minor/MacroReadingInput'
-import GradientBorder from '../Minor/GradientBorder'
-import ModifyTimeSelector from '../Minor/ModifyTimeSelector'
-import SuccessModal from './SuccessModal'
+import MacroReadingInput from '../../Minor/MacroReadingInput'
+import GradientBorder from '../../Minor/GradientBorder'
+import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
+import SuccessModal from '../SuccessModal'
 
-import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
+import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
 type ModifyMacroModalProps = {
   isVisible: boolean

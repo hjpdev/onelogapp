@@ -3,13 +3,34 @@ import { ScrollView } from 'react-native'
 
 import SavedMacrosForLetter from './SavedMacrosForLetter'
 import SavedMacrosHeader from './SavedMacrosHeader'
+import MacroCollectionSummaryModal from './MacroCollection/MacroCollectionSummaryModal'
 import { ALPHABET } from '../../Helpers/General'
 import { getData, storeData } from '../../Store'
 import { getReadings } from '../../Store/Data'
 import { TSavedMacro } from './SavedMacro'
+import { concat } from 'react-native-reanimated'
+
+export type TMacroCollectionEntry = {
+  amount: number
+  reading: TSavedMacro
+}
 
 const SavedMacros: React.FC = () => {
-  const [savedMacros, setSavedMacros] = useState([] as any)
+  const [savedMacros, setSavedMacros] = useState<TSavedMacro[]>([])
+  const [collection, setCollection] = useState<TMacroCollectionEntry[]>([])
+  const [showMacroCollectionSummaryModal, setShowMacroCollectionSummaryModal] = useState<boolean>(false)
+
+  const addEntry = (amount: number, entry: TSavedMacro): void => {
+    const updatedEntries = [ ...collection, { amount, reading: entry } ]
+    setCollection(updatedEntries)
+  }
+
+  const removeEntry = (key: string): void => {
+    const clearedCollection = collection.filter((entry) => {
+      return `${entry.reading.id}-${entry.amount}` !== key
+    })
+    setCollection(clearedCollection)
+  }
 
   const fetchSavedMacros = async () => {
     try {
@@ -47,16 +68,17 @@ const SavedMacros: React.FC = () => {
     const savedMacrosByLetter = sortSavedMacrosByLetter()
 
     return ALPHABET.map((letter) => {
-      return <SavedMacrosForLetter letter={letter} readings={savedMacrosByLetter[letter]} key={letter} update={() => fetchSavedMacros()} />
+      return <SavedMacrosForLetter letter={letter} readings={savedMacrosByLetter[letter]} key={letter} update={() => fetchSavedMacros()} addEntry={addEntry} />
     })
   }
 
   return(
     <>
-    <SavedMacrosHeader />
+    <SavedMacrosHeader numberOfEntries={collection.length} onPress={() => setShowMacroCollectionSummaryModal(true)} />
     <ScrollView>
       {savedMacros && generateListItems()}
     </ScrollView>
+    <MacroCollectionSummaryModal isVisible={showMacroCollectionSummaryModal} collection={collection} onClose={() => setShowMacroCollectionSummaryModal(false)} removeEntry={removeEntry} clearCollection={() => setCollection([])} />
     </>
   )
 }

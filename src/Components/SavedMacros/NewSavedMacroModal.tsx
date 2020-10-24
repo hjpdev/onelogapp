@@ -4,7 +4,7 @@ import Modal from 'react-native-modal'
 
 import GradientBorder from '../Minor/GradientBorder'
 import MacroAmountSelector from '../Minor/MacroAmountSelector'
-import SuccessModal from './SuccessModal'
+import SuccessModal from '../Modals/SuccessModal'
 import { handleSuccessfulSubmit, submitReading } from '../../Store/Data'
 
 type NewSavedMacroModalProps = {
@@ -52,14 +52,18 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
       <View style={Styles.container}>
         <TextInput placeholder={'Name'} onChangeText={setName} style={Styles.textInput} />
         <GradientBorder x={1.0} y={1.0} />
-        <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} />
+        <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} allowEditUnit />
         <View style={Styles.buttons}>
-          <TouchableOpacity onPress={onClose}>
-            <Text style={Styles.buttonText}>{'Cancel'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={async () => await handleSubmit()}>
-            <Text style={Styles.buttonText}>{'Submit'}</Text>
-          </TouchableOpacity>
+          <View style={{ width: '50%' }}>
+            <TouchableOpacity onPress={onClose} style={{ borderRightWidth: 1 }}>
+              <Text style={Styles.buttonText}>{'Cancel'}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ width: '50%' }}>
+            <TouchableOpacity onPress={async () => await handleSubmit()}>
+              <Text style={Styles.buttonText}>{'Submit'}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -75,7 +79,8 @@ const Styles = StyleSheet.create({
   container: {
     width: '50%',
     backgroundColor: 'white',
-    borderRadius: 2
+    borderRadius: 2,
+    borderWidth: 2
   },
   modal: {
     alignItems: 'center'
@@ -92,9 +97,10 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,
-    borderRadius: 2
+    borderWidth: 1
   },
   buttonText: {
-    padding: 6
+    padding: 6,
+    textAlign: 'center'
   }
 })

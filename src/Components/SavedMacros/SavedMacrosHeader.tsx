@@ -4,7 +4,14 @@ import { useNavigation } from '@react-navigation/native'
 
 import GradientBorder from '../Minor/GradientBorder'
 
-const SavedMacrosHeader: React.FC = () => {
+type SavedMacrosHeaderProps = {
+  numberOfEntries: number
+  onPress: (() => void)
+}
+
+const SavedMacrosHeader: React.FC<SavedMacrosHeaderProps> = (props: SavedMacrosHeaderProps) => {
+  const { numberOfEntries, onPress } = props
+
   const navigation = useNavigation()
 
   return(
@@ -19,7 +26,10 @@ const SavedMacrosHeader: React.FC = () => {
         <Text style={Styles.text}>{`Saved Macros`}</Text>
       </View>
       <View style={Styles.iconContainer}>
-        <Text style={Styles.placeholder}>{' '}</Text>
+        <TouchableOpacity onPress={onPress}>
+          <Image source={require('../../Assets/Images/PreviousReadings.png')} style={{ height: 40, width: 30, position: 'absolute' }} />
+          <Text style={Styles.numberOfEntries}>{numberOfEntries}</Text>
+        </TouchableOpacity>
       </View>
     </View>
     <GradientBorder x={1.0} y={1.0} />
@@ -53,7 +63,14 @@ const Styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center'
   },
-  placeholder: {
+  numberOfEntries: {
+    color: 'red',
+    // textDecorationLine: 'underline',
+    textAlign: 'right',
+    paddingTop: 6,
+    paddingRight: 4,
+    fontSize: 10,
+    fontWeight: 'bold',
     height: 40,
     width: 30
   }

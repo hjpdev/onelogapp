@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import GradientBorder from '../Minor/GradientBorder'
-import ModifyTimeSelector from '../Minor/ModifyTimeSelector'
-import SuccessModal from './SuccessModal'
-import WheelSelector from '../Minor/WheelSelector'
+import GradientBorder from '../../Minor/GradientBorder'
+import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
+import SuccessModal from '../SuccessModal'
+import WheelSelector from '../../Minor/WheelSelector'
 
-import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
+import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
 type ModifyDoseModalProps = {
   isVisible: boolean

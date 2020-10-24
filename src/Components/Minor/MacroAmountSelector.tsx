@@ -6,7 +6,8 @@ import { defaultNumSelectorOptions } from '../../Helpers'
 
 type MacroSelectorProps = {
   updateAmount: Dispatch<SetStateAction<number>>
-  updateUnit: Dispatch<SetStateAction<string>>
+  updateUnit?: Dispatch<SetStateAction<string>>
+  allowEditUnit?: boolean
   amount?: number
   unit?: string
 }
@@ -32,7 +33,7 @@ const parseAmount = (value: number) => {
 
 
 const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
-  const { updateAmount, updateUnit, amount, unit } = props
+  const { updateAmount, updateUnit, allowEditUnit, amount, unit } = props
 
   const [hundreds, setHundreds] = useState((amount && parseAmount(amount).hundreds) || 0)
   const [tens, setTens] = useState((amount && parseAmount(amount).tens) || 0)
@@ -93,7 +94,10 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
         />
       </View>
       <View style={{ justifyContent: 'flex-end' }}>
-        <TextInput placeholder={unit || 'Unit'} onChangeText={updateUnit} style={Styles.textInput} />
+        {allowEditUnit
+          ? <TextInput placeholder={unit || 'Unit'} onChangeText={updateUnit} style={Styles.textInput} />
+          : <Text style={Styles.text}>{unit || 'Units'}</Text>
+        }
       </View>
     </View>
   )
@@ -115,5 +119,9 @@ const Styles = StyleSheet.create({
     paddingBottom: 6,
     paddingLeft: 10,
     height: 34
+  },
+  text: {
+    paddingBottom: 6,
+    paddingLeft: 10
   }
 })

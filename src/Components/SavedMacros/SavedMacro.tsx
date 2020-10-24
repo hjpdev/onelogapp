@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
-import ModifyReadingModal from '../Modals/ModifyReadingModal'
-import ModifySavedMacroModal from '../Modals/ModifySavedMacroModal'
+import ModifyReadingModal from '../Modals/Modification/ModifyReadingModal'
+import ModifySavedMacroModal from '../Modals/Modification/ModifySavedMacroModal'
+import MacroCollectionConfirmationModal from './MacroCollection/MacroCollectionConfirmationModal'
 import { formatName } from '../../Helpers/General'
 
 export type TSavedMacro = {
@@ -23,14 +24,35 @@ export type TSavedMacro = {
 type SavedMacroProps = {
   data: TSavedMacro
   update: () => void
+  addEntry: (amount: number, entry: TSavedMacro) => void
+}
+
+const PlusSymbol: React.FC = () => {
+  const PlusSymbolStyles = StyleSheet.create({
+    text: {
+      paddingHorizontal: 4,
+      textAlign: 'center',
+      textAlignVertical: 'center',
+      fontSize: 10,
+      fontWeight: 'bold',
+      borderRadius: 100,
+      borderWidth: 1,
+      marginVertical: 4,
+    }
+  })
+
+  return (
+    <><Text style={PlusSymbolStyles.text}>{'+'}</Text></>
+  )
 }
 
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
-  const { data, update } = props
+  const { data, update, addEntry } = props
   const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
-  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
-  const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState(false)
+  const [showModifyReadingModal, setShowModifyReadingModal] = useState<boolean>(false)
+  const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState<boolean>(false)
+  const [showMacroCollectionConfirmationModal, setShowMacroCollectionConfirmationModal] = useState<boolean>(false)
 
   return(
     <>
@@ -40,8 +62,8 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
           <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
         </TouchableOpacity>
         <Text style={Styles.name}>{formatName(name)}</Text>
-        <TouchableOpacity>
-          <Image source={require('../../Assets/Images/NavBarNewReading.png')} style={Styles.icon} />
+        <TouchableOpacity onPress={() => setShowMacroCollectionConfirmationModal(true)}>
+          <PlusSymbol />
         </TouchableOpacity>
       </View>
       <GradientBorder x={1.0} y={1.0} />
@@ -67,6 +89,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
     </View>
     <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} dataKey={'savedMacros'} showReadingModal={() => setShowModifySavedMacroModal(true)} update={update} />
     <ModifySavedMacroModal isVisible={showModifySavedMacroModal} data={data} onClose={() => setShowModifySavedMacroModal(false)} update={update} />
+    <MacroCollectionConfirmationModal isVisible={showMacroCollectionConfirmationModal} data={data} onClose={() => setShowMacroCollectionConfirmationModal(false)} onSubmit={addEntry}/>
     </>
   )
 }

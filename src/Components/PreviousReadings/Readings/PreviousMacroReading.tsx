@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import GradientBorder from '../../Minor/GradientBorder'
-import ModifyReadingModal from '../../Modals/ModifyReadingModal'
-import ModifyMacroModal from '../../Modals/ModifyMacroModal'
+import ModifyReadingModal from '../../Modals/Modification/ModifyReadingModal'
+import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
 type PreviousMacroReadingProps = {

@@ -1,6 +1,6 @@
 import 'react-native'
 import React from 'react'
-import { render, waitFor } from '@testing-library/react-native'
+import { render } from '@testing-library/react-native'
 import fetchMock from 'jest-fetch-mock'
 
 import App from '../../App'

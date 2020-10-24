@@ -1,5 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+
+import GradientBorder from '../../Minor/GradientBorder'
 
 export type DoseReadingProps = {
   data: {
@@ -12,30 +15,33 @@ export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps)
   const { data } = props
   const { reading, long } = data
 
+  const generateColors = () => {
+    return long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#b2bfaa']
+  }
+
+  const generateStartPoint = () => {
+    const y = long ? 0.2 : 0.80
+    return { x: 0.5, y }
+  }
+
+  const generateEndPoint = () => {
+    return long ? { x: 0.5, y: 0.25 } : { x: 0.5, y: 0.95 }
+  }
+
   return(
     <View style={Styles.container} testID={'carousel-dose'}>
       <View style={Styles.readingContainer}>
-        <Text style={Styles.reading}>
+        <LinearGradient colors={generateColors()} start={generateStartPoint()} end={generateEndPoint()} style={{ width: '100%' }}>
+          <Text style={Styles.reading}>
           { reading.toFixed(1) }
-        </Text>
-        <Text style={Styles.unit}>
-        { 'Units' }
-        </Text>
+          </Text>
+        </LinearGradient>
+        <GradientBorder x={1.0} y={1.0} />
+        <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
       </View>
-
-      <Text style={generateStyle(long)}>
-      { long === true ? 'Long' : 'Short' }
-      </Text>
     </View>
   )
 }
-
-const generateStyle = (long: boolean) => {
-  return long === true 
-    ? { ...Styles.type, backgroundColor: '#c4c4c4' }
-    : Styles.type
-}
-
 
 const Styles = StyleSheet.create({
   container: {
@@ -50,21 +56,11 @@ const Styles = StyleSheet.create({
   },
   reading: {
     fontSize: 54,
+    textAlign: 'center',
     paddingTop: 8,
     color: 'black'
   },
   unit: {
     fontSize: 12,
-  },
-  type: {
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    padding: 12,
-    borderWidth: 1,
-    borderColor: '#c4c4c4',
-    borderRadius: 1,
-    color: '#3f3d3d',
-    width: '30%'
   }
 })

@@ -5,47 +5,44 @@ import { WheelPicker } from '../../react-native-wheel-picker-android'
 import { defaultNumSelectorOptions } from '../../Helpers'
 
 type MacroSelectorProps = {
-  hasThousands: boolean
   label: string
-  value?: number
   updateMacro: Dispatch<SetStateAction<number>>
+  value?: number
+  hasThousands?: boolean
 }
 
-const parseValue = (value: number) => {
-  const stringValue = value.toString()
-  const integers = stringValue.split('.')[0]
-  const decimal = parseInt(stringValue.split('.')[1])
-  let thousands, hundreds, tens, ones
-  if (integers.length === 4) {
-    thousands = parseInt(integers[0])
-    hundreds = parseInt(integers[1])
-    tens = parseInt(integers[2])
-    ones = parseInt(integers[3])
-  }
-  if (integers.length === 3) {
-    hundreds = parseInt(integers[0])
-    tens = parseInt(integers[1])
-    ones = parseInt(integers[2])
-  }
-  if (integers.length === 2) {
-    tens = parseInt(integers[0])
-    ones = parseInt(integers[1])
-  }
-  if (integers.length === 1) {
-    ones = parseInt(integers[0])
+const parseValue = (value: number | undefined) => {
+  const stringValue = value && value.toFixed(1)
+  const integers = stringValue && stringValue.split('.')[0]
+  const keys = ['ones', 'tens', 'hundreds', 'thousands']
+  const keysToUse = integers && keys.slice(0, integers.length)
+
+  const decimal = (stringValue && parseInt(stringValue.split('.')[1])) || 0
+  const tmpObj = { thousands: 0, hundreds: 0, tens: 0, ones: 0, decimal } as any
+
+  if (integers && keysToUse) {
+    for (let i = 0; i < integers.length; i++) {
+      const key = keysToUse.reverse()[i]
+      tmpObj[key] = parseInt(integers[i])
+    }
   }
 
-  return { thousands, hundreds, tens, ones, decimal }
+  return tmpObj
 }
 
 const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
   const { hasThousands, label, value, updateMacro } = props
 
-  const [thousands, setThousands] = useState((value && parseValue(value).thousands) || 0)
-  const [hundreds, setHundreds] = useState((value && parseValue(value).hundreds) || 0)
-  const [tens, setTens] = useState((value && parseValue(value).tens) || 0)
-  const [ones, setOnes] = useState((value && parseValue(value).ones) || 0)
-  const [decimal, setDecimal] = useState((value && parseValue(value).decimal) || 0)
+  const amount = parseValue(value)
+
+  console.log('VALLUE IN SELECTOR => ', value)
+  console.log('AMOUNT IN SLEECTOR => ', amount)
+
+  const [thousands, setThousands] = useState(amount.thousands)
+  const [hundreds, setHundreds] = useState(amount.hundreds)
+  const [tens, setTens] = useState(amount.tens)
+  const [ones, setOnes] = useState(amount.ones)
+  const [decimal, setDecimal] = useState(amount.decimal)
 
   const generateValue = () => {
     return parseFloat(`${thousands}${hundreds}${tens}${ones}.${decimal}`)
@@ -153,6 +150,7 @@ const Styles = StyleSheet.create({
   },
   selectors: {
     flexDirection: 'row',
+    borderLeftWidth: 0.5
   },
   label: {
     textAlignVertical: 'bottom',

@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import MacroReadingInput from '../Minor/MacroReadingInput'
-import GradientBorder from '../Minor/GradientBorder'
-import MacroAmountSelector from '../Minor/MacroAmountSelector'
-import SuccessModal from './SuccessModal'
+import MacroReadingInput from '../../Minor/MacroReadingInput'
+import GradientBorder from '../../Minor/GradientBorder'
+import MacroAmountSelector from '../../Minor/MacroAmountSelector'
+import SuccessModal from '../SuccessModal'
 
-import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
-import { formatName } from '../../Helpers/General'
-import { TSavedMacro } from '../SavedMacros/SavedMacro'
+import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
+import { formatName } from '../../../Helpers/General'
+import { TSavedMacro } from '../../SavedMacros/SavedMacro'
 
 type ModifySavedMacroModalProps = {
   isVisible: boolean
@@ -32,7 +32,7 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
   const handleSubmit = async () => {
     try {
       const data = { name, ...reading, amount, unit }
-      const response = await putReading({ table: `macro/saved/${id}`, data })
+      const response = await putReading({ table: 'macro/saved', data, id })
 
       await handleSuccessfulUpdate('savedMacros', response, setShowSuccessModal)
       update()
@@ -57,7 +57,7 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
       <View style={Styles.container}>
         <TextInput value={formatName(name)} onChangeText={setName} style={Styles.name} />
         <GradientBorder x={1.0} y={1.0} />
-        <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} amount={amount} unit={unit} />
+        <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} amount={amount} unit={unit} allowEditUnit />
         <GradientBorder x={1.0} y={1.0} />
         <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
         <View style={Styles.buttons}>

@@ -58,10 +58,13 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   dateText: {
-    fontSize: 22,
+    fontSize: 18,
+    flex: 4,
+    textAlign: 'center',
     fontWeight: 'bold',
   },
   placeholder: {
+    flex: 1,
     paddingLeft: 8,
     fontSize: 22,
     color: '#e6e6e6'
@@ -69,7 +72,8 @@ const Styles = StyleSheet.create({
   chevron: {
     fontSize: 22,
     textAlign: 'center',
-    paddingRight: 8
+    paddingRight: 8,
+    flex: 1
   },
   view: {
     flexDirection: 'row',

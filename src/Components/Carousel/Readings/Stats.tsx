@@ -24,7 +24,7 @@ export const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingPro
         </Text>
       </View>
 
-      <Text style={Styles.type}>
+      <Text style={Styles.stddev}>
       { `±${stddev && stddev.toFixed(1)}` }
       </Text>
     </View>
@@ -50,12 +50,13 @@ const Styles = StyleSheet.create({
   unit: {
     fontSize: 12,
   },
-  type: {
+  stddev: {
     textAlign: 'center',
     fontSize: 20,
     fontWeight: 'bold',
     padding: 12,
     borderWidth: 1,
+    borderRadius: 2,
     borderColor: '#c4c4c4',
     width: '30%'
   }

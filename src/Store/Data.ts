@@ -54,6 +54,7 @@ export const getReadings = async(options: GetReadingsOptions): Promise<any> => {
       body: JSON.stringify({ query })
     })
     const { data } = await response.json()
+    console.log('Made request getReading')
     return data
   } catch (err) {
     console.log('Error getReadings: ', err)
@@ -74,6 +75,7 @@ export const submitReading = async (options: SubmitReadingOptions): Promise<any>
       body: JSON.stringify(data)
     })
 
+    console.log('Made request submitReading')
     return result.json()
   } catch (err) {
     console.log('Error submitReading: ', err)
@@ -94,6 +96,7 @@ export const putReading = async (options: PutReadingOptions) => {
       body: JSON.stringify(data)
     })
 
+    console.log('Made request putReading')
     return result.json()
   } catch (err) {
     console.log('Error putReading: ', err)
@@ -113,6 +116,7 @@ export const deleteReading = async (options: DeleteReadingOptions) => {
       }
     })
 
+    console.log('Made request deleteReading')
     return result.json()
   } catch (err) {
     console.log('Error deleteReading: ', err)

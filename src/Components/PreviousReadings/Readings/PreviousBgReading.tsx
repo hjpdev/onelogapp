@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-import ModifyReadingModal from '../../Modals/ModifyReadingModal'
+import ModifyReadingModal from '../../Modals/Modification/ModifyReadingModal'
 import GradientBorder from '../../Minor/GradientBorder'
-import ModifyBgModal from '../../Modals/ModifyBgModal'
+import ModifyBgModal from '../../Modals/Modification/ModifyBgModal'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
 type PreviousBgReadingProps = {

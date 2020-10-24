@@ -2,27 +2,27 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import GradientBorder from '../Minor/GradientBorder'
-import ModifyTimeSelector from '../Minor/ModifyTimeSelector'
-import SuccessModal from './SuccessModal'
-import WheelSelector from '../Minor/WheelSelector'
+import GradientBorder from '../../Minor/GradientBorder'
+import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
+import SuccessModal from '../SuccessModal'
+import WheelSelector from '../../Minor/WheelSelector'
 
-import { handleSuccessfulUpdate, putReading } from '../../Store/Data'
+import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
-type ModifyBgModalProps = {
+type ModifyKetoModalProps = {
   isVisible: boolean
-  data: BgReading
+  data: KetoReading
   onClose: () => void
   update: (dataKey: string) => void
 }
 
-type BgReading = {
+type KetoReading = {
   id: number
   created: Date
   reading: number
 }
 
-const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) => {
+const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalProps) => {
   const { isVisible, data, onClose, update } = props
 
   const [created, setCreated] = useState(data.created)
@@ -32,13 +32,13 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   const handleSubmit = async () => {
     try {
       const body = created !== data.created ? { created, reading } : { reading }
-      const response = await putReading({ table: 'bg', data: body, id: data.id })
+      const response = await putReading({ table: 'keto', data: body, id: data.id })
 
-      await handleSuccessfulUpdate('bgReadings', response, setShowSuccessModal)
-      update('bgReadings')
+      await handleSuccessfulUpdate('ketoReadings', response, setShowSuccessModal)
+      update('ketoReadings')
       onClose()
     } catch (err) {
-      console.log(`Error ModifyBgModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyKetoModal.handleSubmit: ${err}`)
     }
   }
 
@@ -76,7 +76,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   )
 }
 
-export default ModifyBgModal
+export default ModifyKetoModal
 
 const Styles = StyleSheet.create({
   modal: {

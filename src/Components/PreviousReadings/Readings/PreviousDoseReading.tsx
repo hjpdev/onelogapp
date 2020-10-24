@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-import ModifyReadingModal from '../../Modals/ModifyReadingModal'
-import ModifyDoseModal from '../../Modals/ModifyDoseModal'
+import ModifyReadingModal from '../../Modals/Modification/ModifyReadingModal'
+import ModifyDoseModal from '../../Modals/Modification/ModifyDoseModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
