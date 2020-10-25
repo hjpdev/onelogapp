@@ -17,11 +17,12 @@ type MacroReading = {
 type MacroReadingInputProps = {
   showSavedMacroOptions: boolean
   updateReading: (reading: {[macro: string]: number}) => any
+  showClearOption?: boolean
   data?: MacroReading
 }
 
 const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReadingInputProps) => {
-  const { showSavedMacroOptions, data, updateReading } = props
+  const { showSavedMacroOptions, data, updateReading, showClearOption } = props
 
   const parseData = () => {
     const tmpObj = { } as any
@@ -43,6 +44,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   const [sugar, setSugar] = useState(macros.sugar)
   const [protein, setProtein] = useState(macros.protein)
   const [fat, setFat] = useState(macros.fat)
+
   const [showNewSavedMacroModal, setShowNewSavedMacroModal] = useState(false)
 
   useEffect(() => {
@@ -62,9 +64,9 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
 
   return(
     <>
-    <TouchableOpacity onPress={() => clearMacros()}>
+    {showClearOption && <TouchableOpacity onPress={() => clearMacros()}>
       <Text>Clear</Text>
-    </TouchableOpacity>
+    </TouchableOpacity>}
     <View style={Styles.container}>
       <GradientBorder x={1.0} y={1.0} />
       <MacroSelector hasThousands value={kcal} label={'Kcal:'} updateMacro={setKcal} />
@@ -81,7 +83,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
             </TouchableOpacity>
           </View>
           <View style={{ width: '50%' }}>
-            <TouchableOpacity onPress={() => navigation.navigate('SavedMacros')}>
+            <TouchableOpacity onPress={() => navigation.navigate('SavedMacros', { updateReading })}>
               <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Saved</Text>
             </TouchableOpacity>
           </View>

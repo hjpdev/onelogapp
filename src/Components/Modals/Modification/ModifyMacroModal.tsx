@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Modal from 'react-native-modal'
 
+import ChoiceButtons from '../../Minor/ChoiceButtons'
 import MacroReadingInput from '../../Minor/MacroReadingInput'
-import GradientBorder from '../../Minor/GradientBorder'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
 import SuccessModal from '../SuccessModal'
 
@@ -61,18 +61,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       <View style={Styles.container}>
         <ModifyTimeSelector created={created} setDateTime={setCreated} />
         <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
-        <View style={Styles.buttons}>
-          <TouchableOpacity onPress={onClose} style={Styles.button}>
-            <GradientBorder x={1.0} y={1.0} />
-            <Text style={Styles.buttonText}>{'Cancel'}</Text>
-            <GradientBorder x={1.0} y={1.0} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.button}>
-            <GradientBorder x={1.0} y={1.0} />
-            <Text style={Styles.buttonText}>{'Submit'}</Text>
-            <GradientBorder x={1.0} y={1.0} />
-          </TouchableOpacity>
-        </View>
+        <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
@@ -82,27 +71,15 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
 
 export default ModifyMacroModal
 
+
 const Styles = StyleSheet.create({
   modal: {
     justifyContent: 'flex-start'
   },
   container: {
     backgroundColor: '#ebebeb',
-    justifyContent: 'space-evenly',
     alignItems: 'center',
-  },
-  name: {
-    fontSize: 18,
-    paddingVertical: 2
-  },
-  buttons: {
-    flexDirection: 'row'
-  },
-  button: {
-    width: '50%',
-    alignItems: 'center'
-  },
-  buttonText: {
-    padding: 6
+    borderWidth: 1,
+    borderRadius: 2
   }
 })

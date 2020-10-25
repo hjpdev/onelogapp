@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import GradientBorder from '../../Minor/GradientBorder'
+import ChoiceButtons from '../../Minor/ChoiceButtons'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
 import SuccessModal from '../SuccessModal'
 import WheelSelector from '../../Minor/WheelSelector'
@@ -52,19 +52,13 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
       animationOutTiming={500}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      backdropOpacity={0.66}
       style={Styles.modal}
     >
       <View style={Styles.container}>
         <ModifyTimeSelector created={created} setDateTime={setCreated} />
         <WheelSelector reading={data.reading} updateReading={setReading} />
-        <View style={Styles.buttons}>
-          <TouchableOpacity onPress={onClose} style={{ ...Styles.button }}>
-            <Text style={Styles.buttonText}>{'Cancel'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.button}>
-            <Text style={Styles.buttonText}>{'Submit'}</Text>
-          </TouchableOpacity>
-        </View>
+        <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
@@ -76,24 +70,11 @@ export default ModifyBgModal
 
 const Styles = StyleSheet.create({
   modal: {
-    justifyContent: 'flex-start',
-    borderRadius: 2,
-    borderWidth: 2
+    justifyContent: 'flex-start'
   },
   container: {
-    backgroundColor: '#ebebeb'
-  },
-  buttons: {
-    flexDirection: 'row'
-  },
-  button: {
-    width: '50%',
-    alignItems: 'center',
-    borderRightWidth: 1,
-    borderTopWidth: 1
-  },
-  buttonText: {
-    padding: 6,
-    textAlign: 'center'
+    backgroundColor: '#ebebeb',
+    borderRadius: 2,
+    borderWidth: 1
   }
 })

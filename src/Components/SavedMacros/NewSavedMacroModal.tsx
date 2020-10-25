@@ -83,7 +83,8 @@ const Styles = StyleSheet.create({
     borderWidth: 2
   },
   modal: {
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   textInput: {
     width: '100%',

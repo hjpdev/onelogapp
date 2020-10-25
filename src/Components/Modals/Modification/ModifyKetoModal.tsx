@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import GradientBorder from '../../Minor/GradientBorder'
+import ChoiceButtons from '../../Minor/ChoiceButtons'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
 import SuccessModal from '../SuccessModal'
 import WheelSelector from '../../Minor/WheelSelector'
@@ -52,23 +52,13 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
       animationOutTiming={500}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      backdropOpacity={0.66}
       style={Styles.modal}
     >
       <View style={Styles.container}>
         <ModifyTimeSelector created={created} setDateTime={setCreated} />
         <WheelSelector reading={data.reading} updateReading={setReading} />
-        <View style={Styles.buttons}>
-          <TouchableOpacity onPress={onClose} style={Styles.button}>
-            <GradientBorder x={1.0} y={1.0} />
-            <Text style={Styles.buttonText}>{'Cancel'}</Text>
-            <GradientBorder x={1.0} y={1.0} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.button}>
-            <GradientBorder x={1.0} y={1.0} />
-            <Text style={Styles.buttonText}>{'Submit'}</Text>
-            <GradientBorder x={1.0} y={1.0} />
-          </TouchableOpacity>
-        </View>
+        <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
@@ -84,21 +74,11 @@ const Styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#ebebeb',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 2
   },
   name: {
     fontSize: 18,
     paddingVertical: 2
-  },
-  buttons: {
-    flexDirection: 'row'
-  },
-  button: {
-    width: '50%',
-    alignItems: 'center'
-  },
-  buttonText: {
-    padding: 6
   }
 })

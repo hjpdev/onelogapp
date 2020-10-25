@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
+import ChoiceButtons from '../../Minor/ChoiceButtons'
 import MacroReadingInput from '../../Minor/MacroReadingInput'
 import GradientBorder from '../../Minor/GradientBorder'
 import MacroAmountSelector from '../../Minor/MacroAmountSelector'
 import SuccessModal from '../SuccessModal'
 
 import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
-import { formatName } from '../../../Helpers/General'
+import { capitaliseAddWhitespace } from '../../../Helpers/General'
 import { TSavedMacro } from '../../SavedMacros/SavedMacro'
 
 type ModifySavedMacroModalProps = {
@@ -55,23 +56,12 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
       style={Styles.modal}
     >
       <View style={Styles.container}>
-        <TextInput value={formatName(name)} onChangeText={setName} style={Styles.name} />
+        <TextInput value={capitaliseAddWhitespace(name)} onChangeText={setName} style={Styles.name} />
         <GradientBorder x={1.0} y={1.0} />
         <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} amount={amount} unit={unit} allowEditUnit />
         <GradientBorder x={1.0} y={1.0} />
         <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
-        <View style={Styles.buttons}>
-          <TouchableOpacity onPress={onClose} style={Styles.button}>
-            <GradientBorder x={1.0} y={1.0} />
-            <Text style={Styles.buttonText}>{'Cancel'}</Text>
-            <GradientBorder x={1.0} y={1.0} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.button}>
-            <GradientBorder x={1.0} y={1.0} />
-            <Text style={Styles.buttonText}>{'Submit'}</Text>
-            <GradientBorder x={1.0} y={1.0} />
-          </TouchableOpacity>
-        </View>
+        <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
@@ -89,19 +79,11 @@ const Styles = StyleSheet.create({
     backgroundColor: '#ebebeb',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 2
   },
   name: {
     fontSize: 18,
     paddingVertical: 2
-  },
-  buttons: {
-    flexDirection: 'row'
-  },
-  button: {
-    width: '50%',
-    alignItems: 'center'
-  },
-  buttonText: {
-    padding: 6
   }
 })

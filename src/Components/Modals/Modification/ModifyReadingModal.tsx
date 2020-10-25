@@ -33,6 +33,7 @@ const ModifyReadingModal: React.FC<ModifyReadingModalProps> = (props: ModifyRead
       animationOutTiming={500}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      backdropOpacity={0.33}
       style={Styles.modal}
     >
       <View style={Styles.container}>
@@ -59,14 +60,14 @@ export default ModifyReadingModal
 const Styles = StyleSheet.create({
   container: {
     width: '70%',
-    borderRadius: 2,
-    borderWidth: 1
+    borderRadius: 4,
+    borderWidth: 1.2
   },
   modal: {
     alignItems: 'center'
   },
   buttons: {
-    backgroundColor: '#ebebeb',
+    backgroundColor: '#e4e4e4',
     justifyContent: 'space-around',
     borderRadius: 2
   },
@@ -75,6 +76,7 @@ const Styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
+    fontWeight: 'bold',
     fontSize: 16,
     padding: 6
   }

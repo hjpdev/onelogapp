@@ -25,7 +25,7 @@ const MacroCollectionEntry: React.FC<MacroCollectionEntryProps> = (props: MacroC
         <Text style={Styles.remove}>{'X'}</Text>
       </TouchableOpacity>
       <View style={Styles.headerText}>
-        <Text>{`${formatName(reading.name)}`}</Text><Text>{`${(ratio * reading.amount).toFixed(0)} ${reading.unit}`}</Text>
+        <Text>{`${formatName(reading.name)}`}</Text><Text>{`  ${(ratio * reading.amount).toFixed(0)} ${reading.unit}`}</Text>
       </View>
       <View>
         <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>

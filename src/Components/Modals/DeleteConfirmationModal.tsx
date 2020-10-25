@@ -44,21 +44,22 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
       animationOutTiming={500}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      backdropOpacity={0.33}
       style={Styles.modal}
     >
       <View style={Styles.container}>
         <Text style={Styles.name}>{`Delete ${formatName(name)}?`}</Text>
         <View style={Styles.buttons}>
-          <TouchableOpacity onPress={onClose} style={Styles.button}>
-            <GradientBorder x={1.0} y={1.0} />
-            <Text style={Styles.buttonText}>{'Cancel'}</Text>
-            <GradientBorder x={1.0} y={1.0} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={async() => await handleDelete()} style={Styles.button}>
-            <GradientBorder x={1.0} y={1.0} />
-            <Text style={Styles.buttonText}>{'Confirm'}</Text>
-            <GradientBorder x={1.0} y={1.0} />
-          </TouchableOpacity>
+          <View style={{ width: '50%', borderRightWidth: 1 }}>
+            <TouchableOpacity onPress={onClose} style={Styles.button}>
+              <Text style={Styles.buttonText}>{'Cancel'}</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ width: '50%' }}>
+            <TouchableOpacity onPress={async() => await handleDelete()} style={Styles.button}>
+              <Text style={Styles.buttonText}>{'Confirm'}</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -77,9 +78,11 @@ const Styles = StyleSheet.create({
   },
   container: {
     width: '70%',
-    backgroundColor: '#ebebeb',
+    backgroundColor: '#e4e4e4',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 2,
+    borderWidth: 1
   },
   name: {
     textAlign: 'center',
@@ -88,13 +91,15 @@ const Styles = StyleSheet.create({
     margin: 6
   },
   buttons: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderTopWidth: 1
   },
   button: {
     margin: 6
   },
   buttonText: {
     textAlign: 'center',
+    fontWeight: 'bold',
     fontSize: 16,
     padding: 6
   }

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Text, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Text, ScrollView, StyleSheet, View } from 'react-native'
 import Modal from 'react-native-modal'
 import { useNavigation } from '@react-navigation/native'
 
+import ChoiceButtons from '../../Minor/ChoiceButtons'
 import GradientBorder from '../../Minor/GradientBorder'
 import MacroCollectionEntry from './MacroCollectionEntry'
 import { TMacroCollectionEntry } from '../SavedMacros'
@@ -21,10 +22,11 @@ type MacroCollectionSummaryModalProps = {
   onClose: () => void
   removeEntry: (key: string) => void
   clearCollection: () => void
+  updateReading: (macros: Macros) => void
 }
 
 const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = (props: MacroCollectionSummaryModalProps) => {
-  const { isVisible, collection, onClose, removeEntry, clearCollection } = props
+  const { isVisible, collection, onClose, removeEntry, clearCollection, updateReading } = props
 
   const navigation = useNavigation()
 
@@ -59,6 +61,12 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
 
     return { carbsCal, proteinCal, fatCal }
   }
+
+  const handleSubmit = () => {
+    updateReading(macros)
+    navigation.navigate('NewMacroReading', {macros} )
+  }
+
   const calories = calorieBreakdown()
   const entries = getEntries()
 
@@ -113,18 +121,7 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
     <ScrollView style={Styles.entries}>
       {entries}
     </ScrollView>
-    <View style={Styles.buttons}>
-      <View style={{ width: '50%', borderTopWidth: 1 }}>
-        <TouchableOpacity onPress={clearCollection} style={Styles.button}>
-          <Text style={Styles.buttonText}>{'Clear'}</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={{ width: '50%', borderLeftWidth: 1, borderTopWidth: 1 }}>
-        <TouchableOpacity onPress={() => navigation.navigate('NewMacroReading', { macros })} style={Styles.button}>
-          <Text style={Styles.buttonText}>{'Add'}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <ChoiceButtons confirmationText={'Add'} cancellationText={'Clear'} onSubmit={async () => handleSubmit()} onClose={clearCollection} />
   </Modal>
 	</>
   )
@@ -192,7 +189,8 @@ const Styles = StyleSheet.create({
   buttons: {
     width: '100%',
     flexDirection: 'row',
-    borderRadius: 8
+    borderRadius: 8,
+    backgroundColor: '#ebebeb'
   },
   button: {
     padding: 8

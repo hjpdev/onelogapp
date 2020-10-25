@@ -31,6 +31,8 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
+  console.log('HERE IT IS => ', reading)
+
   const handleSubmit = async () => {
     if (Object.keys(reading).length > 0) {
       if (!Object.keys(reading).every(macro => { return reading[macro] === 0 })) {

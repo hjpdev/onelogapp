@@ -15,8 +15,17 @@ export const capitalise = (word: string): string => {
   return`${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`
 }
 
-export const formatName = (name: string) => {
+export const capitaliseAddWhitespace = (name: string) => {
   return titleCase(name.replace(/_/g, ' '))
+}
+
+export const formatName = (name: string) => {
+  let formattedName = capitaliseAddWhitespace(name)
+  if (formattedName.length > 20) {
+    formattedName = formattedName.slice(0, 20) + '...'
+  }
+
+  return formattedName
 }
 
 export const ALPHABET = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']

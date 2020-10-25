@@ -5,7 +5,7 @@ import GradientBorder from '../Minor/GradientBorder'
 import ModifyReadingModal from '../Modals/Modification/ModifyReadingModal'
 import ModifySavedMacroModal from '../Modals/Modification/ModifySavedMacroModal'
 import MacroCollectionConfirmationModal from './MacroCollection/MacroCollectionConfirmationModal'
-import { formatName } from '../../Helpers/General'
+import { capitaliseAddWhitespace } from '../../Helpers/General'
 
 export type TSavedMacro = {
   id: number
@@ -61,7 +61,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
           <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
         </TouchableOpacity>
-        <Text style={Styles.name}>{formatName(name)}</Text>
+        <Text style={Styles.name}>{capitaliseAddWhitespace(name)}</Text>
         <TouchableOpacity onPress={() => setShowMacroCollectionConfirmationModal(true)}>
           <PlusSymbol />
         </TouchableOpacity>
@@ -128,6 +128,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'flex-end',
     paddingBottom: 8,
   },
   labels: {

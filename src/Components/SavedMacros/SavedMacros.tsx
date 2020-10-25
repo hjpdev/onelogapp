@@ -8,14 +8,32 @@ import { ALPHABET } from '../../Helpers/General'
 import { getData, storeData } from '../../Store'
 import { getReadings } from '../../Store/Data'
 import { TSavedMacro } from './SavedMacro'
-import { concat } from 'react-native-reanimated'
 
 export type TMacroCollectionEntry = {
   amount: number
   reading: TSavedMacro
 }
 
-const SavedMacros: React.FC = () => {
+type Macros = {
+  kcal: number
+  carbs: number
+  sugar: number
+  protein: number
+  fat: number
+}
+
+type SavedMacrosProps = {
+  route: {
+    params: {
+      updateReading: (macros: Macros) => void
+    }
+  }
+}
+
+const SavedMacros: React.FC<SavedMacrosProps> = (props: SavedMacrosProps) => {
+  const { route } = props
+  const { updateReading } = route.params
+
   const [savedMacros, setSavedMacros] = useState<TSavedMacro[]>([])
   const [collection, setCollection] = useState<TMacroCollectionEntry[]>([])
   const [showMacroCollectionSummaryModal, setShowMacroCollectionSummaryModal] = useState<boolean>(false)
@@ -78,7 +96,7 @@ const SavedMacros: React.FC = () => {
     <ScrollView>
       {savedMacros && generateListItems()}
     </ScrollView>
-    <MacroCollectionSummaryModal isVisible={showMacroCollectionSummaryModal} collection={collection} onClose={() => setShowMacroCollectionSummaryModal(false)} removeEntry={removeEntry} clearCollection={() => setCollection([])} />
+    <MacroCollectionSummaryModal isVisible={showMacroCollectionSummaryModal} collection={collection} onClose={() => setShowMacroCollectionSummaryModal(false)} removeEntry={removeEntry} clearCollection={() => setCollection([])} updateReading={updateReading} />
     </>
   )
 }
