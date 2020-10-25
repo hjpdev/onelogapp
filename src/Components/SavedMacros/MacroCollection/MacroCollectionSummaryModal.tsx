@@ -74,10 +74,10 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
 	<>
   <Modal
     isVisible={isVisible}
-    animationIn='fadeInUp'
-    animationOut='fadeOutDown'
-    animationInTiming={500}
-    animationOutTiming={500}
+    animationIn='zoomInDown'
+    animationOut='zoomOutUp'
+    animationInTiming={800}
+    animationOutTiming={800}
     onBackButtonPress={onClose}
     onBackdropPress={onClose}
     backdropOpacity={0.2}
@@ -85,28 +85,19 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
     <View style={Styles.readingContainer}>
       <View style={Styles.labels}>
         <Text style={Styles.label}>{'Kcal:'}</Text>
-        <Text style={Styles.label}>{'Carbs:'}</Text>
-        <Text style={Styles.label}>{'Sugar:'}</Text>
-        <Text style={Styles.label}>{'Protein:'}</Text>
-        <Text style={Styles.label}>{'Fat:'}</Text>
+        <Text style={Styles.label}>{'Carbs (g):'}</Text>
+        <Text style={Styles.label}>{'Sugar (g):'}</Text>
+        <Text style={Styles.label}>{'Protein (g):'}</Text>
+        <Text style={Styles.label}>{'Fat (g):'}</Text>
       </View>
 
       <View style={Styles.numbers}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}>
-          <View style={Styles.values}>
-            <Text style={Styles.value}>{`${macros.kcal.toFixed(2)}`}</Text>
-            <Text style={Styles.value}>{`${macros.carbs.toFixed(2)}`}</Text>
-            <Text style={Styles.value}>{`${macros.sugar.toFixed(2)}`}</Text>
-            <Text style={Styles.value}>{`${macros.protein.toFixed(2)}`}</Text>
-            <Text style={Styles.value}>{`${macros.fat.toFixed(2)}`}</Text>
-          </View>
-          <View style={{ paddingRight: 4 }}>
-            <Text></Text>
-            <Text>g</Text>
-            <Text>g</Text>
-            <Text>g</Text>
-            <Text>g</Text>
-          </View>
+        <View style={Styles.values}>
+          <Text style={Styles.value}>{`${macros.kcal.toFixed(2)}`}</Text>
+          <Text style={Styles.value}>{`${macros.carbs.toFixed(2)}`}</Text>
+          <Text style={Styles.value}>{`${macros.sugar.toFixed(2)}`}</Text>
+          <Text style={Styles.value}>{`${macros.protein.toFixed(2)}`}</Text>
+          <Text style={Styles.value}>{`${macros.fat.toFixed(2)}`}</Text>
         </View>
         <View style={Styles.percentages}>
           <Text style={Styles.percentage} />
@@ -178,26 +169,12 @@ const Styles = StyleSheet.create({
   },
   percentages: {
     width: '40%',
-    justifyContent: 'center',
-    alignItems: 'flex-end'
+    justifyContent: 'center'
   },
   percentage: {
-    paddingRight: 4
+    textAlign: 'right'
   },
   entries: {
     width: '100%'
-  },
-  buttons: {
-    width: '100%',
-    flexDirection: 'row',
-    borderRadius: 8,
-    backgroundColor: '#ebebeb'
-  },
-  button: {
-    padding: 8
-  },
-  buttonText: {
-    width: '100%',
-    textAlign: 'center'
   }
 })

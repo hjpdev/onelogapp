@@ -19,10 +19,10 @@ export const capitaliseAddWhitespace = (name: string) => {
   return titleCase(name.replace(/_/g, ' '))
 }
 
-export const formatName = (name: string) => {
+export const truncateName = (limit: number, name: string) => {
   let formattedName = capitaliseAddWhitespace(name)
-  if (formattedName.length > 18) {
-    formattedName = formattedName.slice(0, 18) + '...'
+  if (formattedName.length > limit) {
+    formattedName = formattedName.slice(0, limit) + '...'
   }
 
   return formattedName

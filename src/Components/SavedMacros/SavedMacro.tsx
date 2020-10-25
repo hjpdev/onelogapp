@@ -5,7 +5,7 @@ import GradientBorder from '../Minor/GradientBorder'
 import ModifyReadingModal from '../Modals/Modification/ModifyReadingModal'
 import ModifySavedMacroModal from '../Modals/Modification/ModifySavedMacroModal'
 import MacroCollectionConfirmationModal from './MacroCollection/MacroCollectionConfirmationModal'
-import { capitaliseAddWhitespace } from '../../Helpers/General'
+import { capitaliseAddWhitespace, truncateName } from '../../Helpers/General'
 
 export type TSavedMacro = {
   id: number
@@ -50,6 +50,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { data, update, addEntry } = props
   const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
+  const [isOpen, setIsOpen] = useState(false)
   const [showModifyReadingModal, setShowModifyReadingModal] = useState<boolean>(false)
   const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState<boolean>(false)
   const [showMacroCollectionConfirmationModal, setShowMacroCollectionConfirmationModal] = useState<boolean>(false)
@@ -61,7 +62,13 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
           <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
         </TouchableOpacity>
-        <Text style={Styles.name}>{capitaliseAddWhitespace(name)}</Text>
+        <View style={Styles.name}>
+          <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+          {isOpen
+            ? <Text style={{ ...Styles.nameText, flexWrap: 'wrap' }}>{`${capitaliseAddWhitespace(name)}`}</Text>
+            : <Text style={Styles.nameText}>{`${truncateName(10, name)}`}</Text>}
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity onPress={() => setShowMacroCollectionConfirmationModal(true)}>
           <PlusSymbol />
         </TouchableOpacity>
@@ -120,8 +127,10 @@ const Styles = StyleSheet.create({
     marginTop: 4
   },
   name: {
-    flex: 5,
-    fontSize: 16,
+    flex: 5
+  },
+  nameText: {
+    fontSize: 14,
     textAlign: 'center'
   },
   readingContainer: {

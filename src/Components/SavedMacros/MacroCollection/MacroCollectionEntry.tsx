@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import GradientBorder from '../../Minor/GradientBorder'
-import { formatName } from '../../../Helpers/General'
+import { capitaliseAddWhitespace, truncateName } from '../../../Helpers/General'
 import { TSavedMacro } from '../SavedMacro'
 
 type MacroCollectionEntryProps = {
@@ -19,13 +19,17 @@ const MacroCollectionEntry: React.FC<MacroCollectionEntryProps> = (props: MacroC
 
   return(
 	<>
-	<GradientBorder x={1.0} y={1.0} />
 	  <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.header}>
       <TouchableOpacity onPress={() => removeEntry(`${reading.id}-${amount}`)}>
         <Text style={Styles.remove}>{'X'}</Text>
       </TouchableOpacity>
       <View style={Styles.headerText}>
-        <Text>{`${formatName(reading.name)}`}</Text><Text>{`  ${(ratio * reading.amount).toFixed(0)} ${reading.unit}`}</Text>
+        {isOpen
+          ? <Text style={{ flexWrap: 'wrap' }}>{`${capitaliseAddWhitespace(reading.name)}`}</Text>
+          : <Text>{`${truncateName(28, reading.name)}`}</Text>}
+      </View>
+      <View>
+        <Text style={{ textAlign: 'right' }}>{`  ${(ratio * reading.amount).toFixed(0)} ${reading.unit}`}</Text>
       </View>
       <View>
         <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
@@ -68,7 +72,7 @@ const Styles = StyleSheet.create({
     fontSize: 22,
     padding: 4,
     paddingVertical: 8,
-    justifyContent: 'space-between'
+    justifyContent: 'space-around'
   },
   chevron: {
     fontSize: 12,
@@ -80,7 +84,7 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '50%'
+    width: '60%'
   },
   remove: {
     fontSize: 12,

@@ -65,7 +65,6 @@ const Styles = StyleSheet.create({
   },
   numberOfEntries: {
     color: 'red',
-    // textDecorationLine: 'underline',
     textAlign: 'right',
     paddingTop: 6,
     paddingRight: 4,

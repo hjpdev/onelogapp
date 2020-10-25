@@ -5,7 +5,7 @@ import Modal from 'react-native-modal'
 import ChoiceButtons from '../Minor/ChoiceButtons'
 import SuccessModal from './SuccessModal'
 import { deleteReading, handleSuccessfulDelete } from '../../Store/Data'
-import { formatName } from '../../Helpers/General'
+import { truncateName } from '../../Helpers/General'
 
 type DeleteConfirmationModalProps = {
   id: number
@@ -48,7 +48,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
       style={Styles.modal}
     >
       <View style={Styles.container}>
-        <Text style={Styles.name}>{`Delete:  ${formatName(name)}?`}</Text>
+        <Text style={Styles.name}>{`Delete:  ${truncateName(20, name)}?`}</Text>
         <ChoiceButtons confirmationText={'Confirm'} cancellationText={'Cancel'} onSubmit={async () => await handleDelete()} onClose={onClose} />
       </View>
     </Modal>

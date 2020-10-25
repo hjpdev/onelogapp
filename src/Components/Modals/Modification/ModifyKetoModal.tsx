@@ -78,9 +78,5 @@ const Styles = StyleSheet.create({
     borderWidth: 1.5,
     borderBottomWidth: 2,
     borderRadius: 4
-  },
-  name: {
-    fontSize: 18,
-    paddingVertical: 2
   }
 })

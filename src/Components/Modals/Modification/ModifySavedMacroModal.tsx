@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TextInput, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
@@ -54,7 +54,6 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
       backdropOpacity={0.66}
-      style={Styles.modal}
     >
       <View style={Styles.container}>
         <TextInput value={capitaliseAddWhitespace(name)} onChangeText={setName} style={Styles.name} />

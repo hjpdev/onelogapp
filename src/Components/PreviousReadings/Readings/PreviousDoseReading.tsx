@@ -31,7 +31,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   }
 
   const generateStartPoint = () => {
-    const y = long ? (reading / 60) : 1 - (reading / 10)
+    const y = long ? ((reading - 10) / 25) : 1 - (reading / 20)
     return { x: 0.5, y}
   }
 
