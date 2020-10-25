@@ -72,7 +72,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
     const dates = readings.map(reading => {
       return generateCreatedDay(reading['created'])
     })
-    const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i)
+    const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i).sort((a, b) => a - b)
     const readingsByDay = sortReadingsByDay(uniqueDates)
 
     return uniqueDates.map((date, index) => {
