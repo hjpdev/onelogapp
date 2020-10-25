@@ -139,8 +139,9 @@ const Styles = StyleSheet.create({
     height: '50%',
     flex: 0,
     top: '20%',
-    borderRadius: 2,
-    borderWidth: 1
+    borderWidth: 1.5,
+    borderBottomWidth: 2,
+    borderRadius: 4,
   },
   readingContainer: {
     width: '90%',

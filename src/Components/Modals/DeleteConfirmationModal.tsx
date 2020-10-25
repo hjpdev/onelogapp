@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Text, StyleSheet, View } from 'react-native'
 import Modal from 'react-native-modal'
 
-import GradientBorder from '../Minor/GradientBorder'
+import ChoiceButtons from '../Minor/ChoiceButtons'
 import SuccessModal from './SuccessModal'
 import { deleteReading, handleSuccessfulDelete } from '../../Store/Data'
 import { formatName } from '../../Helpers/General'
@@ -48,19 +48,8 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
       style={Styles.modal}
     >
       <View style={Styles.container}>
-        <Text style={Styles.name}>{`Delete ${formatName(name)}?`}</Text>
-        <View style={Styles.buttons}>
-          <View style={{ width: '50%', borderRightWidth: 1 }}>
-            <TouchableOpacity onPress={onClose} style={Styles.button}>
-              <Text style={Styles.buttonText}>{'Cancel'}</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ width: '50%' }}>
-            <TouchableOpacity onPress={async() => await handleDelete()} style={Styles.button}>
-              <Text style={Styles.buttonText}>{'Confirm'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <Text style={Styles.name}>{`Delete:  ${formatName(name)}?`}</Text>
+        <ChoiceButtons confirmationText={'Confirm'} cancellationText={'Cancel'} onSubmit={async () => await handleDelete()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
@@ -81,26 +70,14 @@ const Styles = StyleSheet.create({
     backgroundColor: '#e4e4e4',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 2,
-    borderWidth: 1
+    borderWidth: 1.5,
+    borderBottomWidth: 2,
+    borderRadius: 4
   },
   name: {
     textAlign: 'center',
     fontSize: 16,
     padding: 6,
     margin: 6
-  },
-  buttons: {
-    flexDirection: 'row',
-    borderTopWidth: 1
-  },
-  button: {
-    margin: 6
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 16,
-    padding: 6
   }
 })

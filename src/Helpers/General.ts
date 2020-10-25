@@ -21,8 +21,8 @@ export const capitaliseAddWhitespace = (name: string) => {
 
 export const formatName = (name: string) => {
   let formattedName = capitaliseAddWhitespace(name)
-  if (formattedName.length > 20) {
-    formattedName = formattedName.slice(0, 20) + '...'
+  if (formattedName.length > 18) {
+    formattedName = formattedName.slice(0, 18) + '...'
   }
 
   return formattedName

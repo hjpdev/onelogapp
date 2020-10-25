@@ -68,8 +68,8 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
     <>
     <Modal
       isVisible={isVisible}
-      animationIn='fadeInUp'
-      animationOut='fadeOutDown'
+      animationIn='zoomIn'
+      animationOut='zoomOut'
       animationInTiming={500}
       animationOutTiming={500}
       onBackButtonPress={onClose}
@@ -101,13 +101,15 @@ export default ModifyDoseModal
 
 const Styles = StyleSheet.create({
   modal: {
-    justifyContent: 'flex-start'
+    alignItems: 'center'
   },
   container: {
+    width: 240,
     backgroundColor: '#ebebeb',
     alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 2
+    borderWidth: 1.5,
+    borderBottomWidth: 2,
+    borderRadius: 4
   },
   name: {
     fontSize: 18,

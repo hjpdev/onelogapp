@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
@@ -46,8 +46,8 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
     <>
     <Modal
       isVisible={isVisible}
-      animationIn='fadeInUp'
-      animationOut='fadeOutDown'
+      animationIn='zoomIn'
+      animationOut='zoomOut'
       animationInTiming={500}
       animationOutTiming={500}
       onBackButtonPress={onClose}
@@ -70,11 +70,13 @@ export default ModifyBgModal
 
 const Styles = StyleSheet.create({
   modal: {
-    justifyContent: 'flex-start'
+    alignItems: 'center'
   },
   container: {
+    width: 240,
     backgroundColor: '#ebebeb',
-    borderRadius: 2,
-    borderWidth: 1
+    borderWidth: 1.5,
+    borderBottomWidth: 2,
+    borderRadius: 4
   }
 })

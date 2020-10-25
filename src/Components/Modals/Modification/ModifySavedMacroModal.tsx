@@ -47,12 +47,13 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
     <>
     <Modal
       isVisible={isVisible}
-      animationIn='fadeInUp'
-      animationOut='fadeOutDown'
+      animationIn='zoomIn'
+      animationOut='zoomOut'
       animationInTiming={500}
       animationOutTiming={500}
       onBackButtonPress={onClose}
       onBackdropPress={onClose}
+      backdropOpacity={0.66}
       style={Styles.modal}
     >
       <View style={Styles.container}>
@@ -72,14 +73,12 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
 export default ModifySavedMacroModal
 
 const Styles = StyleSheet.create({
-  modal: {
-    justifyContent: 'flex-start'
-  },
   container: {
     backgroundColor: '#ebebeb',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 1.5,
+    borderBottomWidth: 2,
     borderRadius: 2
   },
   name: {

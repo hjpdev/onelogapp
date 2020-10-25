@@ -46,8 +46,8 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
     <>
     <Modal
       isVisible={isVisible}
-      animationIn='fadeInUp'
-      animationOut='fadeOutDown'
+      animationIn='zoomIn'
+      animationOut='zoomOut'
       animationInTiming={500}
       animationOutTiming={500}
       onBackButtonPress={onClose}
@@ -70,12 +70,14 @@ export default ModifyKetoModal
 
 const Styles = StyleSheet.create({
   modal: {
-    justifyContent: 'flex-start'
+    alignItems: 'center'
   },
   container: {
+    width: 240,
     backgroundColor: '#ebebeb',
-    borderWidth: 1,
-    borderRadius: 2
+    borderWidth: 1.5,
+    borderBottomWidth: 2,
+    borderRadius: 4
   },
   name: {
     fontSize: 18,

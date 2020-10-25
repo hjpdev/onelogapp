@@ -60,8 +60,9 @@ export default ModifyReadingModal
 const Styles = StyleSheet.create({
   container: {
     width: '70%',
-    borderRadius: 4,
-    borderWidth: 1.2
+    borderWidth: 1.5,
+    borderBottomWidth: 2,
+    borderRadius: 4
   },
   modal: {
     alignItems: 'center'

@@ -37,7 +37,8 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: 10,
     borderTopWidth: 1,
-    borderBottomWidth: 0.5
+    borderBottomStartRadius: 4,
+    borderBottomEndRadius: 4
   },
   submitButton: {
     width: '50%'
