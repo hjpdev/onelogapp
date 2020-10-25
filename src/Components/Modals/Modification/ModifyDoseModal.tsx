@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, Switch, Text, View } from 'react-native'
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
+import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
 import SuccessModal from '../SuccessModal'
 import WheelSelector from '../../Minor/WheelSelector'
-
+import { generateCreatedDate } from '../../../Helpers/Date'
 import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
 type ModifyDoseModalProps = {
@@ -38,6 +39,7 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
   const [reading, setReading] = useState<number>(data.reading || 0.0)
   const [long, setLong] = useState<boolean>(data.long)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const state: DoseReading = { id: data.id, created, reading, long }
 
@@ -89,10 +91,16 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
           />
           <Text style={Styles.switchText}>Long</Text>
         </View>
+        <View style={Styles.deleteContainer}>
+          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+            <Text style={Styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
         <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table={'dose'} dataKey={'doseReadings'} onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('doseReadings')} />
     </>
   )
 }
@@ -123,5 +131,15 @@ const Styles = StyleSheet.create({
   },
   switchText: {
     fontSize: 16
+  },
+  deleteContainer: {
+    width: '33%',
+    margin: 4,
+    borderBottomWidth: 2,
+    borderRadius: 4,
+    marginBottom: 12
+  },
+  deleteText: {
+    textAlign: 'center'
   }
 })

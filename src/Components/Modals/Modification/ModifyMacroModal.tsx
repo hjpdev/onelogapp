@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
+import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import MacroReadingInput from '../../Minor/MacroReadingInput'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
 import SuccessModal from '../SuccessModal'
+import { generateCreatedDate } from '../../../Helpers/Date'
 
 import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
@@ -32,6 +34,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
   const [created, setCreated] = useState(data.created)
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const handleSubmit = async () => {
     try {
@@ -62,10 +65,16 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       <View style={Styles.container}>
         <ModifyTimeSelector created={created} setDateTime={setCreated} />
         <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
+        <View style={Styles.deleteContainer}>
+          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+            <Text style={Styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
         <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table={'macro'} dataKey={'macroReadings'} onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('macroReadings')} />
     </>
   )
 }
@@ -82,5 +91,15 @@ const Styles = StyleSheet.create({
     borderWidth: 1.5,
     borderBottomWidth: 2,
     borderRadius: 4
+  },
+  deleteContainer: {
+    width: '33%',
+    margin: 4,
+    borderBottomWidth: 2,
+    borderRadius: 4,
+    marginVertical: 10
+  },
+  deleteText: {
+    textAlign: 'center'
   }
 })

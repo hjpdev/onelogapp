@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-import ModifyReadingModal from '../../Modals/Modification/ModifyReadingModal'
 import ModifyDoseModal from '../../Modals/Modification/ModifyDoseModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
@@ -20,7 +19,6 @@ type PreviousDoseReadingProps = {
 export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: PreviousDoseReadingProps) => {
   const { data, update } = props
 
-  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
   const [showModifyDoseModal, setShowModifyDoseModal] = useState(false)
 
   const { id, created, reading, long } = data
@@ -43,7 +41,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
     <>
     <View style={Styles.container}>
       <View style={Styles.header}>
-        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+        <TouchableOpacity onPress={() => setShowModifyDoseModal(true)}>
           <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
         </TouchableOpacity>
         <Text style={Styles.timeCreated}>{timeCreated}</Text>
@@ -52,7 +50,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
         </TouchableOpacity>
       </View>
       <GradientBorder x={1.0} y={1.0} />
-      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={{ width: '100%' }}>
+      <TouchableOpacity onPress={() => setShowModifyDoseModal(true)} style={{ width: '100%' }}>
         <View style={Styles.reading}>
           <LinearGradient colors={generateColors()} start={generateStartPoint()}>
             <Text style={Styles.readingText}>{generateReading()}</Text>
@@ -62,7 +60,6 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
         <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
       </TouchableOpacity>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'dose'} dataKey={'doseReadings'} showReadingModal={() => setShowModifyDoseModal(true)} update={() => update('doseReadings')} />
     <ModifyDoseModal isVisible={showModifyDoseModal} data={data} onClose={() => setShowModifyDoseModal(false)} update={update} />
     </>
   )

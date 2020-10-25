@@ -59,13 +59,13 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
       style={Styles.modal}
     >
       <View style={Styles.container}>
+        <ModifyTimeSelector created={created} setDateTime={setCreated} />
+        <WheelSelector reading={data.reading} updateReading={setReading} />
         <View style={Styles.deleteContainer}>
           <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
             <Text style={Styles.deleteText}>Delete</Text>
           </TouchableOpacity>
         </View>
-        <ModifyTimeSelector created={created} setDateTime={setCreated} />
-        <WheelSelector reading={data.reading} updateReading={setReading} />
         <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
@@ -82,18 +82,19 @@ const Styles = StyleSheet.create({
     alignItems: 'center'
   },
   container: {
-    width: 240,
+    width: 260,
     backgroundColor: '#ebebeb',
     borderWidth: 1.5,
     borderBottomWidth: 2,
-    borderRadius: 4
+    borderRadius: 4,
+    alignItems: 'center'
   },
   deleteContainer: {
     width: '33%',
     margin: 4,
-    borderWidth: 1,
-    borderBottomWidth: 1.2,
-    borderRadius: 4
+    borderBottomWidth: 2,
+    borderRadius: 4,
+    marginVertical: 10
   },
   deleteText: {
     textAlign: 'center'

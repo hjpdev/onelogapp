@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
+import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
 import SuccessModal from '../SuccessModal'
 import WheelSelector from '../../Minor/WheelSelector'
+import { generateCreatedDate } from '../../../Helpers/Date'
 
 import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
@@ -28,6 +30,7 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
   const [created, setCreated] = useState(data.created)
   const [reading, setReading] = useState<number>(data.reading || 0.0)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const handleSubmit = async () => {
     try {
@@ -58,10 +61,16 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
       <View style={Styles.container}>
         <ModifyTimeSelector created={created} setDateTime={setCreated} />
         <WheelSelector reading={data.reading} updateReading={setReading} />
+        <View style={Styles.deleteContainer}>
+          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+            <Text style={Styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
         <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table={'keto'} dataKey={'ketoReadings'} onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('ketoReadings')} />
     </>
   )
 }
@@ -77,6 +86,17 @@ const Styles = StyleSheet.create({
     backgroundColor: '#ebebeb',
     borderWidth: 1.5,
     borderBottomWidth: 2,
-    borderRadius: 4
+    borderRadius: 4,
+    alignItems: 'center'
+  },
+  deleteContainer: {
+    width: '33%',
+    margin: 4,
+    borderBottomWidth: 2,
+    borderRadius: 4,
+    marginBottom: 12
+  },
+  deleteText: {
+    textAlign: 'center'
   }
 })

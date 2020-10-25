@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
-import ModifyReadingModal from '../Modals/Modification/ModifyReadingModal'
 import ModifySavedMacroModal from '../Modals/Modification/ModifySavedMacroModal'
 import MacroCollectionConfirmationModal from './MacroCollection/MacroCollectionConfirmationModal'
 import { capitaliseAddWhitespace, truncateName } from '../../Helpers/General'
@@ -51,7 +50,6 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
 
   const [isOpen, setIsOpen] = useState(false)
-  const [showModifyReadingModal, setShowModifyReadingModal] = useState<boolean>(false)
   const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState<boolean>(false)
   const [showMacroCollectionConfirmationModal, setShowMacroCollectionConfirmationModal] = useState<boolean>(false)
 
@@ -59,7 +57,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
     <>
     <View style={Styles.container}>
       <View style={Styles.title}>
-        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+        <TouchableOpacity onPress={() => setShowModifySavedMacroModal(true)}>
           <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
         </TouchableOpacity>
         <View style={Styles.name}>
@@ -94,7 +92,6 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
       </View>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={name} table={'macro/saved'} dataKey={'savedMacros'} showReadingModal={() => setShowModifySavedMacroModal(true)} update={update} />
     <ModifySavedMacroModal isVisible={showModifySavedMacroModal} data={data} onClose={() => setShowModifySavedMacroModal(false)} update={update} />
     <MacroCollectionConfirmationModal isVisible={showMacroCollectionConfirmationModal} data={data} onClose={() => setShowMacroCollectionConfirmationModal(false)} onSubmit={addEntry}/>
     </>

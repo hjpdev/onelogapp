@@ -66,18 +66,19 @@ const Styles = StyleSheet.create({
     alignItems: 'center'
   },
   container: {
-    width: '70%',
+    width: '80%',
     backgroundColor: '#e4e4e4',
     justifyContent: 'center',
-    alignItems: 'center',
     borderWidth: 1.5,
     borderBottomWidth: 2,
     borderRadius: 4
   },
   name: {
-    textAlign: 'center',
     fontSize: 16,
     padding: 6,
+    width: '100%',
+    textAlign: 'center',
+    textAlignVertical: 'bottom',
     margin: 6
   }
 })

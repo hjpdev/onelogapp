@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
+import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import MacroReadingInput from '../../Minor/MacroReadingInput'
 import GradientBorder from '../../Minor/GradientBorder'
 import MacroAmountSelector from '../../Minor/MacroAmountSelector'
 import SuccessModal from '../SuccessModal'
 
 import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
-import { capitaliseAddWhitespace } from '../../../Helpers/General'
+import { capitaliseAddWhitespace, truncateName } from '../../../Helpers/General'
 import { TSavedMacro } from '../../SavedMacros/SavedMacro'
 
 type ModifySavedMacroModalProps = {
@@ -27,6 +28,7 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
   const [unit, setUnit] = useState(data.unit)
   const [reading, setReading] = useState<{[key: string]: string | number}>({})
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const id = data.id
 
@@ -61,10 +63,16 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
         <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} amount={amount} unit={unit} allowEditUnit />
         <GradientBorder x={1.0} y={1.0} />
         <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
+        <View style={Styles.deleteContainer}>
+          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+            <Text style={Styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
         <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={truncateName(20, `${data.name}`)} table={'macro/saved'} dataKey={'savedMacros'} onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('savedMacros')} />
     </>
   )
 }
@@ -83,5 +91,15 @@ const Styles = StyleSheet.create({
   name: {
     fontSize: 18,
     paddingVertical: 2
+  },
+  deleteContainer: {
+    width: '33%',
+    margin: 4,
+    borderBottomWidth: 2,
+    borderRadius: 4,
+    marginVertical: 10
+  },
+  deleteText: {
+    textAlign: 'center'
   }
 })

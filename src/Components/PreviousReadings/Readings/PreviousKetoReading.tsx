@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-import ModifyReadingModal from '../../Modals/Modification/ModifyReadingModal'
 import ModifyKetoModal from '../../Modals/Modification/ModifyKetoModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
@@ -19,7 +18,6 @@ type PreviousKetoReadingProps = {
 export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: PreviousKetoReadingProps) => {
   const { data, update } = props
 
-  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
   const [showModifyKetoModal, setShowModifyKetoModal] = useState(false)
 
   const { id, created, reading } = data
@@ -29,7 +27,7 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
     <>
     <View style={Styles.container}>
       <View style={Styles.header}>
-        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={{}}>
+        <TouchableOpacity onPress={() => setShowModifyKetoModal(true)} style={{}}>
           <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
         </TouchableOpacity>
         <Text style={Styles.timeCreated}>{timeCreated}</Text>
@@ -38,7 +36,7 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
         </TouchableOpacity>
       </View>
       <GradientBorder x={1.0} y={1.0} />
-      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={{ backgroundColor: 'black' }} activeOpacity={50}>
+      <TouchableOpacity onPress={() => setShowModifyKetoModal(true)} style={{ backgroundColor: 'black' }} activeOpacity={50}>
       <View>
         <LinearGradient style={{ width: '100%' }} colors={['#ebebeb', '#b8b884']} start={{ x: 0.5, y: 0.75}}>
           <Text style={Styles.reading}>{reading.toFixed(1)}</Text>
@@ -46,7 +44,6 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
       </View>
     </TouchableOpacity>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'keto'} dataKey={'ketoReadings'} showReadingModal={() => setShowModifyKetoModal(true)} update={() => update('ketoReadings')} />
     <ModifyKetoModal isVisible={showModifyKetoModal} data={data} onClose={() => setShowModifyKetoModal(false)} update={update} />
     </>
   )

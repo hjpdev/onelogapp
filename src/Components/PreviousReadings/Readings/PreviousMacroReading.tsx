@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import GradientBorder from '../../Minor/GradientBorder'
-import ModifyReadingModal from '../../Modals/Modification/ModifyReadingModal'
 import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
@@ -22,7 +21,6 @@ type PreviousMacroReadingProps = {
 export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props: PreviousMacroReadingProps) => {
   const { data, update } = props
 
-  const [showModifyReadingModal, setShowModifyReadingModal] = useState(false)
   const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
 
   const { id, created, kcal, carbs, sugar, protein, fat } = data
@@ -32,7 +30,7 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
     <>
     <View style={Styles.container}>
       <View style={Styles.header}>
-        <TouchableOpacity onPress={() => setShowModifyReadingModal(true)}>
+        <TouchableOpacity onPress={() => setShowModifyMacroModal(true)}>
           <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
         </TouchableOpacity>
         <Text style={Styles.timeCreated}>{timeCreated}</Text>
@@ -41,7 +39,7 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
         </TouchableOpacity>
       </View>
       <GradientBorder x={1.0} y={1.0} />
-      <TouchableOpacity onPress={() => setShowModifyReadingModal(true)} style={Styles.readingContainer}>
+      <TouchableOpacity onPress={() => setShowModifyMacroModal(true)} style={Styles.readingContainer}>
         <View style={Styles.readingContainer}>
           <View style={Styles.labels}>
             <Text style={Styles.label}>{'Kcal:'}</Text>
@@ -61,7 +59,6 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
         </View>
       </TouchableOpacity>
     </View>
-    <ModifyReadingModal isVisible={showModifyReadingModal} onClose={() => setShowModifyReadingModal(false)} id={id} name={generateCreatedDate(created)} table={'macro'} dataKey={'macroReadings'} showReadingModal={() => setShowModifyMacroModal(true)} update={() => update('macroReadings')} />
     <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
     </>
   )
