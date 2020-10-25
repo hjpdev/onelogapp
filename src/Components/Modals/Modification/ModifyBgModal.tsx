@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
+import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
 import SuccessModal from '../SuccessModal'
 import WheelSelector from '../../Minor/WheelSelector'
+import { generateCreatedDate } from '../../../Helpers/Date'
 
 import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
@@ -28,6 +30,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   const [created, setCreated] = useState(data.created)
   const [reading, setReading] = useState<number>(data.reading || 0.0)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const handleSubmit = async () => {
     try {
@@ -56,12 +59,18 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
       style={Styles.modal}
     >
       <View style={Styles.container}>
+        <View style={Styles.deleteContainer}>
+          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+            <Text style={Styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        </View>
         <ModifyTimeSelector created={created} setDateTime={setCreated} />
         <WheelSelector reading={data.reading} updateReading={setReading} />
         <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
       </View>
     </Modal>
     <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table={'bg'} dataKey={'bgReadings'} onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('bgReadings')} />
     </>
   )
 }
@@ -78,5 +87,15 @@ const Styles = StyleSheet.create({
     borderWidth: 1.5,
     borderBottomWidth: 2,
     borderRadius: 4
+  },
+  deleteContainer: {
+    width: '33%',
+    margin: 4,
+    borderWidth: 1,
+    borderBottomWidth: 1.2,
+    borderRadius: 4
+  },
+  deleteText: {
+    textAlign: 'center'
   }
 })
