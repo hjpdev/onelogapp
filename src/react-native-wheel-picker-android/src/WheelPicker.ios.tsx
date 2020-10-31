@@ -6,13 +6,13 @@
 import React from 'react'
 import { requireNativeComponent, PickerIOS, Picker, Text } from 'react-native'
 
-type Props = {
-  data: Array<string>,
-  selectedItem?: number,
-  onItemSelected?: number => void
+interface Props {
+  data: Array<string>;
+  selectedItem?: number;
+  onItemSelected?: number => void;
 }
 
-type State = {
+interface State {
   selectedItem: number
 }
 

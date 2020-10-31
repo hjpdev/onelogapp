@@ -2,13 +2,13 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import PreviousReadings from '../PreviousReadings/PreviousReadings'
-import SavedMacros from '../SavedMacros/SavedMacros'
 import NewReadingSelection from '../NewReading/NewReadingSelection'
 import { NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '../NewReading/Readings'
 
-const Stack = createStackNavigator()
 
 const NewReadingScreen: React.FC = () => {
+  const Stack = createStackNavigator()
+
   return(
     <>
     <Stack.Navigator initialRouteName="NewReadingSelection" screenOptions={{ headerShown: false, animationEnabled: false }}>
@@ -18,7 +18,6 @@ const NewReadingScreen: React.FC = () => {
       <Stack.Screen name="NewMacroReading" component={NewMacroReading} />
       <Stack.Screen name="NewKetoReading" component={NewKetoReading} />
       <Stack.Screen name="PreviousReadings" component={PreviousReadings} />
-      <Stack.Screen name="SavedMacros" component={SavedMacros} />
     </Stack.Navigator>
     </>
   )

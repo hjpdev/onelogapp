@@ -8,19 +8,19 @@ import { requireNativeComponent } from 'react-native'
 
 const WheelPickerView = requireNativeComponent('WheelPicker')
 
-type Props = {
-  data: Array<string>,
-  isCyclic?: boolean,
-  selectedItemTextColor?: string,
-  selectedItemTextSize?: number,
-  indicatorWidth?: number,
-  hideIndicator?: boolean,
-  indicatorColor?: string,
-  itemTextColor?: string,
-  itemTextSize?: number,
-  selectedItem?: number,
-  backgroundColor?: string,
-  onItemSelected?: (n: number) => void
+interface Props {
+  data: Array<string>;
+  isCyclic?: boolean;
+  selectedItemTextColor?: string;
+  selectedItemTextSize?: number;
+  indicatorWidth?: number;
+  hideIndicator?: boolean;
+  indicatorColor?: string;
+  itemTextColor?: string;
+  itemTextSize?: number;
+  selectedItem?: number;
+  backgroundColor?: string;
+  onItemSelected?: (n: number) => void;
 }
 
 const WheelPicker: React.FC<Props> = (props) => {

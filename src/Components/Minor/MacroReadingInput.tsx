@@ -22,7 +22,9 @@ type MacroReadingInputProps = {
 }
 
 const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReadingInputProps) => {
-  const { showSavedMacroOptions, data, updateReading, showClearOption } = props
+  const { showSavedMacroOptions, updateReading, data, showClearOption } = props
+
+  const navigation = useNavigation()
 
   const parseData = () => {
     const tmpObj = { } as any
@@ -34,10 +36,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
     return tmpObj
   }
 
-  const navigation = useNavigation()
   const macros = parseData()
-
-  const reading = useState<MacroReading>(data || {} as MacroReading)
 
   const [kcal, setKcal] = useState(macros.kcal)
   const [carbs, setCarbs] = useState(macros.carbs)
@@ -83,14 +82,13 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
             </TouchableOpacity>
           </View>
           <View style={{ width: '50%' }}>
-            <TouchableOpacity onPress={() => navigation.navigate('SavedMacros', { updateReading })}>
+            <TouchableOpacity onPress={() => navigation.navigate('SavedMacros')}>
               <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Saved</Text>
             </TouchableOpacity>
           </View>
         </View>
       }
     </View>
-    
     <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }} />
     </>
   )

@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import MacroReadingInput from '../../Minor/MacroReadingInput'
+import SavedMacros from '../../SavedMacros/SavedMacros'
 import { NewReadingHeader } from '../NewReadingHeader'
 import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
@@ -31,6 +33,8 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
+  const Stack = createStackNavigator()
+
   const handleSubmit = async () => {
     if (Object.keys(reading).length > 0) {
       if (!Object.keys(reading).every(macro => { return reading[macro] === 0 })) {
@@ -46,18 +50,34 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
     }
   }
 
+  const newMacroReading = () => {
+    return (
+      <>
+      <NewReadingHeader headerText={'Macro'} dataKey={'macroReadings'} />
+      <View style={Styles.container}>
+        <TimeSelector setDateTime={setDateTime} />
+        <MacroReadingInput showSavedMacroOptions data={macros} updateReading={setReading} />
+        <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
+          <Text style={Styles.submitText}>{'Submit'}</Text>
+        </TouchableOpacity>
+      </View>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      </>
+    )
+  }
+
+  const savedMacros = () => {
+    return (
+      <SavedMacros updateReading={setReading} />
+    )
+  }
+
+
   return(
-    <>
-    <NewReadingHeader headerText={'Macro'} dataKey={'macroReadings'} />
-    <View style={Styles.container}>
-      <TimeSelector setDateTime={setDateTime} />
-      <MacroReadingInput showSavedMacroOptions data={macros} updateReading={setReading} />
-      <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
-        <Text style={Styles.submitText}>{'Submit'}</Text>
-      </TouchableOpacity>
-    </View>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-    </>
+    <Stack.Navigator initialRouteName="MacroReading" screenOptions={{ headerShown: false, animationEnabled: false }}>
+      <Stack.Screen name="MacroReading" component={newMacroReading} />
+      <Stack.Screen name="SavedMacros" component={savedMacros} />
+    </Stack.Navigator>
   )
 }
 

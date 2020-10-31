@@ -6,7 +6,7 @@ import GradientBorder from '../Minor/GradientBorder'
 
 type SavedMacrosHeaderProps = {
   numberOfEntries: number
-  onPress: (() => void)
+  onPress: () => void
 }
 
 const SavedMacrosHeader: React.FC<SavedMacrosHeaderProps> = (props: SavedMacrosHeaderProps) => {

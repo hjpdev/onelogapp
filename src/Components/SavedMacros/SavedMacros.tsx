@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { Dispatch, SetStateAction, ReactText, useState, useEffect } from 'react'
 import { ScrollView } from 'react-native'
 
 import SavedMacrosForLetter from './SavedMacrosForLetter'
@@ -14,26 +14,13 @@ export type TMacroCollectionEntry = {
   reading: TSavedMacro
 }
 
-type Macros = {
-  kcal: number
-  carbs: number
-  sugar: number
-  protein: number
-  fat: number
+type SavedMacroProps = {
+  updateReading: Dispatch<SetStateAction<{ [key: string]: ReactText; }>>
 }
 
-type SavedMacrosProps = {
-  route: {
-    params: {
-      updateReading: (macros: Macros) => void
-    }
-  }
-}
-
-const SavedMacros: React.FC<SavedMacrosProps> = (props: SavedMacrosProps) => {
-  const { route } = props
-  const { updateReading } = route.params
-
+const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
+  const { updateReading } = props
+  
   const [savedMacros, setSavedMacros] = useState<TSavedMacro[]>([])
   const [collection, setCollection] = useState<TMacroCollectionEntry[]>([])
   const [showMacroCollectionSummaryModal, setShowMacroCollectionSummaryModal] = useState<boolean>(false)
