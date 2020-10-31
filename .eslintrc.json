@@ -30,6 +30,7 @@
         "comma-dangle": 0,
         "jsx-quotes": 1,
         "import/extensions": 0,
-        "import/no-unresolved": 0
+        "import/no-unresolved": 0,
+        "object-curly-newline": 0
     }
 }
