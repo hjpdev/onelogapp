@@ -5,7 +5,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import Carousel from '../Carousel/Carousel'
 import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/Readings'
 import { getHomeScreenData } from '../../Store/Data'
-import { ScreenStyles } from '../../Assets/Styles/Screen'
+import ScreenStyles from '../../Assets/Styles/Screen'
 
 const deafultHomeScreenData = {
   bgReadings: { readings: [] },

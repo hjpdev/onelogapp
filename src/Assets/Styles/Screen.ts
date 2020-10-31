@@ -1,14 +1,18 @@
 import { StyleSheet } from 'react-native'
 
-export const ScreenStyles = StyleSheet.create({
+import Colors from './Colors'
+
+const ScreenStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#ebebeb',
+    backgroundColor: Colors.lightGrey1,
     height: '100%',
     width: '100%',
   },
   text: {
     fontSize: 28,
     textAlign: 'center',
-    color: 'black'
+    color: Colors.black
   }
 })
+
+export default ScreenStyles

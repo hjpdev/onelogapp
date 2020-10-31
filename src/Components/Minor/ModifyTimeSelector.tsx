@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { WheelPicker } from "../../react-native-wheel-picker-android"
+import WheelPicker from "../../react-native-wheel-picker-android"
 
 import { clockHours, clockMinutes, generateCreatedDateTime, newDate } from '../../Helpers'
 

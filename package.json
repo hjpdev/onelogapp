@@ -8,7 +8,7 @@
     "start": "scripts/start.sh",
     "test": "jest --verbose",
     "test:unit": "jest --verbose __tests__/unit",
-    "lint": "eslint ./src"
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx"
   },
   "pre-commit": [
     "test:unit"

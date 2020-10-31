@@ -5,10 +5,7 @@
         "jest": true
     },
     "extends": [
-        "airbnb",
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "airbnb"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -29,7 +26,10 @@
         "react-native/no-inline-styles": 2,
         "react-native/no-color-literals": 2,
         "react-native/no-raw-text": 2,
-        "react-native/space-before-blocks": 1,
-        "react-native/arrow-spacing": 1
+        "semi": 0,
+        "comma-dangle": 0,
+        "jsx-quotes": 1,
+        "import/extensions": 0,
+        "import/no-unresolved": 0
     }
 }
