@@ -20,7 +20,7 @@ type PreviousReadingsProps = {
 type PreviousReading = {
   id: string
   created: Date
-  reading: number
+  data: number
   Template: React.FC
 }
 
@@ -40,6 +40,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
   const fetchReadings = async (dataKey: string) => {
     try {
       let { readings } = await getData(dataKey)
+      console.log('HESRE THE READINGS ===> ', readings)
       if (!readings) {
         const response = await getReadings({ dataKeys: [dataKey] })
         readings = response[dataKey]

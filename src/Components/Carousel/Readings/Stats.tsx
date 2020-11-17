@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 export type StatsReadingProps = {
-  data: {
+  reading: {
     created: string,
     avg: number,
     stddev: number
@@ -10,8 +10,8 @@ export type StatsReadingProps = {
 }
 
 export const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingProps) => {
-  const { data } = props
-  const { avg, stddev } = data
+  const { reading } = props
+  const { avg, stddev } = reading
 
   return (
     <View style={Styles.container} testID="carousel-bg-stats">

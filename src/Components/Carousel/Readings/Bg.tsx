@@ -2,27 +2,27 @@ import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 export type BgReadingProps = {
-  data: {
-    reading: number
+  reading: {
+    data: number
   }
 }
 
 export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {
-  const { data } = props
-  const { reading } = data
+  const { reading } = props
+  const { data } = reading
 
   return (
     <View style={Styles.container} testID="carousel-bg">
       <Text style={Styles.reading}>
-        { reading.toFixed(1) }
+        { data.toFixed(1) }
       </Text>
       <Text style={Styles.unit}>
         mmol/L
       </Text>
       <>
-        { reading < 3.8 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingDownArrow.png')} testID="bg-image-low" /> }
-        { (reading >= 3.8 && reading <= 8.0) && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingTick.png')} testID="bg-image-normal" /> }
-        { reading > 8.0 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingUpArrow.png')} testID="bg-image-high" /> }
+        { data < 3.8 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingDownArrow.png')} testID="bg-image-low" /> }
+        { (data >= 3.8 && data <= 8.0) && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingTick.png')} testID="bg-image-normal" /> }
+        { data > 8.0 && <Image style={Styles.image} source={require('../../../Assets/Images/LastReadingUpArrow.png')} testID="bg-image-high" /> }
       </>
     </View>
   )

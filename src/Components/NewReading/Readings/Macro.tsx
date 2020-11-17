@@ -29,17 +29,17 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
   const { route } = props
   const macros = route && route.params && route.params.macros
 
-  const [reading, setReading] = useState<{[key: string]: string | number}>(macros || {})
+  const [data, setData] = useState<{[key: string]: string | number}>(macros || {})
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const Stack = createStackNavigator()
 
   const handleSubmit = async () => {
-    if (Object.keys(reading).length > 0) {
-      if (!Object.keys(reading).every((macro) => reading[macro] === 0)) {
+    if (Object.keys(data).length > 0) {
+      if (!Object.keys(data).every((macro) => data[macro] === 0)) {
         try {
-          const data = dateTime ? { ...reading, created: dateTime } : { ...reading }
+          const reading = dateTime ? { ...data, created: dateTime } : { ...data }
           const response = await submitReading({ table: 'macro', data })
 
           return handleSuccessfulSubmit('macroReadings', response, setShowSuccessModal)
@@ -55,7 +55,7 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
       <NewReadingHeader headerText="Macro" dataKey="macroReadings" />
       <View style={Styles.container}>
         <TimeSelector setDateTime={setDateTime} />
-        <MacroReadingInput showSavedMacroOptions data={macros} updateReading={setReading} />
+        <MacroReadingInput showSavedMacroOptions data={macros} updateReading={setData} />
         <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
           <Text style={Styles.submitText}>Submit</Text>
         </TouchableOpacity>
@@ -65,7 +65,7 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
   )
 
   const savedMacros = () => (
-    <SavedMacros updateReading={setReading} />
+    <SavedMacros updateReading={setData} />
   )
 
   return (

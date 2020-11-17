@@ -19,8 +19,8 @@ type GetReadingsOptions = {
 
 type SubmitReadingOptions = {
   table: string
-  data: {
-    reading: number | {[key: string]: number | string}
+  reading: {
+    data: number | {[key: string]: number | string}
     created?: Date | undefined | null
   }
 }
@@ -62,7 +62,7 @@ export const getReadings = async (options: GetReadingsOptions): Promise<any> => 
 }
 
 export const submitReading = async (options: SubmitReadingOptions): Promise<any> => {
-  const { table, data } = options
+  const { table, reading } = options
   const url = `${BASE_URL}/readings/${table}`
 
   try {
@@ -72,11 +72,12 @@ export const submitReading = async (options: SubmitReadingOptions): Promise<any>
         Accept: 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(reading)
     })
 
     console.log('Made request submitReading')
-    return result.json()
+    const entry = await result.json()
+    return entry
   } catch (err) {
     console.log('Error submitReading: ', err)
   }
@@ -97,7 +98,8 @@ export const putReading = async (options: PutReadingOptions) => {
     })
 
     console.log('Made request putReading')
-    return result.json()
+    const entry = await result.json()
+    return entry
   } catch (err) {
     console.log('Error putReading: ', err)
   }
@@ -117,7 +119,7 @@ export const deleteReading = async (options: DeleteReadingOptions) => {
     })
 
     console.log('Made request deleteReading')
-    return result.json()
+    return await result.json()
   } catch (err) {
     console.log('Error deleteReading: ', err)
   }
@@ -195,11 +197,11 @@ const updateHomeScreenData = async () => {
 const generateReadingsQuery = (options: GenerateReadingsQueryOptions): string => {
   const { dataKeys, days } = options
   const queryMap: {[key: string]: string} = {
-    bgReadings: 'bgReadings { id, created reading }',
+    bgReadings: 'bgReadings { id, created data }',
     bgStats: `bgStats(days: [${days}]) { created avg stddev }`,
-    doseReadings: 'doseReadings { id, created reading long }',
+    doseReadings: 'doseReadings { id, created data long }',
     macroReadings: 'macroReadings { id, created kcal carbs sugar protein fat }',
-    ketoReadings: 'ketoReadings { id, created reading }',
+    ketoReadings: 'ketoReadings { id, created data }',
     savedMacros: 'savedMacros { id, created, name, kcal, carbs, sugar, protein, fat, amount, unit, times_added }'
   }
   const querys: string[] = []

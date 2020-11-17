@@ -5,15 +5,15 @@ import LinearGradient from 'react-native-linear-gradient'
 import GradientBorder from '../../Minor/GradientBorder'
 
 export type DoseReadingProps = {
-  data: {
-    reading: number,
+  reading: {
+    data: number,
     long: boolean
   }
 }
 
 export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
-  const { data } = props
-  const { reading, long } = data
+  const { reading } = props
+  const { data, long } = reading
 
   const generateColors = () => (long ? ['#ebebeb', '#c9c9b7'] : ['#ebebeb', '#b2bfaa'])
 
@@ -22,12 +22,12 @@ export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps)
       <View style={Styles.readingContainer}>
         <LinearGradient colors={generateColors()} start={{ x: 0.5, y: 0.8 }} end={{ x: 0.5, y: 0.95 }} style={{ width: '100%' }}>
           <Text style={Styles.reading}>
-            { reading.toFixed(1) }
+            { data.toFixed(1) }
           </Text>
         </LinearGradient>
         <GradientBorder x={1.0} y={1.0} />
         <Text>{long ? 'Long' : 'Short'}</Text>
-      </View>
+      </View> 
     </View>
   )
 }

@@ -14,9 +14,9 @@ const navContext = {
 
 jest.mock('../../../../src/Store/Data', () => ({ getHomeScreenData: jest.fn(() => {
   return {
-    bgReadings: [{ created: '2020-08-10T19:54:29.374Z', reading: 7.2 }, { created: '2020-08-10T14:54:29.374Z', reading: 5.2 }],
-    bgStats: [{ created: '2020-08-10T19:54:29.374Z', reading: 0.2 }, { created: '2020-08-10T14:54:29.374Z', reading: 0.5 }],
-    doseReadings: [{ created: '2020-08-10T19:54:29.374Z', reading: 2.5, long: false }, { created: '2020-08-10T14:54:29.374Z', reading: 15, long: true }],
+    bgReadings: [{ created: '2020-08-10T19:54:29.374Z', data: 7.2 }, { created: '2020-08-10T14:54:29.374Z', data: 5.2 }],
+    bgStats: [{ created: '2020-08-10T19:54:29.374Z', data: 0.2 }, { created: '2020-08-10T14:54:29.374Z', data: 0.5 }],
+    doseReadings: [{ created: '2020-08-10T19:54:29.374Z', data: 2.5, long: false }, { created: '2020-08-10T14:54:29.374Z', data: 15, long: true }],
     macroReadings: [{ created: '2020-08-10T19:54:29.374Z', kcal: 772, carbs: 7.2, sugar: 2.7, protein: 77.2, fat: 17.2 }]
   }
 }) }))

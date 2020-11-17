@@ -10,13 +10,12 @@ import { BgReadingProps, StatsReadingProps, DoseReadingProps, MacroReadingProps 
 type CarouselProps = {
   name: string
   Template: React.FC<BgReadingProps> | React.FC<StatsReadingProps> | React.FC<DoseReadingProps> | React.FC<MacroReadingProps>
-  data: any[]
+  readings: any[]
   startingIndex?: number
 }
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { name, Template, data, startingIndex } = props
-  const readings = data
+  const { name, Template, readings, startingIndex } = props
   const [index, setIndex] = useState(startingIndex || 0)
 
   const handleSwipeLeft = () => {
@@ -30,7 +29,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   const reading = readings && readings[index]
 
   return (
-    readings.length > 0
+    readings && readings.length > 0
       ? (
         <View style={Styles.container} testID="carousel">
           <View style={Styles.header}>
@@ -50,7 +49,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
                 : <Chevron left handlePress={handleSwipeRight} />}
             </View>
             <GestureRecognizer onSwipeLeft={handleSwipeLeft} onSwipeRight={handleSwipeRight} style={Styles.template}>
-              <Template data={reading} />
+              <Template reading={reading} />
             </GestureRecognizer>
             <View style={Styles.chevron}>
               {index < readings.length - 1

@@ -9,17 +9,17 @@ import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
 import { NewReadingHeader } from '../NewReadingHeader'
 
 export const NewDoseReading: React.FC = () => {
-  const [reading, setReading] = useState(0.0)
+  const [data, setData] = useState(0.0)
   const [long, setLong] = useState(false)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
-    if (reading > 0) {
-      if (reading < 1) { delay(500) }
+    if (data > 0) {
+      if (data < 1) { delay(500) }
       try {
-        const data = dateTime ? { reading, long, created: dateTime } : { reading, long }
-        const response = await submitReading({ table: 'dose', data })
+        const reading = dateTime ? { data, long, created: dateTime } : { data, long }
+        const response = await submitReading({ table: 'dose', reading })
 
         return handleSuccessfulSubmit('doseReadings', response, setShowSuccessModal)
       } catch (err) {
@@ -33,7 +33,7 @@ export const NewDoseReading: React.FC = () => {
       <NewReadingHeader headerText="Dose" dataKey="doseReadings" />
       <View style={Styles.container}>
         <TimeSelector setDateTime={setDateTime} />
-        <WheelSelector isDose updateReading={setReading} />
+        <WheelSelector isDose updateData={setData} />
         <Text style={Styles.unit}>Units</Text>
         <View style={Styles.switch}>
           <Text style={Styles.switchText}>Short</Text>

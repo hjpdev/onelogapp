@@ -4,7 +4,7 @@ import { render } from '@testing-library/react-native'
 
 import { MacroReading } from '../../../../../src/Components/Carousel/Readings'
 
-const testData = {
+const testReading = {
   kcal: 100,
   carbs: 10.0,
   sugar: 10.0,
@@ -13,7 +13,7 @@ const testData = {
 }
 
 it('renders', () => {
-  const { getByTestId } = render(<MacroReading data={testData} />)
+  const { getByTestId } = render(<MacroReading reading={testReading} />)
 
   expect(getByTestId('carousel-macro')).toBeTruthy()
 })

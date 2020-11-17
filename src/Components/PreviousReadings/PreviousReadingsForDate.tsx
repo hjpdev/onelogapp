@@ -15,7 +15,7 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
   const { date, opened, readings, Template, update } = props
   const [isOpen, setIsOpen] = useState(opened || false)
 
-  const generateList = () => readings.map((reading) => <Template key={reading.id} data={reading} update={update} />)
+  const generateList = () => readings.map((reading) => <Template key={reading.id} reading={reading} update={update} />)
 
   return (
     <View>

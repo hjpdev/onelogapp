@@ -12,7 +12,7 @@ import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
 type ModifyDoseModalProps = {
   isVisible: boolean
-  data: DoseReading
+  reading: DoseReading
   onClose: () => void
   update: (dataKey: string) => void
 }
@@ -20,7 +20,7 @@ type ModifyDoseModalProps = {
 type DoseReading = {
   id: number
   created: Date
-  reading: number
+  data: number
   long: boolean
 }
 
@@ -33,17 +33,17 @@ function getDoseProperties<DoseReading>(obj: DoseReading): Array<keyof DoseReadi
 }
 
 const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalProps) => {
-  const { isVisible, data, onClose, update } = props
+  const { isVisible, reading, onClose, update } = props
 
-  const [created, setCreated] = useState(data.created)
-  const [reading, setReading] = useState<number>(data.reading || 0.0)
-  const [long, setLong] = useState<boolean>(data.long)
+  const [created, setCreated] = useState(reading.created)
+  const [data, setData] = useState<number>(reading.data || 0.0)
+  const [long, setLong] = useState<boolean>(reading.long)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
-  const state: DoseReading = { id: data.id, created, reading, long }
+  const state: DoseReading = { id: reading.id, created, data, long }
 
-  const isPropertyUpdated = (property: keyof DoseReading) => state[property] !== data[property]
+  const isPropertyUpdated = (property: keyof DoseReading) => state[property] !== reading[property]
 
   const handleSubmit = async () => {
     try {
@@ -79,7 +79,7 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
       >
         <View style={Styles.container}>
           <ModifyTimeSelector created={state.created} setDateTime={setCreated} />
-          <WheelSelector reading={data.reading} updateReading={setReading} />
+          <WheelSelector data={reading.data} updateData={setData} />
           <View style={Styles.switch}>
             <Text style={Styles.switchText}>Short</Text>
             <Switch
@@ -98,7 +98,7 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
         </View>
       </Modal>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-      <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table="dose" dataKey="doseReadings" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('doseReadings')} />
+      <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={reading.id} name={generateCreatedDate(`${reading.created}`)} table="dose" dataKey="doseReadings" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('doseReadings')} />
     </>
   )
 }

@@ -13,7 +13,7 @@ import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
 type ModifyKetoModalProps = {
   isVisible: boolean
-  data: KetoReading
+  reading: KetoReading
   onClose: () => void
   update: (dataKey: string) => void
 }
@@ -21,21 +21,21 @@ type ModifyKetoModalProps = {
 type KetoReading = {
   id: number
   created: Date
-  reading: number
+  data: number
 }
 
 const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalProps) => {
-  const { isVisible, data, onClose, update } = props
+  const { isVisible, reading, onClose, update } = props
 
-  const [created, setCreated] = useState(data.created)
-  const [reading, setReading] = useState<number>(data.reading || 0.0)
+  const [created, setCreated] = useState(reading.created)
+  const [data, setData] = useState<number>(reading.data || 0.0)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const handleSubmit = async () => {
     try {
-      const body = created !== data.created ? { created, reading } : { reading }
-      const response = await putReading({ table: 'keto', data: body, id: data.id })
+      const body = created !== reading.created ? { created, data } : { data }
+      const response = await putReading({ table: 'keto', data: body, id: reading.id })
 
       await handleSuccessfulUpdate('ketoReadings', response, setShowSuccessModal)
       update('ketoReadings')
@@ -60,9 +60,9 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
       >
         <View style={Styles.container}>
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
-          <WheelSelector reading={data.reading} updateReading={setReading} />
+          <WheelSelector data={reading.data} updateData={setData} />
           <View style={Styles.deleteContainer}>
-            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} >
               <Text style={Styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
@@ -70,7 +70,7 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
         </View>
       </Modal>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-      <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table="keto" dataKey="ketoReadings" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('ketoReadings')} />
+      <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={reading.id} name={generateCreatedDate(`${reading.created}`)} table="keto" dataKey="ketoReadings" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('ketoReadings')} />
     </>
   )
 }

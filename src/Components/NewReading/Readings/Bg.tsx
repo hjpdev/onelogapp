@@ -9,16 +9,16 @@ import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
 import { NewReadingHeader } from '../NewReadingHeader'
 
 export const NewBgReading: React.FC = () => {
-  const [reading, setReading] = useState(0.0)
+  const [data, setData] = useState(0.0)
   const [dateTime, setDateTime] = useState(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
-    if (reading > 0) {
-      if (reading < 1) { delay(500) }
+    if (data > 0) {
+      if (data < 1) { delay(500) }
       try {
-        const data = dateTime ? { reading, created: dateTime } : { reading }
-        const response = await submitReading({ table: 'bg', data })
+        const reading = dateTime ? { data, created: dateTime } : { data }
+        const response = await submitReading({ table: 'bg', reading })
 
         return response && handleSuccessfulSubmit('bgReadings', response, setShowSuccessModal)
       } catch (err) {
@@ -32,7 +32,7 @@ export const NewBgReading: React.FC = () => {
       <NewReadingHeader headerText="Bg" dataKey="bgReadings" />
       <View style={Styles.container}>
         <TimeSelector setDateTime={setDateTime} />
-        <WheelSelector updateReading={setReading} />
+        <WheelSelector updateData={setData} />
         <Text style={Styles.unit}>mmol/L</Text>
         <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
           <Text style={Styles.submitText}>Submit</Text>

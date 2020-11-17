@@ -10,19 +10,19 @@ import {
 } from '../../Helpers'
 
 type WheelSelectorProps = {
-  updateReading: Dispatch<SetStateAction<number>>
-  reading?: number
+  updateData: Dispatch<SetStateAction<number>>
+  data?: number
   isDose?: boolean
   isKeto?: boolean
 }
 
 const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
-  const { updateReading, reading, isDose, isKeto } = props
+  const { updateData, data, isDose, isKeto } = props
 
   let integer; let
     fraction
-  if (reading) {
-    const parts = `${reading.toFixed(1)}`.split('.')
+  if (data) {
+    const parts = `${data.toFixed(1)}`.split('.')
     integer = parseInt(parts[0])
     fraction = parseInt(parts[1])
   }
@@ -33,9 +33,9 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   const onIntegerPartSelected = (integer: number) => {
     setIntegerPart(integer)
 
-    const reading = Number(parseFloat(`${integerPart}.${fractionalPart}`).toFixed(1))
+    const data = Number(parseFloat(`${integerPart}.${fractionalPart}`).toFixed(1))
 
-    updateReading(reading)
+    updateData(data)
   }
 
   const onFractionalPartSelected = (fraction: number) => {
@@ -45,9 +45,9 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
       setFractionalPart(fraction)
     }
 
-    const reading = integerPart + (fractionalPart / 10)
+    const data = integerPart + (fractionalPart / 10)
 
-    updateReading(reading)
+    updateData(data)
   }
 
   const integerOptions = isKeto ? ketoIntegerOptions : bgIntegerOptions

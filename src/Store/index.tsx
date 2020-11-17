@@ -121,3 +121,18 @@ export const needsUpdating = async (key: string): Promise<boolean> => {
 
   return false
 }
+
+export const clearAllData = async (): Promise<void> => {
+  try {
+    await deleteData('bgReadings')
+    await deleteData('ketoReadings')
+    await deleteData('doseReadings')
+    await deleteData('macroReadings')
+    await deleteData('bgStats')
+    await deleteData('savedMacros')
+  } catch (err) {
+    console.log(`Error clearing data: ${err}`)
+  }
+
+  console.log('Cleared all data')
+}

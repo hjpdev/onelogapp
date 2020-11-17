@@ -22,7 +22,7 @@ export const generateCreatedDateTime = (date: string) => {
 }
 
 export const generateCreatedDate = (date: string): string => {
-  if (date.split(' ')[1] === 'Day') return date
+  if (date && date.split(' ')[1] === 'Day') return date
 
   const today = new Date()
   const todayMonth = today.getMonth() + 1

@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 export type MacroReadingProps = {
-  data: {
+  reading: {
     kcal: number,
     carbs: number,
     sugar: number,
@@ -12,8 +12,8 @@ export type MacroReadingProps = {
 }
 
 export const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingProps) => {
-  const { data } = props
-  const { kcal, carbs, sugar, protein, fat } = data
+  const { reading } = props
+  const { kcal, carbs, sugar, protein, fat } = reading
 
   return (
     <View style={Styles.container} testID="carousel-macro">
