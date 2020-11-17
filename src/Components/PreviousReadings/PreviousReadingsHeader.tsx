@@ -12,28 +12,27 @@ const PreviousReadingsHeader: React.FC<PreviousReadingsHeaderProps> = (props: Pr
   const { headerText } = props
   const navigation = useNavigation()
 
-  return(
+  return (
     <>
-    <View style={Styles.header}>
-      <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
-        </TouchableOpacity>
+      <View style={Styles.header}>
+        <View style={Styles.iconContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
+          </TouchableOpacity>
+        </View>
+        <View style={Styles.textContainer}>
+          <Text style={Styles.text}>{`Previous ${headerText} Readings`}</Text>
+        </View>
+        <View style={Styles.iconContainer}>
+          <Text style={Styles.placeholder}>{' '}</Text>
+        </View>
       </View>
-      <View style={Styles.textContainer}>
-        <Text style={Styles.text}>{`Previous ${headerText} Readings`}</Text>
-      </View>
-      <View style={Styles.iconContainer}>
-        <Text style={Styles.placeholder}>{' '}</Text>
-      </View>
-    </View>
-    <GradientBorder x={1.0} y={1.0} />
+      <GradientBorder x={1.0} y={1.0} />
     </>
   )
 }
 
 export default PreviousReadingsHeader
-
 
 const Styles = StyleSheet.create({
   header: {

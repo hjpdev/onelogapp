@@ -45,7 +45,7 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
   const getEntries = () => {
     const tmpArr: React.ReactNode[] = []
     collection.forEach((entry: any) => {
-      const reading = entry.reading
+      const { reading } = entry
       tmpArr.push(<MacroCollectionEntry amount={entry.amount} reading={reading} key={`${reading.id}-${entry.amount}`} removeEntry={removeEntry} />)
     })
 
@@ -64,62 +64,62 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
 
   const handleSubmit = () => {
     updateReading(macros)
-    navigation.navigate('NewMacroReading', {macros} )
+    navigation.navigate('NewMacroReading', { macros })
   }
 
   const calories = calorieBreakdown()
   const entries = getEntries()
 
-  return(
-	<>
-  <Modal
-    isVisible={isVisible}
-    animationIn='zoomInDown'
-    animationOut='zoomOutUp'
-    animationInTiming={1000}
-    animationOutTiming={1000}
-    onBackButtonPress={onClose}
-    onBackdropPress={onClose}
-    backdropOpacity={0.2}
-    style={Styles.modal}>
-    <View style={Styles.readingContainer}>
-      <View style={Styles.labels}>
-        <Text style={Styles.label}>{'Kcal:'}</Text>
-        <Text style={Styles.label}>{'Carbs (g):'}</Text>
-        <Text style={Styles.label}>{'Sugar (g):'}</Text>
-        <Text style={Styles.label}>{'Protein (g):'}</Text>
-        <Text style={Styles.label}>{'Fat (g):'}</Text>
-      </View>
+  return (
+    <>
+      <Modal
+        isVisible={isVisible}
+        animationIn="zoomInDown"
+        animationOut="zoomOutUp"
+        animationInTiming={1000}
+        animationOutTiming={1000}
+        onBackButtonPress={onClose}
+        onBackdropPress={onClose}
+        backdropOpacity={0.2}
+        style={Styles.modal}
+      >
+        <View style={Styles.readingContainer}>
+          <View style={Styles.labels}>
+            <Text style={Styles.label}>Kcal:</Text>
+            <Text style={Styles.label}>Carbs (g):</Text>
+            <Text style={Styles.label}>Sugar (g):</Text>
+            <Text style={Styles.label}>Protein (g):</Text>
+            <Text style={Styles.label}>Fat (g):</Text>
+          </View>
 
-      <View style={Styles.numbers}>
-        <View style={Styles.values}>
-          <Text style={Styles.value}>{`${macros.kcal.toFixed(2)}`}</Text>
-          <Text style={Styles.value}>{`${macros.carbs.toFixed(2)}`}</Text>
-          <Text style={Styles.value}>{`${macros.sugar.toFixed(2)}`}</Text>
-          <Text style={Styles.value}>{`${macros.protein.toFixed(2)}`}</Text>
-          <Text style={Styles.value}>{`${macros.fat.toFixed(2)}`}</Text>
+          <View style={Styles.numbers}>
+            <View style={Styles.values}>
+              <Text style={Styles.value}>{`${macros.kcal.toFixed(2)}`}</Text>
+              <Text style={Styles.value}>{`${macros.carbs.toFixed(2)}`}</Text>
+              <Text style={Styles.value}>{`${macros.sugar.toFixed(2)}`}</Text>
+              <Text style={Styles.value}>{`${macros.protein.toFixed(2)}`}</Text>
+              <Text style={Styles.value}>{`${macros.fat.toFixed(2)}`}</Text>
+            </View>
+            <View style={Styles.percentages}>
+              <Text style={Styles.percentage} />
+              <Text style={Styles.percentage}>{`${calories.carbsCal ? `${calories.carbsCal.toFixed(1)}%` : ''}`}</Text>
+              <Text style={Styles.percentage} />
+              <Text style={Styles.percentage}>{`${calories.proteinCal ? `${calories.proteinCal.toFixed(1)}%` : ''}`}</Text>
+              <Text style={Styles.percentage}>{`${calories.fatCal ? `${calories.fatCal.toFixed(1)}%` : ''}`}</Text>
+            </View>
+          </View>
         </View>
-        <View style={Styles.percentages}>
-          <Text style={Styles.percentage} />
-          <Text style={Styles.percentage}>{`${calories.carbsCal ? calories.carbsCal.toFixed(1) + '%' : ''}`}</Text>
-          <Text style={Styles.percentage} />
-          <Text style={Styles.percentage}>{`${calories.proteinCal ? calories.proteinCal.toFixed(1) + '%' : ''}`}</Text>
-          <Text style={Styles.percentage}>{`${calories.fatCal ? calories.fatCal.toFixed(1) + '%' : ''}`}</Text>
-        </View>
-      </View>
-    </View>
-    <GradientBorder x={1.0} y={1.0} />
-    <ScrollView style={Styles.entries}>
-      {entries}
-    </ScrollView>
-    <ChoiceButtons confirmationText={'Add'} cancellationText={'Clear'} onSubmit={async () => handleSubmit()} onClose={clearCollection} />
-  </Modal>
-	</>
+        <GradientBorder x={1.0} y={1.0} />
+        <ScrollView style={Styles.entries}>
+          {entries}
+        </ScrollView>
+        <ChoiceButtons confirmationText="Add" cancellationText="Clear" onSubmit={async () => handleSubmit()} onClose={clearCollection} />
+      </Modal>
+    </>
   )
 }
 
 export default MacroCollectionSummaryModal
-
 
 const Styles = StyleSheet.create({
   modal: {

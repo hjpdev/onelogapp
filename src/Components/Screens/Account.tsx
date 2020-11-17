@@ -3,16 +3,14 @@ import { Text, View } from 'react-native'
 
 import ScreenStyles from '../../Assets/Styles/Screen'
 
-const AccountScreen: React.FC = () => {
-  return(
-    <>
-    <View style={ScreenStyles.container} testID={'account-screen'}>
+const AccountScreen: React.FC = () => (
+  <>
+    <View style={ScreenStyles.container} testID="account-screen">
       <Text style={ScreenStyles.text}>
-        {'Account'}
+        Account
       </Text>
     </View>
-    </>
-  )
-}
+  </>
+)
 
 export default AccountScreen

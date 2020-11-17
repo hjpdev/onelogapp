@@ -31,7 +31,6 @@ const parseAmount = (value: number) => {
   return { hundreds, tens, ones }
 }
 
-
 const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
   const { updateAmount, updateUnit, allowEditUnit, amount, unit } = props
 
@@ -39,9 +38,7 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
   const [tens, setTens] = useState((amount && parseAmount(amount).tens) || 0)
   const [ones, setOnes] = useState((amount && parseAmount(amount).ones) || 0)
 
-  const generateAmount = () => {
-    return parseFloat(`${hundreds}${tens}${ones}`)
-  }
+  const generateAmount = () => parseFloat(`${hundreds}${tens}${ones}`)
 
   useEffect(() => {
     const amount = generateAmount()
@@ -52,18 +49,18 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
     setterFunction(int)
   }
 
-  return(
+  return (
     <View style={Styles.container}>
       <View>
         <WheelPicker
           selectedItem={(amount && parseAmount(amount).hundreds) || 0}
           data={defaultNumSelectorOptions}
-          onItemSelected={int => onSelection(setHundreds, int)}
-          isCyclic={true}
+          onItemSelected={(int) => onSelection(setHundreds, int)}
+          isCyclic
           selectedItemTextSize={12}
           itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
+          selectedItemTextFontFamily="roboto"
+          itemTextFontFamily="roboto"
           style={Styles.hundreds}
         />
       </View>
@@ -71,12 +68,12 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
         <WheelPicker
           selectedItem={(amount && parseAmount(amount).tens) || 0}
           data={defaultNumSelectorOptions}
-          onItemSelected={int => onSelection(setTens, int)}
-          isCyclic={true}
+          onItemSelected={(int) => onSelection(setTens, int)}
+          isCyclic
           selectedItemTextSize={12}
           itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
+          selectedItemTextFontFamily="roboto"
+          itemTextFontFamily="roboto"
           style={Styles.hundreds}
         />
       </View>
@@ -84,27 +81,25 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
         <WheelPicker
           selectedItem={(amount && parseAmount(amount).ones) || 0}
           data={defaultNumSelectorOptions}
-          onItemSelected={int => onSelection(setOnes, int)}
-          isCyclic={true}
+          onItemSelected={(int) => onSelection(setOnes, int)}
+          isCyclic
           selectedItemTextSize={12}
           itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
+          selectedItemTextFontFamily="roboto"
+          itemTextFontFamily="roboto"
           style={Styles.hundreds}
         />
       </View>
       <View style={{ justifyContent: 'flex-end' }}>
         {allowEditUnit
           ? <TextInput placeholder={unit || 'Unit'} onChangeText={updateUnit} style={Styles.textInput} />
-          : <Text style={Styles.text}>{unit || 'Units'}</Text>
-        }
+          : <Text style={Styles.text}>{unit || 'Units'}</Text>}
       </View>
     </View>
   )
 }
 
 export default MacroAmountSelector
-
 
 const Styles = StyleSheet.create({
   container: {

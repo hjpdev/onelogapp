@@ -12,7 +12,7 @@ export const storeData = async (key: string, data: StoreData | StatsReadingProps
     const value = JSON.stringify({ ...data, updated: Date.now() })
     await AsyncStorage.setItem(key, value)
     console.log(`${key} updated`)
-  } catch(err) {
+  } catch (err) {
     console.log('Error storeData: ', err)
   }
 }
@@ -21,12 +21,12 @@ export const getData = async (key: string): Promise<StoreData> => {
   let rawData
   try {
     rawData = await AsyncStorage.getItem(key)
-  } catch(err) {
+  } catch (err) {
     console.log('Error getData: ', err)
   }
   const data = rawData && JSON.parse(rawData)
   const readings = data && data.readings && data.readings.filter(Boolean)
-  
+
   return { ...data, readings }
 }
 
@@ -63,7 +63,7 @@ export const updateReadings = async (key: string, updatedReading: any) => {
 
   const updatedReadings = currentReadings.map((reading: any) => {
     if (reading.id === updatedReading.id) {
-      return {  ...reading, ...updatedReading }
+      return { ...reading, ...updatedReading }
     }
     return reading
   })
@@ -86,10 +86,8 @@ export const removeReading = async (key: string, id: number): Promise<any> => {
     return
   }
 
-  const updatedReadings = currentReadings.filter((reading: any) => {
-    return reading.id !== id
-  })
-  const updatedData = { updated: Date.now(), readings: updatedReadings}
+  const updatedReadings = currentReadings.filter((reading: any) => reading.id !== id)
+  const updatedData = { updated: Date.now(), readings: updatedReadings }
 
   try {
     return storeData(key, updatedData)
@@ -117,7 +115,7 @@ export const needsUpdating = async (key: string): Promise<boolean> => {
     if (data && (Date.now() - lastUpdated) > 3600000) {
       return true
     }
-  } catch(err) {
+  } catch (err) {
     console.log('Error needsUpdating: ', err)
   }
 

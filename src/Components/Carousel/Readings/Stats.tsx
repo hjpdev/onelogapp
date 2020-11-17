@@ -13,24 +13,23 @@ export const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingPro
   const { data } = props
   const { avg, stddev } = data
 
-  return(
-    <View style={Styles.container} testID={'carousel-bg-stats'}>
+  return (
+    <View style={Styles.container} testID="carousel-bg-stats">
       <View style={Styles.readingContainer}>
         <Text style={Styles.reading}>
           { avg && avg.toFixed(1) }
         </Text>
         <Text style={Styles.unit}>
-        { 'mmol/L' }
+          mmol/L
         </Text>
       </View>
 
       <Text style={Styles.stddev}>
-      { `±${stddev && stddev.toFixed(1)}` }
+        { `±${stddev && stddev.toFixed(1)}` }
       </Text>
     </View>
   )
 }
-
 
 const Styles = StyleSheet.create({
   container: {

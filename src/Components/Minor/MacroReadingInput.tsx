@@ -27,12 +27,12 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
   const navigation = useNavigation()
 
   const parseData = () => {
-    const tmpObj = { } as any
-  
+    const tmpObj = {} as any
+
     data && Object.keys(data).forEach((macro: keyof MacroReading) => {
       tmpObj[macro] = typeof data[macro] === 'string' ? parseFloat(data[macro]) : parseFloat(data[macro].toFixed(1))
     })
-  
+
     return tmpObj
   }
 
@@ -61,23 +61,26 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
     updateReading(reading)
   }
 
-  return(
+  return (
     <>
-    {showClearOption && <TouchableOpacity onPress={() => clearMacros()}>
-      <Text>Clear</Text>
-    </TouchableOpacity>}
-    <View style={Styles.container}>
-      <GradientBorder x={1.0} y={1.0} />
-      <MacroSelector hasThousands value={kcal} label={'Kcal:'} updateMacro={setKcal} />
-      <MacroSelector hasThousands={false} value={carbs} label={'Carbs (g):'} updateMacro={setCarbs} />
-      <MacroSelector hasThousands={false} value={sugar} label={'Sugar (g):'} updateMacro={setSugar} />
-      <MacroSelector hasThousands={false} value={protein} label={'Protein (g):'} updateMacro={setProtein} />
-      <MacroSelector hasThousands={false} value={fat} label={'Fat (g):'} updateMacro={setFat} />
-      <GradientBorder x={1.0} y={1.0} />
-      {showSavedMacroOptions &&
+      {showClearOption && (
+      <TouchableOpacity onPress={() => clearMacros()}>
+        <Text>Clear</Text>
+      </TouchableOpacity>
+      )}
+      <View style={Styles.container}>
+        <GradientBorder x={1.0} y={1.0} />
+        <MacroSelector hasThousands value={kcal} label="Kcal:" updateMacro={setKcal} />
+        <MacroSelector hasThousands={false} value={carbs} label="Carbs (g):" updateMacro={setCarbs} />
+        <MacroSelector hasThousands={false} value={sugar} label="Sugar (g):" updateMacro={setSugar} />
+        <MacroSelector hasThousands={false} value={protein} label="Protein (g):" updateMacro={setProtein} />
+        <MacroSelector hasThousands={false} value={fat} label="Fat (g):" updateMacro={setFat} />
+        <GradientBorder x={1.0} y={1.0} />
+        {showSavedMacroOptions
+        && (
         <View style={Styles.savedMacroOptions}>
           <View style={{ width: '50%', borderRightWidth: 1 }}>
-            <TouchableOpacity onPress={() => setShowNewSavedMacroModal(true)} >
+            <TouchableOpacity onPress={() => setShowNewSavedMacroModal(true)}>
               <Text style={{ fontSize: 16, textAlign: 'center', padding: 8 }}>Save as</Text>
             </TouchableOpacity>
           </View>
@@ -87,15 +90,14 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
             </TouchableOpacity>
           </View>
         </View>
-      }
-    </View>
-    <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }} />
+        )}
+      </View>
+      <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }} />
     </>
   )
 }
 
 export default MacroReadingInput
-
 
 const Styles = StyleSheet.create({
   container: {

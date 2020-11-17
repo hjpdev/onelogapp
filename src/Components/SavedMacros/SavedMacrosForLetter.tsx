@@ -15,34 +15,31 @@ const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedM
   const { letter, readings, update, addEntry, removeEntry } = props
   const [isOpen, setIsOpen] = useState(false)
 
-  const generateList = () => {
-    return readings.map(reading => {
-      return <SavedMacro key={reading.id} data={reading} update={update} addEntry={addEntry} />
-    })
-  }
+  const generateList = () => readings.map((reading) => <SavedMacro key={reading.id} data={reading} update={update} addEntry={addEntry} />)
 
-  return(
+  return (
     <>
-    <GradientBorder x={1.0} y={1.0} />
+      <GradientBorder x={1.0} y={1.0} />
       <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.date}>
-        <Text style={Styles.placeholder}>{'▼'}</Text>
+        <Text style={Styles.placeholder}>▼</Text>
         <Text style={Styles.letterText}>{letter.toUpperCase()}</Text>
         <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
       </TouchableOpacity>
-      {isOpen &&
+      {isOpen
+      && (
       <>
+        <GradientBorder x={1.0} y={1.0} />
+        <View style={Styles.view}>
+          {generateList()}
+        </View>
+      </>
+      )}
       <GradientBorder x={1.0} y={1.0} />
-      <View style={Styles.view}>
-        {generateList()}
-      </View>
-      </>}
-    <GradientBorder x={1.0} y={1.0} />
     </>
   )
 }
 
 export default SavedMacrosForLetter
-
 
 const Styles = StyleSheet.create({
   date: {

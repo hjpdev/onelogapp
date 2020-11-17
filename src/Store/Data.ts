@@ -4,7 +4,7 @@ import { needsUpdating, storeData, getData } from '.'
 import { addReading, removeReading, updateReadings } from '../Store/index'
 import { delay } from '../Helpers'
 
-const BASE_URL = Config.BASE_URL
+const { BASE_URL } = Config
 
 type GenerateReadingsQueryOptions = {
   dataKeys: string[]
@@ -36,9 +36,9 @@ type DeleteReadingOptions = {
   id: number
 }
 
-export const getReadings = async(options: GetReadingsOptions): Promise<any> => {
+export const getReadings = async (options: GetReadingsOptions): Promise<any> => {
   const { queryString, dataKeys, days } = options
-  if (!queryString && !dataKeys && ! days) {
+  if (!queryString && !dataKeys && !days) {
     throw new Error('Error getReadings: Must provide either query or, dataKeys to query (& array of days if relevent).')
   }
   const query = queryString || generateReadingsQuery({ dataKeys, days })
@@ -134,7 +134,7 @@ export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: s
   }
 }
 
-export const handleSuccessfulUpdate = async(dataKey: string, updatedReading: any, modalSwitchFunction: (isVisible: boolean) => void) => {
+export const handleSuccessfulUpdate = async (dataKey: string, updatedReading: any, modalSwitchFunction: (isVisible: boolean) => void) => {
   try {
     await updateReadings(dataKey, updatedReading)
     modalSwitchFunction(true)
@@ -164,8 +164,8 @@ export const getHomeScreenData = async (): Promise<any> => {
     const bgStats = await getData('bgStats')
     const doseReadings = await getData('doseReadings')
     const macroReadings = await getData('macroReadings')
-  
-    return  { bgReadings, bgStats, doseReadings, macroReadings }
+
+    return { bgReadings, bgStats, doseReadings, macroReadings }
   } catch (err) {
     console.log('Error getHomeScreenData: ', err.stack)
   }

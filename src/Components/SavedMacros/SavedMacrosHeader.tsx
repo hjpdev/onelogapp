@@ -14,31 +14,30 @@ const SavedMacrosHeader: React.FC<SavedMacrosHeaderProps> = (props: SavedMacrosH
 
   const navigation = useNavigation()
 
-  return(
+  return (
     <>
-    <View style={Styles.header}>
-      <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
-        </TouchableOpacity>
+      <View style={Styles.header}>
+        <View style={Styles.iconContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
+          </TouchableOpacity>
+        </View>
+        <View style={Styles.textContainer}>
+          <Text style={Styles.text}>Saved Macros</Text>
+        </View>
+        <View style={Styles.iconContainer}>
+          <TouchableOpacity onPress={onPress}>
+            <Image source={require('../../Assets/Images/PreviousReadings.png')} style={{ height: 40, width: 30, position: 'absolute' }} />
+            <Text style={Styles.numberOfEntries}>{numberOfEntries}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={Styles.textContainer}>
-        <Text style={Styles.text}>{`Saved Macros`}</Text>
-      </View>
-      <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={onPress}>
-          <Image source={require('../../Assets/Images/PreviousReadings.png')} style={{ height: 40, width: 30, position: 'absolute' }} />
-          <Text style={Styles.numberOfEntries}>{numberOfEntries}</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-    <GradientBorder x={1.0} y={1.0} />
+      <GradientBorder x={1.0} y={1.0} />
     </>
   )
 }
 
 export default SavedMacrosHeader
-
 
 const Styles = StyleSheet.create({
   header: {

@@ -14,34 +14,31 @@ export const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewRead
   const { headerText, dataKey, hidePreviousReadingsIcon } = props
 
   const navigation = useNavigation()
-  const generatePreviousReadingsIconStyle = () => {
-    return hidePreviousReadingsIcon
-      ? {...Styles.previousReadingsIcon, tintColor: '#ebebeb', opacity: 100}
-      : Styles.previousReadingsIcon
-  }
+  const generatePreviousReadingsIconStyle = () => (hidePreviousReadingsIcon
+    ? { ...Styles.previousReadingsIcon, tintColor: '#ebebeb', opacity: 100 }
+    : Styles.previousReadingsIcon)
 
-  return(
+  return (
     <>
-    <View style={Styles.header}>
-      <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
-        </TouchableOpacity>
+      <View style={Styles.header}>
+        <View style={Styles.iconContainer}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image source={require('../../Assets/Images/BackArrow.png')} style={Styles.backIcon} />
+          </TouchableOpacity>
+        </View>
+        <View style={Styles.headerTextContainer}>
+          <Text style={Styles.headerText}>{`New ${headerText} Reading`}</Text>
+        </View>
+        <View style={Styles.iconContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate('PreviousReadings', { dataKey, headerText })}>
+            <Image source={require('../../Assets/Images/PreviousReadings.png')} style={generatePreviousReadingsIconStyle()} />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View style={Styles.headerTextContainer}>
-        <Text style={Styles.headerText}>{`New ${headerText} Reading`}</Text>
-      </View>
-      <View style={Styles.iconContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('PreviousReadings', { dataKey, headerText })}>
-          <Image source={require('../../Assets/Images/PreviousReadings.png')} style={generatePreviousReadingsIconStyle()} />
-        </TouchableOpacity>
-      </View>
-    </View>
-    <GradientBorder x={1.0} y={1.0} />
+      <GradientBorder x={1.0} y={1.0} />
     </>
   )
 }
-
 
 const Styles = StyleSheet.create({
   header: {

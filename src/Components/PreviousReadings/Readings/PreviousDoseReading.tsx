@@ -24,47 +24,42 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   const { id, created, reading, long } = data
   const timeCreated = generateCreatedTime(created)
 
-  const generateColors = () => {
-    return long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#b2bfaa']
-  }
+  const generateColors = () => (long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#b2bfaa'])
 
   const generateStartPoint = () => {
     const y = long ? ((reading - 10) / 25) : 1 - (reading / 20)
-    return { x: 0.5, y}
+    return { x: 0.5, y }
   }
 
-  const generateReading = () => {
-    return `${reading}`.length < 2 ? reading.toFixed(1) : reading
-  }
+  const generateReading = () => (`${reading}`.length < 2 ? reading.toFixed(1) : reading)
 
-  return(
+  return (
     <>
-    <View style={Styles.container}>
-      <View style={Styles.header}>
-        <TouchableOpacity onPress={() => setShowModifyDoseModal(true)}>
-          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
-        </TouchableOpacity>
-        <Text style={Styles.timeCreated}>{timeCreated}</Text>
-        <TouchableOpacity>
-          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
-        </TouchableOpacity>
-      </View>
-      <GradientBorder x={1.0} y={1.0} />
-      <TouchableOpacity onPress={() => setShowModifyDoseModal(true)} style={{ width: '100%' }}>
-        <View style={Styles.reading}>
-          <LinearGradient colors={generateColors()} start={generateStartPoint()}>
-            <Text style={Styles.readingText}>{generateReading()}</Text>
-          </LinearGradient>
+      <View style={Styles.container}>
+        <View style={Styles.header}>
+          <TouchableOpacity onPress={() => setShowModifyDoseModal(true)}>
+            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+          </TouchableOpacity>
+          <Text style={Styles.timeCreated}>{timeCreated}</Text>
+          <TouchableOpacity>
+            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+          </TouchableOpacity>
         </View>
         <GradientBorder x={1.0} y={1.0} />
-        <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
-      </TouchableOpacity>
-    </View>
-    <ModifyDoseModal isVisible={showModifyDoseModal} data={data} onClose={() => setShowModifyDoseModal(false)} update={update} />
+        <TouchableOpacity onPress={() => setShowModifyDoseModal(true)} style={{ width: '100%' }}>
+          <View style={Styles.reading}>
+            <LinearGradient colors={generateColors()} start={generateStartPoint()}>
+              <Text style={Styles.readingText}>{generateReading()}</Text>
+            </LinearGradient>
+          </View>
+          <GradientBorder x={1.0} y={1.0} />
+          <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
+        </TouchableOpacity>
+      </View>
+      <ModifyDoseModal isVisible={showModifyDoseModal} data={data} onClose={() => setShowModifyDoseModal(false)} update={update} />
     </>
   )
 }
-
 
 const Styles = StyleSheet.create({
   container: {

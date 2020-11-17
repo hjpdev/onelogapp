@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
-import { Text, View, StyleSheet } from "react-native"
-import WheelPicker from "../../react-native-wheel-picker-android"
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import { Text, View, StyleSheet } from 'react-native'
+import WheelPicker from '../../react-native-wheel-picker-android'
 
 import {
   bgIntegerOptions,
@@ -19,13 +19,14 @@ type WheelSelectorProps = {
 const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
   const { updateReading, reading, isDose, isKeto } = props
 
-  let integer, fraction
+  let integer; let
+    fraction
   if (reading) {
     const parts = `${reading.toFixed(1)}`.split('.')
     integer = parseInt(parts[0])
     fraction = parseInt(parts[1])
   }
-  
+
   const [integerPart, setIntegerPart] = useState(integer || 0)
   const [fractionalPart, setFractionalPart] = useState(fraction || 0)
 
@@ -48,7 +49,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
 
     updateReading(reading)
   }
- 
+
   const integerOptions = isKeto ? ketoIntegerOptions : bgIntegerOptions
   const fractionalOptions = isDose ? doseFractionOptions : defaultNumSelectorOptions
 
@@ -59,27 +60,27 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
           selectedItem={integerPart}
           data={integerOptions}
           onItemSelected={onIntegerPartSelected}
-          isCyclic={true}
+          isCyclic
           selectedItemTextSize={30}
           itemTextSize={16}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
+          selectedItemTextFontFamily="roboto"
+          itemTextFontFamily="roboto"
           style={Styles.wheel}
         />
       </View>
 
-      <View style={Styles.decimalContainer}><Text style={Styles.decimalText}>{'.'}</Text></View>
+      <View style={Styles.decimalContainer}><Text style={Styles.decimalText}>.</Text></View>
 
       <View style={Styles.wheelRight}>
         <WheelPicker
           selectedItem={fractionalPart}
           data={fractionalOptions}
           onItemSelected={onFractionalPartSelected}
-          isCyclic={isDose ? false : true}
+          isCyclic={!isDose}
           selectedItemTextSize={30}
           itemTextSize={16}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
+          selectedItemTextFontFamily="roboto"
+          itemTextFontFamily="roboto"
           style={Styles.wheel}
         />
       </View>
@@ -88,7 +89,6 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
 }
 
 export default WheelSelector
-
 
 const Styles = StyleSheet.create({
   container: {

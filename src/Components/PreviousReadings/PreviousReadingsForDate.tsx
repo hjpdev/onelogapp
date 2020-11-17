@@ -15,28 +15,26 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
   const { date, opened, readings, Template, update } = props
   const [isOpen, setIsOpen] = useState(opened || false)
 
-  const generateList = () => {
-    return readings.map(reading => {
-      return <Template key={reading.id} data={reading} update={update} />
-    })
-  }
+  const generateList = () => readings.map((reading) => <Template key={reading.id} data={reading} update={update} />)
 
-  return(
+  return (
     <View>
       <View style={Styles.header}>
         <GradientBorder x={1.0} y={1.0} />
-          <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.date}>
-            <Text style={Styles.placeholder}>{'▶︎'}</Text>
-            <Text style={Styles.dateText}>{date}</Text>
-            <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
-          </TouchableOpacity>
-          {isOpen &&
+        <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.date}>
+          <Text style={Styles.placeholder}>▶︎</Text>
+          <Text style={Styles.dateText}>{date}</Text>
+          <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
+        </TouchableOpacity>
+        {isOpen
+          && (
           <>
-          <GradientBorder x={1.0} y={1.0} />
-          <View style={Styles.view}>
-            {generateList()}
-          </View>
-          </>}
+            <GradientBorder x={1.0} y={1.0} />
+            <View style={Styles.view}>
+              {generateList()}
+            </View>
+          </>
+          )}
         <GradientBorder x={1.0} y={1.0} />
       </View>
     </View>
@@ -44,7 +42,6 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
 }
 
 export default PreviousReadingsForDate
-
 
 const Styles = StyleSheet.create({
   header: {

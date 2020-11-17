@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import WheelPicker from "../../react-native-wheel-picker-android"
+import WheelPicker from '../../react-native-wheel-picker-android'
 
 import { clockHours, clockMinutes, generateCreatedDateTime, newDate } from '../../Helpers'
 
@@ -20,41 +20,41 @@ const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: ModifyTime
 
   useEffect(() => {
     if (hours !== createdHours || minutes !== createdMinutes) {
-      const month = createdDateTime.month
-      const day = createdDateTime.day
+      const { month } = createdDateTime
+      const { day } = createdDateTime
       const date = newDate({ m: month, d: day, h: hours, min: minutes })
 
-      date.setTime(date.getTime() + date.getTimezoneOffset()*60*1000)
+      date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000)
       setDateTime(date)
     }
   }, [hours, minutes])
 
-  return(
+  return (
     <View style={Styles.container}>
-      <View style={{...Styles.wheel, paddingLeft: 10}}>
+      <View style={{ ...Styles.wheel, paddingLeft: 10 }}>
         <WheelPicker
           selectedItem={hours}
           data={clockHours}
           onItemSelected={setHours}
-          isCyclic={true}
+          isCyclic
           selectedItemTextSize={20}
           itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
+          selectedItemTextFontFamily="roboto"
+          itemTextFontFamily="roboto"
           style={Styles.time}
         />
       </View>
-      <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14}}>{':'}</Text>
+      <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14 }}>:</Text>
       <View style={Styles.wheel}>
         <WheelPicker
           selectedItem={minutes}
           data={clockMinutes}
           onItemSelected={setMinutes}
-          isCyclic={true}
+          isCyclic
           selectedItemTextSize={20}
           itemTextSize={8}
-          selectedItemTextFontFamily={'roboto'}
-          itemTextFontFamily={'roboto'}
+          selectedItemTextFontFamily="roboto"
+          itemTextFontFamily="roboto"
           style={Styles.time}
         />
       </View>
@@ -63,7 +63,6 @@ const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: ModifyTime
 }
 
 export default ModifyTimeSelector
-
 
 const Styles = StyleSheet.create({
   container: {

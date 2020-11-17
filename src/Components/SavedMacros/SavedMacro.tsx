@@ -41,7 +41,7 @@ const PlusSymbol: React.FC = () => {
   })
 
   return (
-    <><Text style={PlusSymbolStyles.text}>{'+'}</Text></>
+    <><Text style={PlusSymbolStyles.text}>+</Text></>
   )
 }
 
@@ -53,53 +53,56 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState<boolean>(false)
   const [showMacroCollectionConfirmationModal, setShowMacroCollectionConfirmationModal] = useState<boolean>(false)
 
-  return(
+  return (
     <>
-    <View style={Styles.container}>
-      <View style={Styles.title}>
-        <TouchableOpacity onPress={() => setShowModifySavedMacroModal(true)}>
-          <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
-        </TouchableOpacity>
-        <View style={Styles.name}>
-          <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
-          {isOpen
-            ? <Text style={{ ...Styles.nameText, flexWrap: 'wrap' }}>{`${capitaliseAddWhitespace(name)}`}</Text>
-            : <Text style={Styles.nameText}>{`${truncateName(10, name)}`}</Text>}
+      <View style={Styles.container}>
+        <View style={Styles.title}>
+          <TouchableOpacity onPress={() => setShowModifySavedMacroModal(true)}>
+            <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+          </TouchableOpacity>
+          <View style={Styles.name}>
+            <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
+              {isOpen
+                ? <Text style={{ ...Styles.nameText, flexWrap: 'wrap' }}>{`${capitaliseAddWhitespace(name)}`}</Text>
+                : <Text style={Styles.nameText}>{`${truncateName(10, name)}`}</Text>}
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity onPress={() => setShowMacroCollectionConfirmationModal(true)}>
+            <PlusSymbol />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => setShowMacroCollectionConfirmationModal(true)}>
-          <PlusSymbol />
-        </TouchableOpacity>
-      </View>
-      <GradientBorder x={1.0} y={1.0} />
-      <Text>{amount} {unit}</Text>
-      <GradientBorder x={1.0} y={1.0} />
-      <View style={Styles.readingContainer}>
-        <View style={Styles.labels}>
-          <Text style={Styles.label}>{'Kcal:'}</Text>
-          <Text style={Styles.label}>{'Carbs:'}</Text>
-          <Text style={Styles.label}>{'Sugar:'}</Text>
-          <Text style={Styles.label}>{'Protein:'}</Text>
-          <Text style={Styles.label}>{'Fat:'}</Text>
-        </View>
+        <GradientBorder x={1.0} y={1.0} />
+        <Text>
+          {amount}
+          {' '}
+          {unit}
+        </Text>
+        <GradientBorder x={1.0} y={1.0} />
+        <View style={Styles.readingContainer}>
+          <View style={Styles.labels}>
+            <Text style={Styles.label}>Kcal:</Text>
+            <Text style={Styles.label}>Carbs:</Text>
+            <Text style={Styles.label}>Sugar:</Text>
+            <Text style={Styles.label}>Protein:</Text>
+            <Text style={Styles.label}>Fat:</Text>
+          </View>
 
-        <View style={Styles.values}>
-          <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
-          <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
-          <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
-          <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
-          <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
+          <View style={Styles.values}>
+            <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
+            <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
+            <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
+            <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
+            <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
+          </View>
         </View>
       </View>
-    </View>
-    <ModifySavedMacroModal isVisible={showModifySavedMacroModal} data={data} onClose={() => setShowModifySavedMacroModal(false)} update={update} />
-    <MacroCollectionConfirmationModal isVisible={showMacroCollectionConfirmationModal} data={data} onClose={() => setShowMacroCollectionConfirmationModal(false)} onSubmit={addEntry}/>
+      <ModifySavedMacroModal isVisible={showModifySavedMacroModal} data={data} onClose={() => setShowModifySavedMacroModal(false)} update={update} />
+      <MacroCollectionConfirmationModal isVisible={showMacroCollectionConfirmationModal} data={data} onClose={() => setShowMacroCollectionConfirmationModal(false)} onSubmit={addEntry} />
     </>
   )
 }
 
 export default SavedMacro
-
 
 const Styles = StyleSheet.create({
   container: {

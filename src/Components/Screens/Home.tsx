@@ -15,9 +15,9 @@ const deafultHomeScreenData = {
 }
 
 const HomeScreen: React.FC = () => {
-  const [ data, setData ] = useState(deafultHomeScreenData)
+  const [data, setData] = useState(deafultHomeScreenData)
 
-  const getHomeData = async () =>  {
+  const getHomeData = async () => {
     try {
       const homeScreenData = await getHomeScreenData()
       setData(homeScreenData)
@@ -33,13 +33,15 @@ const HomeScreen: React.FC = () => {
   const { bgReadings, bgStats, doseReadings, macroReadings } = data
   const allReadingsAvailable = bgReadings && bgStats && doseReadings && macroReadings
 
-  return(allReadingsAvailable &&
-    <View style={ScreenStyles.container} testID={'home-screen'}>
-      <Carousel name={'bg'} Template={BgReading} data={bgReadings['readings']} />
-      <Carousel name={'stats'} Template={StatsReading} data={bgStats['readings']} />
-      <Carousel name={'dose'} Template={DoseReading} data={doseReadings['readings']} />
-      <Carousel name={'macro'} Template={MacroReading} data={macroReadings['readings']} />
+  return (allReadingsAvailable
+    && (
+    <View style={ScreenStyles.container} testID="home-screen">
+      <Carousel name="bg" Template={BgReading} data={bgReadings.readings} />
+      <Carousel name="stats" Template={StatsReading} data={bgStats.readings} />
+      <Carousel name="dose" Template={DoseReading} data={doseReadings.readings} />
+      <Carousel name="macro" Template={MacroReading} data={macroReadings.readings} />
     </View>
+    )
   )
 }
 

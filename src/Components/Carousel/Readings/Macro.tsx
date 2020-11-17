@@ -15,14 +15,14 @@ export const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingPro
   const { data } = props
   const { kcal, carbs, sugar, protein, fat } = data
 
-  return(
-    <View style={Styles.container} testID={'carousel-macro'}>
+  return (
+    <View style={Styles.container} testID="carousel-macro">
       <View style={Styles.labels}>
-        <Text style={Styles.label}>{'Kcal:'}</Text>
-        <Text style={Styles.label}>{'Carbs:'}</Text>
-        <Text style={Styles.label}>{'Sugar:'}</Text>
-        <Text style={Styles.label}>{'Protein:'}</Text>
-        <Text style={Styles.label}>{'Fat:'}</Text>
+        <Text style={Styles.label}>Kcal:</Text>
+        <Text style={Styles.label}>Carbs:</Text>
+        <Text style={Styles.label}>Sugar:</Text>
+        <Text style={Styles.label}>Protein:</Text>
+        <Text style={Styles.label}>Fat:</Text>
       </View>
 
       <View style={Styles.values}>
@@ -35,7 +35,6 @@ export const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingPro
     </View>
   )
 }
-
 
 const Styles = StyleSheet.create({
   container: {

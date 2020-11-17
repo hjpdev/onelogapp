@@ -20,27 +20,26 @@ export const NewKetoReading: React.FC = () => {
       const response = await submitReading({ table: 'keto', data })
 
       return handleSuccessfulSubmit('ketoReadings', response, setShowSuccessModal)
-    } catch(err) {
+    } catch (err) {
       console.log('Error keto handleSubmit: ', err)
     }
   }
 
-  return(
+  return (
     <>
-    <NewReadingHeader headerText={'Ketones'} dataKey={'ketoReadings'} />
-    <View style={Styles.container}>
-      <TimeSelector setDateTime={setDateTime} />
-      <WheelSelector updateReading={setReading} />
-      <Text style={Styles.unit}>{'mmol/L'}</Text>
-      <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
-        <Text style={Styles.submitText}>{'Submit'}</Text>
-      </TouchableOpacity>
-    </View>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <NewReadingHeader headerText="Ketones" dataKey="ketoReadings" />
+      <View style={Styles.container}>
+        <TimeSelector setDateTime={setDateTime} />
+        <WheelSelector updateReading={setReading} />
+        <Text style={Styles.unit}>mmol/L</Text>
+        <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
+          <Text style={Styles.submitText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
-
 
 const Styles = StyleSheet.create({
   container: {

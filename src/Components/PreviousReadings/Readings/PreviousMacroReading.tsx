@@ -26,44 +26,43 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
   const { id, created, kcal, carbs, sugar, protein, fat } = data
   const timeCreated = generateCreatedTime(created)
 
-  return(
+  return (
     <>
-    <View style={Styles.container}>
-      <View style={Styles.header}>
-        <TouchableOpacity onPress={() => setShowModifyMacroModal(true)}>
-          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
-        </TouchableOpacity>
-        <Text style={Styles.timeCreated}>{timeCreated}</Text>
-        <TouchableOpacity>
-          <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+      <View style={Styles.container}>
+        <View style={Styles.header}>
+          <TouchableOpacity onPress={() => setShowModifyMacroModal(true)}>
+            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+          </TouchableOpacity>
+          <Text style={Styles.timeCreated}>{timeCreated}</Text>
+          <TouchableOpacity>
+            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+          </TouchableOpacity>
+        </View>
+        <GradientBorder x={1.0} y={1.0} />
+        <TouchableOpacity onPress={() => setShowModifyMacroModal(true)} style={Styles.readingContainer}>
+          <View style={Styles.readingContainer}>
+            <View style={Styles.labels}>
+              <Text style={Styles.label}>Kcal:</Text>
+              <Text style={Styles.label}>Carbs:</Text>
+              <Text style={Styles.label}>Sugar:</Text>
+              <Text style={Styles.label}>Protein:</Text>
+              <Text style={Styles.label}>Fat:</Text>
+            </View>
+
+            <View style={Styles.values}>
+              <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
+              <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
+              <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
+              <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
+              <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
+            </View>
+          </View>
         </TouchableOpacity>
       </View>
-      <GradientBorder x={1.0} y={1.0} />
-      <TouchableOpacity onPress={() => setShowModifyMacroModal(true)} style={Styles.readingContainer}>
-        <View style={Styles.readingContainer}>
-          <View style={Styles.labels}>
-            <Text style={Styles.label}>{'Kcal:'}</Text>
-            <Text style={Styles.label}>{'Carbs:'}</Text>
-            <Text style={Styles.label}>{'Sugar:'}</Text>
-            <Text style={Styles.label}>{'Protein:'}</Text>
-            <Text style={Styles.label}>{'Fat:'}</Text>
-          </View>
-
-          <View style={Styles.values}>
-            <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
-            <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
-            <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
-            <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
-            <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </View>
-    <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
+      <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
     </>
   )
 }
-
 
 const Styles = StyleSheet.create({
   container: {

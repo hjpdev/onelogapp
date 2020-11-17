@@ -7,26 +7,26 @@ import GradientBorder from '../Minor/GradientBorder'
 const NewReadingSelection: React.FC = () => {
   const navigation = useNavigation()
 
-  return(
-    <View style={Styles.newReadings} testID={'new-reading-screen'}>
+  return (
+    <View style={Styles.newReadings} testID="new-reading-screen">
       <GradientBorder x={1.0} y={1.0} />
       <TouchableOpacity onPress={() => navigation.navigate('NewBgReading')} style={Styles.newReading}>
-        <Text style={Styles.newReadingText}>{'Bg'}</Text>
+        <Text style={Styles.newReadingText}>Bg</Text>
       </TouchableOpacity>
       <GradientBorder x={1.0} y={1.0} />
 
       <TouchableOpacity onPress={() => navigation.navigate('NewDoseReading')} style={Styles.newReading}>
-        <Text style={Styles.newReadingText}>{'Dose'}</Text>
+        <Text style={Styles.newReadingText}>Dose</Text>
       </TouchableOpacity>
       <GradientBorder x={1.0} y={1.0} />
 
       <TouchableOpacity onPress={() => navigation.navigate('NewMacroReading')} style={Styles.newReading}>
-        <Text style={Styles.newReadingText}>{'Macro'}</Text>
+        <Text style={Styles.newReadingText}>Macro</Text>
       </TouchableOpacity>
       <GradientBorder x={1.0} y={1.0} />
 
       <TouchableOpacity onPress={() => navigation.navigate('NewKetoReading')} style={Styles.newReading}>
-        <Text style={Styles.newReadingText}>{'Ketones'}</Text>
+        <Text style={Styles.newReadingText}>Ketones</Text>
       </TouchableOpacity>
       <GradientBorder x={1.0} y={1.0} />
     </View>
@@ -34,7 +34,6 @@ const NewReadingSelection: React.FC = () => {
 }
 
 export default NewReadingSelection
-
 
 const Styles = StyleSheet.create({
   newReadings: {

@@ -8,7 +8,6 @@ import { delay } from '../../../Helpers/General'
 import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
 import { NewReadingHeader } from '../NewReadingHeader'
 
-
 export const NewDoseReading: React.FC = () => {
   const [reading, setReading] = useState(0.0)
   const [long, setLong] = useState(false)
@@ -23,37 +22,36 @@ export const NewDoseReading: React.FC = () => {
         const response = await submitReading({ table: 'dose', data })
 
         return handleSuccessfulSubmit('doseReadings', response, setShowSuccessModal)
-      } catch(err) {
+      } catch (err) {
         console.log('Error dose handleSubmit: ', err)
       }
     }
   }
 
-  return(
+  return (
     <>
-    <NewReadingHeader headerText={'Dose'} dataKey={'doseReadings'} />
-    <View style={Styles.container}>
-      <TimeSelector setDateTime={setDateTime} />
-      <WheelSelector isDose updateReading={setReading} />
-      <Text style={Styles.unit}>{'Units'}</Text>
-      <View style={Styles.switch}>
-        <Text style={Styles.switchText}>Short</Text>
-        <Switch
-          testID={'doseReading_toggleSwitch'}
-          onValueChange={() => setLong(!long)}
-          value={long}
-        />
-        <Text style={Styles.switchText}>Long</Text>
+      <NewReadingHeader headerText="Dose" dataKey="doseReadings" />
+      <View style={Styles.container}>
+        <TimeSelector setDateTime={setDateTime} />
+        <WheelSelector isDose updateReading={setReading} />
+        <Text style={Styles.unit}>Units</Text>
+        <View style={Styles.switch}>
+          <Text style={Styles.switchText}>Short</Text>
+          <Switch
+            testID="doseReading_toggleSwitch"
+            onValueChange={() => setLong(!long)}
+            value={long}
+          />
+          <Text style={Styles.switchText}>Long</Text>
+        </View>
+        <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
+          <Text style={Styles.submitText}>Submit</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
-        <Text style={Styles.submitText}>{'Submit'}</Text>
-      </TouchableOpacity>
-    </View>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
-
 
 const Styles = StyleSheet.create({
   container: {

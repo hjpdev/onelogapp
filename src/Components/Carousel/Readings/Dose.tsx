@@ -15,20 +15,18 @@ export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps)
   const { data } = props
   const { reading, long } = data
 
-  const generateColors = () => {
-    return long ? ['#ebebeb', '#c9c9b7'] : ['#ebebeb', '#b2bfaa']
-  }
+  const generateColors = () => (long ? ['#ebebeb', '#c9c9b7'] : ['#ebebeb', '#b2bfaa'])
 
-  return(
-    <View style={Styles.container} testID={'carousel-dose'}>
+  return (
+    <View style={Styles.container} testID="carousel-dose">
       <View style={Styles.readingContainer}>
         <LinearGradient colors={generateColors()} start={{ x: 0.5, y: 0.8 }} end={{ x: 0.5, y: 0.95 }} style={{ width: '100%' }}>
           <Text style={Styles.reading}>
-          { reading.toFixed(1) }
+            { reading.toFixed(1) }
           </Text>
         </LinearGradient>
         <GradientBorder x={1.0} y={1.0} />
-        <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
+        <Text>{long ? 'Long' : 'Short'}</Text>
       </View>
     </View>
   )

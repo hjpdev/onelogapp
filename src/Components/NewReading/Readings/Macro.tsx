@@ -37,43 +37,38 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
 
   const handleSubmit = async () => {
     if (Object.keys(reading).length > 0) {
-      if (!Object.keys(reading).every(macro => { return reading[macro] === 0 })) {
+      if (!Object.keys(reading).every((macro) => reading[macro] === 0)) {
         try {
           const data = dateTime ? { ...reading, created: dateTime } : { ...reading }
           const response = await submitReading({ table: 'macro', data })
 
           return handleSuccessfulSubmit('macroReadings', response, setShowSuccessModal)
-        } catch(err) {
+        } catch (err) {
           console.log('Error macro handleSubmit: ', err)
         }
       }
     }
   }
 
-  const newMacroReading = () => {
-    return (
-      <>
-      <NewReadingHeader headerText={'Macro'} dataKey={'macroReadings'} />
+  const newMacroReading = () => (
+    <>
+      <NewReadingHeader headerText="Macro" dataKey="macroReadings" />
       <View style={Styles.container}>
         <TimeSelector setDateTime={setDateTime} />
         <MacroReadingInput showSavedMacroOptions data={macros} updateReading={setReading} />
-        <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
-          <Text style={Styles.submitText}>{'Submit'}</Text>
+        <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
+          <Text style={Styles.submitText}>Submit</Text>
         </TouchableOpacity>
       </View>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-      </>
-    )
-  }
+    </>
+  )
 
-  const savedMacros = () => {
-    return (
-      <SavedMacros updateReading={setReading} />
-    )
-  }
+  const savedMacros = () => (
+    <SavedMacros updateReading={setReading} />
+  )
 
-
-  return(
+  return (
     <Stack.Navigator initialRouteName="MacroReading" screenOptions={{ headerShown: false, animationEnabled: false }}>
       <Stack.Screen name="MacroReading" component={newMacroReading} />
       <Stack.Screen name="SavedMacros" component={savedMacros} />
@@ -82,7 +77,6 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
 }
 
 export default NewMacroReading
-
 
 const Styles = StyleSheet.create({
   container: {

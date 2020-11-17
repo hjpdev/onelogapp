@@ -8,12 +8,12 @@ type ChevronProps = {
 }
 
 const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
-  const { left, right,  handlePress } = props
+  const { left, right, handlePress } = props
   let symbol = ''
   if (left) symbol = '<'
   if (right) symbol = '>'
-  
-  return(
+
+  return (
     <TouchableOpacity onPress={() => handlePress()}>
       <Text style={Styles.chevronSymbol}>
         { symbol }
@@ -23,7 +23,6 @@ const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
 }
 
 export default Chevron
-
 
 const Styles = StyleSheet.create({
   chevronSymbol: {

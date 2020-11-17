@@ -17,53 +17,53 @@ const MacroCollectionEntry: React.FC<MacroCollectionEntryProps> = (props: MacroC
 
   const ratio = parseFloat((amount / reading.amount).toFixed(2))
 
-  return(
-	<>
-	  <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.header}>
-      <TouchableOpacity onPress={() => removeEntry(`${reading.id}-${amount}`)}>
-        <Text style={Styles.remove}>{'X'}</Text>
+  return (
+    <>
+      <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.header}>
+        <TouchableOpacity onPress={() => removeEntry(`${reading.id}-${amount}`)}>
+          <Text style={Styles.remove}>X</Text>
+        </TouchableOpacity>
+        <View style={Styles.headerText}>
+          {isOpen
+            ? <Text style={{ flexWrap: 'wrap' }}>{`${capitaliseAddWhitespace(reading.name)}`}</Text>
+            : <Text>{`${truncateName(28, reading.name)}`}</Text>}
+        </View>
+        <View>
+          <Text style={{ textAlign: 'right' }}>{`  ${(ratio * reading.amount).toFixed(0)} ${reading.unit}`}</Text>
+        </View>
+        <View>
+          <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
+        </View>
       </TouchableOpacity>
-      <View style={Styles.headerText}>
-        {isOpen
-          ? <Text style={{ flexWrap: 'wrap' }}>{`${capitaliseAddWhitespace(reading.name)}`}</Text>
-          : <Text>{`${truncateName(28, reading.name)}`}</Text>}
-      </View>
-      <View>
-        <Text style={{ textAlign: 'right' }}>{`  ${(ratio * reading.amount).toFixed(0)} ${reading.unit}`}</Text>
-      </View>
-      <View>
-        <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
-      </View>
-	  </TouchableOpacity>
-	  {isOpen &&
-	  <>
-	  <GradientBorder x={1.0} y={1.0} />
-	  <View style={Styles.readingContainer}>
-      <View style={Styles.labels}>
-        <Text style={Styles.label}>{'Kcal:'}</Text>
-        <Text style={Styles.label}>{'Carbs:'}</Text>
-        <Text style={Styles.label}>{'Sugar:'}</Text>
-        <Text style={Styles.label}>{'Protein:'}</Text>
-        <Text style={Styles.label}>{'Fat:'}</Text>
-      </View>
+      {isOpen
+	  && (
+<>
+  <GradientBorder x={1.0} y={1.0} />
+  <View style={Styles.readingContainer}>
+    <View style={Styles.labels}>
+      <Text style={Styles.label}>Kcal:</Text>
+      <Text style={Styles.label}>Carbs:</Text>
+      <Text style={Styles.label}>Sugar:</Text>
+      <Text style={Styles.label}>Protein:</Text>
+      <Text style={Styles.label}>Fat:</Text>
+    </View>
 
-      <View style={Styles.values}>
-        <Text style={Styles.value}>{ (ratio * reading.kcal).toFixed(2) }</Text>
-        <Text style={Styles.value}>{ (ratio * reading.carbs).toFixed(2) }</Text>
-        <Text style={Styles.value}>{ (ratio * reading.sugar).toFixed(2) }</Text>
-        <Text style={Styles.value}>{ (ratio * reading.protein).toFixed(2) }</Text>
-        <Text style={Styles.value}>{ (ratio * reading.fat).toFixed(2) }</Text>
-      </View>
-	  </View>
-	  </>}
-	<GradientBorder x={1.0} y={1.0} />
-	</>
+    <View style={Styles.values}>
+      <Text style={Styles.value}>{ (ratio * reading.kcal).toFixed(2) }</Text>
+      <Text style={Styles.value}>{ (ratio * reading.carbs).toFixed(2) }</Text>
+      <Text style={Styles.value}>{ (ratio * reading.sugar).toFixed(2) }</Text>
+      <Text style={Styles.value}>{ (ratio * reading.protein).toFixed(2) }</Text>
+      <Text style={Styles.value}>{ (ratio * reading.fat).toFixed(2) }</Text>
+    </View>
+  </View>
+</>
+	  )}
+      <GradientBorder x={1.0} y={1.0} />
+    </>
   )
 }
 
-
 export default MacroCollectionEntry
-
 
 const Styles = StyleSheet.create({
   header: {

@@ -36,29 +36,28 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
 
   return (
     <>
-    <Modal
-      isVisible={isVisible}
-      animationIn='fadeInUp'
-      animationOut='fadeOutDown'
-      animationInTiming={500}
-      animationOutTiming={500}
-      onBackButtonPress={onClose}
-      onBackdropPress={onClose}
-      backdropOpacity={0.33}
-      style={Styles.modal}
-    >
-      <View style={Styles.container}>
-        <Text style={Styles.name}>{`Delete:  ${truncateName(20, name)}?`}</Text>
-        <ChoiceButtons confirmationText={'Confirm'} cancellationText={'Cancel'} onSubmit={async () => await handleDelete()} onClose={onClose} />
-      </View>
-    </Modal>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <Modal
+        isVisible={isVisible}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationInTiming={500}
+        animationOutTiming={500}
+        onBackButtonPress={onClose}
+        onBackdropPress={onClose}
+        backdropOpacity={0.33}
+        style={Styles.modal}
+      >
+        <View style={Styles.container}>
+          <Text style={Styles.name}>{`Delete:  ${truncateName(20, name)}?`}</Text>
+          <ChoiceButtons confirmationText="Confirm" cancellationText="Cancel" onSubmit={async () => await handleDelete()} onClose={onClose} />
+        </View>
+      </Modal>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
 
 export default DeleteConfirmationModal
-
 
 const Styles = StyleSheet.create({
   modal: {

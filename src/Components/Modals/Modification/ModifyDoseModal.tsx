@@ -43,13 +43,11 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
 
   const state: DoseReading = { id: data.id, created, reading, long }
 
-  const isPropertyUpdated = (property: keyof DoseReading) => {
-    return state[property] !== data[property]
-  }
+  const isPropertyUpdated = (property: keyof DoseReading) => state[property] !== data[property]
 
   const handleSubmit = async () => {
     try {
-      let body = {} as any
+      const body = {} as any
       const properties: Array<keyof DoseReading> = getDoseProperties(state)
       for (const key of properties) {
         if (isPropertyUpdated(key)) {
@@ -66,41 +64,41 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
     }
   }
 
-  return(
+  return (
     <>
-    <Modal
-      isVisible={isVisible}
-      animationIn='zoomIn'
-      animationOut='zoomOut'
-      animationInTiming={500}
-      animationOutTiming={500}
-      onBackButtonPress={onClose}
-      onBackdropPress={onClose}
-      backdropOpacity={0.66}
-      style={Styles.modal}
-    >
-      <View style={Styles.container}>
-        <ModifyTimeSelector created={state.created} setDateTime={setCreated} />
-        <WheelSelector reading={data.reading} updateReading={setReading} />
-        <View style={Styles.switch}>
-        <Text style={Styles.switchText}>Short</Text>
-          <Switch
-          testID={'doseReading_toggleSwitch'}
-          onValueChange={() => setLong(!long)}
-          value={state.long}
-          />
-          <Text style={Styles.switchText}>Long</Text>
+      <Modal
+        isVisible={isVisible}
+        animationIn="zoomIn"
+        animationOut="zoomOut"
+        animationInTiming={500}
+        animationOutTiming={500}
+        onBackButtonPress={onClose}
+        onBackdropPress={onClose}
+        backdropOpacity={0.66}
+        style={Styles.modal}
+      >
+        <View style={Styles.container}>
+          <ModifyTimeSelector created={state.created} setDateTime={setCreated} />
+          <WheelSelector reading={data.reading} updateReading={setReading} />
+          <View style={Styles.switch}>
+            <Text style={Styles.switchText}>Short</Text>
+            <Switch
+              testID="doseReading_toggleSwitch"
+              onValueChange={() => setLong(!long)}
+              value={state.long}
+            />
+            <Text style={Styles.switchText}>Long</Text>
+          </View>
+          <View style={Styles.deleteContainer}>
+            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+              <Text style={Styles.deleteText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+          <ChoiceButtons confirmationText="Submit" cancellationText="Cancel" onSubmit={async () => await handleSubmit()} onClose={onClose} />
         </View>
-        <View style={Styles.deleteContainer}>
-          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
-            <Text style={Styles.deleteText}>Delete</Text>
-          </TouchableOpacity>
-        </View>
-        <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
-      </View>
-    </Modal>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table={'dose'} dataKey={'doseReadings'} onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('doseReadings')} />
+      </Modal>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table="dose" dataKey="doseReadings" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('doseReadings')} />
     </>
   )
 }

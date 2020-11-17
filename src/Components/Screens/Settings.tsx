@@ -3,16 +3,14 @@ import { Text, View } from 'react-native'
 
 import ScreenStyles from '../../Assets/Styles/Screen'
 
-const SettingsScreen: React.FC = () => {
-  return(
-    <>
-    <View style={ScreenStyles.container} testID={'settings-screen'}>
+const SettingsScreen: React.FC = () => (
+  <>
+    <View style={ScreenStyles.container} testID="settings-screen">
       <Text style={ScreenStyles.text}>
-        {'Settings'}
+        Settings
       </Text>
     </View>
-    </>
-  )
-}
+  </>
+)
 
 export default SettingsScreen

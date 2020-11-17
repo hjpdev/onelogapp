@@ -49,38 +49,37 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
     }
   }
 
-  return(
+  return (
     <>
-    <Modal
-      isVisible={isVisible}
-      animationIn='zoomIn'
-      animationOut='zoomOut'
-      animationInTiming={500}
-      animationOutTiming={500}
-      onBackButtonPress={onClose}
-      onBackdropPress={onClose}
-      backdropOpacity={0.66}
-      style={Styles.modal}
-    >
-      <View style={Styles.container}>
-        <ModifyTimeSelector created={created} setDateTime={setCreated} />
-        <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
-        <View style={Styles.deleteContainer}>
-          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
-            <Text style={Styles.deleteText}>Delete</Text>
-          </TouchableOpacity>
+      <Modal
+        isVisible={isVisible}
+        animationIn="zoomIn"
+        animationOut="zoomOut"
+        animationInTiming={500}
+        animationOutTiming={500}
+        onBackButtonPress={onClose}
+        onBackdropPress={onClose}
+        backdropOpacity={0.66}
+        style={Styles.modal}
+      >
+        <View style={Styles.container}>
+          <ModifyTimeSelector created={created} setDateTime={setCreated} />
+          <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
+          <View style={Styles.deleteContainer}>
+            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+              <Text style={Styles.deleteText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+          <ChoiceButtons confirmationText="Submit" cancellationText="Cancel" onSubmit={async () => await handleSubmit()} onClose={onClose} />
         </View>
-        <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
-      </View>
-    </Modal>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table={'macro'} dataKey={'macroReadings'} onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('macroReadings')} />
+      </Modal>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table="macro" dataKey="macroReadings" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('macroReadings')} />
     </>
   )
 }
 
 export default ModifyMacroModal
-
 
 const Styles = StyleSheet.create({
   modal: {

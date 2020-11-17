@@ -32,7 +32,7 @@ export const generateCreatedDate = (date: string): string => {
   const day: (string | number) = new Date(date).getDate()
   const hours: (string | number) = padLeft(new Date(date).getHours())
   const minutes: (string | number) = padLeft(new Date(date).getMinutes())
-  
+
   return (month === todayMonth && day === todayDay)
     ? `${hours}:${minutes}`
     : `${hours}:${minutes}  ${padLeft(day)}/${padLeft(month)} `
@@ -52,14 +52,14 @@ export const generateCreatedTime = (date: string): string => {
   return `${hours}:${minutes}`
 }
 
-export const statsDateTitleCompare = ( a: IStatsReading, b: IStatsReading ) => {
+export const statsDateTitleCompare = (a: IStatsReading, b: IStatsReading) => {
   const aNumber = parseInt(a.created.split(' ')[0])
   const bNumber = parseInt(b.created.split(' ')[0])
 
-  if ( aNumber < bNumber ){
+  if (aNumber < bNumber) {
     return -1;
   }
-  if ( aNumber > bNumber ){
+  if (aNumber > bNumber) {
     return 1;
   }
   return 0;
@@ -70,19 +70,19 @@ export const generateLastSevenDays = (): Date[] => {
   const today = new Date().getDate()
 
   if (today < 7) {
-    for(let i = today; i > 0; i -= 1) {
+    for (let i = today; i > 0; i -= 1) {
       const date = new Date().setDate(i)
       days.push(new Date(date))
     }
     const diff = 7 - today
-    for(let i = 0; i < diff; i++) {
+    for (let i = 0; i < diff; i++) {
       const date = new Date().setDate(-i)
       days.push(new Date(date))
     }
   }
 
   if (today >= 7) {
-    for(let i = today; i > today - 7; i -= 1) {
+    for (let i = today; i > today - 7; i -= 1) {
       const date = new Date().setDate(i)
       days.push(new Date(date))
     }
@@ -94,7 +94,7 @@ export const generateLastSevenDays = (): Date[] => {
 export const getDaysAndMonthsForLastSevenDays = (): any => {
   const lastSevenDays = generateLastSevenDays()
   const days = []
-  for(const date of lastSevenDays) {
+  for (const date of lastSevenDays) {
     days.push(`${date.getDate().toString()} / ${(date.getMonth() + 1).toString()}`)
   }
 

@@ -20,20 +20,18 @@ type SavedMacroProps = {
 
 const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { updateReading } = props
-  
+
   const [savedMacros, setSavedMacros] = useState<TSavedMacro[]>([])
   const [collection, setCollection] = useState<TMacroCollectionEntry[]>([])
   const [showMacroCollectionSummaryModal, setShowMacroCollectionSummaryModal] = useState<boolean>(false)
 
   const addEntry = (amount: number, entry: TSavedMacro): void => {
-    const updatedEntries = [ ...collection, { amount, reading: entry } ]
+    const updatedEntries = [...collection, { amount, reading: entry }]
     setCollection(updatedEntries)
   }
 
   const removeEntry = (key: string): void => {
-    const clearedCollection = collection.filter((entry) => {
-      return `${entry.reading.id}-${entry.amount}` !== key
-    })
+    const clearedCollection = collection.filter((entry) => `${entry.reading.id}-${entry.amount}` !== key)
     setCollection(clearedCollection)
   }
 
@@ -43,11 +41,11 @@ const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
       let { readings } = data
       if (!readings) {
         const response = await getReadings({ dataKeys: ['savedMacros'] })
-        readings = response['savedMacros']
+        readings = response.savedMacros
         await storeData('savedMacros', { readings })
       }
       setSavedMacros(readings)
-    } catch(err) {
+    } catch (err) {
       console.log('Error SavedMacros.fetchSavedMacros: ', err)
     }
   }
@@ -58,11 +56,11 @@ const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
 
   const sortSavedMacrosByLetter = () => {
     const savedMacrosByLetter: {[day: string]: TSavedMacro[]} = {} as any
-    ALPHABET.forEach(letter => {
+    ALPHABET.forEach((letter) => {
       savedMacrosByLetter[letter] = []
     })
     savedMacros.forEach((reading: TSavedMacro) => {
-      const firstLetter = reading['name'][0]
+      const firstLetter = reading.name[0]
       savedMacrosByLetter[firstLetter].push(reading)
     })
 
@@ -72,18 +70,16 @@ const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const generateListItems = () => {
     const savedMacrosByLetter = sortSavedMacrosByLetter()
 
-    return ALPHABET.map((letter) => {
-      return <SavedMacrosForLetter letter={letter} readings={savedMacrosByLetter[letter]} key={letter} update={() => fetchSavedMacros()} addEntry={addEntry} />
-    })
+    return ALPHABET.map((letter) => <SavedMacrosForLetter letter={letter} readings={savedMacrosByLetter[letter]} key={letter} update={() => fetchSavedMacros()} addEntry={addEntry} />)
   }
 
-  return(
+  return (
     <>
-    <SavedMacrosHeader numberOfEntries={collection.length} onPress={() => setShowMacroCollectionSummaryModal(true)} />
-    <ScrollView>
-      {savedMacros && generateListItems()}
-    </ScrollView>
-    <MacroCollectionSummaryModal isVisible={showMacroCollectionSummaryModal} collection={collection} onClose={() => setShowMacroCollectionSummaryModal(false)} removeEntry={removeEntry} clearCollection={() => setCollection([])} updateReading={updateReading} />
+      <SavedMacrosHeader numberOfEntries={collection.length} onPress={() => setShowMacroCollectionSummaryModal(true)} />
+      <ScrollView>
+        {savedMacros && generateListItems()}
+      </ScrollView>
+      <MacroCollectionSummaryModal isVisible={showMacroCollectionSummaryModal} collection={collection} onClose={() => setShowMacroCollectionSummaryModal(false)} removeEntry={removeEntry} clearCollection={() => setCollection([])} updateReading={updateReading} />
     </>
   )
 }

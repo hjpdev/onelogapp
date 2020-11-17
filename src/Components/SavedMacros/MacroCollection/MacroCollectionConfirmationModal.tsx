@@ -30,33 +30,33 @@ const MacroCollectionConfirmationModal: React.FC<MacroCollectionConfirmationModa
     setShowSuccessModal(false)
   }
 
-  return(
-	<>
-	<Modal
-	  isVisible={isVisible}
-	  animationIn='fadeInUp'
-	  animationOut='fadeOutDown'
-	  animationInTiming={500}
-	  animationOutTiming={500}
-	  onBackButtonPress={onClose}
-    onBackdropPress={onClose}
-    backdropOpacity={0.2}
-	  style={Styles.modal}>
-	  <View style={Styles.container}>
-		<GradientBorder x={1.0} y={1.0} />
-    <View>
-  		<MacroAmountSelector unit={data.unit} updateAmount={setAmount} />
-    </View>
-    <ChoiceButtons confirmationText={'Add'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
-	  </View>
-	</Modal>
-	<SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-	</>
+  return (
+    <>
+      <Modal
+        isVisible={isVisible}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationInTiming={500}
+        animationOutTiming={500}
+        onBackButtonPress={onClose}
+        onBackdropPress={onClose}
+        backdropOpacity={0.2}
+        style={Styles.modal}
+      >
+        <View style={Styles.container}>
+          <GradientBorder x={1.0} y={1.0} />
+          <View>
+            <MacroAmountSelector unit={data.unit} updateAmount={setAmount} />
+          </View>
+          <ChoiceButtons confirmationText="Add" cancellationText="Cancel" onSubmit={async () => await handleSubmit()} onClose={onClose} />
+        </View>
+      </Modal>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+    </>
   )
 }
 
 export default MacroCollectionConfirmationModal
-
 
 const Styles = StyleSheet.create({
   container: {

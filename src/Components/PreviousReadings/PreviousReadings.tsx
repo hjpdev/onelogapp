@@ -46,7 +46,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
         await storeData(dataKey, { readings })
       }
       setReadings(readings)
-    } catch(err) {
+    } catch (err) {
       console.log('Error PreviousReadings.fetchReadings: ', err)
     }
   }
@@ -57,11 +57,11 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
 
   const sortReadingsByDay = (uniqueDates: string[]) => {
     const readingsByDay: {[day: string]: PreviousReading[]} = {}
-    uniqueDates.forEach(uniqueDate => {
+    uniqueDates.forEach((uniqueDate) => {
       readingsByDay[uniqueDate] = []
     })
-    readings.forEach(reading => {
-      const readingDate = generateCreatedDay(reading['created'])
+    readings.forEach((reading) => {
+      const readingDate = generateCreatedDay(reading.created)
       readingsByDay[readingDate].push(reading)
     })
 
@@ -69,25 +69,21 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
   }
 
   const generateListItems = () => {
-    const dates = readings.map(reading => {
-      return generateCreatedDay(reading['created'])
-    })
+    const dates = readings.map((reading) => generateCreatedDay(reading.created))
     const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i).sort((a, b) => a - b)
     const readingsByDay = sortReadingsByDay(uniqueDates)
 
-    return uniqueDates.map((date, index) => {
-      return index === 0
-        ? <PreviousReadingsForDate opened date={date} readings={readingsByDay[date]} key={date} Template={templateMap[dataKey]} update={(dataKey: string) => fetchReadings(dataKey)} />
-        : <PreviousReadingsForDate date={date} readings={readingsByDay[date]} key={date} Template={templateMap[dataKey]} update={(dataKey: string) => fetchReadings(dataKey)} />
-    })
+    return uniqueDates.map((date, index) => (index === 0
+      ? <PreviousReadingsForDate opened date={date} readings={readingsByDay[date]} key={date} Template={templateMap[dataKey]} update={(dataKey: string) => fetchReadings(dataKey)} />
+      : <PreviousReadingsForDate date={date} readings={readingsByDay[date]} key={date} Template={templateMap[dataKey]} update={(dataKey: string) => fetchReadings(dataKey)} />))
   }
 
-  return(
+  return (
     <>
-    <PreviousReadingsHeader headerText={headerText} />
-    <ScrollView>
-      {generateListItems()}
-    </ScrollView>
+      <PreviousReadingsHeader headerText={headerText} />
+      <ScrollView>
+        {generateListItems()}
+      </ScrollView>
     </>
   )
 }

@@ -29,7 +29,6 @@ const ChoiceButtons: React.FC<ChoiceButtonsProps> = (props: ChoiceButtonsProps) 
 
 export default ChoiceButtons
 
-
 const Styles = StyleSheet.create({
   buttons: {
     backgroundColor: '#e4e4e4',

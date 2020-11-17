@@ -30,7 +30,7 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
-  const id = data.id
+  const { id } = data
 
   const handleSubmit = async () => {
     try {
@@ -45,34 +45,34 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
     }
   }
 
-  return(
+  return (
     <>
-    <Modal
-      isVisible={isVisible}
-      animationIn='zoomIn'
-      animationOut='zoomOut'
-      animationInTiming={500}
-      animationOutTiming={500}
-      onBackButtonPress={onClose}
-      onBackdropPress={onClose}
-      backdropOpacity={0.66}
-    >
-      <View style={Styles.container}>
-        <TextInput value={capitaliseAddWhitespace(name)} onChangeText={setName} style={Styles.name} />
-        <GradientBorder x={1.0} y={1.0} />
-        <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} amount={amount} unit={unit} allowEditUnit />
-        <GradientBorder x={1.0} y={1.0} />
-        <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
-        <View style={Styles.deleteContainer}>
-          <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
-            <Text style={Styles.deleteText}>Delete</Text>
-          </TouchableOpacity>
+      <Modal
+        isVisible={isVisible}
+        animationIn="zoomIn"
+        animationOut="zoomOut"
+        animationInTiming={500}
+        animationOutTiming={500}
+        onBackButtonPress={onClose}
+        onBackdropPress={onClose}
+        backdropOpacity={0.66}
+      >
+        <View style={Styles.container}>
+          <TextInput value={capitaliseAddWhitespace(name)} onChangeText={setName} style={Styles.name} />
+          <GradientBorder x={1.0} y={1.0} />
+          <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} amount={amount} unit={unit} allowEditUnit />
+          <GradientBorder x={1.0} y={1.0} />
+          <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
+          <View style={Styles.deleteContainer}>
+            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+              <Text style={Styles.deleteText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+          <ChoiceButtons confirmationText="Submit" cancellationText="Cancel" onSubmit={async () => await handleSubmit()} onClose={onClose} />
         </View>
-        <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
-      </View>
-    </Modal>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-    <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={truncateName(20, `${data.name}`)} table={'macro/saved'} dataKey={'savedMacros'} onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('savedMacros')} />
+      </Modal>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={truncateName(20, `${data.name}`)} table="macro/saved" dataKey="savedMacros" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('savedMacros')} />
     </>
   )
 }

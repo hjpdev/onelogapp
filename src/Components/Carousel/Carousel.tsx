@@ -29,48 +29,51 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
 
   const reading = readings && readings[index]
 
-  return(
+  return (
     readings.length > 0
-      ? <View style={Styles.container} testID={'carousel'}>
+      ? (
+        <View style={Styles.container} testID="carousel">
           <View style={Styles.header}>
             <Text style={Styles.tag}>
               { capitalise(name) }
             </Text>
             <Text style={Styles.time}>
-              {reading && generateCreatedDate(reading['created']) || ''}
+              {reading && generateCreatedDate(reading.created) || ''}
             </Text>
           </View>
           <GradientBorder x={0.4} y={1.0} colors={['grey', '#ebebeb']} />
 
           <View style={Styles.contentContainer}>
             <View style={Styles.chevron}>
-            {index === 0
-              ? <Chevron handlePress={() => null}/>
-              : <Chevron left handlePress={handleSwipeRight} />}
+              {index === 0
+                ? <Chevron handlePress={() => null} />
+                : <Chevron left handlePress={handleSwipeRight} />}
             </View>
             <GestureRecognizer onSwipeLeft={handleSwipeLeft} onSwipeRight={handleSwipeRight} style={Styles.template}>
               <Template data={reading} />
             </GestureRecognizer>
             <View style={Styles.chevron}>
-            {index < readings.length - 1
-              ? <Chevron right handlePress={handleSwipeLeft} />
-              : <Chevron handlePress={() => null} />}
+              {index < readings.length - 1
+                ? <Chevron right handlePress={handleSwipeLeft} />
+                : <Chevron handlePress={() => null} />}
             </View>
           </View>
           <GradientBorder x={1.0} y={1.0} />
         </View>
-      : <View style={{ flex: 1 }} testID={'carousel'}>
+      )
+      : (
+        <View style={{ flex: 1 }} testID="carousel">
           <View style={{ flex: 1 }} />
           <View style={{ ...Styles.lastReading }}>
-            <ActivityIndicator color={'black'} />
+            <ActivityIndicator color="black" />
           </View>
           <GradientBorder x={1.0} y={1.0} />
         </View>
+      )
   )
 }
 
 export default Carousel
-
 
 const Styles = StyleSheet.create({
   container: {
@@ -90,7 +93,7 @@ const Styles = StyleSheet.create({
     flex: 5,
     alignItems: 'center',
     justifyContent: 'center'
-},
+  },
   template: {
     flex: 4,
     alignContent: 'center'

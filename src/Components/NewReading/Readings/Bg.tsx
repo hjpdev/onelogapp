@@ -27,22 +27,21 @@ export const NewBgReading: React.FC = () => {
     }
   }
 
-  return(
+  return (
     <>
-    <NewReadingHeader headerText={'Bg'} dataKey={'bgReadings'} />
-    <View style={Styles.container}>
-      <TimeSelector setDateTime={setDateTime} />
-      <WheelSelector updateReading={setReading} />
-      <Text style={Styles.unit}>{'mmol/L'}</Text>
-      <TouchableOpacity onPress={async() => await handleSubmit()} style={Styles.submit}>
-        <Text style={Styles.submitText}>{'Submit'}</Text>
-      </TouchableOpacity>
-    </View>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <NewReadingHeader headerText="Bg" dataKey="bgReadings" />
+      <View style={Styles.container}>
+        <TimeSelector setDateTime={setDateTime} />
+        <WheelSelector updateReading={setReading} />
+        <Text style={Styles.unit}>mmol/L</Text>
+        <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
+          <Text style={Styles.submitText}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
-
 
 const Styles = StyleSheet.create({
   container: {

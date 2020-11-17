@@ -39,31 +39,31 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
     }
   }
 
-  return(
+  return (
     <>
-    <Modal
-      isVisible={isVisible}
-      animationIn='fadeInUp'
-      animationOut='fadeOutDown'
-      animationInTiming={500}
-      animationOutTiming={500}
-      onBackButtonPress={onClose}
-      onBackdropPress={onClose}
-      style={Styles.modal}>
-      <View style={Styles.container}>
-        <TextInput placeholder={'Name'} onChangeText={setName} style={Styles.textInput} />
-        <GradientBorder x={1.0} y={1.0} />
-        <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} allowEditUnit />
-        <ChoiceButtons confirmationText={'Submit'} cancellationText={'Cancel'} onSubmit={async () => await handleSubmit()} onClose={onClose} />
-      </View>
-    </Modal>
-    <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <Modal
+        isVisible={isVisible}
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
+        animationInTiming={500}
+        animationOutTiming={500}
+        onBackButtonPress={onClose}
+        onBackdropPress={onClose}
+        style={Styles.modal}
+      >
+        <View style={Styles.container}>
+          <TextInput placeholder="Name" onChangeText={setName} style={Styles.textInput} />
+          <GradientBorder x={1.0} y={1.0} />
+          <MacroAmountSelector updateAmount={setAmount} updateUnit={setUnit} allowEditUnit />
+          <ChoiceButtons confirmationText="Submit" cancellationText="Cancel" onSubmit={async () => await handleSubmit()} onClose={onClose} />
+        </View>
+      </Modal>
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   )
 }
 
 export default NewSavedMacroModal
-
 
 const Styles = StyleSheet.create({
   container: {

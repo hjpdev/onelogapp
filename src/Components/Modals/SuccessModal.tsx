@@ -10,11 +10,11 @@ type SuccessModalProps = {
 const SuccessModal: React.FC<SuccessModalProps> = (props: SuccessModalProps) => {
   const { isVisible, onPress } = props
 
-  return(
+  return (
     <Modal
       isVisible={isVisible}
-      animationIn='zoomIn'
-      animationOut='zoomOut'
+      animationIn="zoomIn"
+      animationOut="zoomOut"
       animationInTiming={500}
       animationOutTiming={200}
       hasBackdrop={false}
@@ -30,7 +30,6 @@ const SuccessModal: React.FC<SuccessModalProps> = (props: SuccessModalProps) => 
 }
 
 export default SuccessModal
-
 
 const Styles = StyleSheet.create({
   modal: {

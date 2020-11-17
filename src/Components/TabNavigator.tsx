@@ -31,57 +31,46 @@ const TabNavigator: React.FC = () => {
 
 export default TabNavigator
 
-
 type tabIconOptions = {
   size: number
   focused: boolean
   color: string
 }
 
-const getSettingsIcon = (options: tabIconOptions) => {
-  return (
-    <Image
-      style={Styles.icon}
-      source={require(`../../src/Assets/Images/NavBarSettings.png`)}
-    />
-  )
-}
+const getSettingsIcon = (options: tabIconOptions) => (
+  <Image
+    style={Styles.icon}
+    source={require('../Assets/Images/NavBarSettings.png')}
+  />
+)
 
-const getAccountIcon = (options: tabIconOptions) => {
-  return (
-    <Image
-      style={Styles.icon}
-      source={require(`../../src/Assets/Images/NavBarAccount.png`)}
-    />
-  )
-}
+const getAccountIcon = (options: tabIconOptions) => (
+  <Image
+    style={Styles.icon}
+    source={require('../Assets/Images/NavBarAccount.png')}
+  />
+)
 
-const getHomeIcon = (options: tabIconOptions) => {
-  return (
-    <Image
-      style={Styles.icon}
-      source={require(`../../src/Assets/Images/NavBarHome.png`)}
-    />
-  )
-}
+const getHomeIcon = (options: tabIconOptions) => (
+  <Image
+    style={Styles.icon}
+    source={require('../Assets/Images/NavBarHome.png')}
+  />
+)
 
-const getNewReadingIcon = (options: tabIconOptions) => {
-  return (
-    <Image
-      style={Styles.icon}
-      source={require(`../../src/Assets/Images/NavBarNewReading.png`)}
-    />
-  )
-}
+const getNewReadingIcon = (options: tabIconOptions) => (
+  <Image
+    style={Styles.icon}
+    source={require('../Assets/Images/NavBarNewReading.png')}
+  />
+)
 
-const getAnalyticsIcon = (options: tabIconOptions) => {
-  return (
-    <Image
-      style={Styles.icon}
-      source={require(`../../src/Assets/Images/NavBarAnalytics.png`)}
-    />
-  )
-}
+const getAnalyticsIcon = (options: tabIconOptions) => (
+  <Image
+    style={Styles.icon}
+    source={require('../Assets/Images/NavBarAnalytics.png')}
+  />
+)
 
 const Styles = StyleSheet.create({
   icon: {
