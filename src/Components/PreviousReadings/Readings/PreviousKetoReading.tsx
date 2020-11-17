@@ -7,20 +7,20 @@ import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
 type PreviousKetoReadingProps = {
-  data: {
+  reading: {
     id: number
     created: string,
-    reading: number
+    data: number
   }
   update: (dataKey: string) => void
 }
 
 export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: PreviousKetoReadingProps) => {
-  const { data, update } = props
+  const { reading, update } = props
 
   const [showModifyKetoModal, setShowModifyKetoModal] = useState(false)
 
-  const { id, created, reading } = data
+  const { id, created, data } = reading
   const timeCreated = generateCreatedTime(created)
 
   return (
@@ -39,12 +39,12 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
         <TouchableOpacity onPress={() => setShowModifyKetoModal(true)} style={{ backgroundColor: 'black' }} activeOpacity={50}>
           <View>
             <LinearGradient style={{ width: '100%' }} colors={['#ebebeb', '#b8b884']} start={{ x: 0.5, y: 0.75 }}>
-              <Text style={Styles.reading}>{reading.toFixed(1)}</Text>
+              <Text style={Styles.reading}>{data.toFixed(1)}</Text>
             </LinearGradient>
           </View>
         </TouchableOpacity>
       </View>
-      <ModifyKetoModal isVisible={showModifyKetoModal} data={data} onClose={() => setShowModifyKetoModal(false)} update={update} />
+      <ModifyKetoModal isVisible={showModifyKetoModal} reading={reading} onClose={() => setShowModifyKetoModal(false)} update={update} />
     </>
   )
 }

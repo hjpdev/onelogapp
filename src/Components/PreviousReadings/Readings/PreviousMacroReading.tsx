@@ -6,7 +6,7 @@ import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
 type PreviousMacroReadingProps = {
-  data: {
+  reading: {
     id: number
     created: string
     kcal: number
@@ -19,11 +19,11 @@ type PreviousMacroReadingProps = {
 }
 
 export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props: PreviousMacroReadingProps) => {
-  const { data, update } = props
+  const { reading, update } = props
 
   const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
 
-  const { id, created, kcal, carbs, sugar, protein, fat } = data
+  const { id, created, kcal, carbs, sugar, protein, fat } = reading
   const timeCreated = generateCreatedTime(created)
 
   return (
@@ -59,7 +59,7 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
           </View>
         </TouchableOpacity>
       </View>
-      <ModifyMacroModal isVisible={showModifyMacroModal} data={data} onClose={() => setShowModifyMacroModal(false)} update={update} />
+      <ModifyMacroModal isVisible={showModifyMacroModal} reading={reading} onClose={() => setShowModifyMacroModal(false)} update={update} />
     </>
   )
 }

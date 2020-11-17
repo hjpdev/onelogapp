@@ -7,31 +7,31 @@ import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
 
 type PreviousDoseReadingProps = {
-  data: {
+  reading: {
     id: number
     created: string
-    reading: number
+    data: number
     long: boolean
   }
   update: (dataKay: string) => void
 }
 
 export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: PreviousDoseReadingProps) => {
-  const { data, update } = props
+  const { reading, update } = props
 
   const [showModifyDoseModal, setShowModifyDoseModal] = useState(false)
 
-  const { id, created, reading, long } = data
+  const { id, created, data, long } = reading
   const timeCreated = generateCreatedTime(created)
 
   const generateColors = () => (long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#b2bfaa'])
 
   const generateStartPoint = () => {
-    const y = long ? ((reading - 10) / 25) : 1 - (reading / 20)
+    const y = long ? ((data - 10) / 25) : 1 - (data / 20)
     return { x: 0.5, y }
   }
 
-  const generateReading = () => (`${reading}`.length < 2 ? reading.toFixed(1) : reading)
+  const generateReading = () => (`${data}`.length < 2 ? data.toFixed(1) : data)
 
   return (
     <>
@@ -56,7 +56,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
           <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
         </TouchableOpacity>
       </View>
-      <ModifyDoseModal isVisible={showModifyDoseModal} data={data} onClose={() => setShowModifyDoseModal(false)} update={update} />
+      <ModifyDoseModal isVisible={showModifyDoseModal} reading={reading} onClose={() => setShowModifyDoseModal(false)} update={update} />
     </>
   )
 }
