@@ -5,7 +5,7 @@ import SavedMacrosForLetter from './SavedMacrosForLetter'
 import SavedMacrosHeader from './SavedMacrosHeader'
 import MacroCollectionSummaryModal from './MacroCollection/MacroCollectionSummaryModal'
 import { ALPHABET } from '../../Helpers/General'
-import { getData, storeData } from '../../Store'
+import { LocalStore } from '../../Store'
 import { getReadings } from '../../Store/Data'
 import { TSavedMacro } from './SavedMacro'
 
@@ -20,6 +20,7 @@ type SavedMacroProps = {
 
 const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { updateReading } = props
+  const store = new LocalStore()
 
   const [savedMacros, setSavedMacros] = useState<TSavedMacro[]>([])
   const [collection, setCollection] = useState<TMacroCollectionEntry[]>([])
@@ -37,12 +38,12 @@ const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
 
   const fetchSavedMacros = async () => {
     try {
-      const data = await getData('savedMacros')
+      const data = await store.getData('savedMacros')
       let { readings } = data
       if (!readings) {
         const response = await getReadings({ dataKeys: ['savedMacros'] })
         readings = response.savedMacros
-        await storeData('savedMacros', { readings })
+        await store.storeData('savedMacros', readings)
       }
       setSavedMacros(readings)
     } catch (err) {

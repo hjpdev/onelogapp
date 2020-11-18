@@ -1,7 +1,6 @@
 import Config from 'react-native-config'
 
-import { needsUpdating, storeData, getData } from '.'
-import { addReading, removeReading, updateReadings } from '../Store/index'
+import { LocalStore } from '.'
 import { delay } from '../Helpers'
 
 const { BASE_URL } = Config
@@ -35,6 +34,8 @@ type DeleteReadingOptions = {
   table: string
   id: number
 }
+
+const store = new LocalStore()
 
 export const getReadings = async (options: GetReadingsOptions): Promise<any> => {
   const { queryString, dataKeys, days } = options
@@ -127,7 +128,7 @@ export const deleteReading = async (options: DeleteReadingOptions) => {
 
 export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: string]: any}, modalSwitchFunction: (isVisible: boolean) => void): Promise<void> => {
   try {
-    await addReading(dataKey, response)
+    await store.addReading(dataKey, response)
     modalSwitchFunction(true)
     await delay(1000)
     modalSwitchFunction(false)
@@ -138,7 +139,7 @@ export const handleSuccessfulSubmit = async (dataKey: string, response: {[key: s
 
 export const handleSuccessfulUpdate = async (dataKey: string, updatedReading: any, modalSwitchFunction: (isVisible: boolean) => void) => {
   try {
-    await updateReadings(dataKey, updatedReading)
+    await store.updateReadings(dataKey, updatedReading)
     modalSwitchFunction(true)
     await delay(1000)
     modalSwitchFunction(false)
@@ -150,7 +151,7 @@ export const handleSuccessfulUpdate = async (dataKey: string, updatedReading: an
 export const handleSuccessfulDelete = async (dataKey: string, response: { id: number }, modalSwitchFunction: (isVisible: boolean) => void): Promise<void> => {
   const { id } = response
   try {
-    await removeReading(dataKey, id)
+    await store.removeReading(dataKey, id)
     modalSwitchFunction(true)
     await delay(1000)
     modalSwitchFunction(false)
@@ -162,11 +163,12 @@ export const handleSuccessfulDelete = async (dataKey: string, response: { id: nu
 export const getHomeScreenData = async (): Promise<any> => {
   await updateHomeScreenData()
   try {
-    const bgReadings = await getData('bgReadings')
-    const bgStats = await getData('bgStats')
-    const doseReadings = await getData('doseReadings')
-    const macroReadings = await getData('macroReadings')
+    const bgReadings = await store.getData('bgReadings')
+    const bgStats = await store.getData('bgStats')
+    const doseReadings = await store.getData('doseReadings')
+    const macroReadings = await store.getData('macroReadings')
 
+    console.log('HERE IT IS => ', JSON.stringify({ bgReadings, bgStats, doseReadings, macroReadings }))
     return { bgReadings, bgStats, doseReadings, macroReadings }
   } catch (err) {
     console.log('Error getHomeScreenData: ', err.stack)
@@ -176,7 +178,7 @@ export const getHomeScreenData = async (): Promise<any> => {
 const updateHomeScreenData = async () => {
   const dataKeys: string[] = []
   for (const key of ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings', 'ketoReadings']) {
-    if (await needsUpdating(key)) {
+    if (await store.needsUpdating(key)) {
       dataKeys.push(key)
     }
   }
@@ -186,7 +188,7 @@ const updateHomeScreenData = async () => {
       const queryString = generateReadingsQuery({ dataKeys, days: [7, 14, 30, 90, 365] })
       const data = await getReadings({ queryString })
       for (const key of Object.keys(data)) {
-        await storeData(key, { updated: Date.now(), readings: data[key] })
+        await store.storeData(key, data[key])
       }
     } catch (err) {
       console.log('Error getHomeScreenData: ', err.stack)

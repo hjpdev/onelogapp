@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { SegmentedControlIOSComponent, View } from 'react-native'
+import { View } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native';
 
 import Carousel from '../Carousel/Carousel'
 import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/Readings'
-import { clearAllData } from '../../Store'
 import { getHomeScreenData } from '../../Store/Data'
 import ScreenStyles from '../../Assets/Styles/Screen'
 
@@ -22,7 +21,7 @@ const HomeScreen: React.FC = () => {
     // await clearAllData()
     try {
       const homeScreenData = await getHomeScreenData()
-      console.log('THE HONME SCREEN DATQA => ', homeScreenData)
+      console.log('THE HONME SCREEN DATA => ', homeScreenData)
       setData(homeScreenData)
     } catch (err) {
       console.log('Error getHomeData: ', err)
