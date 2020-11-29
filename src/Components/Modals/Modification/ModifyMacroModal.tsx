@@ -11,7 +11,6 @@ import SuccessModal from '../SuccessModal'
 import { generateCreatedDate } from '../../../Helpers/Date'
 import { MacroReading } from '../../../types'
 
-
 interface ModifyMacroModalProps {
   isVisible: boolean
   reading: MacroReading

@@ -1,23 +1,24 @@
 import Config from 'react-native-config'
 
 import { LocalStore } from '../Store'
+import { DataKey, Table } from '../types'
 import { delay } from '../Helpers'
 
 const { BASE_URL } = Config
 
 type GenerateReadingsQueryOptions = {
-  dataKeys: string[]
+  dataKeys: DataKey[]
   days?: number[]
 }
 
 type GetReadingsOptions = {
   queryString?: string
-  dataKeys?: string[] | undefined
+  dataKeys?: DataKey[]
   days?: number[]
 }
 
 type SubmitReadingOptions = {
-  table: string
+  table: Table
   reading: {
     data: number | {[key: string]: number | string}
     created?: Date | undefined | null
@@ -25,13 +26,13 @@ type SubmitReadingOptions = {
 }
 
 type PutReadingOptions = {
-  table: string
+  table: Table
   id: number
   data: any
 }
 
 type DeleteReadingOptions = {
-  table: string
+  table: Table
   id: number
 }
 
@@ -45,7 +46,7 @@ export default class ReadingsService {
     }
     const query = queryString || this.generateReadingsQuery({ dataKeys, days })
     const url = `${BASE_URL}/graphql`
-  
+
     try {
       const response = await fetch(url, {
         method: 'POST',
@@ -62,11 +63,11 @@ export default class ReadingsService {
       console.log('Error getReadings: ', err)
     }
   }
-  
+
   async submitReading(options: SubmitReadingOptions): Promise<any> {
     const { table, reading } = options
     const url = `${BASE_URL}/readings/${table}`
-  
+
     try {
       const result = await fetch(url, {
         method: 'POST',
@@ -76,7 +77,7 @@ export default class ReadingsService {
         },
         body: JSON.stringify(reading)
       })
-  
+
       console.log('Made request submitReading')
       const entry = await result.json()
       return entry
@@ -84,11 +85,11 @@ export default class ReadingsService {
       console.log('Error submitReading: ', err)
     }
   }
-  
+
   async putReading(options: PutReadingOptions) {
     const { table, id, data } = options
     const url = `${BASE_URL}/readings/${table}/${id}`
-  
+
     try {
       const result = await fetch(url, {
         method: 'PUT',
@@ -98,7 +99,7 @@ export default class ReadingsService {
         },
         body: JSON.stringify(data)
       })
-  
+
       console.log('Made request putReading')
       const entry = await result.json()
       return entry
@@ -106,11 +107,11 @@ export default class ReadingsService {
       console.log('Error putReading: ', err)
     }
   }
-  
+
   async deleteReading(options: DeleteReadingOptions) {
     const { table, id } = options
     const url = `${BASE_URL}/readings/${table}/${id}`
-  
+
     try {
       const result = await fetch(url, {
         method: 'DELETE',
@@ -119,14 +120,14 @@ export default class ReadingsService {
           'Content-Type': 'application/json'
         }
       })
-  
+
       console.log('Made request deleteReading')
       return await result.json()
     } catch (err) {
       console.log('Error deleteReading: ', err)
     }
   }
-  
+
   async handleSuccessfulSubmit(dataKey: string, response: {[key: string]: any}, modalSwitchFunction: (isVisible: boolean) => void): Promise<void> {
     try {
       await store.addReading(dataKey, response)
@@ -137,7 +138,7 @@ export default class ReadingsService {
       console.log('Error handleSuccessfulSubmit: ', err)
     }
   }
-  
+
   async handleSuccessfulUpdate(dataKey: string, updatedReading: any, modalSwitchFunction: (isVisible: boolean) => void) {
     try {
       await store.updateReadings(dataKey, updatedReading)
@@ -148,7 +149,7 @@ export default class ReadingsService {
       console.log('Error handleSuccessfulSubmit: ', err)
     }
   }
-  
+
   async handleSuccessfulDelete(dataKey: string, response: { id: number }, modalSwitchFunction: (isVisible: boolean) => void): Promise<void> {
     const { id } = response
     try {
@@ -160,7 +161,7 @@ export default class ReadingsService {
       console.log('Error handleSuccessfulDelete: ', err)
     }
   }
-  
+
   async getHomeScreenData(): Promise<any> {
     await this.updateHomeScreenData()
     try {
@@ -174,7 +175,7 @@ export default class ReadingsService {
       console.log('Error getHomeScreenData: ', err.stack)
     }
   }
-  
+
   async updateHomeScreenData() {
     const dataKeys: string[] = []
     for (const key of ['bgReadings', 'bgStats', 'doseReadings', 'macroReadings', 'ketoReadings']) {
@@ -182,7 +183,7 @@ export default class ReadingsService {
         dataKeys.push(key)
       }
     }
-  
+
     if (dataKeys.length > 0) {
       try {
         const queryString = this.generateReadingsQuery({ dataKeys, days: [7, 14, 30, 90, 365] })
@@ -195,7 +196,7 @@ export default class ReadingsService {
       }
     }
   }
-  
+
   generateReadingsQuery(options: GenerateReadingsQueryOptions): string {
     const { dataKeys, days } = options
     const queryMap: {[key: string]: string} = {
@@ -207,11 +208,11 @@ export default class ReadingsService {
       savedMacros: 'savedMacros { id, created, name, kcal, carbs, sugar, protein, fat, amount, unit, times_added }'
     }
     const querys: string[] = []
-  
+
     for (const key of dataKeys) {
       querys.push(queryMap[key])
     }
-  
+
     return querys.length > 0 ? `{ ${querys.join(' ')} }` : ''
   }
 }

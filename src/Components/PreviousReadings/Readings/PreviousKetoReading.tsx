@@ -5,10 +5,10 @@ import LinearGradient from 'react-native-linear-gradient'
 import ModifyKetoModal from '../../Modals/Modification/ModifyKetoModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime } from '../../../Helpers/Date'
-import { KetoReading } from '../../../types'
+import { StoredKetoReading } from '../../../types'
 
 interface PreviousKetoReadingProps {
-  reading: KetoReading
+  reading: StoredKetoReading
   update: (dataKey: string) => void
 }
 
@@ -17,7 +17,7 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
 
   const [showModifyKetoModal, setShowModifyKetoModal] = useState(false)
 
-  const { id, created, data } = reading
+  const { created, data } = reading
   const timeCreated = generateCreatedTime(created)
 
   return (

@@ -1,59 +1,55 @@
-import React, {useState} from 'react';
-import Modal from 'react-native-modal';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react'
+import Modal from 'react-native-modal'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import ChoiceButtons from '../../Minor/ChoiceButtons';
-import DeleteConfirmationModal from '../DeleteConfirmationModal';
-import ModifyTimeSelector from '../../Minor/ModifyTimeSelector';
-import ReadingService from '../../../Services/ReadingService';
-import SuccessModal from '../SuccessModal';
-import WheelSelector from '../../Minor/WheelSelector';
-import { WheelSelectorOptions, generateCreatedDate } from '../../../Helpers';
-import { BgReading, DataKey } from '../../../types';
+import ChoiceButtons from '../../Minor/ChoiceButtons'
+import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
+import ReadingService from '../../../Services/ReadingService'
+import SuccessModal from '../SuccessModal'
+import WheelSelector from '../../Minor/WheelSelector'
+import { WheelSelectorOptions } from '../../../Helpers'
+import { StoredBgReading, DataKey, Table } from '../../../types'
 
 interface ModifyBgModalProps {
-  isVisible: boolean;
-  reading: BgReading;
-  onClose: () => void;
-  update: (dataKey: string) => void;
+  isVisible: boolean
+  reading: StoredBgReading
+  onClose: () => void
+  onDelete: () => void
+  update: (dataKey: string) => void
 }
 
-const dataKey = DataKey.bg;
-const readingService = new ReadingService();
+const dataKey = DataKey.bg
+const readingService = new ReadingService()
 
 const ModifyBgModal: React.FC<ModifyBgModalProps> = (
   props: ModifyBgModalProps,
 ) => {
-  const {isVisible, reading, onClose, update} = props;
+  const { isVisible, reading, onClose, onDelete, update } = props
 
-  const [created, setCreated] = useState(reading.created);
-  const [data, setData] = useState<number>(reading.data || 0.0);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [
-    showDeleteConfirmationModal,
-    setShowDeleteConfirmationModal,
-  ] = useState(false);
+  const [created, setCreated] = useState(reading.created)
+  const [data, setData] = useState<number>(reading.data || 0.0)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     try {
-      const body = created !== reading.created ? {created, data} : {data};
+      const body = created !== reading.created ? { created, data } : { data }
       const response = await readingService.putReading({
-        table: 'bg',
+        table: Table.bg,
         data: body,
         id: reading.id,
-      });
+      })
 
       await readingService.handleSuccessfulUpdate(
         dataKey,
         response,
         setShowSuccessModal,
-      );
-      update(dataKey);
-      onClose();
+      )
+      update(dataKey)
+      onClose()
     } catch (err) {
-      console.log(`Error ModifyBgModal.handleSubmit: ${err}`);
+      console.log(`Error ModifyBgModal.handleSubmit: ${err}`)
     }
-  };
+  }
 
   return (
     <>
@@ -66,7 +62,8 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.66}
-        style={Styles.modal}>
+        style={Styles.modal}
+      >
         <View style={Styles.container}>
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
           <WheelSelector
@@ -76,9 +73,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (
             updateData={setData}
           />
           <View style={Styles.deleteContainer}>
-            <TouchableOpacity
-              onPress={() => {
-                setShowDeleteConfirmationModal(true)}}>
+            <TouchableOpacity onPress={onDelete}>
               <Text style={Styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
@@ -94,20 +89,11 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (
         isVisible={showSuccessModal}
         onPress={() => setShowSuccessModal(false)}
       />
-      <DeleteConfirmationModal
-        isVisible={showDeleteConfirmationModal}
-        id={reading.id}
-        name={generateCreatedDate(`${reading.created}`)}
-        table="bg"
-        dataKey={dataKey}
-        onClose={() => setShowDeleteConfirmationModal(false)}
-        update={() => update(dataKey)}
-      />
     </>
-  );
-};
+  )
+}
 
-export default ModifyBgModal;
+export default ModifyBgModal
 
 const Styles = StyleSheet.create({
   modal: {
@@ -131,4 +117,4 @@ const Styles = StyleSheet.create({
   deleteText: {
     textAlign: 'center',
   },
-});
+})

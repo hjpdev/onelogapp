@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import GradientBorder from '../Minor/GradientBorder'
+import { StoredReading } from '../../types'
 
 type PreviousReadingsForDateProps = {
   date: string
-  readings: {[key: string]: any}
+  readings: StoredReading[]
   Template: any
   update: (dataKey: string) => void
   opened?: boolean
@@ -31,7 +32,7 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
           <>
             <GradientBorder x={1.0} y={1.0} />
             <View style={Styles.view}>
-              {generateList()}
+              { generateList() }
             </View>
           </>
           )}

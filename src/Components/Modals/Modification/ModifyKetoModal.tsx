@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal';
 
 import ChoiceButtons from '../../Minor/ChoiceButtons';
@@ -8,9 +8,9 @@ import ModifyTimeSelector from '../../Minor/ModifyTimeSelector';
 import ReadingService from '../../../Services/ReadingService';
 import SuccessModal from '../SuccessModal';
 import WheelSelector from '../../Minor/WheelSelector';
-import {generateCreatedDate} from '../../../Helpers/Date';
-import {KetoReading} from '../../../types';
-import {WheelSelectorOptions} from '../../../Helpers';
+import { generateCreatedDate } from '../../../Helpers/Date';
+import { KetoReading } from '../../../types';
+import { WheelSelectorOptions } from '../../../Helpers';
 
 interface ModifyKetoModalProps {
   isVisible: boolean;
@@ -24,7 +24,7 @@ const readingService = new ReadingService();
 const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (
   props: ModifyKetoModalProps,
 ) => {
-  const {isVisible, reading, onClose, update} = props;
+  const { isVisible, reading, onClose, update } = props;
 
   const [created, setCreated] = useState(reading.created);
   const [data, setData] = useState<number>(reading.data || 0.0);
@@ -36,7 +36,7 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (
 
   const handleSubmit = async () => {
     try {
-      const body = created !== reading.created ? {created, data} : {data};
+      const body = created !== reading.created ? { created, data } : { data };
       const response = await readingService.putReading({
         table: 'keto',
         data: body,
@@ -66,7 +66,8 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.66}
-        style={Styles.modal}>
+        style={Styles.modal}
+      >
         <View style={Styles.container}>
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
           <WheelSelector
@@ -77,7 +78,8 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (
           />
           <View style={Styles.deleteContainer}>
             <TouchableOpacity
-              onPress={() => setShowDeleteConfirmationModal(true)}>
+              onPress={() => setShowDeleteConfirmationModal(true)}
+            >
               <Text style={Styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>

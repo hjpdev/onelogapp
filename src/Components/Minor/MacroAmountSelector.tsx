@@ -11,7 +11,8 @@ type MacroSelectorProps = {
 
 const parseAmount = (value: number) => {
   const stringValue = value.toString()
-  let hundreds, tens, ones
+  let hundreds; let tens; let
+    ones
   if (stringValue.length === 3) {
     hundreds = parseInt(stringValue[0])
     tens = parseInt(stringValue[1])

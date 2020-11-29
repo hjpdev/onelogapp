@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {Text, TouchableOpacity, View, StyleSheet} from 'react-native'
+import React, { useState } from 'react'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
 import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
@@ -23,15 +23,15 @@ export const NewBgReading: React.FC = () => {
         delay(500)
       }
       try {
-        const reading = dateTime ? {data, created: dateTime} : {data}
+        const reading = dateTime ? { data, created: dateTime } : { data }
         const response = await readingService.submitReading({
           table: 'bg',
           reading,
         })
 
         return (
-          response &&
-          readingService.handleSuccessfulSubmit(
+          response
+          && readingService.handleSuccessfulSubmit(
             dataKey,
             response,
             setShowSuccessModal,
@@ -56,7 +56,8 @@ export const NewBgReading: React.FC = () => {
         <Text style={Styles.unit}>mmol/L</Text>
         <TouchableOpacity
           onPress={async () => await handleSubmit()}
-          style={Styles.submit}>
+          style={Styles.submit}
+        >
           <Text style={Styles.submitText}>Submit</Text>
         </TouchableOpacity>
       </View>

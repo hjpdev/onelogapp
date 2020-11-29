@@ -24,11 +24,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
   const [integerPart, setIntegerPart] = useState(integer)
   const [fractionPart, setFractionPart] = useState(fraction)
 
-  const getPickerItems = (items: string[]) => {
-    return items.map(i => {
-      return <Picker.Item key={i} label={`${i}`} value={i} />
-    })
-  }
+  const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />)
 
   const onIntegerPartSelected = (itemValue: ReactText, _: number) => {
     setIntegerPart(parseInt(`${itemValue}`))
@@ -53,7 +49,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
         { getPickerItems(integerOptions) }
       </Picker>
       <View style={Styles.textContainer}>
-        <Text style={Styles.text}>{'.'}</Text>
+        <Text style={Styles.text}>.</Text>
       </View>
       <Picker
         selectedValue={`${fractionPart}`}
@@ -68,7 +64,6 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
 }
 
 export default WheelSelector
-
 
 const Styles = StyleSheet.create({
   container: {

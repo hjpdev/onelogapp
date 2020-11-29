@@ -3,12 +3,13 @@ import LinearGradient from 'react-native-linear-gradient'
 import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 import ModifyBgModal from '../../Modals/Modification/ModifyBgModal'
+import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
 import GradientBorder from '../../Minor/GradientBorder'
 import { generateCreatedTime } from '../../../Helpers/Date'
-import { BgReading } from '../../../types'
+import { StoredBgReading, DataKey, Table } from '../../../types'
 
 interface PreviousBgReadingProps {
-  reading: BgReading
+  reading: StoredBgReading
   update: (dataKey: string) => void
 }
 
@@ -16,11 +17,19 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
   const { reading, update } = props
 
   const [showModifyBgModal, setShowModifyBgModal] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
-  const { id, created, data } = reading
+  const { created, data } = reading
   const timeCreated = generateCreatedTime(created)
 
-  const generateColor = () => {
+  const handleDelete = (): void => {
+    setShowModifyBgModal(false)
+    setTimeout(() => {
+      setShowDeleteConfirmationModal(true)
+    }, 100)
+  }
+
+  const generateColor = (): string | undefined => {
     if (data < 3.9) return 'rgba(217, 30, 30, 0.9)' // '#d91e1e'
     if (data >= 3.9 && data < 8.1) return '#279621'
     if (data > 8.0) return '#deda00'
@@ -49,11 +58,18 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
           </View>
         </TouchableOpacity>
       </View>
-      <ModifyBgModal isVisible={showModifyBgModal} reading={reading} onClose={() => setShowModifyBgModal(false)} update={update} />
+      <ModifyBgModal isVisible={showModifyBgModal} reading={reading} onClose={() => setShowModifyBgModal(false)} onDelete={handleDelete} update={update} />
+      <DeleteConfirmationModal
+        isVisible={showDeleteConfirmationModal}
+        reading={reading}
+        table={Table.bg}
+        dataKey={DataKey.bg}
+        onClose={() => setShowDeleteConfirmationModal(false)}
+        update={() => update(DataKey.bg)}
+      />
     </>
   )
 }
-
 
 const Styles = StyleSheet.create({
   container: {

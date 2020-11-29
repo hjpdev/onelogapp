@@ -5,11 +5,12 @@ import { Text, StyleSheet, View } from 'react-native'
 import ChoiceButtons from '../Minor/ChoiceButtons'
 import SuccessModal from './SuccessModal'
 import ReadingService from '../../Services/ReadingService'
+import { generateCreatedDate } from '../../Helpers'
 import { truncateName } from '../../Helpers/General'
+import { StoredReading } from '../../types'
 
 interface DeleteConfirmationModalProps {
-  id: number
-  name: string
+  reading: StoredReading
   table: string
   dataKey: string
   isVisible: boolean
@@ -20,7 +21,9 @@ interface DeleteConfirmationModalProps {
 const readingService = new ReadingService()
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: DeleteConfirmationModalProps) => {
-  const { id, name, table, dataKey, isVisible, onClose, update } = props
+  const { reading, table, dataKey, isVisible, onClose, update } = props
+  const { id, created } = reading
+  const name = generateCreatedDate(`${created}`)
 
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
@@ -60,7 +63,6 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
 }
 
 export default DeleteConfirmationModal
-
 
 const Styles = StyleSheet.create({
   modal: {

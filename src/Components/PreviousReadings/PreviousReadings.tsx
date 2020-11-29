@@ -3,26 +3,19 @@ import { ScrollView } from 'react-native'
 
 import PreviousReadingsHeader from './PreviousReadingsHeader'
 import PreviousReadingsForDate from './PreviousReadingsForDate'
-import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMacroReading } from './Readings'
-import { generateCreatedDay } from '../../Helpers/Date'
-import { LocalStore } from '../../Store'
 import ReadingService from '../../Services/ReadingService'
-import { Reading } from '../../types'
+import { LocalStore } from '../../Store'
+import { generateCreatedDay } from '../../Helpers/Date'
+import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMacroReading } from './Readings'
+import { DataKey, StoredReading } from '../../types'
 
 type PreviousReadingsProps = {
   route: {
     params: {
-      dataKey: string
+      dataKey: DataKey
       headerText: string
     }
   }
-}
-
-type PreviousReading = {
-  id: string
-  created: Date
-  data: number
-  Template: React.FC
 }
 
 const templateMap: {[key: string]: any} = {
@@ -39,9 +32,9 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
   const { route } = props
   const { dataKey, headerText } = route.params
 
-  const [readings, setReadings] = useState<Reading[]>([])
+  const [readings, setReadings] = useState<StoredReading[]>([])
 
-  const fetchReadings = async (dataKey: string) => {
+  const fetchReadings = async (dataKey: DataKey) => {
     try {
       let { readings } = await store.getData(dataKey)
       if (!readings) {
@@ -60,7 +53,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
   }, [])
 
   const sortReadingsByDay = (uniqueDates: string[]) => {
-    const readingsByDay: {[day: string]: Reading[]} = {}
+    const readingsByDay: {[day: string]: StoredReading[]} = {}
     uniqueDates.forEach((uniqueDate) => {
       readingsByDay[uniqueDate] = []
     })
@@ -86,7 +79,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
     <>
       <PreviousReadingsHeader headerText={headerText} />
       <ScrollView>
-        {generateListItems()}
+        { generateListItems() }
       </ScrollView>
     </>
   )

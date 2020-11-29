@@ -92,7 +92,6 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
 
 export default MacroReadingInput
 
-
 const Styles = StyleSheet.create({
   container: {
     width: '80%',

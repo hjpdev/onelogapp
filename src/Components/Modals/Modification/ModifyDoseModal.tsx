@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native'
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
 import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
@@ -8,7 +8,7 @@ import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import WheelSelector from '../../Minor/WheelSelector'
-import {WheelSelectorOptions, generateCreatedDate} from '../../../Helpers'
+import { WheelSelectorOptions, generateCreatedDate } from '../../../Helpers'
 import { DoseReading } from '../../../types'
 
 interface ModifyDoseModalProps {
@@ -33,7 +33,7 @@ const readingService = new ReadingService()
 const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
   props: ModifyDoseModalProps,
 ) => {
-  const {isVisible, reading, onClose, update} = props
+  const { isVisible, reading, onClose, update } = props
 
   const [created, setCreated] = useState(reading.created)
   const [data, setData] = useState<number>(reading.data || 0.0)
@@ -44,10 +44,9 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
     setShowDeleteConfirmationModal,
   ] = useState(false)
 
-  const state: DoseReading = {id: reading.id, created, data, long}
+  const state: DoseReading = { id: reading.id, created, data, long }
 
-  const isPropertyUpdated = (property: keyof DoseReading) =>
-    state[property] !== reading[property]
+  const isPropertyUpdated = (property: keyof DoseReading) => state[property] !== reading[property]
 
   const handleSubmit = async () => {
     try {
@@ -87,9 +86,10 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.66}
-        style={Styles.modal}>
+        style={Styles.modal}
+      >
         <View style={Styles.container}>
-        <View style={Styles.deleteContainer}>
+          <View style={Styles.deleteContainer}>
             <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
               <Text style={Styles.deleteText}>Delete</Text>
             </TouchableOpacity>

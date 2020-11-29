@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet, Switch} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native';
 
 import SuccessModal from '../../Modals/SuccessModal';
 import TimeSelector from '../../Minor/TimeSelector';
 import WheelSelector from '../../Minor/WheelSelector';
-import {delay, WheelSelectorOptions} from '../../../Helpers/General';
+import { delay, WheelSelectorOptions } from '../../../Helpers/General';
 import ReadingService from '../../../Services/ReadingService';
-import {NewReadingHeader} from '../NewReadingHeader';
+import { NewReadingHeader } from '../NewReadingHeader';
 
 const readingService = new ReadingService();
 
@@ -23,8 +23,8 @@ export const NewDoseReading: React.FC = () => {
       }
       try {
         const reading = dateTime
-          ? {data, long, created: dateTime}
-          : {data, long};
+          ? { data, long, created: dateTime }
+          : { data, long };
         const response = await readingService.submitReading({
           table: 'dose',
           reading,
@@ -64,7 +64,8 @@ export const NewDoseReading: React.FC = () => {
         </View>
         <TouchableOpacity
           onPress={async () => await handleSubmit()}
-          style={Styles.submit}>
+          style={Styles.submit}
+        >
           <Text style={Styles.submitText}>Submit</Text>
         </TouchableOpacity>
       </View>

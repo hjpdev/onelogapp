@@ -51,11 +51,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
     setDateTime(null)
   }, [selectedDate, hours, minutes])
 
-  const getPickerItems = (items: string[]) => {
-    return items.map(i => {
-      return <Picker.Item key={i} label={`${i}`} value={i} />
-    })
-  }
+  const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />)
 
   const onDateSelected = (_: ReactText, index: number) => {
     setSelectedDate(index)
@@ -64,7 +60,7 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
   const onHoursSelected = (hours: ReactText, _: number) => {
     setHours(parseInt(`${hours}`))
   }
-  
+
   const onMinutesSelected = (minutes: ReactText, _: number) => {
     setMinutes(parseInt(`${minutes}`))
   }

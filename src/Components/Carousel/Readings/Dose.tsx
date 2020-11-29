@@ -1,54 +1,40 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import GradientBorder from '../../Minor/GradientBorder'
+// eslint-disable-next-line no-unused-vars
 import { DoseReading } from '../../../types'
+import { DoseCarouselStyles } from './Styles'
 
 interface DoseCarouselProps {
   reading: DoseReading
 }
 
-export const DoseCarousel: React.FC<DoseCarouselProps> = (props: DoseCarouselProps) => {
+const DoseCarousel: React.FC<DoseCarouselProps> = (props: DoseCarouselProps) => {
   const { reading } = props
   const { data, long } = reading
 
   const generateColors = () => (long ? ['#ebebeb', '#e0d5b7'] : ['#ebebeb', '#b56076'])
 
   return (
-    <View style={Styles.container} testID="carousel-dose">
-      <View style={Styles.readingContainer}>
-        <LinearGradient colors={generateColors()} start={{ x: 0.5, y: 0.8 }} end={{ x: 0.5, y: 0.95 }} style={{ width: '100%' }}>
-          <Text style={Styles.reading}>
+    <View style={DoseCarouselStyles.container} testID="carousel-dose">
+      <View style={DoseCarouselStyles.readingContainer}>
+        <LinearGradient
+          colors={generateColors()}
+          start={{ x: 0.5, y: 0.8 }}
+          end={{ x: 0.5, y: 0.95 }}
+          style={DoseCarouselStyles.colorHighlight}
+        >
+          <Text style={DoseCarouselStyles.reading}>
             { data.toFixed(1) }
           </Text>
         </LinearGradient>
         <GradientBorder x={1.0} y={1.0} />
         <Text>{long ? 'Long' : 'Short'}</Text>
-      </View> 
+      </View>
     </View>
   )
 }
 
-
-const Styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%'
-  },
-  readingContainer: {
-    alignItems: 'center',
-    width: '50%'
-  },
-  reading: {
-    fontSize: 54,
-    textAlign: 'center',
-    paddingTop: 8,
-    color: 'black'
-  },
-  unit: {
-    fontSize: 12,
-  }
-})
+export default DoseCarousel

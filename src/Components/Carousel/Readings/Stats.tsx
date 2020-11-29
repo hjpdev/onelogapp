@@ -1,7 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 
-export type StatsReadingProps = {
+import { StatsCarouselStyles } from './Styles'
+
+export interface StatsReadingProps {
   reading: {
     created: string,
     avg: number,
@@ -9,54 +11,26 @@ export type StatsReadingProps = {
   }
 }
 
-export const StatsCarousel: React.FC<StatsReadingProps> = (props: StatsReadingProps) => {
+const StatsCarousel: React.FC<StatsReadingProps> = (props: StatsReadingProps) => {
   const { reading } = props
   const { avg, stddev } = reading
 
   return (
-    <View style={Styles.container} testID="carousel-bg-stats">
-      <View style={Styles.readingContainer}>
-        <Text style={Styles.reading}>
+    <View style={StatsCarouselStyles.container} testID="carousel-bg-stats">
+      <View style={StatsCarouselStyles.readingContainer}>
+        <Text style={StatsCarouselStyles.reading}>
           { avg && avg.toFixed(1) }
         </Text>
-        <Text style={Styles.unit}>
+        <Text style={StatsCarouselStyles.unit}>
           mmol/L
         </Text>
       </View>
 
-      <Text style={Styles.stddev}>
+      <Text style={StatsCarouselStyles.stddev}>
         { `±${stddev && stddev.toFixed(1)}` }
       </Text>
     </View>
   )
 }
 
-const Styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width: '100%',
-  },
-  readingContainer: {
-    alignItems: 'center',
-    width: '50%'
-  },
-  reading: {
-    fontSize: 54,
-    color: 'black'
-  },
-  unit: {
-    fontSize: 12,
-  },
-  stddev: {
-    textAlign: 'center',
-    fontSize: 20,
-    fontWeight: 'bold',
-    padding: 12,
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: '#c4c4c4',
-    width: '30%'
-  }
-})
+export default StatsCarousel
