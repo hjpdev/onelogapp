@@ -26,10 +26,11 @@ export default Chevron
 
 const Styles = StyleSheet.create({
   chevronSymbol: {
+    padding: 18,
+    paddingVertical: 38,
     fontSize: 28,
     textAlign: 'center',
     textAlignVertical: 'center',
-    height: '100%',
     color: '#c4c4c4'
   }
 })

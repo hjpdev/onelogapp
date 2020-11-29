@@ -7,7 +7,7 @@ import SavedMacros from '../../SavedMacros/SavedMacros'
 import { NewReadingHeader } from '../NewReadingHeader'
 import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
-import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
+import ReadingService from '../../../Services/ReadingService'
 
 type MacroReading = {
   kcal: number,
@@ -25,6 +25,8 @@ type NewMacroReadingProps = {
   }
 }
 
+const readingService = new ReadingService()
+
 export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroReadingProps) => {
   const { route } = props
   const macros = route && route.params && route.params.macros
@@ -40,9 +42,9 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
       if (!Object.keys(data).every((macro) => data[macro] === 0)) {
         try {
           const reading = dateTime ? { ...data, created: dateTime } : { ...data }
-          const response = await submitReading({ table: 'macro', data })
+          const response = await readingService.submitReading({ table: 'macro', data })
 
-          return handleSuccessfulSubmit('macroReadings', response, setShowSuccessModal)
+          return readingService.handleSuccessfulSubmit('macroReadings', response, setShowSuccessModal)
         } catch (err) {
           console.log('Error macro handleSubmit: ', err)
         }

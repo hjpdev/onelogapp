@@ -9,7 +9,7 @@ import GradientBorder from '../../Minor/GradientBorder'
 import MacroAmountSelector from '../../Minor/MacroAmountSelector'
 import SuccessModal from '../SuccessModal'
 
-import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
+import ReadingService from '../../../Services/ReadingService'
 import { capitaliseAddWhitespace, truncateName } from '../../../Helpers/General'
 import { TSavedMacro } from '../../SavedMacros/SavedMacro'
 
@@ -19,6 +19,8 @@ type ModifySavedMacroModalProps = {
   onClose: () => void
   update: () => void
 }
+
+const readingService = new ReadingService()
 
 const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: ModifySavedMacroModalProps) => {
   const { isVisible, data, onClose, update } = props
@@ -35,9 +37,9 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
   const handleSubmit = async () => {
     try {
       const data = { name, ...reading, amount, unit }
-      const response = await putReading({ table: 'macro/saved', data, id })
+      const response = await readingService.putReading({ table: 'macro/saved', data, id })
 
-      await handleSuccessfulUpdate('savedMacros', response, setShowSuccessModal)
+      await readingService.handleSuccessfulUpdate('savedMacros', response, setShowSuccessModal)
       update()
       onClose()
     } catch (err) {
@@ -64,7 +66,7 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
           <GradientBorder x={1.0} y={1.0} />
           <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
           <View style={Styles.deleteContainer}>
-            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
               <Text style={Styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>

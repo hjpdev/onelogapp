@@ -5,32 +5,25 @@ import { useNavigation } from '@react-navigation/native'
 import MacroSelector from './MacroSelector'
 import NewSavedMacroModal from '../SavedMacros/NewSavedMacroModal'
 import GradientBorder from './GradientBorder'
+import { MacroReadingData, MacroReadingKey } from '../../types'
 
-type MacroReading = {
-  kcal: number
-  carbs: number
-  sugar: number
-  protein: number
-  fat: number
-}
-
-type MacroReadingInputProps = {
+interface MacroReadingInputProps {
   showSavedMacroOptions: boolean
   updateReading: (reading: {[macro: string]: number}) => any
   showClearOption?: boolean
-  data?: MacroReading
+  reading?: MacroReadingData
 }
 
 const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReadingInputProps) => {
-  const { showSavedMacroOptions, updateReading, data, showClearOption } = props
+  const { showSavedMacroOptions, updateReading, reading, showClearOption } = props
 
   const navigation = useNavigation()
 
   const parseData = () => {
-    const tmpObj = {} as any
+    const tmpObj = {} as MacroReadingData
 
-    data && Object.keys(data).forEach((macro: keyof MacroReading) => {
-      tmpObj[macro] = typeof data[macro] === 'string' ? parseFloat(data[macro]) : parseFloat(data[macro].toFixed(1))
+    reading && Object.keys(reading).forEach((macro: MacroReadingKey) => {
+      tmpObj[macro] = typeof reading[macro] === 'string' ? parseFloat(reading[macro]) : parseFloat(reading[macro].toFixed(1))
     })
 
     return tmpObj
@@ -98,6 +91,7 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
 }
 
 export default MacroReadingInput
+
 
 const Styles = StyleSheet.create({
   container: {

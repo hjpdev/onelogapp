@@ -5,8 +5,10 @@ import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import WheelSelector from '../../Minor/WheelSelector'
 import { delay } from '../../../Helpers'
-import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
+import ReadingService from '../../../Services/ReadingService'
 import { NewReadingHeader } from '../NewReadingHeader'
+
+const readingService = new ReadingService()
 
 export const NewBgReading: React.FC = () => {
   const [data, setData] = useState(0.0)
@@ -18,9 +20,9 @@ export const NewBgReading: React.FC = () => {
       if (data < 1) { delay(500) }
       try {
         const reading = dateTime ? { data, created: dateTime } : { data }
-        const response = await submitReading({ table: 'bg', reading })
+        const response = await readingService.submitReading({ table: 'bg', reading })
 
-        return response && handleSuccessfulSubmit('bgReadings', response, setShowSuccessModal)
+        return response && readingService.handleSuccessfulSubmit('bgReadings', response, setShowSuccessModal)
       } catch (err) {
         console.log('Error bg handleSubmit: ', err)
       }

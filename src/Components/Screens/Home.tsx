@@ -4,23 +4,25 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import Carousel from '../Carousel/Carousel'
 import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/Readings'
-import { getHomeScreenData } from '../../Store/Data'
+import ReadingService from '../../Services/ReadingService'
 import ScreenStyles from '../../Assets/Styles/Screen'
 
-const deafultHomeScreenData = {
+const defaultHomeScreenData = {
   bgReadings: { readings: [] },
   bgStats: { readings: [] },
   doseReadings: { readings: [] },
   macroReadings: { readings: [] },
 }
 
+const readingService = new ReadingService()
+
 const HomeScreen: React.FC = () => {
-  const [data, setData] = useState(deafultHomeScreenData)
+  const [data, setData] = useState(defaultHomeScreenData)
 
   const getHomeData = async () => {
     // await clearAllData()
     try {
-      const homeScreenData = await getHomeScreenData()
+      const homeScreenData = await readingService.getHomeScreenData()
       console.log('THE HONME SCREEN DATA => ', homeScreenData)
       setData(homeScreenData)
     } catch (err) {

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
 import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
+import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import WheelSelector from '../../Minor/WheelSelector'
 import { generateCreatedDate } from '../../../Helpers/Date'
-import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
 type ModifyDoseModalProps = {
   isVisible: boolean
@@ -32,6 +32,8 @@ function getDoseProperties<DoseReading>(obj: DoseReading): Array<keyof DoseReadi
   return result
 }
 
+const readingService = new ReadingService()
+
 const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalProps) => {
   const { isVisible, reading, onClose, update } = props
 
@@ -54,9 +56,9 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
           body[key] = state[key]
         }
       }
-      const response = await putReading({ table: 'dose', data: body, id: state.id })
+      const response = await readingService.putReading({ table: 'dose', data: body, id: state.id })
 
-      await handleSuccessfulUpdate('doseReadings', response, setShowSuccessModal)
+      await readingService.handleSuccessfulUpdate('doseReadings', response, setShowSuccessModal)
       update('doseReadings')
       onClose()
     } catch (err) {
@@ -104,6 +106,7 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
 }
 
 export default ModifyDoseModal
+
 
 const Styles = StyleSheet.create({
   modal: {

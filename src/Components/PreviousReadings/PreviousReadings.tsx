@@ -6,7 +6,7 @@ import PreviousReadingsForDate from './PreviousReadingsForDate'
 import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMacroReading } from './Readings'
 import { generateCreatedDay } from '../../Helpers/Date'
 import { LocalStore } from '../../Store'
-import { getReadings } from '../../Store/Data'
+import ReadingService from '../../Services/ReadingService'
 
 type PreviousReadingsProps = {
   route: {
@@ -31,6 +31,8 @@ const templateMap: {[key: string]: any} = {
   macroReadings: PreviousMacroReading
 }
 
+const readingService = new ReadingService()
+
 const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadingsProps) => {
   const { route } = props
   const { dataKey, headerText } = route.params
@@ -42,7 +44,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
     try {
       let { readings } = await store.getData(dataKey)
       if (!readings) {
-        const response = await getReadings({ dataKeys: [dataKey] })
+        const response = await readingService.getReadings({ dataKeys: [dataKey] })
         readings = response[dataKey]
         await store.storeData(dataKey, readings)
       }

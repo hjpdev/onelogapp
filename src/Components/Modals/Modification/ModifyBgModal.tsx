@@ -1,28 +1,25 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import ChoiceButtons from '../../Minor/ChoiceButtons'
 import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
+import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import WheelSelector from '../../Minor/WheelSelector'
 import { generateCreatedDate } from '../../../Helpers/Date'
+import { SimpleReading } from '../../../types'
 
-import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
-type ModifyBgModalProps = {
+interface ModifyBgModalProps {
   isVisible: boolean
-  reading: BgReading
+  reading: SimpleReading
   onClose: () => void
   update: (dataKey: string) => void
 }
 
-type BgReading = {
-  id: number
-  created: Date
-  data: number
-}
+const readingService = new ReadingService()
 
 const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) => {
   const { isVisible, reading, onClose, update } = props
@@ -35,9 +32,9 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   const handleSubmit = async () => {
     try {
       const body = created !== reading.created ? { created, data } : { data }
-      const response = await putReading({ table: 'bg', data: body, id: reading.id })
+      const response = await readingService.putReading({ table: 'bg', data: body, id: reading.id })
 
-      await handleSuccessfulUpdate('bgReadings', response, setShowSuccessModal)
+      await readingService.handleSuccessfulUpdate('bgReadings', response, setShowSuccessModal)
       update('bgReadings')
       onClose()
     } catch (err) {
@@ -76,6 +73,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
 }
 
 export default ModifyBgModal
+
 
 const Styles = StyleSheet.create({
   modal: {

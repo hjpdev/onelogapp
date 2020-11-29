@@ -6,42 +6,35 @@ import ChoiceButtons from '../../Minor/ChoiceButtons'
 import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import MacroReadingInput from '../../Minor/MacroReadingInput'
 import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
+import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import { generateCreatedDate } from '../../../Helpers/Date'
+import { MacroReading } from '../../../types'
 
-import { handleSuccessfulUpdate, putReading } from '../../../Store/Data'
 
-type ModifyMacroModalProps = {
+interface ModifyMacroModalProps {
   isVisible: boolean
-  data: MacroReading
+  reading: MacroReading
   onClose: () => void
   update: (dataKey: string) => void
 }
 
-type MacroReading = {
-  id: number
-  created: Date
-  kcal: number
-  carbs: number
-  sugar: number
-  protein: number
-  fat: number
-}
+const readingService = new ReadingService()
 
 const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroModalProps) => {
-  const { isVisible, data, onClose, update } = props
+  const { isVisible, reading, onClose, update } = props
 
-  const [created, setCreated] = useState(data.created)
-  const [reading, setReading] = useState<{[key: string]: string | number}>({})
+  const [created, setCreated] = useState(reading.created)
+  const [data, setData] = useState<{[key: string]: string | number}>({})
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const handleSubmit = async () => {
     try {
-      const body = created !== data.created ? { ...reading, created } : { ...reading }
-      const response = await putReading({ table: 'macro', data: body, id: data.id })
+      const body = created !== reading.created ? { ...reading, created } : { ...reading }
+      const response = await readingService.putReading({ table: 'macro', data: body, id: reading.id })
 
-      await handleSuccessfulUpdate('macroReadings', response, setShowSuccessModal)
+      await readingService.handleSuccessfulUpdate('macroReadings', response, setShowSuccessModal)
       update('macroReadings')
       onClose()
     } catch (err) {
@@ -64,7 +57,7 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       >
         <View style={Styles.container}>
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
-          <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
+          <MacroReadingInput showSavedMacroOptions={false} reading={data} updateReading={setReading} />
           <View style={Styles.deleteContainer}>
             <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
               <Text style={Styles.deleteText}>Delete</Text>

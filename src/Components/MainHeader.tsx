@@ -14,7 +14,7 @@ export default MainHeader
 
 const Styles = StyleSheet.create({
   mainHeaderView: {
-    height: 48,
+    height: 68,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -24,11 +24,13 @@ const Styles = StyleSheet.create({
   mainHeaderText: {
     textAlign: 'center',
     padding: 10,
+    marginTop: 24,
     color: 'white',
     fontSize: 24
   },
   logo: {
     tintColor: '#ebebeb',
+    marginTop: 28,
     height: 24,
     width: 24
   }

@@ -6,7 +6,7 @@ import SavedMacrosHeader from './SavedMacrosHeader'
 import MacroCollectionSummaryModal from './MacroCollection/MacroCollectionSummaryModal'
 import { ALPHABET } from '../../Helpers/General'
 import { LocalStore } from '../../Store'
-import { getReadings } from '../../Store/Data'
+import ReadingService from '../../Services/ReadingService'
 import { TSavedMacro } from './SavedMacro'
 
 export type TMacroCollectionEntry = {
@@ -17,6 +17,8 @@ export type TMacroCollectionEntry = {
 type SavedMacroProps = {
   updateReading: Dispatch<SetStateAction<{ [key: string]: ReactText; }>>
 }
+
+const readingService = new ReadingService()
 
 const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { updateReading } = props
@@ -41,7 +43,7 @@ const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
       const data = await store.getData('savedMacros')
       let { readings } = data
       if (!readings) {
-        const response = await getReadings({ dataKeys: ['savedMacros'] })
+        const response = await readingService.getReadings({ dataKeys: ['savedMacros'] })
         readings = response.savedMacros
         await store.storeData('savedMacros', readings)
       }

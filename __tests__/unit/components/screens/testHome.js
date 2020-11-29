@@ -20,7 +20,7 @@ jest.mock('../../../../src/Store/Data', () => ({ getHomeScreenData: jest.fn(() =
     macroReadings: [{ created: '2020-08-10T19:54:29.374Z', kcal: 772, carbs: 7.2, sugar: 2.7, protein: 77.2, fat: 17.2 }]
   }
 }) }))
-import { getHomeScreenData } from '../../../../src/Store/Data'
+import { getHomeScreenData } from '../../../../src/Services/ReadingService'
 
 it('renders four Carousels', async () => {
   const mockNavigate = jest.fn()

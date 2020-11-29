@@ -5,8 +5,10 @@ import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import WheelSelector from '../../Minor/WheelSelector'
 import { delay } from '../../../Helpers/General'
-import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
+import ReadingService from '../../../Services/ReadingService'
 import { NewReadingHeader } from '../NewReadingHeader'
+
+const readingService = new ReadingService()
 
 export const NewKetoReading: React.FC = () => {
   const [data, setData] = useState(0.0)
@@ -17,9 +19,9 @@ export const NewKetoReading: React.FC = () => {
     if (data === 0) { delay(500) }
     try {
       const reading = dateTime ? { data, created: dateTime } : { data }
-      const response = await submitReading({ table: 'keto', reading })
+      const response = await readingService.submitReading({ table: 'keto', reading })
 
-      return handleSuccessfulSubmit('ketoReadings', response, setShowSuccessModal)
+      return readingService.handleSuccessfulSubmit('ketoReadings', response, setShowSuccessModal)
     } catch (err) {
       console.log('Error keto handleSubmit: ', err)
     }

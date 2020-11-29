@@ -6,7 +6,7 @@ import GradientBorder from '../Minor/GradientBorder'
 import ChoiceButtons from '../Minor/ChoiceButtons'
 import MacroAmountSelector from '../Minor/MacroAmountSelector'
 import SuccessModal from '../Modals/SuccessModal'
-import { handleSuccessfulSubmit, submitReading } from '../../Store/Data'
+import ReadingService from '../../Services/ReadingService'
 
 type NewSavedMacroModalProps = {
   isVisible: boolean
@@ -20,6 +20,8 @@ type NewSavedMacroModalProps = {
   }
 }
 
+const readingService = new ReadingService()
+
 const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMacroModalProps) => {
   const { isVisible, onClose, macros } = props
 
@@ -31,9 +33,9 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
   const handleSubmit = async () => {
     const data = { ...macros, name, amount, unit }
     try {
-      const response = await submitReading({ table: 'macro/saved', data })
+      const response = await readingService.submitReading({ table: 'macro/saved', data })
       onClose()
-      return handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)
+      return readingService.handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)
     } catch (err) {
       console.log('Error NewSavedMacroModal handleSubmit: ', err)
     }

@@ -1,4 +1,4 @@
-interface MacroReadingData {
+export interface MacroReadingData {
   kcal: number
   carbs: number
   sugar: number
@@ -6,33 +6,50 @@ interface MacroReadingData {
   fat: number
 }
 
-export type Reading = SimpleReading | DoseReading | SavedMacroReading | StatsResponse
+export type Reading = SimpleReading | DoseReading | MacroReading | SavedMacroReading
+export type DataKey = 'bgReadings' | 'ketoReadings' | 'doseReadings' | 'macroReadings' | 'bgStats' | 'savedMacros'
+export type MacroReadingKey = keyof MacroReadingData
 
 export interface ReadingProps {
   id: number
   created?: Date
-  data: number | MacroReadingData
 }
 
-export interface DoseReadingProps extends ReadingProps {
+export interface SimpleReadingProps extends ReadingProps {
+  data: number
+}
+
+export interface DoseReadingProps extends SimpleReadingProps {
   long: boolean
 }
 
-export interface SavedMacroReadingProps extends ReadingProps {
+export interface MacroReadingProps extends ReadingProps {
+  data: MacroReadingData
+}
+
+export interface SavedMacroReadingProps extends MacroReadingProps {
   name: string
   amount: number
   unit: string
 }
 
-export class SimpleReading {
+class BaseReading {
   public id: number
   public created: Date
-  public data: number | MacroReadingData
 
   constructor(props: ReadingProps) {
-    const { data, created, id } = props
+    const { id, created } = props
     this.id = id
     this.created = created || new Date()
+  }
+}
+
+export class SimpleReading extends BaseReading {
+  public data: number
+
+  constructor(props: SimpleReadingProps) {
+    super(props)
+    const { data } = props
     this.data = data
   }
 }
@@ -47,7 +64,17 @@ export class DoseReading extends SimpleReading {
   }
 }
 
-export class SavedMacroReading extends SimpleReading {
+export class MacroReading extends BaseReading {
+  public data: MacroReadingData
+
+  constructor(props: MacroReadingProps) {
+    super(props)
+    const { data } = props
+    this.data = data
+  }
+}
+
+export class SavedMacroReading extends MacroReading {
   public name: string
   public amount: number
   public unit: string

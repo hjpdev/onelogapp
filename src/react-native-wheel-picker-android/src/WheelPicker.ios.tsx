@@ -9,7 +9,7 @@ import { requireNativeComponent, PickerIOS, Picker, Text } from 'react-native'
 interface Props {
   data: Array<string>;
   selectedItem?: number;
-  onItemSelected?: number => void;
+  onItemSelected?: (arg0: number) => void;
 }
 
 interface State {

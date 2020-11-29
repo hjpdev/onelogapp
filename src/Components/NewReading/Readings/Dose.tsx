@@ -5,8 +5,10 @@ import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import WheelSelector from '../../Minor/WheelSelector'
 import { delay } from '../../../Helpers/General'
-import { handleSuccessfulSubmit, submitReading } from '../../../Store/Data'
+import ReadingService from '../../../Services/ReadingService'
 import { NewReadingHeader } from '../NewReadingHeader'
+
+const readingService = new ReadingService()
 
 export const NewDoseReading: React.FC = () => {
   const [data, setData] = useState(0.0)
@@ -19,9 +21,9 @@ export const NewDoseReading: React.FC = () => {
       if (data < 1) { delay(500) }
       try {
         const reading = dateTime ? { data, long, created: dateTime } : { data, long }
-        const response = await submitReading({ table: 'dose', reading })
+        const response = await readingService.submitReading({ table: 'dose', reading })
 
-        return handleSuccessfulSubmit('doseReadings', response, setShowSuccessModal)
+        return readingService.handleSuccessfulSubmit('doseReadings', response, setShowSuccessModal)
       } catch (err) {
         console.log('Error dose handleSubmit: ', err)
       }

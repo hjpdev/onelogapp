@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Text, StyleSheet, View } from 'react-native'
 import Modal from 'react-native-modal'
+import { Text, StyleSheet, View } from 'react-native'
 
 import ChoiceButtons from '../Minor/ChoiceButtons'
 import SuccessModal from './SuccessModal'
-import { deleteReading, handleSuccessfulDelete } from '../../Store/Data'
+import ReadingService from '../../Services/ReadingService'
 import { truncateName } from '../../Helpers/General'
 
 type DeleteConfirmationModalProps = {
@@ -17,6 +17,8 @@ type DeleteConfirmationModalProps = {
   update: () => void
 }
 
+const readingService = new ReadingService()
+
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: DeleteConfirmationModalProps) => {
   const { id, name, table, dataKey, isVisible, onClose, update } = props
 
@@ -24,9 +26,9 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
 
   const handleDelete = async () => {
     try {
-      const response = await deleteReading({ table, id })
+      const response = await readingService.deleteReading({ table, id })
 
-      await handleSuccessfulDelete(dataKey, response, setShowSuccessModal)
+      await readingService.handleSuccessfulDelete(dataKey, response, setShowSuccessModal)
       await update()
       onClose()
     } catch (err) {
@@ -58,6 +60,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
 }
 
 export default DeleteConfirmationModal
+
 
 const Styles = StyleSheet.create({
   modal: {
