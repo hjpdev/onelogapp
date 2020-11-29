@@ -50,11 +50,11 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
             </View>
 
             <View style={Styles.values}>
-              <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
-              <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
-              <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
-              <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
-              <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
+              <Text style={Styles.value}>{ kcal.toFixed(1) }</Text>
+              <Text style={Styles.value}>{ carbs.toFixed(1) }</Text>
+              <Text style={Styles.value}>{ sugar.toFixed(1) }</Text>
+              <Text style={Styles.value}>{ protein.toFixed(1) }</Text>
+              <Text style={Styles.value}>{ fat.toFixed(1) }</Text>
             </View>
           </View>
         </TouchableOpacity>

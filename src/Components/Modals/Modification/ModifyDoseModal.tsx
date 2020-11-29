@@ -1,70 +1,86 @@
-import React, { useState } from 'react'
-import Modal from 'react-native-modal'
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
+import React, {useState} from 'react';
+import Modal from 'react-native-modal';
+import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
 
-import ChoiceButtons from '../../Minor/ChoiceButtons'
-import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
-import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
-import ReadingService from '../../../Services/ReadingService'
-import SuccessModal from '../SuccessModal'
-import WheelSelector from '../../Minor/WheelSelector'
-import { generateCreatedDate } from '../../../Helpers/Date'
+import ChoiceButtons from '../../Minor/ChoiceButtons';
+import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal';
+import ModifyTimeSelector from '../../Minor/ModifyTimeSelector';
+import ReadingService from '../../../Services/ReadingService';
+import SuccessModal from '../SuccessModal';
+import WheelSelector from '../../Minor/WheelSelector';
+import {WheelSelectorOptions, generateCreatedDate} from '../../../Helpers';
 
 type ModifyDoseModalProps = {
-  isVisible: boolean
-  reading: DoseReading
-  onClose: () => void
-  update: (dataKey: string) => void
-}
+  isVisible: boolean;
+  reading: DoseReading;
+  onClose: () => void;
+  update: (dataKey: string) => void;
+};
 
 type DoseReading = {
-  id: number
-  created: Date
-  data: number
-  long: boolean
-}
+  id: number;
+  created: Date;
+  data: number;
+  long: boolean;
+};
 
-function getDoseProperties<DoseReading>(obj: DoseReading): Array<keyof DoseReading> {
-  const result: Array<keyof DoseReading> = []
+function getDoseProperties<DoseReading>(
+  obj: DoseReading,
+): Array<keyof DoseReading> {
+  const result: Array<keyof DoseReading> = [];
   for (const key in obj) {
-    result.push(key)
+    result.push(key);
   }
-  return result
+  return result;
 }
 
-const readingService = new ReadingService()
+const readingService = new ReadingService();
 
-const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalProps) => {
-  const { isVisible, reading, onClose, update } = props
+const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
+  props: ModifyDoseModalProps,
+) => {
+  const {isVisible, reading, onClose, update} = props;
 
-  const [created, setCreated] = useState(reading.created)
-  const [data, setData] = useState<number>(reading.data || 0.0)
-  const [long, setLong] = useState<boolean>(reading.long)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
+  const [created, setCreated] = useState(reading.created);
+  const [data, setData] = useState<number>(reading.data || 0.0);
+  const [long, setLong] = useState<boolean>(reading.long);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [
+    showDeleteConfirmationModal,
+    setShowDeleteConfirmationModal,
+  ] = useState(false);
 
-  const state: DoseReading = { id: reading.id, created, data, long }
+  const state: DoseReading = {id: reading.id, created, data, long};
 
-  const isPropertyUpdated = (property: keyof DoseReading) => state[property] !== reading[property]
+  const isPropertyUpdated = (property: keyof DoseReading) =>
+    state[property] !== reading[property];
 
   const handleSubmit = async () => {
     try {
-      const body = {} as any
-      const properties: Array<keyof DoseReading> = getDoseProperties(state)
+      const body = {} as any;
+      const properties: Array<keyof DoseReading> = getDoseProperties(state);
       for (const key of properties) {
         if (isPropertyUpdated(key)) {
-          body[key] = state[key]
+          body[key] = state[key];
         }
       }
-      const response = await readingService.putReading({ table: 'dose', data: body, id: state.id })
+      const response = await readingService.putReading({
+        table: 'dose',
+        data: body,
+        id: state.id,
+      });
 
-      await readingService.handleSuccessfulUpdate('doseReadings', response, setShowSuccessModal)
-      update('doseReadings')
-      onClose()
+      await readingService.handleSuccessfulUpdate(
+        'doseReadings',
+        response,
+        setShowSuccessModal,
+      );
+      update('doseReadings');
+      onClose();
     } catch (err) {
-      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`);
     }
-  }
+  };
 
   return (
     <>
@@ -77,11 +93,18 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.66}
-        style={Styles.modal}
-      >
+        style={Styles.modal}>
         <View style={Styles.container}>
-          <ModifyTimeSelector created={state.created} setDateTime={setCreated} />
-          <WheelSelector data={reading.data} updateData={setData} />
+          <ModifyTimeSelector
+            created={state.created}
+            setDateTime={setCreated}
+          />
+          <WheelSelector
+            data={reading.data}
+            integerOptions={WheelSelectorOptions.bgInt}
+            fractionOptions={WheelSelectorOptions.doseFrac}
+            updateData={setData}
+          />
           <View style={Styles.switch}>
             <Text style={Styles.switchText}>Short</Text>
             <Switch
@@ -92,25 +115,42 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
             <Text style={Styles.switchText}>Long</Text>
           </View>
           <View style={Styles.deleteContainer}>
-            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
+            <TouchableOpacity
+              onPress={() => setShowDeleteConfirmationModal(true)}
+              s>
               <Text style={Styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
-          <ChoiceButtons confirmationText="Submit" cancellationText="Cancel" onSubmit={async () => await handleSubmit()} onClose={onClose} />
+          <ChoiceButtons
+            confirmationText="Submit"
+            cancellationText="Cancel"
+            onSubmit={async () => await handleSubmit()}
+            onClose={onClose}
+          />
         </View>
       </Modal>
-      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
-      <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={reading.id} name={generateCreatedDate(`${reading.created}`)} table="dose" dataKey="doseReadings" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('doseReadings')} />
+      <SuccessModal
+        isVisible={showSuccessModal}
+        onPress={() => setShowSuccessModal(false)}
+      />
+      <DeleteConfirmationModal
+        isVisible={showDeleteConfirmationModal}
+        id={reading.id}
+        name={generateCreatedDate(`${reading.created}`)}
+        table="dose"
+        dataKey="doseReadings"
+        onClose={() => setShowDeleteConfirmationModal(false)}
+        update={() => update('doseReadings')}
+      />
     </>
-  )
-}
+  );
+};
 
-export default ModifyDoseModal
-
+export default ModifyDoseModal;
 
 const Styles = StyleSheet.create({
   modal: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   container: {
     width: 240,
@@ -118,29 +158,29 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1.5,
     borderBottomWidth: 2,
-    borderRadius: 4
+    borderRadius: 4,
   },
   name: {
     fontSize: 18,
-    paddingVertical: 2
+    paddingVertical: 2,
   },
   switch: {
     width: '60%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   switchText: {
-    fontSize: 16
+    fontSize: 16,
   },
   deleteContainer: {
     width: '33%',
     margin: 4,
     borderBottomWidth: 2,
     borderRadius: 4,
-    marginBottom: 12
+    marginBottom: 12,
   },
   deleteText: {
-    textAlign: 'center'
-  }
-})
+    textAlign: 'center',
+  },
+});

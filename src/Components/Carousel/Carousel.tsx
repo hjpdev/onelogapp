@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import GestureRecognizer from 'react-native-swipe-gestures';
+import GestureRecognizer from 'react-native-swipe-gestures'
 
 import Chevron from '../Minor/Chevron'
 import GradientBorder from '../Minor/GradientBorder'
@@ -85,6 +85,7 @@ const Styles = StyleSheet.create({
   header: {
     flex: 1.1,
     flexDirection: 'row',
+    alignItems: 'center',
     width: '100%',
   },
   contentContainer: {
@@ -104,9 +105,8 @@ const Styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
+    borderRightWidth: 1,
     padding: 4,
-    color: 'white',
-    backgroundColor: 'black',
     width: 60
   },
   time: {

@@ -4,7 +4,7 @@ import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import SuccessModal from '../../Modals/SuccessModal'
 import TimeSelector from '../../Minor/TimeSelector'
 import WheelSelector from '../../Minor/WheelSelector'
-import { delay } from '../../../Helpers/General'
+import { delay, WheelSelectorOptions } from '../../../Helpers/General'
 import ReadingService from '../../../Services/ReadingService'
 import { NewReadingHeader } from '../NewReadingHeader'
 
@@ -32,7 +32,7 @@ export const NewKetoReading: React.FC = () => {
       <NewReadingHeader headerText="Ketones" dataKey="ketoReadings" />
       <View style={Styles.container}>
         <TimeSelector setDateTime={setDateTime} />
-        <WheelSelector updateData={setData} />
+        <WheelSelector integerOptions={WheelSelectorOptions.default} fractionOptions={WheelSelectorOptions.default} updateData={setData} />
         <Text style={Styles.unit}>mmol/L</Text>
         <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
           <Text style={Styles.submitText}>Submit</Text>

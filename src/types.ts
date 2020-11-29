@@ -1,3 +1,15 @@
+export enum DataKey {
+  bg = 'bgReadings',
+  keto = 'ketoReadings',
+  dose = 'doseReadings',
+  macro = 'macroReadings',
+  bgStats = 'bgStats',
+  savedMacro = 'savedMacros'
+}
+
+export type MacroReadingKey = keyof MacroReadingData
+export type Reading = BaseReading | DoseReading | MacroReading | SavedMacroReading
+
 export interface MacroReadingData {
   kcal: number
   carbs: number
@@ -6,24 +18,35 @@ export interface MacroReadingData {
   fat: number
 }
 
-export type Reading = SimpleReading | DoseReading | MacroReading | SavedMacroReading
-export type DataKey = 'bgReadings' | 'ketoReadings' | 'doseReadings' | 'macroReadings' | 'bgStats' | 'savedMacros'
-export type MacroReadingKey = keyof MacroReadingData
+export type StatsResponse = {
+  [key: string]: {
+    avg: number
+    stddev: number
+  }
+  | string
+}
 
-export interface ReadingProps {
-  id: number
+export interface IPrototype { prototype: any }
+
+export interface BaseReadingProps {
+  id?: number
   created?: Date
 }
 
-export interface SimpleReadingProps extends ReadingProps {
+export interface BgReadingProps extends BaseReadingProps {
   data: number
 }
 
-export interface DoseReadingProps extends SimpleReadingProps {
+export interface KetoReadingProps extends BaseReadingProps {
+  data: number
+}
+
+export interface DoseReadingProps extends BaseReadingProps {
+  data: number
   long: boolean
 }
 
-export interface MacroReadingProps extends ReadingProps {
+export interface MacroReadingProps extends BaseReadingProps {
   data: MacroReadingData
 }
 
@@ -34,43 +57,49 @@ export interface SavedMacroReadingProps extends MacroReadingProps {
 }
 
 class BaseReading {
-  public id: number
-  public created: Date
+  id?: number
+  created: Date
 
-  constructor(props: ReadingProps) {
+  constructor(props: BaseReadingProps) {
     const { id, created } = props
-    this.id = id
+    this.id = id || undefined
     this.created = created || new Date()
   }
 }
 
-export class SimpleReading extends BaseReading {
-  public data: number
+export class BgReading extends BaseReading {
+  data: number
 
-  constructor(props: SimpleReadingProps) {
+  constructor(props: BgReadingProps) {
     super(props)
-    const { data } = props
-    this.data = data
+    this.data = props.data
   }
 }
 
-export class DoseReading extends SimpleReading {
+export class KetoReading extends BaseReading {
+  data: number
+
+  constructor(props: KetoReadingProps) {
+    super(props)
+    this.data = props.data
+  }
+}
+
+export class DoseReading extends BaseReading {
   public long: boolean
 
   constructor(props: DoseReadingProps) {
     super(props)
-    const { long } = props
-    this.long = long
+    this.long = props.long
   }
 }
 
 export class MacroReading extends BaseReading {
-  public data: MacroReadingData
+  data: MacroReadingData
 
   constructor(props: MacroReadingProps) {
     super(props)
-    const { data } = props
-    this.data = data
+    this.data = props.data
   }
 }
 
@@ -86,12 +115,4 @@ export class SavedMacroReading extends MacroReading {
     this.amount = amount
     this.unit = unit
   }
-}
-
-export type StatsResponse = {
-  [key: string]: {
-    avg: number
-    stddev: number
-  }
-  | string
 }
