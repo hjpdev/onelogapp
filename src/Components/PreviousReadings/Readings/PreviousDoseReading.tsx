@@ -4,16 +4,12 @@ import LinearGradient from 'react-native-linear-gradient'
 
 import ModifyDoseModal from '../../Modals/Modification/ModifyDoseModal'
 import GradientBorder from '../../Minor/GradientBorder'
-import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
+import { generateCreatedTime } from '../../../Helpers/Date'
+import { DataKey, DoseReading } from '../../../types'
 
-type PreviousDoseReadingProps = {
-  reading: {
-    id: number
-    created: string
-    data: number
-    long: boolean
-  }
-  update: (dataKay: string) => void
+interface PreviousDoseReadingProps {
+  reading: DoseReading
+  update: (dataKey: DataKey) => void
 }
 
 export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: PreviousDoseReadingProps) => {
@@ -24,7 +20,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
   const { id, created, data, long } = reading
   const timeCreated = generateCreatedTime(created)
 
-  const generateColors = () => (long ? ['#c9c9b7', '#ebebeb'] : ['#ebebeb', '#b2bfaa'])
+  const generateColors = () => (long ? ['#e0d5b7', '#ebebeb'] : ['#ebebeb', '#b56076'])
 
   const generateStartPoint = () => {
     const y = long ? ((data - 10) / 25) : 1 - (data / 20)

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
-export type BgReadingProps = {
-  reading: {
-    data: number
-  }
+import { BgReading } from '../../../types'
+
+interface BgCarouselProps {
+  reading: BgReading
 }
 
-export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {
+export const BgCarousel: React.FC<BgCarouselProps> = (props: BgCarouselProps) => {
   const { reading } = props
   const { data } = reading
 
@@ -27,6 +27,7 @@ export const BgReading: React.FC<BgReadingProps> = (props: BgReadingProps) => {
     </View>
   )
 }
+
 
 const Styles = StyleSheet.create({
   container: {
@@ -52,5 +53,3 @@ const Styles = StyleSheet.create({
     width: 30
   }
 })
-
-export default BgReading

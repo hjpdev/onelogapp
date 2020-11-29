@@ -1,17 +1,14 @@
 import React, { useState } from 'react'
-import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 import ModifyBgModal from '../../Modals/Modification/ModifyBgModal'
 import GradientBorder from '../../Minor/GradientBorder'
-import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
+import { generateCreatedTime } from '../../../Helpers/Date'
+import { BgReading } from '../../../types'
 
-type PreviousBgReadingProps = {
-  reading: {
-    id: number,
-    created: string
-    data: number
-  }
+interface PreviousBgReadingProps {
+  reading: BgReading
   update: (dataKey: string) => void
 }
 
@@ -56,6 +53,7 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
     </>
   )
 }
+
 
 const Styles = StyleSheet.create({
   container: {

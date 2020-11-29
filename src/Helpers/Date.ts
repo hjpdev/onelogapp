@@ -12,7 +12,7 @@ export const newDate = ({ m, d, h, min }: {[key: string]: number}): Date => {
   return new Date([dateString, timeString].join('T'))
 }
 
-export const generateCreatedDateTime = (date: string) => {
+export const generateCreatedDateTime = (date: Date | string) => {
   const month: (string | number) = new Date(date).getMonth() + 1
   const day: (string | number) = new Date(date).getDate()
   const hours: (string | number) = new Date(date).getHours()
@@ -38,31 +38,18 @@ export const generateCreatedDate = (date: string): string => {
     : `${hours}:${minutes}  ${padLeft(day)}/${padLeft(month)} `
 }
 
-export const generateCreatedDay = (date: string): string => {
+export const generateCreatedDay = (date: Date | string): string => {
   const day = padLeft(new Date(date).getDate())
   const month = padLeft(new Date(date).getMonth() + 1)
 
   return `${day}/${month}`
 }
 
-export const generateCreatedTime = (date: string): string => {
+export const generateCreatedTime = (date: Date | string): string => {
   const hours = padLeft(new Date(date).getHours())
   const minutes = padLeft(new Date(date).getMinutes())
 
   return `${hours}:${minutes}`
-}
-
-export const statsDateTitleCompare = (a: IStatsReading, b: IStatsReading) => {
-  const aNumber = parseInt(a.created.split(' ')[0])
-  const bNumber = parseInt(b.created.split(' ')[0])
-
-  if (aNumber < bNumber) {
-    return -1;
-  }
-  if (aNumber > bNumber) {
-    return 1;
-  }
-  return 0;
 }
 
 export const generateLastSevenDays = (): Date[] => {

@@ -3,19 +3,17 @@ import { StyleSheet, Text, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import GradientBorder from '../../Minor/GradientBorder'
+import { DoseReading } from '../../../types'
 
-export type DoseReadingProps = {
-  reading: {
-    data: number,
-    long: boolean
-  }
+interface DoseCarouselProps {
+  reading: DoseReading
 }
 
-export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps) => {
+export const DoseCarousel: React.FC<DoseCarouselProps> = (props: DoseCarouselProps) => {
   const { reading } = props
   const { data, long } = reading
 
-  const generateColors = () => (long ? ['#ebebeb', '#c9c9b7'] : ['#ebebeb', '#b2bfaa'])
+  const generateColors = () => (long ? ['#ebebeb', '#e0d5b7'] : ['#ebebeb', '#b56076'])
 
   return (
     <View style={Styles.container} testID="carousel-dose">
@@ -31,6 +29,7 @@ export const DoseReading: React.FC<DoseReadingProps> = (props: DoseReadingProps)
     </View>
   )
 }
+
 
 const Styles = StyleSheet.create({
   container: {

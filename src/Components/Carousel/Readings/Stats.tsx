@@ -9,7 +9,7 @@ export type StatsReadingProps = {
   }
 }
 
-export const StatsReading: React.FC<StatsReadingProps> = (props: StatsReadingProps) => {
+export const StatsCarousel: React.FC<StatsReadingProps> = (props: StatsReadingProps) => {
   const { reading } = props
   const { avg, stddev } = reading
 

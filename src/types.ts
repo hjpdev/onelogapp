@@ -86,10 +86,12 @@ export class KetoReading extends BaseReading {
 }
 
 export class DoseReading extends BaseReading {
+  data: number
   public long: boolean
 
   constructor(props: DoseReadingProps) {
     super(props)
+    this.data = props.data
     this.long = props.long
   }
 }

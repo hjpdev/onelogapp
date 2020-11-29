@@ -1,17 +1,13 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export type MacroReadingProps = {
-  reading: {
-    kcal: number,
-    carbs: number,
-    sugar: number,
-    protein: number,
-    fat: number
-  }
+import { MacroReadingData } from '../../../types'
+
+interface MacroCarouselProps {
+  reading: MacroReadingData
 }
 
-export const MacroReading: React.FC<MacroReadingProps> = (props: MacroReadingProps) => {
+export const MacroCarousel: React.FC<MacroCarouselProps> = (props: MacroCarouselProps) => {
   const { reading } = props
   const { kcal, carbs, sugar, protein, fat } = reading
 

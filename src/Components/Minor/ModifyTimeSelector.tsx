@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, ReactText, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import WheelPicker from '../../react-native-wheel-picker-android'
+import { Picker } from '@react-native-picker/picker'
 
 import { clockHours, clockMinutes, generateCreatedDateTime, newDate } from '../../Helpers'
 
@@ -29,57 +29,59 @@ const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: ModifyTime
     }
   }, [hours, minutes])
 
+  const getPickerItems = (items: string[]) => {
+    return items.map(i => {
+      return <Picker.Item key={i} label={`${i}`} value={i} />
+    })
+  }
+
+  const onHoursSelected = (hours: ReactText, _: number) => {
+    setHours(parseInt(`${hours}`))
+  }
+  
+  const onMinutesSelected = (minutes: ReactText, _: number) => {
+    setMinutes(parseInt(`${minutes}`))
+  }
+
   return (
     <View style={Styles.container}>
-      <View style={{ ...Styles.wheel, paddingLeft: 10 }}>
-        <WheelPicker
-          selectedItem={hours}
-          data={clockHours}
-          onItemSelected={setHours}
-          isCyclic
-          selectedItemTextSize={20}
-          itemTextSize={8}
-          selectedItemTextFontFamily="roboto"
-          itemTextFontFamily="roboto"
-          style={Styles.time}
-        />
+      <Picker
+        selectedValue={clockHours[hours]}
+        style={Styles.picker}
+        itemStyle={Styles.pickerItem}
+        onValueChange={onHoursSelected}
+      >
+        { getPickerItems(clockHours) }
+      </Picker>
+      <View style={{ justifyContent: 'center' }}>
+        <Text style={{ fontSize: 24 }}>:</Text>
       </View>
-      <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 14 }}>:</Text>
-      <View style={Styles.wheel}>
-        <WheelPicker
-          selectedItem={minutes}
-          data={clockMinutes}
-          onItemSelected={setMinutes}
-          isCyclic
-          selectedItemTextSize={20}
-          itemTextSize={8}
-          selectedItemTextFontFamily="roboto"
-          itemTextFontFamily="roboto"
-          style={Styles.time}
-        />
-      </View>
+      <Picker
+        selectedValue={clockMinutes[minutes]}
+        style={Styles.picker}
+        itemStyle={Styles.pickerItem}
+        onValueChange={onMinutesSelected}
+      >
+        { getPickerItems(clockMinutes) }
+      </Picker>
     </View>
   )
 }
 
 export default ModifyTimeSelector
 
+
 const Styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
-  wheel: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    alignContent: 'flex-end'
-  },
-  date: {
+  picker: {
     height: 100,
-    width: 84
+    width: 90,
+    justifyContent: 'center'
   },
-  time: {
-    height: 100,
-    width: 42
+  pickerItem: {
+    height: '100%'
   }
 })

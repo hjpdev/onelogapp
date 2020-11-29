@@ -7,7 +7,7 @@ import SuccessModal from './SuccessModal'
 import ReadingService from '../../Services/ReadingService'
 import { truncateName } from '../../Helpers/General'
 
-type DeleteConfirmationModalProps = {
+interface DeleteConfirmationModalProps {
   id: number
   name: string
   table: string

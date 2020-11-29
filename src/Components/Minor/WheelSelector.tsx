@@ -26,7 +26,7 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
 
   const getPickerItems = (items: string[]) => {
     return items.map(i => {
-      return <Picker.Item label={`${i}`} value={i} />
+      return <Picker.Item key={i} label={`${i}`} value={i} />
     })
   }
 

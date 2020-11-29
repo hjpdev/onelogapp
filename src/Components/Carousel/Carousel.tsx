@@ -5,11 +5,11 @@ import GestureRecognizer from 'react-native-swipe-gestures'
 import Chevron from '../Minor/Chevron'
 import GradientBorder from '../Minor/GradientBorder'
 import { capitalise, generateCreatedDate } from '../../Helpers'
-import { BgReadingProps, StatsReadingProps, DoseReadingProps, MacroReadingProps } from './Readings'
+import { BgCarousel, DoseCarousel, MacroCarousel } from './Readings'
 
 type CarouselProps = {
   name: string
-  Template: React.FC<BgReadingProps> | React.FC<StatsReadingProps> | React.FC<DoseReadingProps> | React.FC<MacroReadingProps>
+  Template: typeof BgCarousel | typeof DoseCarousel | typeof MacroCarousel
   readings: any[]
   startingIndex?: number
 }

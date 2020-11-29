@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, ReactText, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import WheelPicker from '../../react-native-wheel-picker-android'
+import { Picker } from '@react-native-picker/picker'
 
 import { clockHours, clockMinutes, getDaysAndMonthsForLastSevenDays, newDate } from '../../Helpers'
 
@@ -51,47 +51,55 @@ const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorProps) => 
     setDateTime(null)
   }, [selectedDate, hours, minutes])
 
+  const getPickerItems = (items: string[]) => {
+    return items.map(i => {
+      return <Picker.Item key={i} label={`${i}`} value={i} />
+    })
+  }
+
+  const onDateSelected = (_: ReactText, index: number) => {
+    setSelectedDate(index)
+  }
+
+  const onHoursSelected = (hours: ReactText, _: number) => {
+    setHours(parseInt(`${hours}`))
+  }
+  
+  const onMinutesSelected = (minutes: ReactText, _: number) => {
+    setMinutes(parseInt(`${minutes}`))
+  }
+
   return (
     <View style={Styles.container}>
-      <View style={{ ...Styles.wheel, paddingRight: 10, borderRightWidth: 0.5 }}>
-        <WheelPicker
-          selectedItem={selectedDate}
-          data={lastSevenDays}
-          onItemSelected={setSelectedDate}
-          selectedItemTextSize={20}
-          itemTextSize={8}
-          selectedItemTextFontFamily="roboto"
-          itemTextFontFamily="roboto"
-          style={Styles.date}
-        />
+      <View style={Styles.date}>
+        <Picker
+          selectedValue={lastSevenDays[selectedDate]}
+          style={Styles.picker}
+          itemStyle={Styles.pickerItem}
+          onValueChange={onDateSelected}
+        >
+          { getPickerItems(lastSevenDays) }
+        </Picker>
       </View>
-      <View style={{ ...Styles.wheel, paddingLeft: 10 }}>
-        <WheelPicker
-          selectedItem={hours}
-          data={hoursData}
-          onItemSelected={setHours}
-          isCyclic={!hoursCheck}
-          selectedItemTextSize={20}
-          itemTextSize={8}
-          selectedItemTextFontFamily="roboto"
-          itemTextFontFamily="roboto"
-          style={Styles.time}
-        />
+      <Picker
+        selectedValue={hoursData[hours]}
+        style={Styles.picker}
+        itemStyle={Styles.pickerItem}
+        onValueChange={onHoursSelected}
+      >
+        { getPickerItems(hoursData) }
+      </Picker>
+      <View style={Styles.textContainer}>
+        <Text style={Styles.text}>:</Text>
       </View>
-      <Text style={{ fontSize: 20, textAlignVertical: 'bottom', paddingBottom: 18 }}>:</Text>
-      <View style={Styles.wheel}>
-        <WheelPicker
-          selectedItem={minutes}
-          data={minutesData}
-          onItemSelected={setMinutes}
-          isCyclic={!minutesCheck}
-          selectedItemTextSize={20}
-          itemTextSize={8}
-          selectedItemTextFontFamily="roboto"
-          itemTextFontFamily="roboto"
-          style={Styles.time}
-        />
-      </View>
+      <Picker
+        selectedValue={minutesData[minutes]}
+        style={Styles.picker}
+        itemStyle={Styles.pickerItem}
+        onValueChange={onMinutesSelected}
+      >
+        { getPickerItems(minutesData) }
+      </Picker>
     </View>
   )
 }
@@ -103,17 +111,21 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center'
   },
-  wheel: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    alignContent: 'flex-end'
-  },
   date: {
-    height: 100,
-    width: 84
+    borderRightWidth: 1
   },
-  time: {
-    height: 100,
-    width: 42
+  picker: {
+    height: 120,
+    width: 90,
+    justifyContent: 'center'
+  },
+  pickerItem: {
+    height: '100%'
+  },
+  textContainer: {
+    justifyContent: 'center'
+  },
+  text: {
+    fontSize: 24
   }
 })

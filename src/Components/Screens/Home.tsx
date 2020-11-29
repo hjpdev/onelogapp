@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { View } from 'react-native'
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native'
 
 import Carousel from '../Carousel/Carousel'
-import { BgReading, StatsReading, DoseReading, MacroReading } from '../Carousel/Readings'
-import ReadingService from '../../Services/ReadingService'
 import ScreenStyles from '../../Assets/Styles/Screen'
+import ReadingService from '../../Services/ReadingService'
+import { BgCarousel, StatsCarousel, DoseCarousel, MacroCarousel } from '../Carousel/Readings'
 
 const defaultHomeScreenData = {
   bgReadings: { readings: [] },
@@ -40,10 +40,10 @@ const HomeScreen: React.FC = () => {
   return (allReadingsAvailable
     && (
     <View style={ScreenStyles.container} testID="home-screen">
-      <Carousel name="bg" Template={BgReading} readings={bgReadings.readings} />
-      <Carousel name="stats" Template={StatsReading} readings={bgStats.readings} />
-      <Carousel name="dose" Template={DoseReading} readings={doseReadings.readings} />
-      <Carousel name="macro" Template={MacroReading} readings={macroReadings.readings} />
+      <Carousel name="bg" Template={BgCarousel} readings={bgReadings.readings} />
+      <Carousel name="stats" Template={StatsCarousel} readings={bgStats.readings} />
+      <Carousel name="dose" Template={DoseCarousel} readings={doseReadings.readings} />
+      <Carousel name="macro" Template={MacroCarousel} readings={macroReadings.readings} />
     </View>
     )
   )

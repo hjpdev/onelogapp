@@ -8,8 +8,8 @@ import ModifyTimeSelector from '../../Minor/ModifyTimeSelector';
 import ReadingService from '../../../Services/ReadingService';
 import SuccessModal from '../SuccessModal';
 import WheelSelector from '../../Minor/WheelSelector';
-import {WheelSelectorOptions, generateCreatedDate} from '../../../Helpers';
-import {BgReading, DataKey} from '../../../types';
+import { WheelSelectorOptions, generateCreatedDate } from '../../../Helpers';
+import { BgReading, DataKey } from '../../../types';
 
 interface ModifyBgModalProps {
   isVisible: boolean;
@@ -77,7 +77,8 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (
           />
           <View style={Styles.deleteContainer}>
             <TouchableOpacity
-              onPress={() => setShowDeleteConfirmationModal(true)}>
+              onPress={() => {
+                setShowDeleteConfirmationModal(true)}}>
               <Text style={Styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
@@ -98,9 +99,9 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (
         id={reading.id}
         name={generateCreatedDate(`${reading.created}`)}
         table="bg"
-        dataKey="bgReadings"
+        dataKey={dataKey}
         onClose={() => setShowDeleteConfirmationModal(false)}
-        update={() => update('bgReadings')}
+        update={() => update(dataKey)}
       />
     </>
   );
@@ -113,7 +114,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    width: 260,
+    width: 300,
     backgroundColor: '#ebebeb',
     borderWidth: 1.5,
     borderBottomWidth: 2,

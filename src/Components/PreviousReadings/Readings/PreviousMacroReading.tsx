@@ -3,18 +3,11 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import GradientBorder from '../../Minor/GradientBorder'
 import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal'
-import { generateCreatedTime, generateCreatedDate } from '../../../Helpers/Date'
+import { generateCreatedTime } from '../../../Helpers/Date'
+import { MacroReading } from '../../../types'
 
-type PreviousMacroReadingProps = {
-  reading: {
-    id: number
-    created: string
-    kcal: number
-    carbs: number
-    sugar: number
-    protein: number
-    fat: number
-  }
+interface PreviousMacroReadingProps {
+  reading: MacroReading
   update: (dataKey: string) => void
 }
 
@@ -23,7 +16,8 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
 
   const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
 
-  const { id, created, kcal, carbs, sugar, protein, fat } = reading
+  const { id, created, data } = reading
+  const { kcal, carbs, sugar, protein, fat } = data
   const timeCreated = generateCreatedTime(created)
 
   return (

@@ -7,6 +7,7 @@ import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMa
 import { generateCreatedDay } from '../../Helpers/Date'
 import { LocalStore } from '../../Store'
 import ReadingService from '../../Services/ReadingService'
+import { Reading } from '../../types'
 
 type PreviousReadingsProps = {
   route: {
@@ -34,11 +35,11 @@ const templateMap: {[key: string]: any} = {
 const readingService = new ReadingService()
 
 const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadingsProps) => {
+  const store = new LocalStore()
   const { route } = props
   const { dataKey, headerText } = route.params
-  const store = new LocalStore()
 
-  const [readings, setReadings] = useState([] as any)
+  const [readings, setReadings] = useState<Reading[]>([])
 
   const fetchReadings = async (dataKey: string) => {
     try {
@@ -59,7 +60,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
   }, [])
 
   const sortReadingsByDay = (uniqueDates: string[]) => {
-    const readingsByDay: {[day: string]: PreviousReading[]} = {}
+    const readingsByDay: {[day: string]: Reading[]} = {}
     uniqueDates.forEach((uniqueDate) => {
       readingsByDay[uniqueDate] = []
     })
@@ -73,7 +74,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
 
   const generateListItems = () => {
     const dates = readings.map((reading) => generateCreatedDay(reading.created))
-    const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i).sort((a, b) => a - b)
+    const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i).sort((a: any, b: any) => a - b)
     const readingsByDay = sortReadingsByDay(uniqueDates)
 
     return uniqueDates.map((date, index) => (index === 0

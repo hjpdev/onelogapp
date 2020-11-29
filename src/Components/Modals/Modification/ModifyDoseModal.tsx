@@ -1,86 +1,80 @@
-import React, {useState} from 'react';
-import Modal from 'react-native-modal';
-import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react'
+import Modal from 'react-native-modal'
+import {StyleSheet, Switch, Text, TouchableOpacity, View} from 'react-native'
 
-import ChoiceButtons from '../../Minor/ChoiceButtons';
-import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal';
-import ModifyTimeSelector from '../../Minor/ModifyTimeSelector';
-import ReadingService from '../../../Services/ReadingService';
-import SuccessModal from '../SuccessModal';
-import WheelSelector from '../../Minor/WheelSelector';
-import {WheelSelectorOptions, generateCreatedDate} from '../../../Helpers';
+import ChoiceButtons from '../../Minor/ChoiceButtons'
+import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
+import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
+import ReadingService from '../../../Services/ReadingService'
+import SuccessModal from '../SuccessModal'
+import WheelSelector from '../../Minor/WheelSelector'
+import {WheelSelectorOptions, generateCreatedDate} from '../../../Helpers'
+import { DoseReading } from '../../../types'
 
-type ModifyDoseModalProps = {
-  isVisible: boolean;
-  reading: DoseReading;
-  onClose: () => void;
-  update: (dataKey: string) => void;
-};
-
-type DoseReading = {
-  id: number;
-  created: Date;
-  data: number;
-  long: boolean;
-};
+interface ModifyDoseModalProps {
+  isVisible: boolean
+  reading: DoseReading
+  onClose: () => void
+  update: (dataKey: string) => void
+}
 
 function getDoseProperties<DoseReading>(
   obj: DoseReading,
 ): Array<keyof DoseReading> {
-  const result: Array<keyof DoseReading> = [];
+  const result: Array<keyof DoseReading> = []
   for (const key in obj) {
-    result.push(key);
+    result.push(key)
   }
-  return result;
+  return result
 }
 
-const readingService = new ReadingService();
+const readingService = new ReadingService()
 
 const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
   props: ModifyDoseModalProps,
 ) => {
-  const {isVisible, reading, onClose, update} = props;
+  const {isVisible, reading, onClose, update} = props
 
-  const [created, setCreated] = useState(reading.created);
-  const [data, setData] = useState<number>(reading.data || 0.0);
-  const [long, setLong] = useState<boolean>(reading.long);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [created, setCreated] = useState(reading.created)
+  const [data, setData] = useState<number>(reading.data || 0.0)
+  const [long, setLong] = useState<boolean>(reading.long)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [
     showDeleteConfirmationModal,
     setShowDeleteConfirmationModal,
-  ] = useState(false);
+  ] = useState(false)
 
-  const state: DoseReading = {id: reading.id, created, data, long};
+  const state: DoseReading = {id: reading.id, created, data, long}
 
   const isPropertyUpdated = (property: keyof DoseReading) =>
-    state[property] !== reading[property];
+    state[property] !== reading[property]
 
   const handleSubmit = async () => {
     try {
-      const body = {} as any;
-      const properties: Array<keyof DoseReading> = getDoseProperties(state);
+      const body = {} as any
+      const properties: Array<keyof DoseReading> = getDoseProperties(state)
       for (const key of properties) {
         if (isPropertyUpdated(key)) {
-          body[key] = state[key];
+          body[key] = state[key]
         }
       }
       const response = await readingService.putReading({
         table: 'dose',
         data: body,
         id: state.id,
-      });
+      })
 
       await readingService.handleSuccessfulUpdate(
         'doseReadings',
         response,
         setShowSuccessModal,
-      );
-      update('doseReadings');
-      onClose();
+      )
+      update('doseReadings')
+      onClose()
     } catch (err) {
-      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`);
+      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`)
     }
-  };
+  }
 
   return (
     <>
@@ -95,6 +89,11 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
         backdropOpacity={0.66}
         style={Styles.modal}>
         <View style={Styles.container}>
+        <View style={Styles.deleteContainer}>
+            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
+              <Text style={Styles.deleteText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
           <ModifyTimeSelector
             created={state.created}
             setDateTime={setCreated}
@@ -113,13 +112,6 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
               value={state.long}
             />
             <Text style={Styles.switchText}>Long</Text>
-          </View>
-          <View style={Styles.deleteContainer}>
-            <TouchableOpacity
-              onPress={() => setShowDeleteConfirmationModal(true)}
-              s>
-              <Text style={Styles.deleteText}>Delete</Text>
-            </TouchableOpacity>
           </View>
           <ChoiceButtons
             confirmationText="Submit"
@@ -143,17 +135,17 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
         update={() => update('doseReadings')}
       />
     </>
-  );
-};
+  )
+}
 
-export default ModifyDoseModal;
+export default ModifyDoseModal
 
 const Styles = StyleSheet.create({
   modal: {
     alignItems: 'center',
   },
   container: {
-    width: 240,
+    width: 300,
     backgroundColor: '#ebebeb',
     alignItems: 'center',
     borderWidth: 1.5,
@@ -169,18 +161,16 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    paddingVertical: 8
   },
   switchText: {
     fontSize: 16,
   },
   deleteContainer: {
-    width: '33%',
-    margin: 4,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    marginBottom: 12,
+    width: '100%'
   },
   deleteText: {
-    textAlign: 'center',
+    textAlign: 'left',
+    padding: 6
   },
-});
+})

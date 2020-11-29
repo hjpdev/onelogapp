@@ -113,7 +113,7 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    width: 240,
+    width: 300,
     backgroundColor: '#ebebeb',
     borderWidth: 1.5,
     borderBottomWidth: 2,

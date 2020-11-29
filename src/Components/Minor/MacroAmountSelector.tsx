@@ -1,8 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { StyleSheet, View, Text, TextInput } from 'react-native'
-import WheelPicker from '../../react-native-wheel-picker-android'
-
-import { defaultNumSelectorOptions } from '../../Helpers'
 
 type MacroSelectorProps = {
   updateAmount: Dispatch<SetStateAction<number>>
@@ -51,7 +48,7 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
 
   return (
     <View style={Styles.container}>
-      <View>
+      {/* <View>
         <WheelPicker
           selectedItem={(amount && parseAmount(amount).hundreds) || 0}
           data={defaultNumSelectorOptions}
@@ -89,7 +86,7 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
           itemTextFontFamily="roboto"
           style={Styles.hundreds}
         />
-      </View>
+      </View> */}
       <View style={{ justifyContent: 'flex-end' }}>
         {allowEditUnit
           ? <TextInput placeholder={unit || 'Unit'} onChangeText={updateUnit} style={Styles.textInput} />
