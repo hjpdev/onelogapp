@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import { TextInput, View } from 'react-native';
-import Modal from 'react-native-modal';
+import React, { useState } from 'react'
+import { TextInput, View } from 'react-native'
+import Modal from 'react-native-modal'
 
-import GradientBorder from '../Minor/GradientBorder';
-import ChoiceButtons from '../Minor/ChoiceButtons';
-import MacroAmountSelector from '../Minor/MacroAmountSelector';
-import SuccessModal from '../Modals/SuccessModal';
-import ReadingService from '../../Services/ReadingService';
-import { SavedMacroReading, Table } from '../../types';
-import { NewSavedMacroModalStyles } from './Styles';
+import ReadingService from '../../Services/ReadingService'
+import SuccessModal from '../Modals/SuccessModal'
+import { GradientBorder, ChoiceButtons, MacroAmountSelector} from '../Minor'
+import { SavedMacroReading, Table } from '../../types'
+import { NewSavedMacroModalStyles } from './Styles'
 
 interface NewSavedMacroModalProps {
   isVisible: boolean
@@ -16,31 +14,34 @@ interface NewSavedMacroModalProps {
   macros: SavedMacroReading
 }
 
-const readingService = new ReadingService();
+const readingService = new ReadingService()
 
 const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMacroModalProps) => {
-  const { isVisible, onClose, macros } = props;
+  const { isVisible, onClose, macros } = props
 
-  const [name, setName] = useState('');
-  const [amount, setAmount] = useState(0);
-  const [unit, setUnit] = useState('');
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [name, setName] = useState('')
+  const [amount, setAmount] = useState(0)
+  const [unit, setUnit] = useState('')
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     const data = {
-      ...macros, name, amount, unit
-    };
+      ...macros,
+      name,
+      amount,
+      unit
+    }
     try {
       const response = await readingService.submitReading({
         table: Table.savedMacro,
         data
-      });
-      onClose();
-      return readingService.handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal);
+      })
+      onClose()
+      return readingService.handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)
     } catch (err) {
-      console.log('Error NewSavedMacroModal handleSubmit: ', err);
+      console.log('Error NewSavedMacroModal handleSubmit: ', err)
     }
-  };
+  }
 
   return (
     <>
@@ -68,7 +69,7 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
       </Modal>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
-  );
-};
+  )
+}
 
-export default NewSavedMacroModal;
+export default NewSavedMacroModal

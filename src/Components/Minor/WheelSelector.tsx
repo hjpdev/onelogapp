@@ -1,10 +1,10 @@
-import React, {
-  Dispatch, ReactText, SetStateAction, useState
-} from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import React, { Dispatch, ReactText, SetStateAction, useState } from 'react'
+import { Text, View } from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 
-type WheelSelectorProps = {
+import { WheelSelectorStyles } from './Styles'
+
+interface WheelSelectorProps {
   integerOptions: string[]
   fractionOptions: string[]
   updateData: Dispatch<SetStateAction<number>>
@@ -12,82 +12,55 @@ type WheelSelectorProps = {
   isDose?: boolean
 }
 
-const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
-  const {
-    integerOptions, fractionOptions, updateData, data, isDose
-  } = props;
+export const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
+  const { integerOptions, fractionOptions, updateData, data, isDose } = props
 
-  let integer = 0;
-  let fraction = 0;
+  let integer = 0
+  let fraction = 0
   if (data) {
-    const parts = `${data.toFixed(1)}`.split('.');
-    integer = parseInt(parts[0]);
-    fraction = parseInt(parts[1]);
+    const parts = `${data.toFixed(1)}`.split('.')
+    integer = parseInt(parts[0])
+    fraction = parseInt(parts[1])
   }
 
-  const [integerPart, setIntegerPart] = useState(integer);
-  const [fractionPart, setFractionPart] = useState(fraction);
+  const [integerPart, setIntegerPart] = useState(integer)
+  const [fractionPart, setFractionPart] = useState(fraction)
 
-  const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />);
+  const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />)
 
   const onIntegerPartSelected = (itemValue: ReactText, _: number) => {
-    setIntegerPart(parseInt(`${itemValue}`));
-    const data = Number(parseFloat(`${itemValue}.${fractionPart}`).toFixed(1));
-    updateData(data);
-  };
+    setIntegerPart(parseInt(`${itemValue}`))
+    const data = Number(parseFloat(`${itemValue}.${fractionPart}`).toFixed(1))
+    updateData(data)
+  }
 
   const onFractionPartSelected = (itemValue: ReactText, _: number) => {
-    setFractionPart(parseInt(`${itemValue}`));
-    const data = integerPart + (parseInt(`${itemValue}`) / 10);
-    updateData(data);
-  };
+    setFractionPart(parseInt(`${itemValue}`))
+    const data = integerPart + parseInt(`${itemValue}`) / 10
+    updateData(data)
+  }
 
   return (
-    <View style={Styles.container}>
+    <View style={WheelSelectorStyles.container}>
       <Picker
         selectedValue={`${integerPart}`}
-        style={Styles.picker}
-        itemStyle={Styles.pickerItem}
+        style={WheelSelectorStyles.picker}
+        itemStyle={WheelSelectorStyles.pickerItem}
         onValueChange={onIntegerPartSelected}
       >
-        { getPickerItems(integerOptions) }
+        {getPickerItems(integerOptions)}
       </Picker>
-      <View style={Styles.textContainer}>
-        <Text style={Styles.text}>.</Text>
+      <View style={WheelSelectorStyles.textContainer}>
+        <Text style={WheelSelectorStyles.text}>.</Text>
       </View>
       <Picker
         selectedValue={`${fractionPart}`}
-        style={Styles.picker}
-        itemStyle={Styles.pickerItem}
+        style={WheelSelectorStyles.picker}
+        itemStyle={WheelSelectorStyles.pickerItem}
         onValueChange={onFractionPartSelected}
       >
-        { getPickerItems(fractionOptions) }
+        {getPickerItems(fractionOptions)}
       </Picker>
     </View>
-  );
-};
-
-export default WheelSelector;
-
-const Styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    borderLeftWidth: 0.7,
-    borderRightWidth: 0.7
-  },
-  picker: {
-    height: 200,
-    width: 140,
-    justifyContent: 'center'
-  },
-  pickerItem: {
-    height: '100%'
-  },
-  textContainer: {
-    justifyContent: 'center'
-  },
-  text: {
-    fontSize: 40
-  }
-});
+  )
+}

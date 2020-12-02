@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
-import Modal from 'react-native-modal';
-import {
-  StyleSheet, Switch, Text, TouchableOpacity, View
-} from 'react-native';
+import React, { useState } from 'react'
+import Modal from 'react-native-modal'
+import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
 
-import ChoiceButtons from '../../Minor/ChoiceButtons';
-import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal';
-import ModifyTimeSelector from '../../Minor/ModifyTimeSelector';
-import ReadingService from '../../../Services/ReadingService';
-import SuccessModal from '../SuccessModal';
-import WheelSelector from '../../Minor/WheelSelector';
-import { WheelSelectorOptions, generateCreatedDate } from '../../../Helpers';
-import { DoseReading } from '../../../types';
+import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
+import ReadingService from '../../../Services/ReadingService'
+import SuccessModal from '../SuccessModal'
+import { ChoiceButtons, ModifyTimeSelector, WheelSelector } from '../../Minor'
+import { WheelSelectorOptions, generateCreatedDate } from '../../../Helpers'
+import { DoseReading } from '../../../types'
 
 interface ModifyDoseModalProps {
   isVisible: boolean
@@ -20,66 +16,56 @@ interface ModifyDoseModalProps {
   update: (dataKey: string) => void
 }
 
-function getDoseProperties<DoseReading>(
-  obj: DoseReading,
-): Array<keyof DoseReading> {
-  const result: Array<keyof DoseReading> = [];
+function getDoseProperties<DoseReading>(obj: DoseReading): Array<keyof DoseReading> {
+  const result: Array<keyof DoseReading> = []
   for (const key in obj) {
-    result.push(key);
+    result.push(key)
   }
-  return result;
+  return result
 }
 
-const readingService = new ReadingService();
+const readingService = new ReadingService()
 
-const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
-  props: ModifyDoseModalProps,
-) => {
-  const {
-    isVisible, reading, onClose, update
-  } = props;
+const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalProps) => {
+  const { isVisible, reading, onClose, update } = props
 
-  const [created, setCreated] = useState(reading.created);
-  const [data, setData] = useState<number>(reading.data || 0.0);
-  const [long, setLong] = useState<boolean>(reading.long);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [
-    showDeleteConfirmationModal,
-    setShowDeleteConfirmationModal,
-  ] = useState(false);
+  const [created, setCreated] = useState(reading.created)
+  const [data, setData] = useState<number>(reading.data || 0.0)
+  const [long, setLong] = useState<boolean>(reading.long)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const state: DoseReading = {
-    id: reading.id, created, data, long
-  };
+    id: reading.id,
+    created,
+    data,
+    long
+  }
 
-  const isPropertyUpdated = (property: keyof DoseReading) => state[property] !== reading[property];
+  const isPropertyUpdated = (property: keyof DoseReading) => state[property] !== reading[property]
 
   const handleSubmit = async () => {
     try {
-      const body = {} as any;
-      const properties: Array<keyof DoseReading> = getDoseProperties(state);
+      const body = {} as any
+      const properties: Array<keyof DoseReading> = getDoseProperties(state)
       for (const key of properties) {
         if (isPropertyUpdated(key)) {
-          body[key] = state[key];
+          body[key] = state[key]
         }
       }
       const response = await readingService.putReading({
         table: 'dose',
         data: body,
-        id: state.id,
-      });
+        id: state.id
+      })
 
-      await readingService.handleSuccessfulUpdate(
-        'doseReadings',
-        response,
-        setShowSuccessModal,
-      );
-      update('doseReadings');
-      onClose();
+      await readingService.handleSuccessfulUpdate('doseReadings', response, setShowSuccessModal)
+      update('doseReadings')
+      onClose()
     } catch (err) {
-      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`);
+      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`)
     }
-  };
+  }
 
   return (
     <>
@@ -100,10 +86,7 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
               <Text style={Styles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
-          <ModifyTimeSelector
-            created={state.created}
-            setDateTime={setCreated}
-          />
+          <ModifyTimeSelector created={state.created} setDateTime={setCreated} />
           <WheelSelector
             data={reading.data}
             integerOptions={WheelSelectorOptions.bgInt}
@@ -112,11 +95,7 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
           />
           <View style={Styles.switch}>
             <Text style={Styles.switchText}>Short</Text>
-            <Switch
-              testID="doseReading_toggleSwitch"
-              onValueChange={() => setLong(!long)}
-              value={state.long}
-            />
+            <Switch testID="doseReading_toggleSwitch" onValueChange={() => setLong(!long)} value={state.long} />
             <Text style={Styles.switchText}>Long</Text>
           </View>
           <ChoiceButtons
@@ -127,10 +106,7 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
           />
         </View>
       </Modal>
-      <SuccessModal
-        isVisible={showSuccessModal}
-        onPress={() => setShowSuccessModal(false)}
-      />
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
       <DeleteConfirmationModal
         isVisible={showDeleteConfirmationModal}
         id={reading.id}
@@ -141,14 +117,14 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (
         update={() => update('doseReadings')}
       />
     </>
-  );
-};
+  )
+}
 
-export default ModifyDoseModal;
+export default ModifyDoseModal
 
 const Styles = StyleSheet.create({
   modal: {
-    alignItems: 'center',
+    alignItems: 'center'
   },
   container: {
     width: 300,
@@ -156,11 +132,11 @@ const Styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1.5,
     borderBottomWidth: 2,
-    borderRadius: 4,
+    borderRadius: 4
   },
   name: {
     fontSize: 18,
-    paddingVertical: 2,
+    paddingVertical: 2
   },
   switch: {
     width: '60%',
@@ -170,7 +146,7 @@ const Styles = StyleSheet.create({
     paddingVertical: 8
   },
   switchText: {
-    fontSize: 16,
+    fontSize: 16
   },
   deleteContainer: {
     width: '100%'
@@ -178,5 +154,5 @@ const Styles = StyleSheet.create({
   deleteText: {
     textAlign: 'left',
     padding: 6
-  },
-});
+  }
+})

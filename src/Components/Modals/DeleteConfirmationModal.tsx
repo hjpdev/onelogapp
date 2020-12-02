@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import Modal from 'react-native-modal';
 import { Text, StyleSheet, View } from 'react-native';
 
-import ChoiceButtons from '../Minor/ChoiceButtons';
 import SuccessModal from './SuccessModal';
 import ReadingService from '../../Services/ReadingService';
+import { ChoiceButtons } from '../Minor';
 import { generateCreatedDate } from '../../Helpers';
 import { truncateName } from '../../Helpers/General';
 import { StoredReading, Table } from '../../types';

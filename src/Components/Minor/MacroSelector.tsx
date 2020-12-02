@@ -1,9 +1,8 @@
-import React, {
-  Dispatch, SetStateAction, useEffect, useState
-} from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-type MacroSelectorProps = {
+import { MacroSelectorStyles } from './Styles'
+
+interface MacroSelectorProps {
   label: string
   updateMacro: Dispatch<SetStateAction<number>>
   value?: number
@@ -11,59 +10,61 @@ type MacroSelectorProps = {
 }
 
 const parseValue = (value: number | undefined) => {
-  const stringValue = value && value.toFixed(1);
-  const integers = stringValue && stringValue.split('.')[0];
-  const keys = ['ones', 'tens', 'hundreds', 'thousands'];
-  const keysToUse = integers && keys.slice(0, integers.length);
+  const stringValue = value && value.toFixed(1)
+  const integers = stringValue && stringValue.split('.')[0]
+  const keys = ['ones', 'tens', 'hundreds', 'thousands']
+  const keysToUse = integers && keys.slice(0, integers.length)
 
-  const decimal = (stringValue && parseInt(stringValue.split('.')[1])) || 0;
+  const decimal = (stringValue && parseInt(stringValue.split('.')[1])) || 0
   const tmpObj = {
-    thousands: 0, hundreds: 0, tens: 0, ones: 0, decimal
-  } as any;
+    thousands: 0,
+    hundreds: 0,
+    tens: 0,
+    ones: 0,
+    decimal
+  } as any
 
   if (integers && keysToUse) {
     for (let i = 0; i < integers.length; i++) {
-      const key = keysToUse.reverse()[i];
-      tmpObj[key] = parseInt(integers[i]);
+      const key = keysToUse.reverse()[i]
+      tmpObj[key] = parseInt(integers[i])
     }
   }
 
-  return tmpObj;
-};
+  return tmpObj
+}
 
-const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
-  const {
-    hasThousands, label, value, updateMacro
-  } = props;
+export const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
+  const { hasThousands, label, value, updateMacro } = props
 
-  const amount = parseValue(value);
+  const amount = parseValue(value)
 
-  console.log('VALLUE IN SELECTOR => ', value);
-  console.log('AMOUNT IN SLEECTOR => ', amount);
+  console.log('VALLUE IN SELECTOR => ', value)
+  console.log('AMOUNT IN SLEECTOR => ', amount)
 
-  const [thousands, setThousands] = useState(amount.thousands);
-  const [hundreds, setHundreds] = useState(amount.hundreds);
-  const [tens, setTens] = useState(amount.tens);
-  const [ones, setOnes] = useState(amount.ones);
-  const [decimal, setDecimal] = useState(amount.decimal);
+  const [thousands, setThousands] = useState(amount.thousands)
+  const [hundreds, setHundreds] = useState(amount.hundreds)
+  const [tens, setTens] = useState(amount.tens)
+  const [ones, setOnes] = useState(amount.ones)
+  const [decimal, setDecimal] = useState(amount.decimal)
 
-  const generateValue = () => parseFloat(`${thousands}${hundreds}${tens}${ones}.${decimal}`);
+  const generateValue = () => parseFloat(`${thousands}${hundreds}${tens}${ones}.${decimal}`)
 
   useEffect(() => {
-    const value = generateValue();
-    updateMacro(value);
-  }, [thousands, hundreds, tens, ones, decimal]);
+    const value = generateValue()
+    updateMacro(value)
+  }, [thousands, hundreds, tens, ones, decimal])
 
   const onSelection = (setterFunction: Dispatch<SetStateAction<number>>, int: number) => {
-    setterFunction(int);
-  };
+    setterFunction(int)
+  }
 
-  const generateStyle = () => (hasThousands ? Styles.thousands : Styles.hundreds);
+  const generateStyle = () => (hasThousands ? MacroSelectorStyles.thousands : MacroSelectorStyles.hundreds)
 
-  return (null);
-  // <View style={Styles.container}>
-  //   <Text style={Styles.label}>{label}</Text>
-  //   <View style={Styles.selectors}>
+  return null
+  // <View style={MacroSelectorStyles.container}>
+  //   <Text style={MacroSelectorStyles.label}>{label}</Text>
+  //   <View style={MacroSelectorStyles.selectors}>
   //     {hasThousands
   // && (
   // <View>
@@ -119,7 +120,7 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
   //     style={generateStyle()}
   //   />
   // </View>
-  // <Text style={Styles.decimalPoint}>.</Text>
+  // <Text style={MacroSelectorStyles.decimalPoint}>.</Text>
   // <View>
   //   <WheelPicker
   //     selectedItem={decimal}
@@ -136,37 +137,4 @@ const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) 
   //   </View>
   // </View>
   // )
-};
-
-export default MacroSelector;
-
-const Styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    borderLeftWidth: 0.5,
-    borderRightWidth: 0.5
-  },
-  selectors: {
-    flexDirection: 'row',
-    borderLeftWidth: 0.5
-  },
-  label: {
-    textAlignVertical: 'bottom',
-    paddingBottom: 8,
-    paddingLeft: 8
-  },
-  thousands: {
-    width: 32,
-    height: 60
-  },
-  hundreds: {
-    width: 40,
-    height: 60
-  },
-  decimalPoint: {
-    textAlignVertical: 'bottom',
-    paddingBottom: 6
-  }
-});
+}

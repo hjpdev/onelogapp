@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { Image, Text, View } from 'react-native'
 
 // eslint-disable-next-line no-unused-vars
@@ -9,7 +9,7 @@ interface BgCarouselProps {
   reading: BgReading
 }
 
-export default (props: BgCarouselProps): ReactElement<BgCarouselProps> => {
+const BgCarousel: React.FC<BgCarouselProps> = (props: BgCarouselProps) => {
   const { reading } = props
   const { data } = reading
 
@@ -43,3 +43,5 @@ export default (props: BgCarouselProps): ReactElement<BgCarouselProps> => {
     </View>
   )
 }
+
+export default BgCarousel

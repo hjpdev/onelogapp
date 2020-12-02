@@ -1,43 +1,40 @@
-import React, { useState } from 'react';
-import {
-  Text, View, TouchableOpacity, StyleSheet, Switch
-} from 'react-native';
+import React, { useState } from 'react'
+import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native'
 
-import ReadingService from '../../../Services/ReadingService';
-import SuccessModal from '../../Modals/SuccessModal';
-import TimeSelector from '../../Minor/TimeSelector';
-import WheelSelector from '../../Minor/WheelSelector';
-import { delay, WheelSelectorOptions } from '../../../Helpers/General';
-import { NewReadingHeader } from '../NewReadingHeader';
-import { DataKey, Table } from '../../../types';
+import ReadingService from '../../../Services/ReadingService'
+import SuccessModal from '../../Modals/SuccessModal'
+import { TimeSelector, WheelSelector } from '../../Minor'
+import { NewReadingHeader } from '../NewReadingHeader'
+import { delay, WheelSelectorOptions } from '../../../Helpers/General'
+import { DataKey, Table } from '../../../types'
 
-const dataKey = DataKey.dose;
-const readingService = new ReadingService();
+const dataKey = DataKey.dose
+const readingService = new ReadingService()
 
 export const NewDoseReading: React.FC = () => {
-  const [data, setData] = useState(0.0);
-  const [long, setLong] = useState(false);
-  const [dateTime, setDateTime] = useState(null);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [data, setData] = useState(0.0)
+  const [long, setLong] = useState(false)
+  const [dateTime, setDateTime] = useState(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     if (data > 0) {
       if (data < 1) {
-        delay(500);
+        delay(500)
       }
       try {
-        const reading = dateTime ? { data, long, created: dateTime } : { data, long };
+        const reading = dateTime ? { data, long, created: dateTime } : { data, long }
         const response = await readingService.submitReading({
           table: Table.dose,
           reading
-        });
+        })
 
-        return readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal);
+        return readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
       } catch (err) {
-        console.log('Error dose handleSubmit: ', err);
+        console.log('Error dose handleSubmit: ', err)
       }
     }
-  };
+  }
 
   return (
     <>
@@ -62,8 +59,8 @@ export const NewDoseReading: React.FC = () => {
       </View>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
-  );
-};
+  )
+}
 
 const Styles = StyleSheet.create({
   container: {
@@ -96,4 +93,4 @@ const Styles = StyleSheet.create({
   submitText: {
     fontSize: 18
   }
-});
+})

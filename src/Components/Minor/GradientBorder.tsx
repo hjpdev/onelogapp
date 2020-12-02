@@ -1,18 +1,18 @@
-import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
+import React from 'react'
+import LinearGradient from 'react-native-linear-gradient'
 
-type GradientBorderProps = {
-  x: number,
-  y: number,
+interface GradientBorderProps {
+  x: number
+  y: number
   colors?: string[]
 }
 
-const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBorderProps) => {
-  const { x, y } = props;
-  let { colors } = props;
+export const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBorderProps) => {
+  const { x, y } = props
+  let { colors } = props
 
   if (colors === undefined) {
-    colors = ['#ebebeb', 'grey', '#ebebeb'];
+    colors = ['#ebebeb', 'grey', '#ebebeb']
   }
 
   return (
@@ -21,10 +21,11 @@ const GradientBorder: React.FC<GradientBorderProps> = (props: GradientBorderProp
       end={{ x, y }}
       colors={colors}
       style={{
-        height: 0.5, width: '100%', alignItems: 'center', justifyContent: 'center'
+        height: 0.5,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}
     />
-  );
-};
-
-export default GradientBorder;
+  )
+}

@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
-import Modal from 'react-native-modal';
-import { View } from 'react-native';
+import React, { useState } from 'react'
+import Modal from 'react-native-modal'
+import { View } from 'react-native'
 
-import ChoiceButtons from '../../Minor/ChoiceButtons';
-import GradientBorder from '../../Minor/GradientBorder';
-import MacroAmountSelector from '../../Minor/MacroAmountSelector';
-import SuccessModal from '../../Modals/SuccessModal';
-import { delay } from '../../../Helpers/General';
-import { StoredSavedMacroReading } from '../../../types';
-import { ConfirmationModalStyles } from './Styles';
+import SuccessModal from '../../Modals/SuccessModal'
+import { ChoiceButtons, GradientBorder, MacroAmountSelector} from '../../Minor'
+import { delay } from '../../../Helpers/General'
+import { StoredSavedMacroReading } from '../../../types'
+import { ConfirmationModalStyles } from './Styles'
 
 interface MacroCollectionConfirmationModalProps {
   isVisible: boolean
@@ -17,21 +15,21 @@ interface MacroCollectionConfirmationModalProps {
   onSubmit: (amount: number, data: StoredSavedMacroReading) => void
 }
 
-const MacroCollectionConfirmationModal: React.FC<MacroCollectionConfirmationModalProps> = (props: MacroCollectionConfirmationModalProps) => {
-  const {
-    isVisible, data, onClose, onSubmit
-  } = props;
+const MacroCollectionConfirmationModal: React.FC<MacroCollectionConfirmationModalProps> = (
+  props: MacroCollectionConfirmationModalProps
+) => {
+  const { isVisible, data, onClose, onSubmit } = props
 
-  const [amount, setAmount] = useState(data.amount);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [amount, setAmount] = useState(data.amount)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
-    onSubmit(amount, data);
-    onClose();
-    setShowSuccessModal(true);
-    await delay(1200);
-    setShowSuccessModal(false);
-  };
+    onSubmit(amount, data)
+    onClose()
+    setShowSuccessModal(true)
+    await delay(1200)
+    setShowSuccessModal(false)
+  }
 
   return (
     <>
@@ -51,12 +49,17 @@ const MacroCollectionConfirmationModal: React.FC<MacroCollectionConfirmationModa
           <View>
             <MacroAmountSelector unit={data.unit} updateAmount={setAmount} />
           </View>
-          <ChoiceButtons confirmationText="Add" cancellationText="Cancel" onSubmit={async () => await handleSubmit()} onClose={onClose} />
+          <ChoiceButtons
+            confirmationText="Add"
+            cancellationText="Cancel"
+            onSubmit={async () => await handleSubmit()}
+            onClose={onClose}
+          />
         </View>
       </Modal>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
-  );
-};
+  )
+}
 
-export default MacroCollectionConfirmationModal;
+export default MacroCollectionConfirmationModal

@@ -1,21 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import React from 'react'
+import { Text } from 'react-native'
+
+import { PlusSymbolStyles } from './Styles'
 
 export const PlusSymbol: React.FC = () => (
   <>
-    <Text style={Styles.text}>+</Text>
+    <Text style={PlusSymbolStyles.text}>+</Text>
   </>
-);
-
-const Styles = StyleSheet.create({
-  text: {
-    paddingHorizontal: 4,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    fontSize: 10,
-    fontWeight: 'bold',
-    borderRadius: 100,
-    borderWidth: 1,
-    marginVertical: 4,
-  }
-});
+)

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { Text, View } from 'react-native'
 
 // eslint-disable-next-line no-unused-vars
@@ -9,7 +9,7 @@ interface MacroCarouselProps {
   reading: MacroReadingData
 }
 
-export default (props: MacroCarouselProps): ReactElement<MacroCarouselProps> => {
+const MacroCarousel: React.FC<MacroCarouselProps> = (props: MacroCarouselProps) => {
   const { reading } = props
   const { kcal, carbs, sugar, protein, fat } = reading
 
@@ -33,3 +33,5 @@ export default (props: MacroCarouselProps): ReactElement<MacroCarouselProps> => 
     </View>
   )
 }
+
+export default MacroCarousel

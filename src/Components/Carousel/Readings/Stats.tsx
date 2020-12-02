@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { Text, View } from 'react-native'
 
 import { StatsReading } from '../../../types'
@@ -8,7 +8,7 @@ export interface StatsCarouselProps {
   reading: StatsReading
 }
 
-export default (props: StatsCarouselProps): ReactElement<StatsCarouselProps> => {
+const StatsCarousel: React.FC<StatsCarouselProps> = (props: StatsCarouselProps) => {
   const { reading } = props
   const { avg, stddev } = reading
 
@@ -23,3 +23,5 @@ export default (props: StatsCarouselProps): ReactElement<StatsCarouselProps> => 
     </View>
   )
 }
+
+export default StatsCarousel

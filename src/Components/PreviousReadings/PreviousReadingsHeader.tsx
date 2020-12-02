@@ -1,19 +1,17 @@
-import React from 'react';
-import {
-  Image, View, Text, TouchableOpacity
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { HeaderStyles } from './Styles';
+import React from 'react'
+import { Image, View, Text, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-import GradientBorder from '../Minor/GradientBorder';
+import { GradientBorder } from '../Minor'
+import { HeaderStyles } from './Styles'
 
-type PreviousReadingsHeaderProps = {
+interface PreviousReadingsHeaderProps {
   headerText: string
 }
 
 const PreviousReadingsHeader: React.FC<PreviousReadingsHeaderProps> = (props: PreviousReadingsHeaderProps) => {
-  const { headerText } = props;
-  const navigation = useNavigation();
+  const { headerText } = props
+  const navigation = useNavigation()
 
   return (
     <>
@@ -32,7 +30,7 @@ const PreviousReadingsHeader: React.FC<PreviousReadingsHeaderProps> = (props: Pr
       </View>
       <GradientBorder x={1.0} y={1.0} />
     </>
-  );
-};
+  )
+}
 
-export default PreviousReadingsHeader;
+export default PreviousReadingsHeader

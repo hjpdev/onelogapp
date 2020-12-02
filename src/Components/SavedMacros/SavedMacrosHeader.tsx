@@ -1,11 +1,9 @@
-import React from 'react';
-import {
-  Image, View, Text, TouchableOpacity
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React from 'react'
+import { Image, View, Text, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
-import GradientBorder from '../Minor/GradientBorder';
-import { SavedMacrosHeaderStyles } from './Styles';
+import { GradientBorder } from '../Minor'
+import { SavedMacrosHeaderStyles } from './Styles'
 
 interface SavedMacrosHeaderProps {
   numberOfEntries: number
@@ -13,9 +11,9 @@ interface SavedMacrosHeaderProps {
 }
 
 const SavedMacrosHeader: React.FC<SavedMacrosHeaderProps> = (props: SavedMacrosHeaderProps) => {
-  const { numberOfEntries, onPress } = props;
+  const { numberOfEntries, onPress } = props
 
-  const navigation = useNavigation();
+  const navigation = useNavigation()
 
   return (
     <>
@@ -40,7 +38,7 @@ const SavedMacrosHeader: React.FC<SavedMacrosHeaderProps> = (props: SavedMacrosH
       </View>
       <GradientBorder x={1.0} y={1.0} />
     </>
-  );
-};
+  )
+}
 
-export default SavedMacrosHeader;
+export default SavedMacrosHeader

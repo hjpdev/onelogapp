@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 
-import GradientBorder from '../Minor/GradientBorder';
-import { StoredReading } from '../../types';
-import { ForDateStyles } from './Styles';
+import { GradientBorder } from '../Minor'
+import { StoredReading } from '../../types'
+import { ForDateStyles } from './Styles'
 
 type PreviousReadingsForDateProps = {
   date: string
@@ -14,12 +14,10 @@ type PreviousReadingsForDateProps = {
 }
 
 const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: PreviousReadingsForDateProps) => {
-  const {
-    date, opened, readings, Template, update
-  } = props;
-  const [isOpen, setIsOpen] = useState(opened || false);
+  const { date, opened, readings, Template, update } = props
+  const [isOpen, setIsOpen] = useState(opened || false)
 
-  const generateList = () => readings.map((reading) => <Template key={reading.id} reading={reading} update={update} />);
+  const generateList = () => readings.map((reading) => <Template key={reading.id} reading={reading} update={update} />)
 
   return (
     <View>
@@ -39,7 +37,7 @@ const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: 
         <GradientBorder x={1.0} y={1.0} />
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default PreviousReadingsForDate;
+export default PreviousReadingsForDate

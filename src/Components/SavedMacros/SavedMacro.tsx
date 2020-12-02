@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
-import {
-  View, Text, TouchableOpacity, Image
-} from 'react-native';
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 
-import GradientBorder from '../Minor/GradientBorder';
-import ModifySavedMacroModal from '../Modals/Modification/ModifySavedMacroModal';
-import MacroCollectionConfirmationModal from './MacroCollection/MacroCollectionConfirmationModal';
-import { capitaliseAddWhitespace, truncateName } from '../../Helpers/General';
-import { PlusSymbol } from '../Minor/PlusSymbol';
-import { StoredSavedMacroReading } from '../../types';
-import { SavedMacroStyles } from './Styles';
+import MacroCollectionConfirmationModal from './MacroCollection/MacroCollectionConfirmationModal'
+import ModifySavedMacroModal from '../Modals/Modification/ModifySavedMacroModal'
+import { capitaliseAddWhitespace, truncateName } from '../../Helpers/General'
+import { GradientBorder, PlusSymbol } from '../Minor'
+import { StoredSavedMacroReading } from '../../types'
+import { SavedMacroStyles } from './Styles'
 
 interface SavedMacroProps {
   reading: StoredSavedMacroReading
@@ -18,17 +15,13 @@ interface SavedMacroProps {
 }
 
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
-  const { reading, update, addEntry } = props;
-  const {
-    id, name, amount, unit
-  } = reading;
-  const {
-    kcal, carbs, sugar, protein, fat
-  } = reading.data;
+  const { reading, update, addEntry } = props
+  const { id, name, amount, unit } = reading
+  const { kcal, carbs, sugar, protein, fat } = reading.data
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState(false);
-  const [showMacroCollectionConfirmationModal, setShowMacroCollectionConfirmationModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState(false)
+  const [showMacroCollectionConfirmationModal, setShowMacroCollectionConfirmationModal] = useState(false)
 
   return (
     <>
@@ -59,9 +52,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
         <GradientBorder x={1.0} y={1.0} />
         <Text>
-          {amount}
-          {' '}
-          {unit}
+          {amount} {unit}
         </Text>
         <GradientBorder x={1.0} y={1.0} />
         <View style={SavedMacroStyles.readingContainer}>
@@ -95,7 +86,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         onSubmit={addEntry}
       />
     </>
-  );
-};
+  )
+}
 
-export default SavedMacro;
+export default SavedMacro

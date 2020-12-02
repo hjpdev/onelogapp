@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react'
+import { Text, TouchableOpacity, View } from 'react-native'
 
-import GradientBorder from '../Minor/GradientBorder';
-import SavedMacro from './SavedMacro';
-import { StoredSavedMacroReading } from '../../types';
-import { SavedMacrosForLetterStyles } from './Styles';
+import SavedMacro from './SavedMacro'
+import { GradientBorder } from '../Minor'
+import { StoredSavedMacroReading } from '../../types'
+import { SavedMacrosForLetterStyles } from './Styles'
 
 interface SavedMacrosForLetterProps {
   letter: string
@@ -14,12 +14,11 @@ interface SavedMacrosForLetterProps {
 }
 
 const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedMacrosForLetterProps) => {
-  const {
-    letter, readings, update, addEntry
-  } = props;
-  const [isOpen, setIsOpen] = useState(false);
+  const { letter, readings, update, addEntry } = props
+  const [isOpen, setIsOpen] = useState(false)
 
-  const generateList = () => readings.map((reading) => <SavedMacro key={reading.id} reading={reading} update={update} addEntry={addEntry} />);
+  const generateList = () =>
+    readings.map((reading) => <SavedMacro key={reading.id} reading={reading} update={update} addEntry={addEntry} />)
 
   return (
     <>
@@ -37,7 +36,7 @@ const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedM
       )}
       <GradientBorder x={1.0} y={1.0} />
     </>
-  );
-};
+  )
+}
 
-export default SavedMacrosForLetter;
+export default SavedMacrosForLetter

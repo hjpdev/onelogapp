@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { Text, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
-import GradientBorder from '../../Minor/GradientBorder'
+import { GradientBorder } from '../../Minor'
 // eslint-disable-next-line no-unused-vars
 import { DoseReading } from '../../../types'
 import { DoseStyles } from './Styles'
@@ -11,7 +11,7 @@ interface DoseCarouselProps {
   reading: DoseReading
 }
 
-export default (props: DoseCarouselProps): ReactElement<DoseCarouselProps> => {
+const DoseCarousel: React.FC<DoseCarouselProps> = (props: DoseCarouselProps) => {
   const { reading } = props
   const { data, long } = reading
 
@@ -34,3 +34,5 @@ export default (props: DoseCarouselProps): ReactElement<DoseCarouselProps> => {
     </View>
   )
 }
+
+export default DoseCarousel

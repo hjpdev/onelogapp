@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
-import {
-  Text, TouchableOpacity, View, StyleSheet
-} from 'react-native';
+import React, { useState } from 'react'
+import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
 
-import SuccessModal from '../../Modals/SuccessModal';
-import TimeSelector from '../../Minor/TimeSelector';
-import WheelSelector from '../../Minor/WheelSelector';
-import ReadingService from '../../../Services/ReadingService';
-import { DataKey, Table } from '../../../types';
-import { NewReadingHeader } from '../NewReadingHeader';
-import { delay, WheelSelectorOptions } from '../../../Helpers';
+import ReadingService from '../../../Services/ReadingService'
+import SuccessModal from '../../Modals/SuccessModal'
+import { TimeSelector, WheelSelector } from '../../Minor'
+import { DataKey, Table } from '../../../types'
+import { NewReadingHeader } from '../NewReadingHeader'
+import { delay, WheelSelectorOptions } from '../../../Helpers'
 
-const dataKey = DataKey.bg;
-const readingService = new ReadingService();
+const dataKey = DataKey.bg
+const readingService = new ReadingService()
 
 export const NewBgReading: React.FC = () => {
-  const [data, setData] = useState(0.0);
-  const [dateTime, setDateTime] = useState(null);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [data, setData] = useState(0.0)
+  const [dateTime, setDateTime] = useState(null)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
     if (data > 0) {
       if (data < 1) {
-        delay(500);
+        delay(500)
       }
       try {
-        const reading = dateTime ? { data, created: dateTime } : { data };
+        const reading = dateTime ? { data, created: dateTime } : { data }
         const response = await readingService.submitReading({
           table: Table.bg,
           reading
-        });
+        })
 
-        return response && readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal);
+        return response && readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
       } catch (err) {
-        console.log('Error bg handleSubmit: ', err);
+        console.log('Error bg handleSubmit: ', err)
       }
     }
-  };
+  }
 
   return (
     <>
@@ -55,8 +52,8 @@ export const NewBgReading: React.FC = () => {
       </View>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
-  );
-};
+  )
+}
 
 const Styles = StyleSheet.create({
   container: {
@@ -80,4 +77,4 @@ const Styles = StyleSheet.create({
   unit: {
     fontSize: 20
   }
-});
+})

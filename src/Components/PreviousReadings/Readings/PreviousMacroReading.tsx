@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import {
-  Image, StyleSheet, Text, TouchableOpacity, View
-} from 'react-native';
+import React, { useState } from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import GradientBorder from '../../Minor/GradientBorder';
-import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal';
-import { generateCreatedTime } from '../../../Helpers/Date';
-import { StoredMacroReading } from '../../../types';
+import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal'
+import { GradientBorder } from '../../Minor'
+import { generateCreatedTime } from '../../../Helpers/Date'
+import { StoredMacroReading } from '../../../types'
 
 interface PreviousMacroReadingProps {
   reading: StoredMacroReading
@@ -14,15 +12,13 @@ interface PreviousMacroReadingProps {
 }
 
 export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props: PreviousMacroReadingProps) => {
-  const { reading, update } = props;
+  const { reading, update } = props
 
-  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false);
+  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
 
-  const { created, data } = reading;
-  const {
-    kcal, carbs, sugar, protein, fat
-  } = data;
-  const timeCreated = generateCreatedTime(created);
+  const { created, data } = reading
+  const { kcal, carbs, sugar, protein, fat } = data
+  const timeCreated = generateCreatedTime(created)
 
   return (
     <>
@@ -64,8 +60,8 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
         update={update}
       />
     </>
-  );
-};
+  )
+}
 
 const Styles = StyleSheet.create({
   container: {
@@ -128,4 +124,4 @@ const Styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black'
   }
-});
+})
