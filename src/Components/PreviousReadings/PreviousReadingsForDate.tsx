@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import GradientBorder from '../Minor/GradientBorder'
-import { StoredReading } from '../../types'
+import GradientBorder from '../Minor/GradientBorder';
+import { StoredReading } from '../../types';
+import { ForDateStyles } from './Styles';
 
 type PreviousReadingsForDateProps = {
   date: string
@@ -13,70 +14,32 @@ type PreviousReadingsForDateProps = {
 }
 
 const PreviousReadingsForDate: React.FC<PreviousReadingsForDateProps> = (props: PreviousReadingsForDateProps) => {
-  const { date, opened, readings, Template, update } = props
-  const [isOpen, setIsOpen] = useState(opened || false)
+  const {
+    date, opened, readings, Template, update
+  } = props;
+  const [isOpen, setIsOpen] = useState(opened || false);
 
-  const generateList = () => readings.map((reading) => <Template key={reading.id} reading={reading} update={update} />)
+  const generateList = () => readings.map((reading) => <Template key={reading.id} reading={reading} update={update} />);
 
   return (
     <View>
-      <View style={Styles.header}>
+      <View style={ForDateStyles.header}>
         <GradientBorder x={1.0} y={1.0} />
-        <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={Styles.date}>
-          <Text style={Styles.placeholder}>▶︎</Text>
-          <Text style={Styles.dateText}>{date}</Text>
-          <Text style={Styles.chevron}>{ isOpen ? '▼' : '▶︎'}</Text>
+        <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={ForDateStyles.date}>
+          <Text style={ForDateStyles.placeholder}>▶︎</Text>
+          <Text style={ForDateStyles.dateText}>{date}</Text>
+          <Text style={ForDateStyles.chevron}>{isOpen ? '▼' : '▶︎'}</Text>
         </TouchableOpacity>
-        {isOpen
-          && (
+        {isOpen && (
           <>
             <GradientBorder x={1.0} y={1.0} />
-            <View style={Styles.view}>
-              { generateList() }
-            </View>
+            <View style={ForDateStyles.view}>{generateList()}</View>
           </>
-          )}
+        )}
         <GradientBorder x={1.0} y={1.0} />
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default PreviousReadingsForDate
-
-const Styles = StyleSheet.create({
-  header: {
-    width: '100%'
-  },
-  date: {
-    backgroundColor: '#e6e6e6',
-    flexDirection: 'row',
-    fontSize: 22,
-    padding: 14,
-    justifyContent: 'space-between'
-  },
-  dateText: {
-    fontSize: 18,
-    flex: 4,
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  placeholder: {
-    flex: 1,
-    paddingLeft: 8,
-    fontSize: 22,
-    color: '#e6e6e6'
-  },
-  chevron: {
-    fontSize: 22,
-    textAlign: 'center',
-    paddingRight: 8,
-    flex: 1
-  },
-  view: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    backgroundColor: '#dbdbdb'
-  }
-})
+export default PreviousReadingsForDate;

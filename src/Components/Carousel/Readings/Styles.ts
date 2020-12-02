@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 import Colors from '../../../Assets/Styles/Colors'
 
-export const BgCarouselStyles = StyleSheet.create({
+export const BgStyles = StyleSheet.create({
   container: {
     flex: 5,
     paddingBottom: 10,
@@ -15,7 +15,7 @@ export const BgCarouselStyles = StyleSheet.create({
     justifyContent: 'center',
     color: Colors.black,
     fontSize: 54,
-    paddingTop: 8,
+    paddingTop: 8
   },
   unit: {
     fontSize: 12,
@@ -27,7 +27,7 @@ export const BgCarouselStyles = StyleSheet.create({
   }
 })
 
-export const DoseCarouselStyles = StyleSheet.create({
+export const DoseStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -45,14 +45,14 @@ export const DoseCarouselStyles = StyleSheet.create({
     color: Colors.black
   },
   unit: {
-    fontSize: 12,
+    fontSize: 12
   },
   colorHighlight: {
     width: '100%'
   }
 })
 
-export const MacroCarouselStyles = StyleSheet.create({
+export const MacroStyles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -81,12 +81,12 @@ export const MacroCarouselStyles = StyleSheet.create({
   }
 })
 
-export const StatsCarouselStyles = StyleSheet.create({
+export const StatsStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    width: '100%',
+    width: '100%'
   },
   readingContainer: {
     alignItems: 'center',
@@ -97,7 +97,7 @@ export const StatsCarouselStyles = StyleSheet.create({
     color: Colors.black
   },
   unit: {
-    fontSize: 12,
+    fontSize: 12
   },
   stddev: {
     textAlign: 'center',

@@ -1,84 +1,78 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { createStackNavigator } from '@react-navigation/stack'
+import React, { useState } from 'react';
+import {
+  StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import MacroReadingInput from '../../Minor/MacroReadingInput'
-import SavedMacros from '../../SavedMacros/SavedMacros'
-import { NewReadingHeader } from '../NewReadingHeader'
-import SuccessModal from '../../Modals/SuccessModal'
-import TimeSelector from '../../Minor/TimeSelector'
-import ReadingService from '../../../Services/ReadingService'
+import MacroReadingInput from '../../Minor/MacroReadingInput';
+import ReadingService from '../../../Services/ReadingService';
+import SavedMacros from '../../SavedMacros/SavedMacros';
+import SuccessModal from '../../Modals/SuccessModal';
+import TimeSelector from '../../Minor/TimeSelector';
+import { NewReadingHeader } from '../NewReadingHeader';
+import { DataKey, MacroReadingData, Table } from '../../../types';
 
-type MacroReading = {
-  kcal: number,
-  carbs: number,
-  sugar: number,
-  protein: number,
-  fat: number,
-}
-
-type NewMacroReadingProps = {
+interface NewMacroReadingProps {
   route?: {
     params: {
-      macros: MacroReading
+      macros: MacroReadingData
     }
   }
 }
 
-const readingService = new ReadingService()
+const dataKey = DataKey.macro;
+const readingService = new ReadingService();
 
 export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroReadingProps) => {
-  const { route } = props
-  const macros = route && route.params && route.params.macros
+  const { route } = props;
+  const macros = route && route.params && route.params.macros;
 
-  const [data, setData] = useState<{[key: string]: string | number}>(macros || {})
-  const [dateTime, setDateTime] = useState(null)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [data, setData] = useState<{ [key: string]: string | number }>(macros || ({} as MacroReadingData));
+  const [dateTime, setDateTime] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
-  const Stack = createStackNavigator()
+  const Stack = createStackNavigator();
 
   const handleSubmit = async () => {
     if (Object.keys(data).length > 0) {
       if (!Object.keys(data).every((macro) => data[macro] === 0)) {
         try {
-          const reading = dateTime ? { ...data, created: dateTime } : { ...data }
-          const response = await readingService.submitReading({ table: 'macro', data })
+          const reading = dateTime ? { ...data, created: dateTime } : { ...data };
+          const response = await readingService.submitReading({ table: Table.macro, data });
 
-          return readingService.handleSuccessfulSubmit('macroReadings', response, setShowSuccessModal)
+          return readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal);
         } catch (err) {
-          console.log('Error macro handleSubmit: ', err)
+          console.log('Error macro handleSubmit: ', err);
         }
       }
     }
-  }
+  };
 
   const newMacroReading = () => (
     <>
-      <NewReadingHeader headerText="Macro" dataKey="macroReadings" />
+      <NewReadingHeader headerText="Macro" dataKey={dataKey} />
       <View style={Styles.container}>
         <TimeSelector setDateTime={setDateTime} />
-        <MacroReadingInput showSavedMacroOptions data={macros} updateReading={setData} />
+        <MacroReadingInput showSavedMacroOptions reading={macros} updateReading={setData} />
         <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
           <Text style={Styles.submitText}>Submit</Text>
         </TouchableOpacity>
       </View>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
-  )
+  );
 
-  const savedMacros = () => (
-    <SavedMacros updateReading={setData} />
-  )
+  const savedMacros = () => <SavedMacros updateReading={setData} />;
 
   return (
     <Stack.Navigator initialRouteName="MacroReading" screenOptions={{ headerShown: false, animationEnabled: false }}>
       <Stack.Screen name="MacroReading" component={newMacroReading} />
       <Stack.Screen name="SavedMacros" component={savedMacros} />
     </Stack.Navigator>
-  )
-}
+  );
+};
 
-export default NewMacroReading
+export default NewMacroReading;
 
 const Styles = StyleSheet.create({
   container: {
@@ -98,5 +92,5 @@ const Styles = StyleSheet.create({
   },
   submitText: {
     fontSize: 18
-  },
-})
+  }
+});

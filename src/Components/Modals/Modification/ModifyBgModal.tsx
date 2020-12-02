@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
-import Modal from 'react-native-modal'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react';
+import Modal from 'react-native-modal';
+import {
+  StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
 
-import ChoiceButtons from '../../Minor/ChoiceButtons'
-import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
-import ReadingService from '../../../Services/ReadingService'
-import SuccessModal from '../SuccessModal'
-import WheelSelector from '../../Minor/WheelSelector'
-import { WheelSelectorOptions } from '../../../Helpers'
-import { StoredBgReading, DataKey, Table } from '../../../types'
+import ChoiceButtons from '../../Minor/ChoiceButtons';
+import ModifyTimeSelector from '../../Minor/ModifyTimeSelector';
+import ReadingService from '../../../Services/ReadingService';
+import SuccessModal from '../SuccessModal';
+import WheelSelector from '../../Minor/WheelSelector';
+import { WheelSelectorOptions } from '../../../Helpers';
+import { StoredBgReading, DataKey, Table } from '../../../types';
 
 interface ModifyBgModalProps {
   isVisible: boolean
@@ -18,38 +20,40 @@ interface ModifyBgModalProps {
   update: (dataKey: string) => void
 }
 
-const dataKey = DataKey.bg
-const readingService = new ReadingService()
+const dataKey = DataKey.bg;
+const readingService = new ReadingService();
 
 const ModifyBgModal: React.FC<ModifyBgModalProps> = (
   props: ModifyBgModalProps,
 ) => {
-  const { isVisible, reading, onClose, onDelete, update } = props
+  const {
+    isVisible, reading, onClose, onDelete, update
+  } = props;
 
-  const [created, setCreated] = useState(reading.created)
-  const [data, setData] = useState<number>(reading.data || 0.0)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [created, setCreated] = useState(reading.created);
+  const [data, setData] = useState<number>(reading.data || 0.0);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleSubmit = async () => {
     try {
-      const body = created !== reading.created ? { created, data } : { data }
+      const body = created !== reading.created ? { created, data } : { data };
       const response = await readingService.putReading({
         table: Table.bg,
         data: body,
         id: reading.id,
-      })
+      });
 
       await readingService.handleSuccessfulUpdate(
         dataKey,
         response,
         setShowSuccessModal,
-      )
-      update(dataKey)
-      onClose()
+      );
+      update(dataKey);
+      onClose();
     } catch (err) {
-      console.log(`Error ModifyBgModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyBgModal.handleSubmit: ${err}`);
     }
-  }
+  };
 
   return (
     <>
@@ -90,10 +94,10 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (
         onPress={() => setShowSuccessModal(false)}
       />
     </>
-  )
-}
+  );
+};
 
-export default ModifyBgModal
+export default ModifyBgModal;
 
 const Styles = StyleSheet.create({
   modal: {
@@ -117,4 +121,4 @@ const Styles = StyleSheet.create({
   deleteText: {
     textAlign: 'center',
   },
-})
+});

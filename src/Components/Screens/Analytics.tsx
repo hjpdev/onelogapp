@@ -1,7 +1,7 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React from 'react';
+import { Text, View } from 'react-native';
 
-import ScreenStyles from '../../Assets/Styles/Screen'
+import ScreenStyles from '../../Assets/Styles/Screen';
 
 const AnalyticsScreen: React.FC = () => (
   <>
@@ -11,6 +11,6 @@ const AnalyticsScreen: React.FC = () => (
       </Text>
     </View>
   </>
-)
+);
 
-export default AnalyticsScreen
+export default AnalyticsScreen;

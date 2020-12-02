@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 import Colors from '../../Assets/Styles/Colors'
 
-export default StyleSheet.create({
+export const CarouselStyles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -14,7 +14,7 @@ export default StyleSheet.create({
     flex: 1.1,
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
+    width: '100%'
   },
   contentContainer: {
     flexDirection: 'row',

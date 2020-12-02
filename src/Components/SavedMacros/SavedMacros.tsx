@@ -1,90 +1,108 @@
-import React, { Dispatch, SetStateAction, ReactText, useState, useEffect } from 'react'
-import { ScrollView } from 'react-native'
+import React, {
+  Dispatch, SetStateAction, ReactText, useState, useEffect
+} from 'react';
+import { ScrollView } from 'react-native';
 
-import SavedMacrosForLetter from './SavedMacrosForLetter'
-import SavedMacrosHeader from './SavedMacrosHeader'
-import MacroCollectionSummaryModal from './MacroCollection/MacroCollectionSummaryModal'
-import { ALPHABET } from '../../Helpers/General'
-import { LocalStore } from '../../Store'
-import ReadingService from '../../Services/ReadingService'
-import { TSavedMacro } from './SavedMacro'
+import MacroCollectionSummaryModal from './MacroCollection/MacroCollectionSummaryModal';
+import ReadingService from '../../Services/ReadingService';
+import SavedMacrosForLetter from './SavedMacrosForLetter';
+import SavedMacrosHeader from './SavedMacrosHeader';
+import { ALPHABET } from '../../Helpers/General';
+import { LocalStore } from '../../Store';
+import { DataKey, StoredSavedMacroReading } from '../../types';
 
-export type TMacroCollectionEntry = {
+export interface MacroCollectionEntry {
   amount: number
-  reading: TSavedMacro
+  reading: StoredSavedMacroReading
 }
 
-type SavedMacroProps = {
-  updateReading: Dispatch<SetStateAction<{ [key: string]: ReactText; }>>
+interface SavedMacrosProps {
+  updateReading: Dispatch<SetStateAction<{ [key: string]: ReactText }>>
 }
 
-const readingService = new ReadingService()
+const readingService = new ReadingService();
 
-const SavedMacros: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
-  const { updateReading } = props
-  const store = new LocalStore()
+const SavedMacros: React.FC<SavedMacrosProps> = (props: SavedMacrosProps) => {
+  const { updateReading } = props;
+  const store = new LocalStore();
 
-  const [savedMacros, setSavedMacros] = useState<TSavedMacro[]>([])
-  const [collection, setCollection] = useState<TMacroCollectionEntry[]>([])
-  const [showMacroCollectionSummaryModal, setShowMacroCollectionSummaryModal] = useState<boolean>(false)
+  const [savedMacros, setSavedMacros] = useState<StoredSavedMacroReading[]>([]);
+  const [collection, setCollection] = useState<MacroCollectionEntry[]>([]);
+  const [showMacroCollectionSummaryModal, setShowMacroCollectionSummaryModal] = useState(false);
 
-  const addEntry = (amount: number, entry: TSavedMacro): void => {
-    const updatedEntries = [...collection, { amount, reading: entry }]
-    setCollection(updatedEntries)
-  }
+  const addEntry = (amount: number, entry: StoredSavedMacroReading): void => {
+    const updatedEntries = [...collection, { amount, reading: entry }];
+    setCollection(updatedEntries);
+  };
 
   const removeEntry = (key: string): void => {
-    const clearedCollection = collection.filter((entry) => `${entry.reading.id}-${entry.amount}` !== key)
-    setCollection(clearedCollection)
-  }
+    const clearedCollection = collection.filter((entry) => `${entry.reading.id}-${entry.amount}` !== key);
+    setCollection(clearedCollection);
+  };
 
   const fetchSavedMacros = async () => {
     try {
-      const data = await store.getData('savedMacros')
-      let { readings } = data
+      const data = await store.getData(DataKey.savedMacro);
+      let { readings } = data;
       if (!readings) {
-        const response = await readingService.getReadings({ dataKeys: ['savedMacros'] })
-        readings = response.savedMacros
-        await store.storeData('savedMacros', readings)
+        const response = await readingService.getReadings({
+          dataKeys: [DataKey.savedMacro]
+        });
+        readings = response.savedMacros;
+        await store.storeData(DataKey.savedMacro, readings);
       }
-      setSavedMacros(readings)
+      setSavedMacros(readings);
     } catch (err) {
-      console.log('Error SavedMacros.fetchSavedMacros: ', err)
+      console.log('Error SavedMacros.fetchSavedMacros: ', err);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchSavedMacros()
-  }, [])
+    fetchSavedMacros();
+  }, []);
 
   const sortSavedMacrosByLetter = () => {
-    const savedMacrosByLetter: {[day: string]: TSavedMacro[]} = {} as any
+    const savedMacrosByLetter: {
+      [day: string]: StoredSavedMacroReading[]
+    } = {} as any;
     ALPHABET.forEach((letter) => {
-      savedMacrosByLetter[letter] = []
-    })
-    savedMacros.forEach((reading: TSavedMacro) => {
-      const firstLetter = reading.name[0]
-      savedMacrosByLetter[firstLetter].push(reading)
-    })
+      savedMacrosByLetter[letter] = [];
+    });
+    savedMacros.forEach((reading: StoredSavedMacroReading) => {
+      const firstLetter = reading.name[0];
+      savedMacrosByLetter[firstLetter].push(reading);
+    });
 
-    return savedMacrosByLetter
-  }
+    return savedMacrosByLetter;
+  };
 
   const generateListItems = () => {
-    const savedMacrosByLetter = sortSavedMacrosByLetter()
-
-    return ALPHABET.map((letter) => <SavedMacrosForLetter letter={letter} readings={savedMacrosByLetter[letter]} key={letter} update={() => fetchSavedMacros()} addEntry={addEntry} />)
-  }
+    const savedMacrosByLetter = sortSavedMacrosByLetter();
+    return ALPHABET.map((letter) => (
+      <SavedMacrosForLetter
+        letter={letter}
+        readings={savedMacrosByLetter[letter]}
+        key={letter}
+        update={() => fetchSavedMacros()}
+        addEntry={addEntry}
+      />
+    ));
+  };
 
   return (
     <>
       <SavedMacrosHeader numberOfEntries={collection.length} onPress={() => setShowMacroCollectionSummaryModal(true)} />
-      <ScrollView>
-        {savedMacros && generateListItems()}
-      </ScrollView>
-      <MacroCollectionSummaryModal isVisible={showMacroCollectionSummaryModal} collection={collection} onClose={() => setShowMacroCollectionSummaryModal(false)} removeEntry={removeEntry} clearCollection={() => setCollection([])} updateReading={updateReading} />
+      <ScrollView>{savedMacros && generateListItems()}</ScrollView>
+      <MacroCollectionSummaryModal
+        isVisible={showMacroCollectionSummaryModal}
+        collection={collection}
+        onClose={() => setShowMacroCollectionSummaryModal(false)}
+        removeEntry={removeEntry}
+        clearCollection={() => setCollection([])}
+        updateReading={updateReading}
+      />
     </>
-  )
-}
+  );
+};
 
-export default SavedMacros
+export default SavedMacros;

@@ -1,5 +1,7 @@
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react';
+import {
+  StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
 
 type ChoiceButtonsProps = {
   confirmationText: string
@@ -9,7 +11,9 @@ type ChoiceButtonsProps = {
 }
 
 const ChoiceButtons: React.FC<ChoiceButtonsProps> = (props: ChoiceButtonsProps) => {
-  const { confirmationText, cancellationText, onSubmit, onClose } = props
+  const {
+    confirmationText, cancellationText, onSubmit, onClose
+  } = props;
 
   return (
     <View style={Styles.buttons}>
@@ -24,10 +28,10 @@ const ChoiceButtons: React.FC<ChoiceButtonsProps> = (props: ChoiceButtonsProps) 
         </TouchableOpacity>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default ChoiceButtons
+export default ChoiceButtons;
 
 const Styles = StyleSheet.create({
   buttons: {
@@ -50,4 +54,4 @@ const Styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold'
   }
-})
+});

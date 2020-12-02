@@ -1,6 +1,8 @@
-import React, { Dispatch, ReactText, SetStateAction, useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
-import { Picker } from '@react-native-picker/picker'
+import React, {
+  Dispatch, ReactText, SetStateAction, useState
+} from 'react';
+import { Text, View, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 type WheelSelectorProps = {
   integerOptions: string[]
@@ -11,32 +13,34 @@ type WheelSelectorProps = {
 }
 
 const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) => {
-  const { integerOptions, fractionOptions, updateData, data, isDose } = props
+  const {
+    integerOptions, fractionOptions, updateData, data, isDose
+  } = props;
 
-  let integer = 0
-  let fraction = 0
+  let integer = 0;
+  let fraction = 0;
   if (data) {
-    const parts = `${data.toFixed(1)}`.split('.')
-    integer = parseInt(parts[0])
-    fraction = parseInt(parts[1])
+    const parts = `${data.toFixed(1)}`.split('.');
+    integer = parseInt(parts[0]);
+    fraction = parseInt(parts[1]);
   }
 
-  const [integerPart, setIntegerPart] = useState(integer)
-  const [fractionPart, setFractionPart] = useState(fraction)
+  const [integerPart, setIntegerPart] = useState(integer);
+  const [fractionPart, setFractionPart] = useState(fraction);
 
-  const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />)
+  const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />);
 
   const onIntegerPartSelected = (itemValue: ReactText, _: number) => {
-    setIntegerPart(parseInt(`${itemValue}`))
-    const data = Number(parseFloat(`${itemValue}.${fractionPart}`).toFixed(1))
-    updateData(data)
-  }
+    setIntegerPart(parseInt(`${itemValue}`));
+    const data = Number(parseFloat(`${itemValue}.${fractionPart}`).toFixed(1));
+    updateData(data);
+  };
 
   const onFractionPartSelected = (itemValue: ReactText, _: number) => {
-    setFractionPart(parseInt(`${itemValue}`))
-    const data = integerPart + (parseInt(`${itemValue}`) / 10)
-    updateData(data)
-  }
+    setFractionPart(parseInt(`${itemValue}`));
+    const data = integerPart + (parseInt(`${itemValue}`) / 10);
+    updateData(data);
+  };
 
   return (
     <View style={Styles.container}>
@@ -60,10 +64,10 @@ const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelectorProps) 
         { getPickerItems(fractionOptions) }
       </Picker>
     </View>
-  )
-}
+  );
+};
 
-export default WheelSelector
+export default WheelSelector;
 
 const Styles = StyleSheet.create({
   container: {
@@ -86,4 +90,4 @@ const Styles = StyleSheet.create({
   text: {
     fontSize: 40
   }
-})
+});

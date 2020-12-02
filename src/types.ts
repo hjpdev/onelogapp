@@ -3,7 +3,7 @@ export enum Table {
   keto = 'keto',
   dose = 'dose',
   macro = 'macro',
-  savedMacro = 'saved_macro'
+  savedMacro = 'saved-macro'
 }
 
 export enum DataKey {
@@ -17,7 +17,12 @@ export enum DataKey {
 
 export type MacroReadingKey = keyof MacroReadingData
 export type Reading = BgReading | KetoReading | DoseReading | MacroReading | SavedMacroReading
-export type StoredReading = StoredBgReading | StoredKetoReading | StoredDoseReading | StoredMacroReading | StoredSavedMacroReading
+export type StoredReading =
+  | StoredBgReading
+  | StoredKetoReading
+  | StoredDoseReading
+  | StoredMacroReading
+  | StoredSavedMacroReading
 
 export interface MacroReadingData {
   kcal: number
@@ -25,14 +30,17 @@ export interface MacroReadingData {
   sugar: number
   protein: number
   fat: number
+
+  [macro: string]: number
 }
 
 export type StatsResponse = {
-  [key: string]: {
-    avg: number
-    stddev: number
-  }
-  | string
+  [key: string]:
+    | {
+        avg: number
+        stddev: number
+      }
+    | string
 }
 
 export interface BaseReadingProps {
@@ -41,6 +49,11 @@ export interface BaseReadingProps {
 
 export interface BgReadingProps extends BaseReadingProps {
   data: number
+}
+
+export interface StatsReadingProps extends BaseReadingProps {
+  avg: number
+  stddev: number
 }
 
 export interface KetoReadingProps extends BaseReadingProps {
@@ -77,6 +90,18 @@ export class BgReading extends BaseReading {
   constructor(props: BgReadingProps) {
     super(props)
     this.data = props.data
+  }
+}
+
+export class StatsReading extends BaseReading {
+  avg: number
+
+  stddev: number
+
+  constructor(props: StatsReadingProps) {
+    super(props)
+    this.avg = props.avg
+    this.stddev = props.stddev
   }
 }
 
@@ -128,6 +153,12 @@ export class SavedMacroReading extends MacroReading {
 
 export class StoredBgReading extends BgReading {
   constructor(public id: number, props: BgReadingProps) {
+    super(props)
+  }
+}
+
+export class StoredStatsReading extends StatsReading {
+  constructor(public id: number, props: StatsReadingProps) {
     super(props)
   }
 }

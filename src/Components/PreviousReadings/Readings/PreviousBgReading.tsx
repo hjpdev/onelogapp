@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
-import LinearGradient from 'react-native-linear-gradient'
-import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import {
+  Image, View, StyleSheet, Text, TouchableOpacity
+} from 'react-native';
 
-import ModifyBgModal from '../../Modals/Modification/ModifyBgModal'
-import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
-import GradientBorder from '../../Minor/GradientBorder'
-import { generateCreatedTime } from '../../../Helpers/Date'
-import { StoredBgReading, DataKey, Table } from '../../../types'
+import ModifyBgModal from '../../Modals/Modification/ModifyBgModal';
+import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal';
+import GradientBorder from '../../Minor/GradientBorder';
+import { generateCreatedTime } from '../../../Helpers/Date';
+import { StoredBgReading, DataKey, Table } from '../../../types';
 
 interface PreviousBgReadingProps {
   reading: StoredBgReading
@@ -14,28 +16,28 @@ interface PreviousBgReadingProps {
 }
 
 export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgReadingProps) => {
-  const { reading, update } = props
+  const { reading, update } = props;
 
-  const [showModifyBgModal, setShowModifyBgModal] = useState(false)
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
+  const [showModifyBgModal, setShowModifyBgModal] = useState(false);
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
-  const { created, data } = reading
-  const timeCreated = generateCreatedTime(created)
+  const { created, data } = reading;
+  const timeCreated = generateCreatedTime(created);
 
   const handleDelete = (): void => {
-    setShowModifyBgModal(false)
+    setShowModifyBgModal(false);
     setTimeout(() => {
-      setShowDeleteConfirmationModal(true)
-    }, 100)
-  }
+      setShowDeleteConfirmationModal(true);
+    }, 100);
+  };
 
   const generateColor = (): string | undefined => {
-    if (data < 3.9) return 'rgba(217, 30, 30, 0.9)' // '#d91e1e'
-    if (data >= 3.9 && data < 8.1) return '#279621'
-    if (data > 8.0) return '#deda00'
-  }
+    if (data < 3.9) return 'rgba(217, 30, 30, 0.9)'; // '#d91e1e'
+    if (data >= 3.9 && data < 8.1) return '#279621';
+    if (data > 8.0) return '#deda00';
+  };
 
-  const color = reading && generateColor() || '#ebebeb'
+  const color = (reading && generateColor()) || '#ebebeb';
 
   return (
     <>
@@ -58,7 +60,13 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
           </View>
         </TouchableOpacity>
       </View>
-      <ModifyBgModal isVisible={showModifyBgModal} reading={reading} onClose={() => setShowModifyBgModal(false)} onDelete={handleDelete} update={update} />
+      <ModifyBgModal
+        isVisible={showModifyBgModal}
+        reading={reading}
+        onClose={() => setShowModifyBgModal(false)}
+        onDelete={handleDelete}
+        update={update}
+      />
       <DeleteConfirmationModal
         isVisible={showDeleteConfirmationModal}
         reading={reading}
@@ -68,8 +76,8 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
         update={() => update(DataKey.bg)}
       />
     </>
-  )
-}
+  );
+};
 
 const Styles = StyleSheet.create({
   container: {
@@ -88,7 +96,7 @@ const Styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   icon: {
     tintColor: 'black',
@@ -107,4 +115,4 @@ const Styles = StyleSheet.create({
     fontSize: 28,
     paddingVertical: 6
   }
-})
+});

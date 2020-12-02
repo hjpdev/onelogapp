@@ -1,5 +1,9 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
+import React, {
+  Dispatch, SetStateAction, useEffect, useState
+} from 'react';
+import {
+  StyleSheet, View, Text, TextInput
+} from 'react-native';
 
 type MacroSelectorProps = {
   updateAmount: Dispatch<SetStateAction<number>>
@@ -10,42 +14,44 @@ type MacroSelectorProps = {
 }
 
 const parseAmount = (value: number) => {
-  const stringValue = value.toString()
+  const stringValue = value.toString();
   let hundreds; let tens; let
-    ones
+    ones;
   if (stringValue.length === 3) {
-    hundreds = parseInt(stringValue[0])
-    tens = parseInt(stringValue[1])
-    ones = parseInt(stringValue[2])
+    hundreds = parseInt(stringValue[0]);
+    tens = parseInt(stringValue[1]);
+    ones = parseInt(stringValue[2]);
   }
   if (stringValue.length === 2) {
-    tens = parseInt(stringValue[0])
-    ones = parseInt(stringValue[1])
+    tens = parseInt(stringValue[0]);
+    ones = parseInt(stringValue[1]);
   }
   if (stringValue.length === 1) {
-    ones = parseInt(stringValue[0])
+    ones = parseInt(stringValue[0]);
   }
 
-  return { hundreds, tens, ones }
-}
+  return { hundreds, tens, ones };
+};
 
 const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorProps) => {
-  const { updateAmount, updateUnit, allowEditUnit, amount, unit } = props
+  const {
+    updateAmount, updateUnit, allowEditUnit, amount, unit
+  } = props;
 
-  const [hundreds, setHundreds] = useState((amount && parseAmount(amount).hundreds) || 0)
-  const [tens, setTens] = useState((amount && parseAmount(amount).tens) || 0)
-  const [ones, setOnes] = useState((amount && parseAmount(amount).ones) || 0)
+  const [hundreds, setHundreds] = useState((amount && parseAmount(amount).hundreds) || 0);
+  const [tens, setTens] = useState((amount && parseAmount(amount).tens) || 0);
+  const [ones, setOnes] = useState((amount && parseAmount(amount).ones) || 0);
 
-  const generateAmount = () => parseFloat(`${hundreds}${tens}${ones}`)
+  const generateAmount = () => parseFloat(`${hundreds}${tens}${ones}`);
 
   useEffect(() => {
-    const amount = generateAmount()
-    updateAmount(amount)
-  }, [hundreds, tens, ones])
+    const amount = generateAmount();
+    updateAmount(amount);
+  }, [hundreds, tens, ones]);
 
   const onSelection = (setterFunction: Dispatch<SetStateAction<number>>, int: number) => {
-    setterFunction(int)
-  }
+    setterFunction(int);
+  };
 
   return (
     <View style={Styles.container}>
@@ -94,10 +100,10 @@ const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSelectorP
           : <Text style={Styles.text}>{unit || 'Units'}</Text>}
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default MacroAmountSelector
+export default MacroAmountSelector;
 
 const Styles = StyleSheet.create({
   container: {
@@ -117,4 +123,4 @@ const Styles = StyleSheet.create({
     paddingBottom: 6,
     paddingLeft: 10
   }
-})
+});

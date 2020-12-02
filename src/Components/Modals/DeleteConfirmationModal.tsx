@@ -1,43 +1,45 @@
-import React, { useState } from 'react'
-import Modal from 'react-native-modal'
-import { Text, StyleSheet, View } from 'react-native'
+import React, { useState } from 'react';
+import Modal from 'react-native-modal';
+import { Text, StyleSheet, View } from 'react-native';
 
-import ChoiceButtons from '../Minor/ChoiceButtons'
-import SuccessModal from './SuccessModal'
-import ReadingService from '../../Services/ReadingService'
-import { generateCreatedDate } from '../../Helpers'
-import { truncateName } from '../../Helpers/General'
-import { StoredReading } from '../../types'
+import ChoiceButtons from '../Minor/ChoiceButtons';
+import SuccessModal from './SuccessModal';
+import ReadingService from '../../Services/ReadingService';
+import { generateCreatedDate } from '../../Helpers';
+import { truncateName } from '../../Helpers/General';
+import { StoredReading, Table } from '../../types';
 
 interface DeleteConfirmationModalProps {
   reading: StoredReading
-  table: string
+  table: Table
   dataKey: string
   isVisible: boolean
   onClose: () => void
   update: () => void
 }
 
-const readingService = new ReadingService()
+const readingService = new ReadingService();
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: DeleteConfirmationModalProps) => {
-  const { reading, table, dataKey, isVisible, onClose, update } = props
-  const { id, created } = reading
-  const name = generateCreatedDate(`${created}`)
+  const {
+    reading, table, dataKey, isVisible, onClose, update
+  } = props;
+  const { id, created } = reading;
+  const name = generateCreatedDate(`${created}`);
 
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleDelete = async () => {
     try {
-      const response = await readingService.deleteReading({ table, id })
+      const response = await readingService.deleteReading({ table, id });
 
-      await readingService.handleSuccessfulDelete(dataKey, response, setShowSuccessModal)
-      await update()
-      onClose()
+      await readingService.handleSuccessfulDelete(dataKey, response, setShowSuccessModal);
+      await update();
+      onClose();
     } catch (err) {
-      console.log(`Error handleDelete table: ${table}, id: ${id}: ${err}`)
+      console.log(`Error handleDelete table: ${table}, id: ${id}: ${err}`);
     }
-  }
+  };
 
   return (
     <>
@@ -59,10 +61,10 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
       </Modal>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
-  )
-}
+  );
+};
 
-export default DeleteConfirmationModal
+export default DeleteConfirmationModal;
 
 const Styles = StyleSheet.create({
   modal: {
@@ -85,4 +87,4 @@ const Styles = StyleSheet.create({
     textAlignVertical: 'bottom',
     margin: 6
   }
-})
+});

@@ -1,74 +1,71 @@
-import React from 'react'
-import { Text, ScrollView, StyleSheet, View } from 'react-native'
-import Modal from 'react-native-modal'
-import { useNavigation } from '@react-navigation/native'
+import React from 'react';
+import Modal from 'react-native-modal';
+import { Text, ScrollView, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import ChoiceButtons from '../../Minor/ChoiceButtons'
-import GradientBorder from '../../Minor/GradientBorder'
-import MacroCollectionEntry from './MacroCollectionEntry'
-import { TMacroCollectionEntry } from '../SavedMacros'
+import ChoiceButtons from '../../Minor/ChoiceButtons';
+import GradientBorder from '../../Minor/GradientBorder';
+import MacroCollectionEntry from './MacroCollectionEntry';
+import { MacroReadingData } from '../../../types';
+import { CollectionSummaryModalStyles } from './Styles';
 
-type Macros = {
-  kcal: number
-  carbs: number
-  sugar: number
-  protein: number
-  fat: number
-}
-
-type MacroCollectionSummaryModalProps = {
+interface MacroCollectionSummaryModalProps {
   isVisible: boolean
-  collection: TMacroCollectionEntry[]
+  collection: typeof MacroCollectionEntry[]
   onClose: () => void
   removeEntry: (key: string) => void
   clearCollection: () => void
-  updateReading: (macros: Macros) => void
+  updateReading: (macros: MacroReadingData) => void
 }
 
 const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = (props: MacroCollectionSummaryModalProps) => {
-  const { isVisible, collection, onClose, removeEntry, clearCollection, updateReading } = props
+  const {
+    isVisible, collection, onClose, removeEntry, clearCollection, updateReading
+  } = props;
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const getMacros = () => {
-    const tmpObj: Macros = { kcal: 0, carbs: 0, sugar: 0, protein: 0, fat: 0 }
+    const tmpObj: MacroReadingData = {
+      kcal: 0, carbs: 0, sugar: 0, protein: 0, fat: 0
+    };
     collection.forEach((entry: any) => {
-      const keys = Object.keys(tmpObj)
+      const keys = Object.keys(tmpObj);
       keys.forEach((key) => {
-        tmpObj[key] += parseFloat(entry.reading[key].toFixed(1)) * parseInt(entry.amount) / parseInt(entry.reading.amount)
-      })
-    })
+        tmpObj[key] += parseFloat(entry.reading[key].toFixed(1)) * parseInt(entry.amount) / parseInt(entry.reading.amount);
+      });
+    });
 
-    return tmpObj
-  }
+    return tmpObj;
+  };
 
   const getEntries = () => {
-    const tmpArr: React.ReactNode[] = []
+    const tmpArr: React.ReactNode[] = [];
     collection.forEach((entry: any) => {
-      const { reading } = entry
-      tmpArr.push(<MacroCollectionEntry amount={entry.amount} reading={reading} key={`${reading.id}-${entry.amount}`} removeEntry={removeEntry} />)
-    })
+      const { reading } = entry;
+      tmpArr.push(<MacroCollectionEntry amount={entry.amount} reading={reading} key={`${reading.id}-${entry.amount}`} removeEntry={removeEntry} />);
+    });
 
-    return tmpArr
-  }
+    return tmpArr;
+  };
 
-  const macros = getMacros()
+  const macros = getMacros();
 
   const calorieBreakdown = () => {
-    const carbsCal = parseFloat(((macros.carbs * 4) * 100 / macros.kcal).toFixed(1))
-    const proteinCal = parseFloat(((macros.protein * 4) * 100 / macros.kcal).toFixed(1))
-    const fatCal = parseFloat(((macros.fat * 9) * 100 / macros.kcal).toFixed(1))
+    const carbsCal = parseFloat(((macros.carbs * 4) * 100 / macros.kcal).toFixed(1));
+    const proteinCal = parseFloat(((macros.protein * 4) * 100 / macros.kcal).toFixed(1));
+    const fatCal = parseFloat(((macros.fat * 9) * 100 / macros.kcal).toFixed(1));
 
-    return { carbsCal, proteinCal, fatCal }
-  }
+    return { carbsCal, proteinCal, fatCal };
+  };
 
   const handleSubmit = () => {
-    updateReading(macros)
-    navigation.navigate('NewMacroReading', { macros })
-  }
+    updateReading(macros);
+    navigation.navigate('NewMacroReading', { macros });
+  };
 
-  const calories = calorieBreakdown()
-  const entries = getEntries()
+  const calories = calorieBreakdown();
+  const entries = getEntries();
 
   return (
     <>
@@ -81,100 +78,42 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.2}
-        style={Styles.modal}
+        style={CollectionSummaryModalStyles.modal}
       >
-        <View style={Styles.readingContainer}>
-          <View style={Styles.labels}>
-            <Text style={Styles.label}>Kcal:</Text>
-            <Text style={Styles.label}>Carbs (g):</Text>
-            <Text style={Styles.label}>Sugar (g):</Text>
-            <Text style={Styles.label}>Protein (g):</Text>
-            <Text style={Styles.label}>Fat (g):</Text>
+        <View style={CollectionSummaryModalStyles.readingContainer}>
+          <View style={CollectionSummaryModalStyles.labels}>
+            <Text style={CollectionSummaryModalStyles.label}>Kcal:</Text>
+            <Text style={CollectionSummaryModalStyles.label}>Carbs (g):</Text>
+            <Text style={CollectionSummaryModalStyles.label}>Sugar (g):</Text>
+            <Text style={CollectionSummaryModalStyles.label}>Protein (g):</Text>
+            <Text style={CollectionSummaryModalStyles.label}>Fat (g):</Text>
           </View>
 
-          <View style={Styles.numbers}>
-            <View style={Styles.values}>
-              <Text style={Styles.value}>{`${macros.kcal.toFixed(2)}`}</Text>
-              <Text style={Styles.value}>{`${macros.carbs.toFixed(2)}`}</Text>
-              <Text style={Styles.value}>{`${macros.sugar.toFixed(2)}`}</Text>
-              <Text style={Styles.value}>{`${macros.protein.toFixed(2)}`}</Text>
-              <Text style={Styles.value}>{`${macros.fat.toFixed(2)}`}</Text>
+          <View style={CollectionSummaryModalStyles.numbers}>
+            <View style={CollectionSummaryModalStyles.values}>
+              <Text style={CollectionSummaryModalStyles.value}>{`${macros.kcal.toFixed(2)}`}</Text>
+              <Text style={CollectionSummaryModalStyles.value}>{`${macros.carbs.toFixed(2)}`}</Text>
+              <Text style={CollectionSummaryModalStyles.value}>{`${macros.sugar.toFixed(2)}`}</Text>
+              <Text style={CollectionSummaryModalStyles.value}>{`${macros.protein.toFixed(2)}`}</Text>
+              <Text style={CollectionSummaryModalStyles.value}>{`${macros.fat.toFixed(2)}`}</Text>
             </View>
-            <View style={Styles.percentages}>
-              <Text style={Styles.percentage} />
-              <Text style={Styles.percentage}>{`${calories.carbsCal ? `${calories.carbsCal.toFixed(1)}%` : ''}`}</Text>
-              <Text style={Styles.percentage} />
-              <Text style={Styles.percentage}>{`${calories.proteinCal ? `${calories.proteinCal.toFixed(1)}%` : ''}`}</Text>
-              <Text style={Styles.percentage}>{`${calories.fatCal ? `${calories.fatCal.toFixed(1)}%` : ''}`}</Text>
+            <View style={CollectionSummaryModalStyles.percentages}>
+              <Text style={CollectionSummaryModalStyles.percentage} />
+              <Text style={CollectionSummaryModalStyles.percentage}>{`${calories.carbsCal ? `${calories.carbsCal.toFixed(1)}%` : ''}`}</Text>
+              <Text style={CollectionSummaryModalStyles.percentage} />
+              <Text style={CollectionSummaryModalStyles.percentage}>{`${calories.proteinCal ? `${calories.proteinCal.toFixed(1)}%` : ''}`}</Text>
+              <Text style={CollectionSummaryModalStyles.percentage}>{`${calories.fatCal ? `${calories.fatCal.toFixed(1)}%` : ''}`}</Text>
             </View>
           </View>
         </View>
         <GradientBorder x={1.0} y={1.0} />
-        <ScrollView style={Styles.entries}>
+        <ScrollView style={CollectionSummaryModalStyles.entries}>
           {entries}
         </ScrollView>
         <ChoiceButtons confirmationText="Add" cancellationText="Clear" onSubmit={async () => handleSubmit()} onClose={clearCollection} />
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default MacroCollectionSummaryModal
-
-const Styles = StyleSheet.create({
-  modal: {
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ebebeb',
-    width: '80%',
-    height: '50%',
-    flex: 0,
-    top: '20%',
-    borderWidth: 1.5,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-  },
-  readingContainer: {
-    width: '90%',
-    margin: 4,
-    marginVertical: 18,
-    borderRadius: 2,
-    borderWidth: 1.2,
-    flexDirection: 'row',
-    backgroundColor: '#ebebeb',
-    justifyContent: 'space-between'
-  },
-  labels: {
-    flexDirection: 'column',
-    padding: 10
-  },
-  label: {
-    fontSize: 14,
-    color: '#3f3d3d'
-  },
-  numbers: {
-    flexDirection: 'row',
-    width: '50%'
-  },
-  values: {
-    flexDirection: 'column',
-    padding: 10,
-    justifyContent: 'space-around'
-  },
-  value: {
-    fontSize: 14,
-    alignSelf: 'flex-end',
-    fontWeight: 'bold',
-    color: 'black'
-  },
-  percentages: {
-    width: '40%',
-    justifyContent: 'center'
-  },
-  percentage: {
-    textAlign: 'right'
-  },
-  entries: {
-    width: '100%'
-  }
-})
+export default MacroCollectionSummaryModal;

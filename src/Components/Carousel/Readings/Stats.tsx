@@ -1,36 +1,25 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Text, View } from 'react-native'
 
-import { StatsCarouselStyles } from './Styles'
+import { StatsReading } from '../../../types'
+import { StatsStyles } from './Styles'
 
-export interface StatsReadingProps {
-  reading: {
-    created: string,
-    avg: number,
-    stddev: number
-  }
+export interface StatsCarouselProps {
+  reading: StatsReading
 }
 
-const StatsCarousel: React.FC<StatsReadingProps> = (props: StatsReadingProps) => {
+export default (props: StatsCarouselProps): ReactElement<StatsCarouselProps> => {
   const { reading } = props
   const { avg, stddev } = reading
 
   return (
-    <View style={StatsCarouselStyles.container} testID="carousel-bg-stats">
-      <View style={StatsCarouselStyles.readingContainer}>
-        <Text style={StatsCarouselStyles.reading}>
-          { avg && avg.toFixed(1) }
-        </Text>
-        <Text style={StatsCarouselStyles.unit}>
-          mmol/L
-        </Text>
+    <View style={StatsStyles.container} testID="carousel-bg-stats">
+      <View style={StatsStyles.readingContainer}>
+        <Text style={StatsStyles.reading}>{avg && avg.toFixed(1)}</Text>
+        <Text style={StatsStyles.unit}>mmol/L</Text>
       </View>
 
-      <Text style={StatsCarouselStyles.stddev}>
-        { `±${stddev && stddev.toFixed(1)}` }
-      </Text>
+      <Text style={StatsStyles.stddev}>{`±${stddev && stddev.toFixed(1)}`}</Text>
     </View>
   )
 }
-
-export default StatsCarousel

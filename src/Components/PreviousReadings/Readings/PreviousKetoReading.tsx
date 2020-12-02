@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
+import React, { useState } from 'react';
+import {
+  Image, View, StyleSheet, Text, TouchableOpacity
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import ModifyKetoModal from '../../Modals/Modification/ModifyKetoModal'
-import GradientBorder from '../../Minor/GradientBorder'
-import { generateCreatedTime } from '../../../Helpers/Date'
-import { StoredKetoReading } from '../../../types'
+import ModifyKetoModal from '../../Modals/Modification/ModifyKetoModal';
+import GradientBorder from '../../Minor/GradientBorder';
+import { generateCreatedTime } from '../../../Helpers/Date';
+import { StoredKetoReading } from '../../../types';
 
 interface PreviousKetoReadingProps {
   reading: StoredKetoReading
@@ -13,12 +15,12 @@ interface PreviousKetoReadingProps {
 }
 
 export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: PreviousKetoReadingProps) => {
-  const { reading, update } = props
+  const { reading, update } = props;
 
-  const [showModifyKetoModal, setShowModifyKetoModal] = useState(false)
+  const [showModifyKetoModal, setShowModifyKetoModal] = useState(false);
 
-  const { created, data } = reading
-  const timeCreated = generateCreatedTime(created)
+  const { created, data } = reading;
+  const timeCreated = generateCreatedTime(created);
 
   return (
     <>
@@ -33,7 +35,11 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
           </TouchableOpacity>
         </View>
         <GradientBorder x={1.0} y={1.0} />
-        <TouchableOpacity onPress={() => setShowModifyKetoModal(true)} style={{ backgroundColor: 'black' }} activeOpacity={50}>
+        <TouchableOpacity
+          onPress={() => setShowModifyKetoModal(true)}
+          style={{ backgroundColor: 'black' }}
+          activeOpacity={50}
+        >
           <View>
             <LinearGradient style={{ width: '100%' }} colors={['#ebebeb', '#b8b884']} start={{ x: 0.5, y: 0.75 }}>
               <Text style={Styles.reading}>{data.toFixed(1)}</Text>
@@ -41,10 +47,15 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
           </View>
         </TouchableOpacity>
       </View>
-      <ModifyKetoModal isVisible={showModifyKetoModal} reading={reading} onClose={() => setShowModifyKetoModal(false)} update={update} />
+      <ModifyKetoModal
+        isVisible={showModifyKetoModal}
+        reading={reading}
+        onClose={() => setShowModifyKetoModal(false)}
+        update={update}
+      />
     </>
-  )
-}
+  );
+};
 
 const Styles = StyleSheet.create({
   container: {
@@ -63,7 +74,7 @@ const Styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   icon: {
     tintColor: 'black',
@@ -81,4 +92,4 @@ const Styles = StyleSheet.create({
   reading: {
     fontSize: 34
   }
-})
+});

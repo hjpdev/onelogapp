@@ -27,12 +27,12 @@
         "react-native/no-color-literals": 2,
         "react-native/no-raw-text": 2,
         "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
-        "semi": 0,
+        "no-extra-semi": 2,
         "comma-dangle": 0,
         "jsx-quotes": 1,
         "import/extensions": 0,
         "import/no-unresolved": 0,
-        "object-curly-newline": 0,
+        "object-curly-newline": 2,
         "global-require": 0
     }
 }

@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 type ChevronProps = {
   left?: boolean,
@@ -8,10 +8,10 @@ type ChevronProps = {
 }
 
 const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
-  const { left, right, handlePress } = props
-  let symbol = ''
-  if (left) symbol = '<'
-  if (right) symbol = '>'
+  const { left, right, handlePress } = props;
+  let symbol = '';
+  if (left) symbol = '<';
+  if (right) symbol = '>';
 
   return (
     <TouchableOpacity onPress={() => handlePress()}>
@@ -19,10 +19,10 @@ const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
         { symbol }
       </Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default Chevron
+export default Chevron;
 
 const Styles = StyleSheet.create({
   chevronSymbol: {
@@ -33,4 +33,4 @@ const Styles = StyleSheet.create({
     textAlignVertical: 'center',
     color: '#c4c4c4'
   }
-})
+});

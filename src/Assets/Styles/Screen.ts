@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
-import Colors from './Colors'
+import Colors from './Colors';
 
 const ScreenStyles = StyleSheet.create({
   container: {
@@ -13,6 +13,6 @@ const ScreenStyles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.black
   }
-})
+});
 
-export default ScreenStyles
+export default ScreenStyles;

@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import Modal from 'react-native-modal'
+import React, { useState } from 'react';
+import {
+  StyleSheet, Text, TextInput, TouchableOpacity, View
+} from 'react-native';
+import Modal from 'react-native-modal';
 
-import ChoiceButtons from '../../Minor/ChoiceButtons'
-import DeleteConfirmationModal from '../DeleteConfirmationModal'
-import MacroReadingInput from '../../Minor/MacroReadingInput'
-import GradientBorder from '../../Minor/GradientBorder'
-import MacroAmountSelector from '../../Minor/MacroAmountSelector'
-import SuccessModal from '../SuccessModal'
+import ChoiceButtons from '../../Minor/ChoiceButtons';
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import MacroReadingInput from '../../Minor/MacroReadingInput';
+import GradientBorder from '../../Minor/GradientBorder';
+import MacroAmountSelector from '../../Minor/MacroAmountSelector';
+import SuccessModal from '../SuccessModal';
 
-import ReadingService from '../../../Services/ReadingService'
-import { capitaliseAddWhitespace, truncateName } from '../../../Helpers/General'
-import { TSavedMacro } from '../../SavedMacros/SavedMacro'
+import ReadingService from '../../../Services/ReadingService';
+import { capitaliseAddWhitespace, truncateName } from '../../../Helpers/General';
+import { TSavedMacro } from '../../SavedMacros/SavedMacro';
 
 type ModifySavedMacroModalProps = {
   isVisible: boolean
@@ -20,32 +22,36 @@ type ModifySavedMacroModalProps = {
   update: () => void
 }
 
-const readingService = new ReadingService()
+const readingService = new ReadingService();
 
 const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: ModifySavedMacroModalProps) => {
-  const { isVisible, data, onClose, update } = props
+  const {
+    isVisible, data, onClose, update
+  } = props;
 
-  const [name, setName] = useState(data.name)
-  const [amount, setAmount] = useState(data.amount)
-  const [unit, setUnit] = useState(data.unit)
-  const [reading, setReading] = useState<{[key: string]: string | number}>({})
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
+  const [name, setName] = useState(data.name);
+  const [amount, setAmount] = useState(data.amount);
+  const [unit, setUnit] = useState(data.unit);
+  const [reading, setReading] = useState<{[key: string]: string | number}>({});
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
-  const { id } = data
+  const { id } = data;
 
   const handleSubmit = async () => {
     try {
-      const data = { name, ...reading, amount, unit }
-      const response = await readingService.putReading({ table: 'macro/saved', data, id })
+      const data = {
+        name, ...reading, amount, unit
+      };
+      const response = await readingService.putReading({ table: 'macro/saved', data, id });
 
-      await readingService.handleSuccessfulUpdate('savedMacros', response, setShowSuccessModal)
-      update()
-      onClose()
+      await readingService.handleSuccessfulUpdate('savedMacros', response, setShowSuccessModal);
+      update();
+      onClose();
     } catch (err) {
-      console.log(`Error ModifySavedMacroModal.handleSubmit: ${err}`)
+      console.log(`Error ModifySavedMacroModal.handleSubmit: ${err}`);
     }
-  }
+  };
 
   return (
     <>
@@ -76,10 +82,10 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
       <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={truncateName(20, `${data.name}`)} table="macro/saved" dataKey="savedMacros" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('savedMacros')} />
     </>
-  )
-}
+  );
+};
 
-export default ModifySavedMacroModal
+export default ModifySavedMacroModal;
 
 const Styles = StyleSheet.create({
   container: {
@@ -104,4 +110,4 @@ const Styles = StyleSheet.create({
   deleteText: {
     textAlign: 'center'
   }
-})
+});

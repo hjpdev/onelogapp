@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import Modal from 'react-native-modal'
+import React, { useState } from 'react';
+import {
+  StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
+import Modal from 'react-native-modal';
 
-import ChoiceButtons from '../../Minor/ChoiceButtons'
-import DeleteConfirmationModal from '../DeleteConfirmationModal'
-import MacroReadingInput from '../../Minor/MacroReadingInput'
-import ModifyTimeSelector from '../../Minor/ModifyTimeSelector'
-import ReadingService from '../../../Services/ReadingService'
-import SuccessModal from '../SuccessModal'
-import { generateCreatedDate } from '../../../Helpers/Date'
-import { MacroReading } from '../../../types'
+import ChoiceButtons from '../../Minor/ChoiceButtons';
+import DeleteConfirmationModal from '../DeleteConfirmationModal';
+import MacroReadingInput from '../../Minor/MacroReadingInput';
+import ModifyTimeSelector from '../../Minor/ModifyTimeSelector';
+import ReadingService from '../../../Services/ReadingService';
+import SuccessModal from '../SuccessModal';
+import { generateCreatedDate } from '../../../Helpers/Date';
+import { MacroReading } from '../../../types';
 
 interface ModifyMacroModalProps {
   isVisible: boolean
@@ -18,28 +20,30 @@ interface ModifyMacroModalProps {
   update: (dataKey: string) => void
 }
 
-const readingService = new ReadingService()
+const readingService = new ReadingService();
 
 const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroModalProps) => {
-  const { isVisible, reading, onClose, update } = props
+  const {
+    isVisible, reading, onClose, update
+  } = props;
 
-  const [created, setCreated] = useState(reading.created)
-  const [data, setData] = useState<{[key: string]: string | number}>({})
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
+  const [created, setCreated] = useState(reading.created);
+  const [data, setData] = useState<{[key: string]: string | number}>({});
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false);
 
   const handleSubmit = async () => {
     try {
-      const body = created !== reading.created ? { ...reading, created } : { ...reading }
-      const response = await readingService.putReading({ table: 'macro', data: body, id: reading.id })
+      const body = created !== reading.created ? { ...reading, created } : { ...reading };
+      const response = await readingService.putReading({ table: 'macro', data: body, id: reading.id });
 
-      await readingService.handleSuccessfulUpdate('macroReadings', response, setShowSuccessModal)
-      update('macroReadings')
-      onClose()
+      await readingService.handleSuccessfulUpdate('macroReadings', response, setShowSuccessModal);
+      update('macroReadings');
+      onClose();
     } catch (err) {
-      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`);
     }
-  }
+  };
 
   return (
     <>
@@ -68,10 +72,10 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
       <DeleteConfirmationModal isVisible={showDeleteConfirmationModal} id={data.id} name={generateCreatedDate(`${data.created}`)} table="macro" dataKey="macroReadings" onClose={() => setShowDeleteConfirmationModal(false)} update={() => update('macroReadings')} />
     </>
-  )
-}
+  );
+};
 
-export default ModifyMacroModal
+export default ModifyMacroModal;
 
 const Styles = StyleSheet.create({
   modal: {
@@ -93,4 +97,4 @@ const Styles = StyleSheet.create({
   deleteText: {
     textAlign: 'center'
   }
-})
+});

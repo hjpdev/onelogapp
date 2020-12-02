@@ -1,6 +1,8 @@
-import React from 'react'
-import { Image, TouchableOpacity, View, StyleSheet } from 'react-native'
-import Modal from 'react-native-modal'
+import React from 'react';
+import {
+  Image, TouchableOpacity, View, StyleSheet
+} from 'react-native';
+import Modal from 'react-native-modal';
 
 type SuccessModalProps = {
   isVisible: boolean
@@ -8,7 +10,7 @@ type SuccessModalProps = {
 }
 
 const SuccessModal: React.FC<SuccessModalProps> = (props: SuccessModalProps) => {
-  const { isVisible, onPress } = props
+  const { isVisible, onPress } = props;
 
   return (
     <Modal
@@ -26,10 +28,10 @@ const SuccessModal: React.FC<SuccessModalProps> = (props: SuccessModalProps) => 
         </TouchableOpacity>
       </View>
     </Modal>
-  )
-}
+  );
+};
 
-export default SuccessModal
+export default SuccessModal;
 
 const Styles = StyleSheet.create({
   modal: {
@@ -40,4 +42,4 @@ const Styles = StyleSheet.create({
     height: 100,
     width: 100
   }
-})
+});

@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native';
+import {
+  Text, View, TouchableOpacity, StyleSheet, Switch
+} from 'react-native';
 
+import ReadingService from '../../../Services/ReadingService';
 import SuccessModal from '../../Modals/SuccessModal';
 import TimeSelector from '../../Minor/TimeSelector';
 import WheelSelector from '../../Minor/WheelSelector';
 import { delay, WheelSelectorOptions } from '../../../Helpers/General';
-import ReadingService from '../../../Services/ReadingService';
 import { NewReadingHeader } from '../NewReadingHeader';
+import { DataKey, Table } from '../../../types';
 
+const dataKey = DataKey.dose;
 const readingService = new ReadingService();
 
 export const NewDoseReading: React.FC = () => {
@@ -22,19 +26,13 @@ export const NewDoseReading: React.FC = () => {
         delay(500);
       }
       try {
-        const reading = dateTime
-          ? { data, long, created: dateTime }
-          : { data, long };
+        const reading = dateTime ? { data, long, created: dateTime } : { data, long };
         const response = await readingService.submitReading({
-          table: 'dose',
-          reading,
+          table: Table.dose,
+          reading
         });
 
-        return readingService.handleSuccessfulSubmit(
-          'doseReadings',
-          response,
-          setShowSuccessModal,
-        );
+        return readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal);
       } catch (err) {
         console.log('Error dose handleSubmit: ', err);
       }
@@ -43,7 +41,7 @@ export const NewDoseReading: React.FC = () => {
 
   return (
     <>
-      <NewReadingHeader headerText="Dose" dataKey="doseReadings" />
+      <NewReadingHeader headerText="Dose" dataKey={dataKey} />
       <View style={Styles.container}>
         <TimeSelector setDateTime={setDateTime} />
         <WheelSelector
@@ -55,24 +53,14 @@ export const NewDoseReading: React.FC = () => {
         <Text style={Styles.unit}>Units</Text>
         <View style={Styles.switch}>
           <Text style={Styles.switchText}>Short</Text>
-          <Switch
-            testID="doseReading_toggleSwitch"
-            onValueChange={() => setLong(!long)}
-            value={long}
-          />
+          <Switch testID="doseReading_toggleSwitch" onValueChange={() => setLong(!long)} value={long} />
           <Text style={Styles.switchText}>Long</Text>
         </View>
-        <TouchableOpacity
-          onPress={async () => await handleSubmit()}
-          style={Styles.submit}
-        >
+        <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
           <Text style={Styles.submitText}>Submit</Text>
         </TouchableOpacity>
       </View>
-      <SuccessModal
-        isVisible={showSuccessModal}
-        onPress={() => setShowSuccessModal(false)}
-      />
+      <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
   );
 };
@@ -81,19 +69,19 @@ const Styles = StyleSheet.create({
   container: {
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    height: '90%',
+    height: '90%'
   },
   unit: {
-    fontSize: 20,
+    fontSize: 20
   },
   switch: {
     width: '60%',
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   switchText: {
-    fontSize: 16,
+    fontSize: 16
   },
   submit: {
     width: '60%',
@@ -103,9 +91,9 @@ const Styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderRadius: 4,
     padding: 16,
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#e6e6e6'
   },
   submitText: {
-    fontSize: 18,
-  },
+    fontSize: 18
+  }
 });

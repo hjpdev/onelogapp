@@ -1,11 +1,13 @@
-import React from 'react'
-import { Text, TouchableOpacity, View, StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import React from 'react';
+import {
+  Text, TouchableOpacity, View, StyleSheet
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import GradientBorder from '../Minor/GradientBorder'
+import GradientBorder from '../Minor/GradientBorder';
 
 const NewReadingSelection: React.FC = () => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   return (
     <View style={Styles.newReadings} testID="new-reading-screen">
@@ -30,10 +32,10 @@ const NewReadingSelection: React.FC = () => {
       </TouchableOpacity>
       <GradientBorder x={1.0} y={1.0} />
     </View>
-  )
-}
+  );
+};
 
-export default NewReadingSelection
+export default NewReadingSelection;
 
 const Styles = StyleSheet.create({
   newReadings: {
@@ -50,4 +52,4 @@ const Styles = StyleSheet.create({
   newReadingText: {
     fontSize: 22
   }
-})
+});

@@ -1,8 +1,10 @@
-import React from 'react'
-import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import React from 'react';
+import {
+  Image, View, StyleSheet, Text, TouchableOpacity
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import GradientBorder from '../Minor/GradientBorder'
+import GradientBorder from '../Minor/GradientBorder';
 
 type NewReadingHeaderProps = {
   headerText: string,
@@ -11,12 +13,12 @@ type NewReadingHeaderProps = {
 }
 
 export const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewReadingHeaderProps) => {
-  const { headerText, dataKey, hidePreviousReadingsIcon } = props
+  const { headerText, dataKey, hidePreviousReadingsIcon } = props;
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const generatePreviousReadingsIconStyle = () => (hidePreviousReadingsIcon
     ? { ...Styles.previousReadingsIcon, tintColor: '#ebebeb', opacity: 100 }
-    : Styles.previousReadingsIcon)
+    : Styles.previousReadingsIcon);
 
   return (
     <>
@@ -37,8 +39,8 @@ export const NewReadingHeader: React.FC<NewReadingHeaderProps> = (props: NewRead
       </View>
       <GradientBorder x={1.0} y={1.0} />
     </>
-  )
-}
+  );
+};
 
 const Styles = StyleSheet.create({
   header: {
@@ -68,4 +70,4 @@ const Styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center'
   }
-})
+});

@@ -1,3 +1,3 @@
-export * from './Date'
-export * from './Fake'
-export * from './General'
+export * from './Date';
+export * from './Fake';
+export * from './General';

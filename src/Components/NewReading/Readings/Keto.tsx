@@ -1,38 +1,48 @@
-import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import React, { useState } from 'react';
+import {
+  Text, View, TouchableOpacity, StyleSheet
+} from 'react-native';
 
-import SuccessModal from '../../Modals/SuccessModal'
-import TimeSelector from '../../Minor/TimeSelector'
-import WheelSelector from '../../Minor/WheelSelector'
-import { delay, WheelSelectorOptions } from '../../../Helpers/General'
-import ReadingService from '../../../Services/ReadingService'
-import { NewReadingHeader } from '../NewReadingHeader'
+import SuccessModal from '../../Modals/SuccessModal';
+import TimeSelector from '../../Minor/TimeSelector';
+import WheelSelector from '../../Minor/WheelSelector';
+import { delay, WheelSelectorOptions } from '../../../Helpers/General';
+import ReadingService from '../../../Services/ReadingService';
+import { NewReadingHeader } from '../NewReadingHeader';
+import { DataKey, Table } from '../../../types';
 
-const readingService = new ReadingService()
+const dataKey = DataKey.keto;
+const readingService = new ReadingService();
 
 export const NewKetoReading: React.FC = () => {
-  const [data, setData] = useState(0.0)
-  const [dateTime, setDateTime] = useState(null)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [data, setData] = useState(0.0);
+  const [dateTime, setDateTime] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleSubmit = async () => {
-    if (data === 0) { delay(500) }
-    try {
-      const reading = dateTime ? { data, created: dateTime } : { data }
-      const response = await readingService.submitReading({ table: 'keto', reading })
-
-      return readingService.handleSuccessfulSubmit('ketoReadings', response, setShowSuccessModal)
-    } catch (err) {
-      console.log('Error keto handleSubmit: ', err)
+    if (data === 0) {
+      delay(500);
     }
-  }
+    try {
+      const reading = dateTime ? { data, created: dateTime } : { data };
+      const response = await readingService.submitReading({ table: Table.keto, reading });
+
+      return readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal);
+    } catch (err) {
+      console.log('Error keto handleSubmit: ', err);
+    }
+  };
 
   return (
     <>
-      <NewReadingHeader headerText="Ketones" dataKey="ketoReadings" />
+      <NewReadingHeader headerText="Ketones" dataKey={dataKey} />
       <View style={Styles.container}>
         <TimeSelector setDateTime={setDateTime} />
-        <WheelSelector integerOptions={WheelSelectorOptions.default} fractionOptions={WheelSelectorOptions.default} updateData={setData} />
+        <WheelSelector
+          integerOptions={WheelSelectorOptions.default}
+          fractionOptions={WheelSelectorOptions.default}
+          updateData={setData}
+        />
         <Text style={Styles.unit}>mmol/L</Text>
         <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
           <Text style={Styles.submitText}>Submit</Text>
@@ -40,8 +50,8 @@ export const NewKetoReading: React.FC = () => {
       </View>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
-  )
-}
+  );
+};
 
 const Styles = StyleSheet.create({
   container: {
@@ -64,5 +74,5 @@ const Styles = StyleSheet.create({
   },
   submitText: {
     fontSize: 18
-  },
-})
+  }
+});

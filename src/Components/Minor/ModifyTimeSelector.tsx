@@ -1,8 +1,12 @@
-import React, { Dispatch, ReactText, SetStateAction, useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Picker } from '@react-native-picker/picker'
+import React, {
+  Dispatch, ReactText, SetStateAction, useEffect, useState
+} from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
-import { clockHours, clockMinutes, generateCreatedDateTime, newDate } from '../../Helpers'
+import {
+  clockHours, clockMinutes, generateCreatedDateTime, newDate
+} from '../../Helpers';
 
 type ModifyTimeSelectorProps = {
   created: Date
@@ -10,34 +14,36 @@ type ModifyTimeSelectorProps = {
 }
 
 const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: ModifyTimeSelectorProps) => {
-  const { created, setDateTime } = props
-  const createdDateTime = generateCreatedDateTime(created)
-  const createdHours = createdDateTime.hours
-  const createdMinutes = createdDateTime.minutes
+  const { created, setDateTime } = props;
+  const createdDateTime = generateCreatedDateTime(created);
+  const createdHours = createdDateTime.hours;
+  const createdMinutes = createdDateTime.minutes;
 
-  const [hours, setHours] = useState(createdHours)
-  const [minutes, setMinutes] = useState(createdMinutes)
+  const [hours, setHours] = useState(createdHours);
+  const [minutes, setMinutes] = useState(createdMinutes);
 
   useEffect(() => {
     if (hours !== createdHours || minutes !== createdMinutes) {
-      const { month } = createdDateTime
-      const { day } = createdDateTime
-      const date = newDate({ m: month, d: day, h: hours, min: minutes })
+      const { month } = createdDateTime;
+      const { day } = createdDateTime;
+      const date = newDate({
+        m: month, d: day, h: hours, min: minutes
+      });
 
-      date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000)
-      setDateTime(date)
+      date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
+      setDateTime(date);
     }
-  }, [hours, minutes])
+  }, [hours, minutes]);
 
-  const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />)
+  const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />);
 
   const onHoursSelected = (hours: ReactText, _: number) => {
-    setHours(parseInt(`${hours}`))
-  }
+    setHours(parseInt(`${hours}`));
+  };
 
   const onMinutesSelected = (minutes: ReactText, _: number) => {
-    setMinutes(parseInt(`${minutes}`))
-  }
+    setMinutes(parseInt(`${minutes}`));
+  };
 
   return (
     <View style={Styles.container}>
@@ -61,10 +67,10 @@ const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: ModifyTime
         { getPickerItems(clockMinutes) }
       </Picker>
     </View>
-  )
-}
+  );
+};
 
-export default ModifyTimeSelector
+export default ModifyTimeSelector;
 
 const Styles = StyleSheet.create({
   container: {
@@ -79,4 +85,4 @@ const Styles = StyleSheet.create({
   pickerItem: {
     height: '100%'
   }
-})
+});

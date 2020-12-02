@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react';
+import {
+  View, StyleSheet, Text, TouchableOpacity
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import MacroSelector from './MacroSelector'
-import NewSavedMacroModal from '../SavedMacros/NewSavedMacroModal'
-import GradientBorder from './GradientBorder'
-import { MacroReadingData, MacroReadingKey } from '../../types'
+import MacroSelector from './MacroSelector';
+import NewSavedMacroModal from '../SavedMacros/NewSavedMacroModal';
+import GradientBorder from './GradientBorder';
+import { MacroReadingData, MacroReadingKey } from '../../types';
 
 interface MacroReadingInputProps {
   showSavedMacroOptions: boolean
@@ -15,44 +17,50 @@ interface MacroReadingInputProps {
 }
 
 const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReadingInputProps) => {
-  const { showSavedMacroOptions, updateReading, reading, showClearOption } = props
+  const {
+    showSavedMacroOptions, updateReading, reading, showClearOption
+  } = props;
 
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   const parseData = () => {
-    const tmpObj = {} as MacroReadingData
+    const tmpObj = {} as MacroReadingData;
 
     reading && Object.keys(reading).forEach((macro: MacroReadingKey) => {
-      tmpObj[macro] = typeof reading[macro] === 'string' ? parseFloat(reading[macro]) : parseFloat(reading[macro].toFixed(1))
-    })
+      tmpObj[macro] = typeof reading[macro] === 'string' ? parseFloat(reading[macro]) : parseFloat(reading[macro].toFixed(1));
+    });
 
-    return tmpObj
-  }
+    return tmpObj;
+  };
 
-  const macros = parseData()
+  const macros = parseData();
 
-  const [kcal, setKcal] = useState(macros.kcal)
-  const [carbs, setCarbs] = useState(macros.carbs)
-  const [sugar, setSugar] = useState(macros.sugar)
-  const [protein, setProtein] = useState(macros.protein)
-  const [fat, setFat] = useState(macros.fat)
+  const [kcal, setKcal] = useState(macros.kcal);
+  const [carbs, setCarbs] = useState(macros.carbs);
+  const [sugar, setSugar] = useState(macros.sugar);
+  const [protein, setProtein] = useState(macros.protein);
+  const [fat, setFat] = useState(macros.fat);
 
-  const [showNewSavedMacroModal, setShowNewSavedMacroModal] = useState(false)
+  const [showNewSavedMacroModal, setShowNewSavedMacroModal] = useState(false);
 
   useEffect(() => {
-    const reading = { kcal, carbs, sugar, protein, fat }
-    updateReading(reading)
-  }, [kcal, carbs, sugar, protein, fat])
+    const reading = {
+      kcal, carbs, sugar, protein, fat
+    };
+    updateReading(reading);
+  }, [kcal, carbs, sugar, protein, fat]);
 
   const clearMacros = () => {
-    setKcal(0)
-    setCarbs(0)
-    setSugar(0)
-    setProtein(0)
-    setFat(0)
-    const reading = { kcal, carbs, sugar, protein, fat }
-    updateReading(reading)
-  }
+    setKcal(0);
+    setCarbs(0);
+    setSugar(0);
+    setProtein(0);
+    setFat(0);
+    const reading = {
+      kcal, carbs, sugar, protein, fat
+    };
+    updateReading(reading);
+  };
 
   return (
     <>
@@ -85,12 +93,18 @@ const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReading
         </View>
         )}
       </View>
-      <NewSavedMacroModal isVisible={showNewSavedMacroModal} onClose={() => setShowNewSavedMacroModal(false)} macros={{ kcal, carbs, sugar, protein, fat }} />
+      <NewSavedMacroModal
+        isVisible={showNewSavedMacroModal}
+        onClose={() => setShowNewSavedMacroModal(false)}
+        macros={{
+          kcal, carbs, sugar, protein, fat
+        }}
+      />
     </>
-  )
-}
+  );
+};
 
-export default MacroReadingInput
+export default MacroReadingInput;
 
 const Styles = StyleSheet.create({
   container: {
@@ -100,4 +114,4 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 24
   }
-})
+});

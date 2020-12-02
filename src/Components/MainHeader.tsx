@@ -1,5 +1,7 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import React from 'react';
+import {
+  StyleSheet, Text, View, Image
+} from 'react-native';
 
 const MainHeader: React.FC = () => (
   <View style={Styles.mainHeaderView} testID="main-header">
@@ -8,9 +10,9 @@ const MainHeader: React.FC = () => (
       Onelog
     </Text>
   </View>
-)
+);
 
-export default MainHeader
+export default MainHeader;
 
 const Styles = StyleSheet.create({
   mainHeaderView: {
@@ -34,4 +36,4 @@ const Styles = StyleSheet.create({
     height: 24,
     width: 24
   }
-})
+});

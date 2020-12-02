@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
 import Modal from 'react-native-modal';
 
 import ChoiceButtons from '../../Minor/ChoiceButtons';
@@ -24,7 +26,9 @@ const readingService = new ReadingService();
 const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (
   props: ModifyKetoModalProps,
 ) => {
-  const { isVisible, reading, onClose, update } = props;
+  const {
+    isVisible, reading, onClose, update
+  } = props;
 
   const [created, setCreated] = useState(reading.created);
   const [data, setData] = useState<number>(reading.data || 0.0);

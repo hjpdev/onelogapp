@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react';
+import {
+  Image, StyleSheet, Text, TouchableOpacity, View
+} from 'react-native';
 
-import GradientBorder from '../../Minor/GradientBorder'
-import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal'
-import { generateCreatedTime } from '../../../Helpers/Date'
-import { StoredMacroReading } from '../../../types'
+import GradientBorder from '../../Minor/GradientBorder';
+import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal';
+import { generateCreatedTime } from '../../../Helpers/Date';
+import { StoredMacroReading } from '../../../types';
 
 interface PreviousMacroReadingProps {
   reading: StoredMacroReading
@@ -12,13 +14,15 @@ interface PreviousMacroReadingProps {
 }
 
 export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props: PreviousMacroReadingProps) => {
-  const { reading, update } = props
+  const { reading, update } = props;
 
-  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false)
+  const [showModifyMacroModal, setShowModifyMacroModal] = useState(false);
 
-  const { created, data } = reading
-  const { kcal, carbs, sugar, protein, fat } = data
-  const timeCreated = generateCreatedTime(created)
+  const { created, data } = reading;
+  const {
+    kcal, carbs, sugar, protein, fat
+  } = data;
+  const timeCreated = generateCreatedTime(created);
 
   return (
     <>
@@ -44,19 +48,24 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
             </View>
 
             <View style={Styles.values}>
-              <Text style={Styles.value}>{ kcal.toFixed(1) }</Text>
-              <Text style={Styles.value}>{ carbs.toFixed(1) }</Text>
-              <Text style={Styles.value}>{ sugar.toFixed(1) }</Text>
-              <Text style={Styles.value}>{ protein.toFixed(1) }</Text>
-              <Text style={Styles.value}>{ fat.toFixed(1) }</Text>
+              <Text style={Styles.value}>{kcal.toFixed(1)}</Text>
+              <Text style={Styles.value}>{carbs.toFixed(1)}</Text>
+              <Text style={Styles.value}>{sugar.toFixed(1)}</Text>
+              <Text style={Styles.value}>{protein.toFixed(1)}</Text>
+              <Text style={Styles.value}>{fat.toFixed(1)}</Text>
             </View>
           </View>
         </TouchableOpacity>
       </View>
-      <ModifyMacroModal isVisible={showModifyMacroModal} reading={reading} onClose={() => setShowModifyMacroModal(false)} update={update} />
+      <ModifyMacroModal
+        isVisible={showModifyMacroModal}
+        reading={reading}
+        onClose={() => setShowModifyMacroModal(false)}
+        update={update}
+      />
     </>
-  )
-}
+  );
+};
 
 const Styles = StyleSheet.create({
   container: {
@@ -74,7 +83,7 @@ const Styles = StyleSheet.create({
   header: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   timeCreated: {
     fontSize: 16
@@ -119,4 +128,4 @@ const Styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black'
   }
-})
+});

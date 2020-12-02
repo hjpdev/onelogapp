@@ -1,70 +1,56 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native'
+import React, { useState } from 'react';
+import {
+  View, Text, TouchableOpacity, Image
+} from 'react-native';
 
-import GradientBorder from '../Minor/GradientBorder'
-import ModifySavedMacroModal from '../Modals/Modification/ModifySavedMacroModal'
-import MacroCollectionConfirmationModal from './MacroCollection/MacroCollectionConfirmationModal'
-import { capitaliseAddWhitespace, truncateName } from '../../Helpers/General'
+import GradientBorder from '../Minor/GradientBorder';
+import ModifySavedMacroModal from '../Modals/Modification/ModifySavedMacroModal';
+import MacroCollectionConfirmationModal from './MacroCollection/MacroCollectionConfirmationModal';
+import { capitaliseAddWhitespace, truncateName } from '../../Helpers/General';
+import { PlusSymbol } from '../Minor/PlusSymbol';
+import { StoredSavedMacroReading } from '../../types';
+import { SavedMacroStyles } from './Styles';
 
-export type TSavedMacro = {
-  id: number
-  created: Date
-  name: string
-  kcal: number
-  carbs: number
-  sugar: number
-  protein: number
-  fat: number
-  unit: string
-  amount: number
-  times_added: number
-}
-
-type SavedMacroProps = {
-  data: TSavedMacro
+interface SavedMacroProps {
+  reading: StoredSavedMacroReading
   update: () => void
-  addEntry: (amount: number, entry: TSavedMacro) => void
-}
-
-const PlusSymbol: React.FC = () => {
-  const PlusSymbolStyles = StyleSheet.create({
-    text: {
-      paddingHorizontal: 4,
-      textAlign: 'center',
-      textAlignVertical: 'center',
-      fontSize: 10,
-      fontWeight: 'bold',
-      borderRadius: 100,
-      borderWidth: 1,
-      marginVertical: 4,
-    }
-  })
-
-  return (
-    <><Text style={PlusSymbolStyles.text}>+</Text></>
-  )
+  addEntry: (amount: number, entry: StoredSavedMacroReading) => void
 }
 
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
-  const { data, update, addEntry } = props
-  const { id, name, kcal, carbs, sugar, protein, fat, amount, unit } = data
+  const { reading, update, addEntry } = props;
+  const {
+    id, name, amount, unit
+  } = reading;
+  const {
+    kcal, carbs, sugar, protein, fat
+  } = reading.data;
 
-  const [isOpen, setIsOpen] = useState(false)
-  const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState<boolean>(false)
-  const [showMacroCollectionConfirmationModal, setShowMacroCollectionConfirmationModal] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [showModifySavedMacroModal, setShowModifySavedMacroModal] = useState(false);
+  const [showMacroCollectionConfirmationModal, setShowMacroCollectionConfirmationModal] = useState(false);
 
   return (
     <>
-      <View style={Styles.container}>
-        <View style={Styles.title}>
+      <View style={SavedMacroStyles.container}>
+        <View style={SavedMacroStyles.title}>
           <TouchableOpacity onPress={() => setShowModifySavedMacroModal(true)}>
-            <Image source={require('../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+            <Image source={require('../../Assets/Images/NavBarSettings.png')} style={SavedMacroStyles.icon} />
           </TouchableOpacity>
-          <View style={Styles.name}>
+          <View style={SavedMacroStyles.name}>
             <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
-              {isOpen
-                ? <Text style={{ ...Styles.nameText, flexWrap: 'wrap' }}>{`${capitaliseAddWhitespace(name)}`}</Text>
-                : <Text style={Styles.nameText}>{`${truncateName(10, name)}`}</Text>}
+              {isOpen ? (
+                <Text
+                  style={{
+                    ...SavedMacroStyles.nameText,
+                    flexWrap: 'wrap'
+                  }}
+                >
+                  {`${capitaliseAddWhitespace(name)}`}
+                </Text>
+              ) : (
+                <Text style={SavedMacroStyles.nameText}>{`${truncateName(10, name)}`}</Text>
+              )}
             </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={() => setShowMacroCollectionConfirmationModal(true)}>
@@ -78,86 +64,38 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
           {unit}
         </Text>
         <GradientBorder x={1.0} y={1.0} />
-        <View style={Styles.readingContainer}>
-          <View style={Styles.labels}>
-            <Text style={Styles.label}>Kcal:</Text>
-            <Text style={Styles.label}>Carbs:</Text>
-            <Text style={Styles.label}>Sugar:</Text>
-            <Text style={Styles.label}>Protein:</Text>
-            <Text style={Styles.label}>Fat:</Text>
+        <View style={SavedMacroStyles.readingContainer}>
+          <View style={SavedMacroStyles.labels}>
+            <Text style={SavedMacroStyles.label}>Kcal:</Text>
+            <Text style={SavedMacroStyles.label}>Carbs:</Text>
+            <Text style={SavedMacroStyles.label}>Sugar:</Text>
+            <Text style={SavedMacroStyles.label}>Protein:</Text>
+            <Text style={SavedMacroStyles.label}>Fat:</Text>
           </View>
 
-          <View style={Styles.values}>
-            <Text style={Styles.value}>{ kcal.toFixed(2) }</Text>
-            <Text style={Styles.value}>{ carbs.toFixed(2) }</Text>
-            <Text style={Styles.value}>{ sugar.toFixed(2) }</Text>
-            <Text style={Styles.value}>{ protein.toFixed(2) }</Text>
-            <Text style={Styles.value}>{ fat.toFixed(2) }</Text>
+          <View style={SavedMacroStyles.values}>
+            <Text style={SavedMacroStyles.value}>{kcal.toFixed(2)}</Text>
+            <Text style={SavedMacroStyles.value}>{carbs.toFixed(2)}</Text>
+            <Text style={SavedMacroStyles.value}>{sugar.toFixed(2)}</Text>
+            <Text style={SavedMacroStyles.value}>{protein.toFixed(2)}</Text>
+            <Text style={SavedMacroStyles.value}>{fat.toFixed(2)}</Text>
           </View>
         </View>
       </View>
-      <ModifySavedMacroModal isVisible={showModifySavedMacroModal} data={data} onClose={() => setShowModifySavedMacroModal(false)} update={update} />
-      <MacroCollectionConfirmationModal isVisible={showMacroCollectionConfirmationModal} data={data} onClose={() => setShowMacroCollectionConfirmationModal(false)} onSubmit={addEntry} />
+      <ModifySavedMacroModal
+        isVisible={showModifySavedMacroModal}
+        data={reading.data}
+        onClose={() => setShowModifySavedMacroModal(false)}
+        update={update}
+      />
+      <MacroCollectionConfirmationModal
+        isVisible={showMacroCollectionConfirmationModal}
+        data={reading.data}
+        onClose={() => setShowMacroCollectionConfirmationModal(false)}
+        onSubmit={addEntry}
+      />
     </>
-  )
-}
+  );
+};
 
-export default SavedMacro
-
-const Styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ebebeb',
-    borderWidth: 1,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    paddingLeft: 6,
-    paddingRight: 6,
-    margin: '1.1%',
-    width: '31%'
-  },
-  title: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  icon: {
-    tintColor: 'black',
-    height: 14,
-    width: 14,
-    padding: 4,
-    marginTop: 4
-  },
-  name: {
-    flex: 5
-  },
-  nameText: {
-    fontSize: 14,
-    textAlign: 'center'
-  },
-  readingContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'flex-end',
-    paddingBottom: 8,
-  },
-  labels: {
-    flexDirection: 'column',
-    padding: 10
-  },
-  label: {
-    fontSize: 14,
-    color: '#3f3d3d'
-  },
-  values: {
-    flexDirection: 'column',
-    padding: 10
-  },
-  value: {
-    fontSize: 14,
-    alignSelf: 'flex-end',
-    fontWeight: 'bold',
-    color: 'black'
-  }
-})
+export default SavedMacro;

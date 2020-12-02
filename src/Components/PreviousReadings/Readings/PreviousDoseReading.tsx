@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
+import React, { useState } from 'react';
+import {
+  Image, View, StyleSheet, Text, TouchableOpacity
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import ModifyDoseModal from '../../Modals/Modification/ModifyDoseModal'
-import GradientBorder from '../../Minor/GradientBorder'
-import { generateCreatedTime } from '../../../Helpers/Date'
-import { StoredDoseReading } from '../../../types'
+import ModifyDoseModal from '../../Modals/Modification/ModifyDoseModal';
+import GradientBorder from '../../Minor/GradientBorder';
+import { generateCreatedTime } from '../../../Helpers/Date';
+import { StoredDoseReading } from '../../../types';
 
 interface PreviousDoseReadingProps {
   reading: StoredDoseReading
@@ -13,21 +15,21 @@ interface PreviousDoseReadingProps {
 }
 
 export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: PreviousDoseReadingProps) => {
-  const { reading, update } = props
+  const { reading, update } = props;
 
-  const [showModifyDoseModal, setShowModifyDoseModal] = useState(false)
+  const [showModifyDoseModal, setShowModifyDoseModal] = useState(false);
 
-  const { created, data, long } = reading
-  const timeCreated = generateCreatedTime(created)
+  const { created, data, long } = reading;
+  const timeCreated = generateCreatedTime(created);
 
-  const generateColors = () => (long ? ['#e0d5b7', '#ebebeb'] : ['#ebebeb', '#b56076'])
+  const generateColors = () => (long ? ['#e0d5b7', '#ebebeb'] : ['#ebebeb', '#b56076']);
 
   const generateStartPoint = () => {
-    const y = long ? ((data - 10) / 25) : 1 - (data / 20)
-    return { x: 0.5, y }
-  }
+    const y = long ? (data - 10) / 25 : 1 - data / 20;
+    return { x: 0.5, y };
+  };
 
-  const generateReading = () => (`${data}`.length < 2 ? data.toFixed(1) : data)
+  const generateReading = () => (`${data}`.length < 2 ? data.toFixed(1) : data);
 
   return (
     <>
@@ -52,10 +54,15 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
           <Text style={Styles.typeText}>{long ? 'Long' : 'Short'}</Text>
         </TouchableOpacity>
       </View>
-      <ModifyDoseModal isVisible={showModifyDoseModal} reading={reading} onClose={() => setShowModifyDoseModal(false)} update={update} />
+      <ModifyDoseModal
+        isVisible={showModifyDoseModal}
+        reading={reading}
+        onClose={() => setShowModifyDoseModal(false)}
+        update={update}
+      />
     </>
-  )
-}
+  );
+};
 
 const Styles = StyleSheet.create({
   container: {
@@ -74,7 +81,7 @@ const Styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   icon: {
     tintColor: 'black',
@@ -100,4 +107,4 @@ const Styles = StyleSheet.create({
   typeText: {
     textAlign: 'center'
   }
-})
+});
