@@ -5,13 +5,13 @@ import LinearGradient from 'react-native-linear-gradient'
 import { GradientBorder } from '../../Minor'
 // eslint-disable-next-line no-unused-vars
 import { DoseReading } from '../../../types'
-import { DoseStyles } from './Styles'
+import { DoseStyles } from '../Styles'
 
 interface DoseCarouselProps {
   reading: DoseReading
 }
 
-const DoseCarousel: React.FC<DoseCarouselProps> = (props: DoseCarouselProps) => {
+export const DoseCarousel: React.FC<DoseCarouselProps> = (props: DoseCarouselProps) => {
   const { reading } = props
   const { data, long } = reading
 

@@ -17,8 +17,7 @@ const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedM
   const { letter, readings, update, addEntry } = props
   const [isOpen, setIsOpen] = useState(false)
 
-  const generateList = () =>
-    readings.map((reading) => <SavedMacro key={reading.id} reading={reading} update={update} addEntry={addEntry} />)
+  const generateList = () => readings.map((reading) => <SavedMacro key={reading.id} reading={reading} update={update} addEntry={addEntry} />)
 
   return (
     <>

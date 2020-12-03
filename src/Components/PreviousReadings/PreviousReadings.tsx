@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react'
+import { ScrollView } from 'react-native'
 
-import PreviousReadingsHeader from './PreviousReadingsHeader';
-import PreviousReadingsForDate from './PreviousReadingsForDate';
-import ReadingService from '../../Services/ReadingService';
-import { LocalStore } from '../../Store';
-import { generateCreatedDay } from '../../Helpers/Date';
-import {
-  PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMacroReading
-} from './Readings';
-import { DataKey, StoredReading } from '../../types';
+import PreviousReadingsHeader from './PreviousReadingsHeader'
+import PreviousReadingsForDate from './PreviousReadingsForDate'
+import ReadingService from '../../Services/ReadingService'
+import { LocalStore } from '../../Store'
+import { generateCreatedDay } from '../../Helpers/Date'
+import { PreviousBgReading, PreviousDoseReading, PreviousKetoReading, PreviousMacroReading } from './Readings'
+import { DataKey, StoredReading } from '../../types'
 
 type PreviousReadingsProps = {
   route: {
@@ -25,52 +23,52 @@ const templateMap: { [key: string]: any } = {
   ketoReadings: PreviousKetoReading,
   doseReadings: PreviousDoseReading,
   macroReadings: PreviousMacroReading
-};
+}
 
-const readingService = new ReadingService();
+const readingService = new ReadingService()
 
 const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadingsProps) => {
-  const store = new LocalStore();
-  const { route } = props;
-  const { dataKey, headerText } = route.params;
+  const store = new LocalStore()
+  const { route } = props
+  const { dataKey, headerText } = route.params
 
-  const [readings, setReadings] = useState<StoredReading[]>([]);
+  const [previousReadings, setPreviousReadings] = useState([] as StoredReading[])
 
-  const fetchReadings = async (dataKey: DataKey) => {
+  const fetchReadings = async (key: DataKey) => {
     try {
-      let { readings } = await store.getData(dataKey);
+      let { readings } = await store.getData(key)
       if (!readings) {
-        const response = await readingService.getReadings({ dataKeys: [dataKey] });
-        readings = response[dataKey];
-        await store.storeData(dataKey, readings);
+        const response = await readingService.getReadings({ dataKeys: [key] })
+        readings = response[key]
+        await store.storeData(key, readings)
       }
-      setReadings(readings);
+      setPreviousReadings(readings)
     } catch (err) {
-      console.log('Error PreviousReadings.fetchReadings: ', err);
+      console.log('Error PreviousReadings.fetchReadings: ', err) // eslint-disable-line no-console
     }
-  };
+  }
 
   useEffect(() => {
-    fetchReadings(dataKey);
-  }, []);
+    fetchReadings(dataKey)
+  }, [])
 
   const sortReadingsByDay = (uniqueDates: string[]) => {
-    const readingsByDay: { [day: string]: StoredReading[] } = {};
+    const readingsByDay: { [day: string]: StoredReading[] } = {}
     uniqueDates.forEach((uniqueDate) => {
-      readingsByDay[uniqueDate] = [];
-    });
-    readings.forEach((reading) => {
-      const readingDate = generateCreatedDay(reading.created);
-      readingsByDay[readingDate].push(reading);
-    });
+      readingsByDay[uniqueDate] = []
+    })
+    previousReadings.forEach((reading) => {
+      const readingDate = generateCreatedDay(reading.created)
+      readingsByDay[readingDate].push(reading)
+    })
 
-    return readingsByDay;
-  };
+    return readingsByDay
+  }
 
   const generateListItems = () => {
-    const dates = readings.map((reading) => generateCreatedDay(reading.created));
-    const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i).sort((a: any, b: any) => a - b);
-    const readingsByDay = sortReadingsByDay(uniqueDates);
+    const dates = previousReadings.map((reading) => generateCreatedDay(reading.created))
+    const uniqueDates = dates.filter((item, i, ar) => ar.indexOf(item) === i).sort((a: any, b: any) => a - b)
+    const readingsByDay = sortReadingsByDay(uniqueDates)
 
     return uniqueDates.map((date, index) => (index === 0 ? (
       <PreviousReadingsForDate
@@ -79,7 +77,7 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
         readings={readingsByDay[date]}
         key={date}
         Template={templateMap[dataKey]}
-        update={(dataKey: string) => fetchReadings(dataKey)}
+        update={(_: DataKey) => fetchReadings(dataKey)}
       />
     ) : (
       <PreviousReadingsForDate
@@ -87,17 +85,17 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
         readings={readingsByDay[date]}
         key={date}
         Template={templateMap[dataKey]}
-        update={(dataKey: string) => fetchReadings(dataKey)}
+        update={(_: DataKey) => fetchReadings(dataKey)}
       />
-    )));
-  };
+    )))
+  }
 
   return (
     <>
       <PreviousReadingsHeader headerText={headerText} />
       <ScrollView>{generateListItems()}</ScrollView>
     </>
-  );
-};
+  )
+}
 
-export default PreviousReadings;
+export default PreviousReadings

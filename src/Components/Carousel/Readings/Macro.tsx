@@ -3,13 +3,13 @@ import { Text, View } from 'react-native'
 
 // eslint-disable-next-line no-unused-vars
 import { MacroReadingData } from '../../../types'
-import { MacroStyles } from './Styles'
+import { MacroStyles } from '../Styles'
 
 interface MacroCarouselProps {
   reading: MacroReadingData
 }
 
-const MacroCarousel: React.FC<MacroCarouselProps> = (props: MacroCarouselProps) => {
+export const MacroCarousel: React.FC<MacroCarouselProps> = (props: MacroCarouselProps) => {
   const { reading } = props
   const { kcal, carbs, sugar, protein, fat } = reading
 

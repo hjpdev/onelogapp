@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, Switch } from 'react-native'
+import { Text, View, TouchableOpacity, Switch } from 'react-native'
 
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../../Modals/SuccessModal'
 import { TimeSelector, WheelSelector } from '../../Minor'
 import { NewReadingHeader } from '../NewReadingHeader'
 import { delay, WheelSelectorOptions } from '../../../Helpers/General'
-import { DataKey, Table } from '../../../types'
+import { DataKey, DoseReadingProps, NewReadingHeaderText, Table } from '../../../types'
+import { DoseStyles } from '../Styles'
 
 const dataKey = DataKey.dose
 const readingService = new ReadingService()
@@ -14,32 +15,33 @@ const readingService = new ReadingService()
 export const NewDoseReading: React.FC = () => {
   const [data, setData] = useState(0.0)
   const [long, setLong] = useState(false)
-  const [dateTime, setDateTime] = useState(null)
+  const [dateTime, setDateTime] = useState<Date | null>(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
+    let response
     if (data > 0) {
       if (data < 1) {
         delay(500)
       }
       try {
-        const reading = dateTime ? { data, long, created: dateTime } : { data, long }
-        const response = await readingService.submitReading({
+        const reading: DoseReadingProps = dateTime ? { data, long, created: dateTime } : { data, long }
+        response = await readingService.submitReading({
           table: Table.dose,
           reading
         })
-
-        return readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
       } catch (err) {
-        console.log('Error dose handleSubmit: ', err)
+        console.log('Error dose handleSubmit: ', err) // eslint-disable-line no-console
       }
     }
+
+    return response && readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
   }
 
   return (
     <>
-      <NewReadingHeader headerText="Dose" dataKey={dataKey} />
-      <View style={Styles.container}>
+      <NewReadingHeader headerText={NewReadingHeaderText.dose} dataKey={dataKey} />
+      <View style={DoseStyles.container}>
         <TimeSelector setDateTime={setDateTime} />
         <WheelSelector
           isDose
@@ -47,14 +49,14 @@ export const NewDoseReading: React.FC = () => {
           fractionOptions={WheelSelectorOptions.doseFrac}
           updateData={setData}
         />
-        <Text style={Styles.unit}>Units</Text>
-        <View style={Styles.switch}>
-          <Text style={Styles.switchText}>Short</Text>
+        <Text style={DoseStyles.unit}>Units</Text>
+        <View style={DoseStyles.switch}>
+          <Text style={DoseStyles.switchText}>Short</Text>
           <Switch testID="doseReading_toggleSwitch" onValueChange={() => setLong(!long)} value={long} />
-          <Text style={Styles.switchText}>Long</Text>
+          <Text style={DoseStyles.switchText}>Long</Text>
         </View>
-        <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
-          <Text style={Styles.submitText}>Submit</Text>
+        <TouchableOpacity onPress={async () => handleSubmit()} style={DoseStyles.submit}>
+          <Text style={DoseStyles.submitText}>Submit</Text>
         </TouchableOpacity>
       </View>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
@@ -62,35 +64,4 @@ export const NewDoseReading: React.FC = () => {
   )
 }
 
-const Styles = StyleSheet.create({
-  container: {
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    height: '90%'
-  },
-  unit: {
-    fontSize: 20
-  },
-  switch: {
-    width: '60%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
-  },
-  switchText: {
-    fontSize: 16
-  },
-  submit: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    padding: 16,
-    backgroundColor: '#e6e6e6'
-  },
-  submitText: {
-    fontSize: 18
-  }
-})
+export default NewDoseReading

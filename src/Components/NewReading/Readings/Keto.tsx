@@ -1,48 +1,50 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../../Modals/SuccessModal'
 import { TimeSelector, WheelSelector } from '../../Minor'
 import { NewReadingHeader } from '../NewReadingHeader'
 import { delay, WheelSelectorOptions } from '../../../Helpers/General'
-import { DataKey, Table } from '../../../types'
+import { DataKey, NewReadingHeaderText, Table } from '../../../types'
+import { KetoStyles } from '../Styles'
 
 const dataKey = DataKey.keto
 const readingService = new ReadingService()
 
 export const NewKetoReading: React.FC = () => {
   const [data, setData] = useState(0.0)
-  const [dateTime, setDateTime] = useState(null)
+  const [dateTime, setDateTime] = useState<Date | null>(null)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
+    let response
     if (data === 0) {
       delay(500)
     }
     try {
       const reading = dateTime ? { data, created: dateTime } : { data }
-      const response = await readingService.submitReading({ table: Table.keto, reading })
-
-      return readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
+      response = await readingService.submitReading({ table: Table.keto, reading })
     } catch (err) {
-      console.log('Error keto handleSubmit: ', err)
+      console.log('Error keto handleSubmit: ', err) // eslint-disable-line no-console
     }
+
+    return response && readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
   }
 
   return (
     <>
-      <NewReadingHeader headerText="Ketones" dataKey={dataKey} />
-      <View style={Styles.container}>
+      <NewReadingHeader headerText={NewReadingHeaderText.keto} dataKey={dataKey} />
+      <View style={KetoStyles.container}>
         <TimeSelector setDateTime={setDateTime} />
         <WheelSelector
           integerOptions={WheelSelectorOptions.default}
           fractionOptions={WheelSelectorOptions.default}
           updateData={setData}
         />
-        <Text style={Styles.unit}>mmol/L</Text>
-        <TouchableOpacity onPress={async () => await handleSubmit()} style={Styles.submit}>
-          <Text style={Styles.submitText}>Submit</Text>
+        <Text style={KetoStyles.unit}>mmol/L</Text>
+        <TouchableOpacity onPress={async () => handleSubmit()} style={KetoStyles.submit}>
+          <Text style={KetoStyles.submitText}>Submit</Text>
         </TouchableOpacity>
       </View>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
@@ -50,26 +52,4 @@ export const NewKetoReading: React.FC = () => {
   )
 }
 
-const Styles = StyleSheet.create({
-  container: {
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    height: '92%'
-  },
-  unit: {
-    fontSize: 20
-  },
-  submit: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    padding: 16,
-    backgroundColor: '#d6d6d6'
-  },
-  submitText: {
-    fontSize: 18
-  }
-})
+export default NewKetoReading

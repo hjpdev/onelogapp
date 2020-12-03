@@ -4,20 +4,20 @@ import Modal from 'react-native-modal'
 
 import ReadingService from '../../Services/ReadingService'
 import SuccessModal from '../Modals/SuccessModal'
-import { GradientBorder, ChoiceButtons, MacroAmountSelector} from '../Minor'
-import { SavedMacroReading, Table } from '../../types'
+import { GradientBorder, ChoiceButtons, MacroAmountSelector } from '../Minor'
+import { MacroReadingData, SavedMacroReadingProps, Table } from '../../types'
 import { NewSavedMacroModalStyles } from './Styles'
 
 interface NewSavedMacroModalProps {
   isVisible: boolean
+  data: MacroReadingData
   onClose: () => void
-  macros: SavedMacroReading
 }
 
 const readingService = new ReadingService()
 
 const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMacroModalProps) => {
-  const { isVisible, onClose, macros } = props
+  const { isVisible, onClose, data } = props
 
   const [name, setName] = useState('')
   const [amount, setAmount] = useState(0)
@@ -25,16 +25,11 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
-    const data = {
-      ...macros,
-      name,
-      amount,
-      unit
-    }
+    const reading: SavedMacroReadingProps = { data, name, amount, unit }
     try {
       const response = await readingService.submitReading({
         table: Table.savedMacro,
-        data
+        reading
       })
       onClose()
       return readingService.handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)

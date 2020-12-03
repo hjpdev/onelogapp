@@ -9,7 +9,7 @@ import { EntryStyles } from './Styles'
 interface MacroCollectionEntryProps {
   amount: number
   reading: StoredSavedMacroReading
-  removeEntry: (key: string) => void
+  removeEntry: (_: string) => void
 }
 
 const MacroCollectionEntry: React.FC<MacroCollectionEntryProps> = (props: MacroCollectionEntryProps) => {

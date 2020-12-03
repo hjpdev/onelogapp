@@ -1,45 +1,44 @@
-import React, { useState } from 'react';
-import Modal from 'react-native-modal';
-import { Text, StyleSheet, View } from 'react-native';
+import React, { useState } from 'react'
+import { Text, View } from 'react-native'
+import Modal from 'react-native-modal'
 
-import SuccessModal from './SuccessModal';
-import ReadingService from '../../Services/ReadingService';
-import { ChoiceButtons } from '../Minor';
-import { generateCreatedDate } from '../../Helpers';
-import { truncateName } from '../../Helpers/General';
-import { StoredReading, Table } from '../../types';
+import SuccessModal from './SuccessModal'
+import ReadingService from '../../Services/ReadingService'
+import { ChoiceButtons } from '../Minor'
+import { generateCreatedDate } from '../../Helpers'
+import { truncateName } from '../../Helpers/General'
+import { DataKey, StoredReading, Table } from '../../types'
+import { DeleteConfirmationStyles } from './Styles'
 
 interface DeleteConfirmationModalProps {
   reading: StoredReading
   table: Table
-  dataKey: string
+  dataKey: DataKey
   isVisible: boolean
   onClose: () => void
-  update: () => void
+  update: (_: DataKey) => void
 }
 
-const readingService = new ReadingService();
+const readingService = new ReadingService()
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: DeleteConfirmationModalProps) => {
-  const {
-    reading, table, dataKey, isVisible, onClose, update
-  } = props;
-  const { id, created } = reading;
-  const name = generateCreatedDate(`${created}`);
+  const { reading, table, dataKey, isVisible, onClose, update } = props
+  const { id, created } = reading
+  const name = generateCreatedDate(`${created}`)
 
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleDelete = async () => {
     try {
-      const response = await readingService.deleteReading({ table, id });
+      const response = await readingService.deleteReading({ table, id })
 
-      await readingService.handleSuccessfulDelete(dataKey, response, setShowSuccessModal);
-      await update();
-      onClose();
+      await readingService.handleSuccessfulDelete(dataKey, response, setShowSuccessModal)
+      await update(dataKey)
+      onClose()
     } catch (err) {
-      console.log(`Error handleDelete table: ${table}, id: ${id}: ${err}`);
+      console.log(`Error handleDelete table: ${table}, id: ${id}: ${err}`) // eslint-disable-line no-console
     }
-  };
+  }
 
   return (
     <>
@@ -52,39 +51,21 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.33}
-        style={Styles.modal}
+        style={DeleteConfirmationStyles.modal}
       >
-        <View style={Styles.container}>
-          <Text style={Styles.name}>{`Delete:  ${truncateName(20, name)}?`}</Text>
-          <ChoiceButtons confirmationText="Confirm" cancellationText="Cancel" onSubmit={async () => await handleDelete()} onClose={onClose} />
+        <View style={DeleteConfirmationStyles.container}>
+          <Text style={DeleteConfirmationStyles.name}>{`Delete:  ${truncateName(20, name)}?`}</Text>
+          <ChoiceButtons
+            confirmationText="Confirm"
+            cancellationText="Cancel"
+            onSubmit={async () => handleDelete()}
+            onClose={onClose}
+          />
         </View>
       </Modal>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
     </>
-  );
-};
+  )
+}
 
-export default DeleteConfirmationModal;
-
-const Styles = StyleSheet.create({
-  modal: {
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  container: {
-    width: '80%',
-    backgroundColor: '#e4e4e4',
-    justifyContent: 'center',
-    borderWidth: 1.5,
-    borderBottomWidth: 2,
-    borderRadius: 4
-  },
-  name: {
-    fontSize: 16,
-    padding: 6,
-    width: '100%',
-    textAlign: 'center',
-    textAlignVertical: 'bottom',
-    margin: 6
-  }
-});
+export default DeleteConfirmationModal

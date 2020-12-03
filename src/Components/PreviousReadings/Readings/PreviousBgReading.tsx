@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
-import { Image, View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Image, View, Text, TouchableOpacity } from 'react-native'
 
 import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
 import ModifyBgModal from '../../Modals/Modification/ModifyBgModal'
 import { GradientBorder } from '../../Minor'
 import { generateCreatedTime } from '../../../Helpers/Date'
 import { StoredBgReading, DataKey, Table } from '../../../types'
+import { BgStyles } from '../Styles'
+import Colors from '../../../Assets/Styles/Colors'
 
 interface PreviousBgReadingProps {
   reading: StoredBgReading
-  update: (dataKey: string) => void
+  update: (_: DataKey) => void
 }
 
 export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: PreviousBgReadingProps) => {
@@ -30,30 +32,33 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
   }
 
   const generateColor = (): string | undefined => {
-    if (data < 3.9) return 'rgba(217, 30, 30, 0.9)' // '#d91e1e'
-    if (data >= 3.9 && data < 8.1) return '#279621'
-    if (data > 8.0) return '#deda00'
+    let color
+    if (data < 3.9) color = Colors.bgRed // '#d91e1e'
+    if (data >= 3.9 && data < 8.1) color = Colors.bgGreen
+    if (data > 8.0) color = Colors.bgYellow
+
+    return color
   }
 
-  const color = (reading && generateColor()) || '#ebebeb'
+  const color = (reading && generateColor()) || Colors.lightGrey1
 
   return (
     <>
-      <View style={Styles.container}>
-        <View style={Styles.header}>
+      <View style={BgStyles.container}>
+        <View style={BgStyles.header}>
           <TouchableOpacity onPress={() => setShowModifyBgModal(true)}>
-            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={BgStyles.icon} />
           </TouchableOpacity>
-          <Text style={Styles.timeCreated}>{timeCreated}</Text>
+          <Text style={BgStyles.timeCreated}>{timeCreated}</Text>
           <TouchableOpacity>
-            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={BgStyles.placeholder} />
           </TouchableOpacity>
         </View>
         <GradientBorder x={1.0} y={1.0} />
         <TouchableOpacity onPress={() => setShowModifyBgModal(true)}>
           <View>
-            <LinearGradient colors={['#ebebeb', color]} start={{ x: 0.5, y: 0.75 }}>
-              <Text style={Styles.reading}>{data.toFixed(1)}</Text>
+            <LinearGradient colors={[Colors.lightGrey1, color]} start={{ x: 0.5, y: 0.75 }}>
+              <Text style={BgStyles.reading}>{data.toFixed(1)}</Text>
             </LinearGradient>
           </View>
         </TouchableOpacity>
@@ -77,40 +82,4 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
   )
 }
 
-const Styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ebebeb',
-    borderWidth: 1,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    paddingLeft: 6,
-    paddingRight: 6,
-    margin: 4,
-    width: '18%'
-  },
-  header: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  },
-  icon: {
-    tintColor: 'black',
-    height: 10,
-    width: 10
-  },
-  placeholder: {
-    tintColor: '#ebebeb',
-    height: 10,
-    width: 10
-  },
-  timeCreated: {
-    fontSize: 14
-  },
-  reading: {
-    fontSize: 28,
-    paddingVertical: 6
-  }
-})
+export default PreviousBgReading

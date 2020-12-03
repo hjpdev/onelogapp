@@ -12,21 +12,20 @@ interface MacroReadingInputProps {
   showSavedMacroOptions: boolean
   updateReading: (reading: MacroReadingData) => void
   showClearOption?: boolean
-  reading?: MacroReadingData
+  data?: MacroReadingData
 }
 
 export const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: MacroReadingInputProps) => {
-  const { showSavedMacroOptions, updateReading, reading, showClearOption } = props
+  const { showSavedMacroOptions, updateReading, data, showClearOption } = props
 
   const navigation = useNavigation()
 
   const parseData = () => {
     const tmpObj = {} as MacroReadingData
 
-    reading &&
-      Object.keys(reading).forEach((macro: MacroReadingKey) => {
-        tmpObj[macro] =
-          typeof reading[macro] === 'string' ? parseFloat(reading[macro]) : parseFloat(reading[macro].toFixed(1))
+    data
+      && Object.keys(data).forEach((macro: MacroReadingKey) => {
+        tmpObj[macro] = typeof data[macro] === 'string' ? parseFloat(`${data[macro]}`) : parseFloat(data[macro].toFixed(1))
       })
 
     return tmpObj
@@ -102,14 +101,10 @@ export const MacroReadingInput: React.FC<MacroReadingInputProps> = (props: Macro
       <NewSavedMacroModal
         isVisible={showNewSavedMacroModal}
         onClose={() => setShowNewSavedMacroModal(false)}
-        macros={{
-          kcal,
-          carbs,
-          sugar,
-          protein,
-          fat
-        }}
+        macros={{ kcal, carbs, sugar, protein, fat }}
       />
     </>
   )
 }
+
+export default MacroReadingInput

@@ -1,31 +1,31 @@
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Text, TextInput, TouchableOpacity, View } from 'react-native'
 
+import ReadingService from '../../../Services/ReadingService'
 import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import SuccessModal from '../SuccessModal'
 import { ChoiceButtons, GradientBorder, MacroAmountSelector, MacroReadingInput } from '../../Minor'
-
-import ReadingService from '../../../Services/ReadingService'
-import { capitaliseAddWhitespace, truncateName } from '../../../Helpers/General'
-import { StoredSavedMacroReading } from '../../../types'
+import { capitaliseAddWhitespace } from '../../../Helpers/General'
+import { DataKey, MacroReadingData, StoredSavedMacroReading, Table } from '../../../types'
+import { ModifySavedMacroStyles } from '../Styles'
 
 interface ModifySavedMacroModalProps {
   isVisible: boolean
-  data: StoredSavedMacroReading
+  reading: StoredSavedMacroReading
   onClose: () => void
-  update: () => void
+  update: (_: DataKey) => void
 }
 
 const readingService = new ReadingService()
 
 const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: ModifySavedMacroModalProps) => {
-  const { isVisible, data, onClose, update } = props
+  const { isVisible, reading, onClose, update } = props
 
-  const [name, setName] = useState(data.name)
-  const [amount, setAmount] = useState(data.amount)
-  const [unit, setUnit] = useState(data.unit)
-  const [reading, setReading] = useState<{ [key: string]: string | number }>({})
+  const [name, setName] = useState(reading.name)
+  const [amount, setAmount] = useState(reading.amount)
+  const [unit, setUnit] = useState(reading.unit)
+  const [data, setReading] = useState({} as MacroReadingData)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
@@ -33,19 +33,19 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
 
   const handleSubmit = async () => {
     try {
-      const data = {
+      const newReading = {
         name,
-        ...reading,
+        ...data,
         amount,
         unit
       }
-      const response = await readingService.putReading({ table: 'macro/saved', data, id })
+      const response = await readingService.putReading({ table: Table.savedMacro, data: newReading, id })
 
-      await readingService.handleSuccessfulUpdate('savedMacros', response, setShowSuccessModal)
-      update()
+      await readingService.handleSuccessfulUpdate(DataKey.savedMacro, response, setShowSuccessModal)
+      update(DataKey.savedMacro)
       onClose()
     } catch (err) {
-      console.log(`Error ModifySavedMacroModal.handleSubmit: ${err}`)
+      console.log(`Error ModifySavedMacroModal.handleSubmit: ${err}`) // eslint-disable-line no-console
     }
   }
 
@@ -61,8 +61,8 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
         onBackdropPress={onClose}
         backdropOpacity={0.66}
       >
-        <View style={Styles.container}>
-          <TextInput value={capitaliseAddWhitespace(name)} onChangeText={setName} style={Styles.name} />
+        <View style={ModifySavedMacroStyles.container}>
+          <TextInput value={capitaliseAddWhitespace(name)} onChangeText={setName} style={ModifySavedMacroStyles.name} />
           <GradientBorder x={1.0} y={1.0} />
           <MacroAmountSelector
             updateAmount={setAmount}
@@ -73,15 +73,15 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
           />
           <GradientBorder x={1.0} y={1.0} />
           <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setReading} />
-          <View style={Styles.deleteContainer}>
+          <View style={ModifySavedMacroStyles.deleteContainer}>
             <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
-              <Text style={Styles.deleteText}>Delete</Text>
+              <Text style={ModifySavedMacroStyles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
           <ChoiceButtons
             confirmationText="Submit"
             cancellationText="Cancel"
-            onSubmit={async () => await handleSubmit()}
+            onSubmit={async () => handleSubmit()}
             onClose={onClose}
           />
         </View>
@@ -89,40 +89,14 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
       <DeleteConfirmationModal
         isVisible={showDeleteConfirmationModal}
-        id={data.id}
-        name={truncateName(20, `${data.name}`)}
-        table="macro/saved"
-        dataKey="savedMacros"
+        reading={reading}
+        table={Table.savedMacro}
+        dataKey={DataKey.savedMacro}
         onClose={() => setShowDeleteConfirmationModal(false)}
-        update={() => update('savedMacros')}
+        update={() => update(DataKey.savedMacro)}
       />
     </>
   )
 }
 
 export default ModifySavedMacroModal
-
-const Styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#ebebeb',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    borderWidth: 1.5,
-    borderBottomWidth: 2,
-    borderRadius: 2
-  },
-  name: {
-    fontSize: 18,
-    paddingVertical: 2
-  },
-  deleteContainer: {
-    width: '33%',
-    margin: 4,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    marginVertical: 10
-  },
-  deleteText: {
-    textAlign: 'center'
-  }
-})

@@ -1,3 +1,8 @@
+export enum DoseText {
+  long = 'Long',
+  short = 'Short'
+}
+
 export enum Table {
   bg = 'bg',
   keto = 'keto',
@@ -15,8 +20,22 @@ export enum DataKey {
   savedMacro = 'savedMacros'
 }
 
+export enum NewReadingHeaderText {
+  bg = 'Bg',
+  keto = 'Keto',
+  dose = 'Dose',
+  macro = 'Macro',
+  savedMacro = 'Saved Macro'
+}
+
 export type MacroReadingKey = keyof MacroReadingData
 export type Reading = BgReading | KetoReading | DoseReading | MacroReading | SavedMacroReading
+export type ReadingProps =
+  | BgReadingProps
+  | KetoReadingProps
+  | DoseReadingProps
+  | MacroReadingProps
+  | SavedMacroReadingProps
 export type StoredReading =
   | StoredBgReading
   | StoredKetoReading

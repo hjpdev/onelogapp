@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 
 import ModifyMacroModal from '../../Modals/Modification/ModifyMacroModal'
 import { GradientBorder } from '../../Minor'
 import { generateCreatedTime } from '../../../Helpers/Date'
-import { StoredMacroReading } from '../../../types'
+import { DataKey, StoredMacroReading } from '../../../types'
+import { MacroStyles } from '../Styles'
 
 interface PreviousMacroReadingProps {
   reading: StoredMacroReading
-  update: (dataKey: string) => void
+  update: (_: DataKey) => void
 }
 
 export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props: PreviousMacroReadingProps) => {
@@ -22,33 +23,33 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
 
   return (
     <>
-      <View style={Styles.container}>
-        <View style={Styles.header}>
+      <View style={MacroStyles.container}>
+        <View style={MacroStyles.header}>
           <TouchableOpacity onPress={() => setShowModifyMacroModal(true)}>
-            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.icon} />
+            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={MacroStyles.icon} />
           </TouchableOpacity>
-          <Text style={Styles.timeCreated}>{timeCreated}</Text>
+          <Text style={MacroStyles.timeCreated}>{timeCreated}</Text>
           <TouchableOpacity>
-            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={Styles.placeholder} />
+            <Image source={require('../../../Assets/Images/NavBarSettings.png')} style={MacroStyles.placeholder} />
           </TouchableOpacity>
         </View>
         <GradientBorder x={1.0} y={1.0} />
-        <TouchableOpacity onPress={() => setShowModifyMacroModal(true)} style={Styles.readingContainer}>
-          <View style={Styles.readingContainer}>
-            <View style={Styles.labels}>
-              <Text style={Styles.label}>Kcal:</Text>
-              <Text style={Styles.label}>Carbs:</Text>
-              <Text style={Styles.label}>Sugar:</Text>
-              <Text style={Styles.label}>Protein:</Text>
-              <Text style={Styles.label}>Fat:</Text>
+        <TouchableOpacity onPress={() => setShowModifyMacroModal(true)} style={MacroStyles.readingContainer}>
+          <View style={MacroStyles.readingContainer}>
+            <View style={MacroStyles.labels}>
+              <Text style={MacroStyles.label}>Kcal:</Text>
+              <Text style={MacroStyles.label}>Carbs:</Text>
+              <Text style={MacroStyles.label}>Sugar:</Text>
+              <Text style={MacroStyles.label}>Protein:</Text>
+              <Text style={MacroStyles.label}>Fat:</Text>
             </View>
 
-            <View style={Styles.values}>
-              <Text style={Styles.value}>{kcal.toFixed(1)}</Text>
-              <Text style={Styles.value}>{carbs.toFixed(1)}</Text>
-              <Text style={Styles.value}>{sugar.toFixed(1)}</Text>
-              <Text style={Styles.value}>{protein.toFixed(1)}</Text>
-              <Text style={Styles.value}>{fat.toFixed(1)}</Text>
+            <View style={MacroStyles.values}>
+              <Text style={MacroStyles.value}>{kcal.toFixed(1)}</Text>
+              <Text style={MacroStyles.value}>{carbs.toFixed(1)}</Text>
+              <Text style={MacroStyles.value}>{sugar.toFixed(1)}</Text>
+              <Text style={MacroStyles.value}>{protein.toFixed(1)}</Text>
+              <Text style={MacroStyles.value}>{fat.toFixed(1)}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -63,65 +64,4 @@ export const PreviousMacroReading: React.FC<PreviousMacroReadingProps> = (props:
   )
 }
 
-const Styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ebebeb',
-    borderWidth: 1,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    paddingLeft: 6,
-    paddingRight: 6,
-    margin: '1.1%',
-    width: '31%'
-  },
-  header: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  timeCreated: {
-    fontSize: 16
-  },
-  icon: {
-    tintColor: 'black',
-    height: 14,
-    width: 14,
-    padding: 4,
-    marginTop: 4
-  },
-  placeholder: {
-    tintColor: '#ebebeb',
-    height: 14,
-    width: 14,
-    padding: 4,
-    marginTop: 4
-  },
-  reading: {
-    fontSize: 38
-  },
-  readingContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  },
-  labels: {
-    flexDirection: 'column',
-    padding: 10
-  },
-  label: {
-    fontSize: 14,
-    color: '#3f3d3d'
-  },
-  values: {
-    flexDirection: 'column',
-    padding: 10
-  },
-  value: {
-    fontSize: 14,
-    alignSelf: 'flex-end',
-    fontWeight: 'bold',
-    color: 'black'
-  }
-})
+export default PreviousMacroReading

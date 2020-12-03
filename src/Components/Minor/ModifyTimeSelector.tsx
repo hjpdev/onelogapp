@@ -37,12 +37,12 @@ export const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: Mod
 
   const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />)
 
-  const onHoursSelected = (hours: ReactText, _: number) => {
-    setHours(parseInt(`${hours}`))
+  const onHoursSelected = (hrs: ReactText, _: number) => {
+    setHours(parseInt(`${hrs}`))
   }
 
-  const onMinutesSelected = (minutes: ReactText, _: number) => {
-    setMinutes(parseInt(`${minutes}`))
+  const onMinutesSelected = (min: ReactText, _: number) => {
+    setMinutes(parseInt(`${min}`))
   }
 
   return (
@@ -55,8 +55,8 @@ export const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: Mod
       >
         {getPickerItems(clockHours)}
       </Picker>
-      <View style={{ justifyContent: 'center' }}>
-        <Text style={{ fontSize: 24 }}>:</Text>
+      <View style={ModifyTimeSelectorStyles.textContainer}>
+        <Text style={ModifyTimeSelectorStyles.text}>:</Text>
       </View>
       <Picker
         selectedValue={clockMinutes[minutes]}
@@ -69,3 +69,5 @@ export const ModifyTimeSelector: React.FC<ModifyTimeSelectorProps> = (props: Mod
     </View>
   )
 }
+
+export default ModifyTimeSelector

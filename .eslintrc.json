@@ -27,12 +27,28 @@
         "react-native/no-color-literals": 2,
         "react-native/no-raw-text": 2,
         "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+        "react/require-default-props": 0,
+        "no-unused-vars": [1, {
+              "args": "after-used",
+              "ignoreRestSiblings": true,
+              "vars": "all",
+              "argsIgnorePattern": "^_|^react$|^req$|^res$|^next$",
+              "varsIgnorePattern": "^React$",
+              "caughtErrorsIgnorePattern": "^_"
+            }
+          ],
         "no-extra-semi": 2,
+        "semi": 0,
+        "max-len": [2, {
+            "code": 120
+        }],
         "comma-dangle": 0,
         "jsx-quotes": 1,
         "import/extensions": 0,
         "import/no-unresolved": 0,
-        "object-curly-newline": 2,
-        "global-require": 0
+        "object-curly-newline": 0,
+        "global-require": 0,
+        "no-use-before-define": 0,
+        "radix": 0
     }
 }

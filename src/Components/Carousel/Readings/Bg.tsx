@@ -3,13 +3,13 @@ import { Image, Text, View } from 'react-native'
 
 // eslint-disable-next-line no-unused-vars
 import { BgReading } from '../../../types'
-import { BgStyles } from './Styles'
+import { BgStyles } from '../Styles'
 
 interface BgCarouselProps {
   reading: BgReading
 }
 
-const BgCarousel: React.FC<BgCarouselProps> = (props: BgCarouselProps) => {
+export const BgCarousel: React.FC<BgCarouselProps> = (props: BgCarouselProps) => {
   const { reading } = props
   const { data } = reading
 

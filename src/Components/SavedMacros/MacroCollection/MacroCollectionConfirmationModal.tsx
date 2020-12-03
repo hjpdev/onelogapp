@@ -3,7 +3,7 @@ import Modal from 'react-native-modal'
 import { View } from 'react-native'
 
 import SuccessModal from '../../Modals/SuccessModal'
-import { ChoiceButtons, GradientBorder, MacroAmountSelector} from '../../Minor'
+import { ChoiceButtons, GradientBorder, MacroAmountSelector } from '../../Minor'
 import { delay } from '../../../Helpers/General'
 import { StoredSavedMacroReading } from '../../../types'
 import { ConfirmationModalStyles } from './Styles'
@@ -12,7 +12,7 @@ interface MacroCollectionConfirmationModalProps {
   isVisible: boolean
   data: StoredSavedMacroReading
   onClose: () => void
-  onSubmit: (amount: number, data: StoredSavedMacroReading) => void
+  onSubmit: (amount: number, data: StoredSavedMacroReading) => void // eslint-disable-line no-unused-vars
 }
 
 const MacroCollectionConfirmationModal: React.FC<MacroCollectionConfirmationModalProps> = (
@@ -52,7 +52,7 @@ const MacroCollectionConfirmationModal: React.FC<MacroCollectionConfirmationModa
           <ChoiceButtons
             confirmationText="Add"
             cancellationText="Cancel"
-            onSubmit={async () => await handleSubmit()}
+            onSubmit={async () => handleSubmit()}
             onClose={onClose}
           />
         </View>

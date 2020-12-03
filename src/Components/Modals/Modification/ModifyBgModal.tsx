@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import { ChoiceButtons, ModifyTimeSelector, WheelSelector } from '../../Minor'
 import { WheelSelectorOptions } from '../../../Helpers'
 import { StoredBgReading, DataKey, Table } from '../../../types'
+import { ModifyBgStyles } from '../Styles'
 
 interface ModifyBgModalProps {
   isVisible: boolean
   reading: StoredBgReading
   onClose: () => void
   onDelete: () => void
-  update: (dataKey: string) => void
+  update: (_: DataKey) => void
 }
 
 const dataKey = DataKey.bg
@@ -23,7 +24,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   const { isVisible, reading, onClose, onDelete, update } = props
 
   const [created, setCreated] = useState(reading.created)
-  const [data, setData] = useState<number>(reading.data || 0.0)
+  const [data, setData] = useState(reading.data || 0.0)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const handleSubmit = async () => {
@@ -39,7 +40,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
       update(dataKey)
       onClose()
     } catch (err) {
-      console.log(`Error ModifyBgModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyBgModal.handleSubmit: ${err}`) // eslint-disable-line no-console
     }
   }
 
@@ -54,9 +55,9 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.66}
-        style={Styles.modal}
+        style={ModifyBgStyles.modal}
       >
-        <View style={Styles.container}>
+        <View style={ModifyBgStyles.container}>
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
           <WheelSelector
             data={data}
@@ -64,15 +65,15 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
             fractionOptions={WheelSelectorOptions.default}
             updateData={setData}
           />
-          <View style={Styles.deleteContainer}>
+          <View style={ModifyBgStyles.deleteContainer}>
             <TouchableOpacity onPress={onDelete}>
-              <Text style={Styles.deleteText}>Delete</Text>
+              <Text style={ModifyBgStyles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
           <ChoiceButtons
             confirmationText="Submit"
             cancellationText="Cancel"
-            onSubmit={async () => await handleSubmit()}
+            onSubmit={async () => handleSubmit()}
             onClose={onClose}
           />
         </View>
@@ -83,27 +84,3 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
 }
 
 export default ModifyBgModal
-
-const Styles = StyleSheet.create({
-  modal: {
-    alignItems: 'center'
-  },
-  container: {
-    width: 300,
-    backgroundColor: '#ebebeb',
-    borderWidth: 1.5,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    alignItems: 'center'
-  },
-  deleteContainer: {
-    width: '33%',
-    margin: 4,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    marginVertical: 10
-  },
-  deleteText: {
-    textAlign: 'center'
-  }
-})

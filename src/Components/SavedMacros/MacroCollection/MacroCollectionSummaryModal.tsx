@@ -35,8 +35,8 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
     collection.forEach((entry: any) => {
       const keys = Object.keys(tmpObj)
       keys.forEach((key) => {
-        tmpObj[key] +=
-          (parseFloat(entry.reading[key].toFixed(1)) * parseInt(entry.amount)) / parseInt(entry.reading.amount)
+        tmpObj[key]
+          += (parseFloat(entry.reading[key].toFixed(1)) * parseInt(entry.amount)) / parseInt(entry.reading.amount)
       })
     })
 
@@ -110,16 +110,22 @@ const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = 
             </View>
             <View style={CollectionSummaryModalStyles.percentages}>
               <Text style={CollectionSummaryModalStyles.percentage} />
-              <Text style={CollectionSummaryModalStyles.percentage}>{`${
-                calories.carbsCal ? `${calories.carbsCal.toFixed(1)}%` : ''
-              }`}</Text>
+              <Text style={CollectionSummaryModalStyles.percentage}>
+                {`${
+                  calories.carbsCal ? `${calories.carbsCal.toFixed(1)}%` : ''
+                }`}
+              </Text>
               <Text style={CollectionSummaryModalStyles.percentage} />
-              <Text style={CollectionSummaryModalStyles.percentage}>{`${
-                calories.proteinCal ? `${calories.proteinCal.toFixed(1)}%` : ''
-              }`}</Text>
-              <Text style={CollectionSummaryModalStyles.percentage}>{`${
-                calories.fatCal ? `${calories.fatCal.toFixed(1)}%` : ''
-              }`}</Text>
+              <Text style={CollectionSummaryModalStyles.percentage}>
+                {`${
+                  calories.proteinCal ? `${calories.proteinCal.toFixed(1)}%` : ''
+                }`}
+              </Text>
+              <Text style={CollectionSummaryModalStyles.percentage}>
+                {`${
+                  calories.fatCal ? `${calories.fatCal.toFixed(1)}%` : ''
+                }`}
+              </Text>
             </View>
           </View>
         </View>

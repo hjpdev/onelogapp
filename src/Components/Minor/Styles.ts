@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native'
 
+import Colors from '../../Assets/Styles/Colors'
+
 export const ChevronStyles = StyleSheet.create({
   chevronSymbol: {
     padding: 18,
@@ -7,13 +9,13 @@ export const ChevronStyles = StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
     textAlignVertical: 'center',
-    color: '#c4c4c4'
+    color: Colors.lightGrey4
   }
 })
 
 export const ChoiceButtonsStyles = StyleSheet.create({
   buttons: {
-    backgroundColor: '#e4e4e4',
+    backgroundColor: Colors.lightGrey2,
     flexDirection: 'row',
     justifyContent: 'space-around',
     borderTopWidth: 1,
@@ -31,6 +33,15 @@ export const ChoiceButtonsStyles = StyleSheet.create({
     padding: 12,
     textAlign: 'center',
     fontWeight: 'bold'
+  }
+})
+
+export const GradientBorderStyles = StyleSheet.create({
+  border: {
+    height: 0.5,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 
@@ -107,6 +118,12 @@ export const ModifyTimeSelectorStyles = StyleSheet.create({
   },
   pickerItem: {
     height: '100%'
+  },
+  textContainer: {
+    justifyContent: 'center'
+  },
+  text: {
+    fontSize: 24
   }
 })
 

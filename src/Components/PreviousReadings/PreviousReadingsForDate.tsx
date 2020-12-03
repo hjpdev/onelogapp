@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
 import { GradientBorder } from '../Minor'
-import { StoredReading } from '../../types'
+import { DataKey, StoredReading } from '../../types'
 import { ForDateStyles } from './Styles'
 
 type PreviousReadingsForDateProps = {
   date: string
   readings: StoredReading[]
   Template: any
-  update: (dataKey: string) => void
+  update: (_: DataKey) => void
   opened?: boolean
 }
 

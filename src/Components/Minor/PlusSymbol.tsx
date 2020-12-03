@@ -8,3 +8,5 @@ export const PlusSymbol: React.FC = () => (
     <Text style={PlusSymbolStyles.text}>+</Text>
   </>
 )
+
+export default PlusSymbol

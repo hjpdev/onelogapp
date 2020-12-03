@@ -1,27 +1,20 @@
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import { StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native'
+import { Switch, Text, TouchableOpacity, View } from 'react-native'
 
 import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import { ChoiceButtons, ModifyTimeSelector, WheelSelector } from '../../Minor'
-import { WheelSelectorOptions, generateCreatedDate } from '../../../Helpers'
-import { DoseReading } from '../../../types'
+import { WheelSelectorOptions } from '../../../Helpers'
+import { DataKey, StoredDoseReading, Table } from '../../../types'
+import { ModifyDoseStyles } from '../Styles'
 
 interface ModifyDoseModalProps {
   isVisible: boolean
-  reading: DoseReading
+  reading: StoredDoseReading
   onClose: () => void
-  update: (dataKey: string) => void
-}
-
-function getDoseProperties<DoseReading>(obj: DoseReading): Array<keyof DoseReading> {
-  const result: Array<keyof DoseReading> = []
-  for (const key in obj) {
-    result.push(key)
-  }
-  return result
+  update: (_: DataKey) => void
 }
 
 const readingService = new ReadingService()
@@ -30,40 +23,39 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
   const { isVisible, reading, onClose, update } = props
 
   const [created, setCreated] = useState(reading.created)
-  const [data, setData] = useState<number>(reading.data || 0.0)
-  const [long, setLong] = useState<boolean>(reading.long)
+  const [data, setData] = useState(reading.data || 0.0)
+  const [long, setLong] = useState(reading.long)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
-  const state: DoseReading = {
+  const state: StoredDoseReading = {
     id: reading.id,
     created,
     data,
     long
   }
 
-  const isPropertyUpdated = (property: keyof DoseReading) => state[property] !== reading[property]
+  const isPropertyUpdated = (property: keyof StoredDoseReading) => state[property] !== reading[property]
 
   const handleSubmit = async () => {
     try {
       const body = {} as any
-      const properties: Array<keyof DoseReading> = getDoseProperties(state)
-      for (const key of properties) {
+      Object.keys(state).forEach((key) => {
         if (isPropertyUpdated(key)) {
           body[key] = state[key]
         }
-      }
+      })
       const response = await readingService.putReading({
-        table: 'dose',
+        table: Table.dose,
         data: body,
         id: state.id
       })
 
-      await readingService.handleSuccessfulUpdate('doseReadings', response, setShowSuccessModal)
-      update('doseReadings')
+      await readingService.handleSuccessfulUpdate(DataKey.dose, response, setShowSuccessModal)
+      update(DataKey.dose)
       onClose()
     } catch (err) {
-      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`) // eslint-disable-line no-console
     }
   }
 
@@ -78,12 +70,12 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.66}
-        style={Styles.modal}
+        style={ModifyDoseStyles.modal}
       >
-        <View style={Styles.container}>
-          <View style={Styles.deleteContainer}>
+        <View style={ModifyDoseStyles.container}>
+          <View style={ModifyDoseStyles.deleteContainer}>
             <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
-              <Text style={Styles.deleteText}>Delete</Text>
+              <Text style={ModifyDoseStyles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
           <ModifyTimeSelector created={state.created} setDateTime={setCreated} />
@@ -93,15 +85,15 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
             fractionOptions={WheelSelectorOptions.doseFrac}
             updateData={setData}
           />
-          <View style={Styles.switch}>
-            <Text style={Styles.switchText}>Short</Text>
+          <View style={ModifyDoseStyles.switch}>
+            <Text style={ModifyDoseStyles.switchText}>Short</Text>
             <Switch testID="doseReading_toggleSwitch" onValueChange={() => setLong(!long)} value={state.long} />
-            <Text style={Styles.switchText}>Long</Text>
+            <Text style={ModifyDoseStyles.switchText}>Long</Text>
           </View>
           <ChoiceButtons
             confirmationText="Submit"
             cancellationText="Cancel"
-            onSubmit={async () => await handleSubmit()}
+            onSubmit={async () => handleSubmit()}
             onClose={onClose}
           />
         </View>
@@ -109,50 +101,14 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
       <DeleteConfirmationModal
         isVisible={showDeleteConfirmationModal}
-        id={reading.id}
-        name={generateCreatedDate(`${reading.created}`)}
-        table="dose"
-        dataKey="doseReadings"
+        reading={reading}
+        table={Table.dose}
+        dataKey={DataKey.dose}
         onClose={() => setShowDeleteConfirmationModal(false)}
-        update={() => update('doseReadings')}
+        update={() => update(DataKey.dose)}
       />
     </>
   )
 }
 
 export default ModifyDoseModal
-
-const Styles = StyleSheet.create({
-  modal: {
-    alignItems: 'center'
-  },
-  container: {
-    width: 300,
-    backgroundColor: '#ebebeb',
-    alignItems: 'center',
-    borderWidth: 1.5,
-    borderBottomWidth: 2,
-    borderRadius: 4
-  },
-  name: {
-    fontSize: 18,
-    paddingVertical: 2
-  },
-  switch: {
-    width: '60%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    paddingVertical: 8
-  },
-  switchText: {
-    fontSize: 16
-  },
-  deleteContainer: {
-    width: '100%'
-  },
-  deleteText: {
-    textAlign: 'left',
-    padding: 6
-  }
-})

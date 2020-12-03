@@ -21,3 +21,10 @@ export const Chevron: React.FC<ChevronProps> = (props: ChevronProps) => {
     </TouchableOpacity>
   )
 }
+
+Chevron.defaultProps = {
+  left: false,
+  right: false
+}
+
+export default Chevron

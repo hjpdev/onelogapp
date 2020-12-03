@@ -1,15 +1,13 @@
-import React, {
-  Dispatch, SetStateAction, ReactText, useState, useEffect
-} from 'react';
-import { ScrollView } from 'react-native';
+import React, { Dispatch, SetStateAction, ReactText, useState, useEffect } from 'react'
+import { ScrollView } from 'react-native'
 
-import MacroCollectionSummaryModal from './MacroCollection/MacroCollectionSummaryModal';
-import ReadingService from '../../Services/ReadingService';
-import SavedMacrosForLetter from './SavedMacrosForLetter';
-import SavedMacrosHeader from './SavedMacrosHeader';
-import { ALPHABET } from '../../Helpers/General';
-import { LocalStore } from '../../Store';
-import { DataKey, StoredSavedMacroReading } from '../../types';
+import MacroCollectionSummaryModal from './MacroCollection/MacroCollectionSummaryModal'
+import ReadingService from '../../Services/ReadingService'
+import SavedMacrosForLetter from './SavedMacrosForLetter'
+import SavedMacrosHeader from './SavedMacrosHeader'
+import { ALPHABET } from '../../Helpers/General'
+import { LocalStore } from '../../Store'
+import { DataKey, StoredSavedMacroReading } from '../../types'
 
 export interface MacroCollectionEntry {
   amount: number
@@ -17,67 +15,67 @@ export interface MacroCollectionEntry {
 }
 
 interface SavedMacrosProps {
-  updateReading: Dispatch<SetStateAction<{ [key: string]: ReactText }>>
+  updateReading: Dispatch<SetStateAction<StoredSavedMacroReading>>
 }
 
-const readingService = new ReadingService();
+const readingService = new ReadingService()
 
 const SavedMacros: React.FC<SavedMacrosProps> = (props: SavedMacrosProps) => {
-  const { updateReading } = props;
-  const store = new LocalStore();
+  const { updateReading } = props
+  const store = new LocalStore()
 
-  const [savedMacros, setSavedMacros] = useState<StoredSavedMacroReading[]>([]);
-  const [collection, setCollection] = useState<MacroCollectionEntry[]>([]);
-  const [showMacroCollectionSummaryModal, setShowMacroCollectionSummaryModal] = useState(false);
+  const [savedMacros, setSavedMacros] = useState([] as StoredSavedMacroReading[])
+  const [collection, setCollection] = useState([] as MacroCollectionEntry[])
+  const [showMacroCollectionSummaryModal, setShowMacroCollectionSummaryModal] = useState(false)
 
   const addEntry = (amount: number, entry: StoredSavedMacroReading): void => {
-    const updatedEntries = [...collection, { amount, reading: entry }];
-    setCollection(updatedEntries);
-  };
+    const updatedEntries = [...collection, { amount, reading: entry }]
+    setCollection(updatedEntries)
+  }
 
   const removeEntry = (key: string): void => {
-    const clearedCollection = collection.filter((entry) => `${entry.reading.id}-${entry.amount}` !== key);
-    setCollection(clearedCollection);
-  };
+    const clearedCollection = collection.filter((entry) => `${entry.reading.id}-${entry.amount}` !== key)
+    setCollection(clearedCollection)
+  }
 
   const fetchSavedMacros = async () => {
     try {
-      const data = await store.getData(DataKey.savedMacro);
-      let { readings } = data;
+      const data = await store.getData(DataKey.savedMacro)
+      let { readings } = data
       if (!readings) {
         const response = await readingService.getReadings({
           dataKeys: [DataKey.savedMacro]
-        });
-        readings = response.savedMacros;
-        await store.storeData(DataKey.savedMacro, readings);
+        })
+        readings = response.savedMacros
+        await store.storeData(DataKey.savedMacro, readings)
       }
-      setSavedMacros(readings);
+      setSavedMacros(readings)
     } catch (err) {
-      console.log('Error SavedMacros.fetchSavedMacros: ', err);
+      console.log('Error SavedMacros.fetchSavedMacros: ', err)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchSavedMacros();
-  }, []);
+    fetchSavedMacros()
+  }, [])
 
   const sortSavedMacrosByLetter = () => {
     const savedMacrosByLetter: {
       [day: string]: StoredSavedMacroReading[]
-    } = {} as any;
+    } = {} as any
     ALPHABET.forEach((letter) => {
-      savedMacrosByLetter[letter] = [];
-    });
+      savedMacrosByLetter[letter] = []
+    })
     savedMacros.forEach((reading: StoredSavedMacroReading) => {
-      const firstLetter = reading.name[0];
-      savedMacrosByLetter[firstLetter].push(reading);
-    });
+      const firstLetter = reading.name[0]
+      savedMacrosByLetter[firstLetter].push(reading)
+    })
 
-    return savedMacrosByLetter;
-  };
+    return savedMacrosByLetter
+  }
 
   const generateListItems = () => {
-    const savedMacrosByLetter = sortSavedMacrosByLetter();
+    const savedMacrosByLetter = sortSavedMacrosByLetter()
     return ALPHABET.map((letter) => (
       <SavedMacrosForLetter
         letter={letter}
@@ -86,8 +84,8 @@ const SavedMacros: React.FC<SavedMacrosProps> = (props: SavedMacrosProps) => {
         update={() => fetchSavedMacros()}
         addEntry={addEntry}
       />
-    ));
-  };
+    ))
+  }
 
   return (
     <>
@@ -102,7 +100,7 @@ const SavedMacros: React.FC<SavedMacrosProps> = (props: SavedMacrosProps) => {
         updateReading={updateReading}
       />
     </>
-  );
-};
+  )
+}
 
-export default SavedMacros;
+export default SavedMacros

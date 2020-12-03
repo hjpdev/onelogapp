@@ -1,16 +1,16 @@
-import React from 'react';
-import {
-  Image, TouchableOpacity, View, StyleSheet
-} from 'react-native';
-import Modal from 'react-native-modal';
+import React from 'react'
+import Modal from 'react-native-modal'
+import { Image, TouchableOpacity, View } from 'react-native'
 
-type SuccessModalProps = {
+import { SuccessStyles } from './Styles'
+
+interface SuccessModalProps {
   isVisible: boolean
   onPress: () => void
 }
 
 const SuccessModal: React.FC<SuccessModalProps> = (props: SuccessModalProps) => {
-  const { isVisible, onPress } = props;
+  const { isVisible, onPress } = props
 
   return (
     <Modal
@@ -20,26 +20,15 @@ const SuccessModal: React.FC<SuccessModalProps> = (props: SuccessModalProps) => 
       animationInTiming={500}
       animationOutTiming={200}
       hasBackdrop={false}
-      style={Styles.modal}
+      style={SuccessStyles.modal}
     >
       <View>
         <TouchableOpacity onPress={onPress}>
-          <Image style={Styles.image} source={require('../../Assets/Images/Confirmation.png')} />
+          <Image style={SuccessStyles.image} source={require('../../Assets/Images/Confirmation.png')} />
         </TouchableOpacity>
       </View>
     </Modal>
-  );
-};
+  )
+}
 
-export default SuccessModal;
-
-const Styles = StyleSheet.create({
-  modal: {
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  image: {
-    height: 100,
-    width: 100
-  }
-});
+export default SuccessModal

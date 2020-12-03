@@ -41,7 +41,7 @@ export const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorPro
     return date.toString() !== dateNow.toString()
   }
 
-  useEffect(() => {
+  useEffect((): void => {
     const day = parseInt(lastSevenDays[selectedDate].split(' / ')[0])
     const month = parseInt(lastSevenDays[selectedDate].split(' / ')[1])
     const date = newDate({
@@ -55,7 +55,7 @@ export const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorPro
       date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000)
       return setDateTime(date)
     }
-    setDateTime(null)
+    return setDateTime(null)
   }, [selectedDate, hours, minutes])
 
   const getPickerItems = (items: string[]) => items.map((i) => <Picker.Item key={i} label={`${i}`} value={i} />)
@@ -64,12 +64,12 @@ export const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorPro
     setSelectedDate(index)
   }
 
-  const onHoursSelected = (hours: ReactText, _: number) => {
-    setHours(parseInt(`${hours}`))
+  const onHoursSelected = (hrs: ReactText, _: number) => {
+    setHours(parseInt(`${hrs}`))
   }
 
-  const onMinutesSelected = (minutes: ReactText, _: number) => {
-    setMinutes(parseInt(`${minutes}`))
+  const onMinutesSelected = (mins: ReactText, _: number) => {
+    setMinutes(parseInt(`${mins}`))
   }
 
   return (
@@ -106,3 +106,5 @@ export const TimeSelector: React.FC<TimeSelectorProps> = (props: TimeSelectorPro
     </View>
   )
 }
+
+export default TimeSelector

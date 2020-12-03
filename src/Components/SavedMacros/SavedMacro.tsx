@@ -52,7 +52,9 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
         </View>
         <GradientBorder x={1.0} y={1.0} />
         <Text>
-          {amount} {unit}
+          {amount}
+          {' '}
+          {unit}
         </Text>
         <GradientBorder x={1.0} y={1.0} />
         <View style={SavedMacroStyles.readingContainer}>

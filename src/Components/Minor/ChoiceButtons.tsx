@@ -28,3 +28,5 @@ export const ChoiceButtons: React.FC<ChoiceButtonsProps> = (props: ChoiceButtons
     </View>
   )
 }
+
+export default ChoiceButtons

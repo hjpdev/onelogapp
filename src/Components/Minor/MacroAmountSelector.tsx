@@ -101,3 +101,5 @@ export const MacroAmountSelector: React.FC<MacroSelectorProps> = (props: MacroSe
     </View>
   )
 }
+
+export default MacroAmountSelector

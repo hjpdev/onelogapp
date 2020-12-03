@@ -138,3 +138,5 @@ export const MacroSelector: React.FC<MacroSelectorProps> = (props: MacroSelector
   // </View>
   // )
 }
+
+export default MacroSelector

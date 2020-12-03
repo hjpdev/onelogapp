@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Modal from 'react-native-modal'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import { ChoiceButtons, ModifyTimeSelector, WheelSelector } from '../../Minor'
 import { WheelSelectorOptions } from '../../../Helpers'
-import { generateCreatedDate } from '../../../Helpers/Date'
-import { KetoReading } from '../../../types'
+import { DataKey, StoredKetoReading, Table } from '../../../types'
+import { ModifyKetoStyles } from '../Styles'
 
 interface ModifyKetoModalProps {
   isVisible: boolean
-  reading: KetoReading
+  reading: StoredKetoReading
   onClose: () => void
-  update: (dataKey: string) => void
+  update: (_: DataKey) => void
 }
 
 const readingService = new ReadingService()
@@ -23,7 +23,7 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
   const { isVisible, reading, onClose, update } = props
 
   const [created, setCreated] = useState(reading.created)
-  const [data, setData] = useState<number>(reading.data || 0.0)
+  const [data, setData] = useState(reading.data || 0.0)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
@@ -31,16 +31,16 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
     try {
       const body = created !== reading.created ? { created, data } : { data }
       const response = await readingService.putReading({
-        table: 'keto',
+        table: Table.keto,
         data: body,
         id: reading.id
       })
 
-      await readingService.handleSuccessfulUpdate('ketoReadings', response, setShowSuccessModal)
-      update('ketoReadings')
+      await readingService.handleSuccessfulUpdate(DataKey.keto, response, setShowSuccessModal)
+      update(DataKey.keto)
       onClose()
     } catch (err) {
-      console.log(`Error ModifyKetoModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyKetoModal.handleSubmit: ${err}`) // eslint-disable-line no-console
     }
   }
 
@@ -55,9 +55,9 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.66}
-        style={Styles.modal}
+        style={ModifyKetoStyles.modal}
       >
-        <View style={Styles.container}>
+        <View style={ModifyKetoStyles.container}>
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
           <WheelSelector
             data={reading.data}
@@ -65,15 +65,15 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
             fractionOptions={WheelSelectorOptions.default}
             updateData={setData}
           />
-          <View style={Styles.deleteContainer}>
+          <View style={ModifyKetoStyles.deleteContainer}>
             <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
-              <Text style={Styles.deleteText}>Delete</Text>
+              <Text style={ModifyKetoStyles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
           <ChoiceButtons
             confirmationText="Submit"
             cancellationText="Cancel"
-            onSubmit={async () => await handleSubmit()}
+            onSubmit={async () => handleSubmit()}
             onClose={onClose}
           />
         </View>
@@ -81,39 +81,14 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
       <DeleteConfirmationModal
         isVisible={showDeleteConfirmationModal}
-        id={reading.id}
-        name={generateCreatedDate(`${reading.created}`)}
-        table="keto"
-        dataKey="ketoReadings"
+        reading={reading}
+        table={Table.keto}
+        dataKey={DataKey.keto}
         onClose={() => setShowDeleteConfirmationModal(false)}
-        update={() => update('ketoReadings')}
+        update={() => update(DataKey.keto)}
       />
     </>
   )
 }
 
 export default ModifyKetoModal
-
-const Styles = StyleSheet.create({
-  modal: {
-    alignItems: 'center'
-  },
-  container: {
-    width: 300,
-    backgroundColor: '#ebebeb',
-    borderWidth: 1.5,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    alignItems: 'center'
-  },
-  deleteContainer: {
-    width: '33%',
-    margin: 4,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    marginBottom: 12
-  },
-  deleteText: {
-    textAlign: 'center'
-  }
-})

@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import { ChoiceButtons, ModifyTimeSelector, MacroReadingInput } from '../../Minor'
-import { generateCreatedDate } from '../../../Helpers/Date'
-import { MacroReading } from '../../../types'
+import { StoredMacroReading, Table, DataKey, MacroReadingData } from '../../../types'
+import { ModifyMacroStyles } from '../Styles'
 
 interface ModifyMacroModalProps {
   isVisible: boolean
-  reading: MacroReading
+  reading: StoredMacroReading
   onClose: () => void
-  update: (dataKey: string) => void
+  update: (_: DataKey) => void
 }
 
 const readingService = new ReadingService()
@@ -22,20 +22,20 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
   const { isVisible, reading, onClose, update } = props
 
   const [created, setCreated] = useState(reading.created)
-  const [data, setData] = useState<{ [key: string]: string | number }>({})
+  const [data, setData] = useState({} as MacroReadingData)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const handleSubmit = async () => {
     try {
       const body = created !== reading.created ? { ...reading, created } : { ...reading }
-      const response = await readingService.putReading({ table: 'macro', data: body, id: reading.id })
+      const response = await readingService.putReading({ table: Table.macro, data: body, id: reading.id })
 
-      await readingService.handleSuccessfulUpdate('macroReadings', response, setShowSuccessModal)
-      update('macroReadings')
+      await readingService.handleSuccessfulUpdate(DataKey.macro, response, setShowSuccessModal)
+      update(DataKey.macro)
       onClose()
     } catch (err) {
-      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`)
+      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`) // eslint-disable-line no-console
     }
   }
 
@@ -50,20 +50,20 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
         onBackButtonPress={onClose}
         onBackdropPress={onClose}
         backdropOpacity={0.66}
-        style={Styles.modal}
+        style={ModifyMacroStyles.modal}
       >
-        <View style={Styles.container}>
+        <View style={ModifyMacroStyles.container}>
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
-          <MacroReadingInput showSavedMacroOptions={false} reading={data} updateReading={setReading} />
-          <View style={Styles.deleteContainer}>
-            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)} s>
-              <Text style={Styles.deleteText}>Delete</Text>
+          <MacroReadingInput showSavedMacroOptions={false} data={data} updateReading={setData} />
+          <View style={ModifyMacroStyles.deleteContainer}>
+            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
+              <Text style={ModifyMacroStyles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
           <ChoiceButtons
             confirmationText="Submit"
             cancellationText="Cancel"
-            onSubmit={async () => await handleSubmit()}
+            onSubmit={async () => handleSubmit()}
             onClose={onClose}
           />
         </View>
@@ -71,36 +71,14 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
       <DeleteConfirmationModal
         isVisible={showDeleteConfirmationModal}
-        id={data.id}
-        name={generateCreatedDate(`${data.created}`)}
-        table="macro"
-        dataKey="macroReadings"
+        reading={reading}
+        table={Table.macro}
+        dataKey={DataKey.macro}
         onClose={() => setShowDeleteConfirmationModal(false)}
-        update={() => update('macroReadings')}
+        update={() => update(DataKey.macro)}
       />
     </>
   )
 }
 
 export default ModifyMacroModal
-
-const Styles = StyleSheet.create({
-  modal: {},
-  container: {
-    backgroundColor: '#ebebeb',
-    alignItems: 'center',
-    borderWidth: 1.5,
-    borderBottomWidth: 2,
-    borderRadius: 4
-  },
-  deleteContainer: {
-    width: '33%',
-    margin: 4,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    marginVertical: 10
-  },
-  deleteText: {
-    textAlign: 'center'
-  }
-})
