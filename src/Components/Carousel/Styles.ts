@@ -119,7 +119,7 @@ export const MacroStyles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: Colors.darkGrey1
+    color: Colors.darkGrey2
   },
   values: {
     flexDirection: 'column',

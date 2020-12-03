@@ -3,7 +3,8 @@ export default {
   bgRed: 'rgba(217, 30, 30, 0.9)',
   bgYellow: '#deda00',
   black: '#000000',
-  darkGrey1: '#3f3d3d',
+  darkGrey1: '#808080',
+  darkGrey2: '#3f3d3d',
   doseLong: '#e0d5b7',
   doseShort: '#b56076',
   keto: '#b8b884',
@@ -13,5 +14,7 @@ export default {
   lightGrey4: '#c4c4c4',
   lightGrey5: '#dbdbdb',
   lightGrey6: '#d6d6d6',
+  red: '#ff0000',
+  tomato: '#ff6347',
   white: '#ffffff'
 }

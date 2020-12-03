@@ -17,8 +17,6 @@ interface ModifyKetoModalProps {
   update: (_: DataKey) => void
 }
 
-const readingService = new ReadingService()
-
 const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalProps) => {
   const { isVisible, reading, onClose, update } = props
 
@@ -30,17 +28,17 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
   const handleSubmit = async () => {
     try {
       const body = created !== reading.created ? { created, data } : { data }
-      const response = await readingService.putReading({
+      const response = await ReadingService.putReading({
         table: Table.keto,
         data: body,
         id: reading.id
       })
 
-      await readingService.handleSuccessfulUpdate(DataKey.keto, response, setShowSuccessModal)
+      await ReadingService.handleSuccessfulUpdate(DataKey.keto, response, setShowSuccessModal)
       update(DataKey.keto)
       onClose()
     } catch (err) {
-      console.log(`Error ModifyKetoModal.handleSubmit: ${err}`) // eslint-disable-line no-console
+      console.log(`Error ModifyKetoModal.handleSubmit: ${err}`)
     }
   }
 

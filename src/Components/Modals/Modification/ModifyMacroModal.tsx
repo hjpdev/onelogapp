@@ -16,8 +16,6 @@ interface ModifyMacroModalProps {
   update: (_: DataKey) => void
 }
 
-const readingService = new ReadingService()
-
 const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroModalProps) => {
   const { isVisible, reading, onClose, update } = props
 
@@ -29,13 +27,13 @@ const ModifyMacroModal: React.FC<ModifyMacroModalProps> = (props: ModifyMacroMod
   const handleSubmit = async () => {
     try {
       const body = created !== reading.created ? { ...reading, created } : { ...reading }
-      const response = await readingService.putReading({ table: Table.macro, data: body, id: reading.id })
+      const response = await ReadingService.putReading({ table: Table.macro, data: body, id: reading.id })
 
-      await readingService.handleSuccessfulUpdate(DataKey.macro, response, setShowSuccessModal)
+      await ReadingService.handleSuccessfulUpdate(DataKey.macro, response, setShowSuccessModal)
       update(DataKey.macro)
       onClose()
     } catch (err) {
-      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`) // eslint-disable-line no-console
+      console.log(`Error ModifyMacroModal.handleSubmit: ${err}`)
     }
   }
 

@@ -10,14 +10,21 @@ interface SavedMacrosForLetterProps {
   letter: string
   readings: StoredSavedMacroReading[]
   update: () => void
-  addEntry: (amount: number, entry: StoredSavedMacroReading) => void
+  addEntry: (_: number, __: StoredSavedMacroReading) => void
 }
 
 const SavedMacrosForLetter: React.FC<SavedMacrosForLetterProps> = (props: SavedMacrosForLetterProps) => {
   const { letter, readings, update, addEntry } = props
   const [isOpen, setIsOpen] = useState(false)
 
-  const generateList = () => readings.map((reading) => <SavedMacro key={reading.id} reading={reading} update={update} addEntry={addEntry} />)
+  const generateList = () => readings.map((reading) => (
+    <SavedMacro
+      key={reading.id}
+      reading={reading}
+      update={update}
+      addEntry={addEntry}
+    />
+  ))
 
   return (
     <>

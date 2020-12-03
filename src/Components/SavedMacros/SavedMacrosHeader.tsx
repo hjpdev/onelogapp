@@ -30,7 +30,7 @@ const SavedMacrosHeader: React.FC<SavedMacrosHeaderProps> = (props: SavedMacrosH
           <TouchableOpacity onPress={onPress}>
             <Image
               source={require('../../Assets/Images/PreviousReadings.png')}
-              style={{ height: 40, width: 30, position: 'absolute' }}
+              style={SavedMacrosHeaderStyles.previousReadings}
             />
             <Text style={SavedMacrosHeaderStyles.numberOfEntries}>{numberOfEntries}</Text>
           </TouchableOpacity>

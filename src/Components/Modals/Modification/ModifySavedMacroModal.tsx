@@ -17,8 +17,6 @@ interface ModifySavedMacroModalProps {
   update: (_: DataKey) => void
 }
 
-const readingService = new ReadingService()
-
 const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: ModifySavedMacroModalProps) => {
   const { isVisible, reading, onClose, update } = props
 
@@ -39,13 +37,13 @@ const ModifySavedMacroModal: React.FC<ModifySavedMacroModalProps> = (props: Modi
         amount,
         unit
       }
-      const response = await readingService.putReading({ table: Table.savedMacro, data: newReading, id })
+      const response = await ReadingService.putReading({ table: Table.savedMacro, data: newReading, id })
 
-      await readingService.handleSuccessfulUpdate(DataKey.savedMacro, response, setShowSuccessModal)
+      await ReadingService.handleSuccessfulUpdate(DataKey.savedMacro, response, setShowSuccessModal)
       update(DataKey.savedMacro)
       onClose()
     } catch (err) {
-      console.log(`Error ModifySavedMacroModal.handleSubmit: ${err}`) // eslint-disable-line no-console
+      console.log(`Error ModifySavedMacroModal.handleSubmit: ${err}`)
     }
   }
 

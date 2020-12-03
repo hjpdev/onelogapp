@@ -10,7 +10,6 @@ import { DataKey, NewReadingHeaderText, Table } from '../../../types'
 import { KetoStyles } from '../Styles'
 
 const dataKey = DataKey.keto
-const readingService = new ReadingService()
 
 export const NewKetoReading: React.FC = () => {
   const [data, setData] = useState(0.0)
@@ -24,12 +23,12 @@ export const NewKetoReading: React.FC = () => {
     }
     try {
       const reading = dateTime ? { data, created: dateTime } : { data }
-      response = await readingService.submitReading({ table: Table.keto, reading })
+      response = await ReadingService.submitReading({ table: Table.keto, reading })
     } catch (err) {
-      console.log('Error keto handleSubmit: ', err) // eslint-disable-line no-console
+      console.log('Error keto handleSubmit: ', err)
     }
 
-    return response && readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
+    return response && ReadingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
   }
 
   return (

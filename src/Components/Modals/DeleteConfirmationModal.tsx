@@ -19,8 +19,6 @@ interface DeleteConfirmationModalProps {
   update: (_: DataKey) => void
 }
 
-const readingService = new ReadingService()
-
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: DeleteConfirmationModalProps) => {
   const { reading, table, dataKey, isVisible, onClose, update } = props
   const { id, created } = reading
@@ -30,13 +28,13 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
 
   const handleDelete = async () => {
     try {
-      const response = await readingService.deleteReading({ table, id })
+      const response = await ReadingService.deleteReading({ table, id })
 
-      await readingService.handleSuccessfulDelete(dataKey, response, setShowSuccessModal)
-      await update(dataKey)
+      await ReadingService.handleSuccessfulDelete(dataKey, response, setShowSuccessModal)
+      update(dataKey)
       onClose()
     } catch (err) {
-      console.log(`Error handleDelete table: ${table}, id: ${id}: ${err}`) // eslint-disable-line no-console
+      console.log(`Error handleDelete table: ${table}, id: ${id}: ${err}`)
     }
   }
 

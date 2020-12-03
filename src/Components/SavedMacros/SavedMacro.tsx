@@ -11,12 +11,12 @@ import { SavedMacroStyles } from './Styles'
 interface SavedMacroProps {
   reading: StoredSavedMacroReading
   update: () => void
-  addEntry: (amount: number, entry: StoredSavedMacroReading) => void
+  addEntry: (_: number, __: StoredSavedMacroReading) => void
 }
 
 const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
   const { reading, update, addEntry } = props
-  const { id, name, amount, unit } = reading
+  const { name, amount, unit } = reading
   const { kcal, carbs, sugar, protein, fat } = reading.data
 
   const [isOpen, setIsOpen] = useState(false)
@@ -34,10 +34,7 @@ const SavedMacro: React.FC<SavedMacroProps> = (props: SavedMacroProps) => {
             <TouchableOpacity onPress={() => setIsOpen(!isOpen)}>
               {isOpen ? (
                 <Text
-                  style={{
-                    ...SavedMacroStyles.nameText,
-                    flexWrap: 'wrap'
-                  }}
+                  style={SavedMacroStyles.openNameText}
                 >
                   {`${capitaliseAddWhitespace(name)}`}
                 </Text>

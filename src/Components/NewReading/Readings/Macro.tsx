@@ -19,7 +19,6 @@ interface NewMacroReadingProps {
 }
 
 const dataKey = DataKey.macro
-const readingService = new ReadingService()
 
 export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroReadingProps) => {
   const { route } = props
@@ -37,13 +36,13 @@ export const NewMacroReading: React.FC<NewMacroReadingProps> = (props: NewMacroR
       if (!Object.keys(data).every((macro) => data[macro] === 0)) {
         try {
           const reading: MacroReadingData = dateTime ? { ...data, created: dateTime } : { ...data }
-          response = await readingService.submitReading({ table: Table.macro, reading })
+          response = await ReadingService.submitReading({ table: Table.macro, reading })
         } catch (err) {
-          console.log('Error macro handleSubmit: ', err) // eslint-disable-line no-console
+          console.log('Error macro handleSubmit: ', err)
         }
       }
     }
-    return response && readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
+    return response && ReadingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
   }
 
   const newMacroReading = () => (

@@ -1,3 +1,4 @@
+// eslint-disable-line max-classes-per-file
 export enum DoseText {
   long = 'Long',
   short = 'Short'
@@ -16,8 +17,8 @@ export enum DataKey {
   keto = 'ketoReadings',
   dose = 'doseReadings',
   macro = 'macroReadings',
-  bgStats = 'bgStats',
-  savedMacro = 'savedMacros'
+  savedMacro = 'savedMacros',
+  bgStats = 'bgStats'
 }
 
 export enum NewReadingHeaderText {

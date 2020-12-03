@@ -28,13 +28,13 @@ const MacroCollectionEntry: React.FC<MacroCollectionEntryProps> = (props: MacroC
         </TouchableOpacity>
         <View style={EntryStyles.headerText}>
           {isOpen ? (
-            <Text style={{ flexWrap: 'wrap' }}>{`${capitaliseAddWhitespace(reading.name)}`}</Text>
+            <Text style={EntryStyles.headerText}>{`${capitaliseAddWhitespace(reading.name)}`}</Text>
           ) : (
             <Text>{`${truncateName(28, reading.name)}`}</Text>
           )}
         </View>
         <View>
-          <Text style={{ textAlign: 'right' }}>{`  ${(ratio * reading.amount).toFixed(0)} ${reading.unit}`}</Text>
+          <Text style={EntryStyles.amountText}>{`  ${(ratio * reading.amount).toFixed(0)} ${reading.unit}`}</Text>
         </View>
         <View>
           <Text style={EntryStyles.chevron}>{isOpen ? '▼' : '▶︎'}</Text>

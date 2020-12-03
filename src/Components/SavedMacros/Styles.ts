@@ -1,9 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
+
+import Colors from '../../Assets/Styles/Colors'
 
 export const NewSavedMacroModalStyles = StyleSheet.create({
   container: {
     width: '50%',
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     borderRadius: 4,
     borderWidth: 1.5,
     borderBottomWidth: 2,
@@ -14,18 +16,18 @@ export const NewSavedMacroModalStyles = StyleSheet.create({
   },
   textInput: {
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     paddingLeft: 10,
-    borderColor: 'grey',
+    borderColor: Colors.darkGrey1,
     borderRadius: 2
   }
-});
+})
 
 export const SavedMacroStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ebebeb',
+    backgroundColor: Colors.lightGrey1,
     borderWidth: 1,
     borderBottomWidth: 2,
     borderRadius: 4,
@@ -39,7 +41,7 @@ export const SavedMacroStyles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   icon: {
-    tintColor: 'black',
+    tintColor: Colors.black,
     height: 14,
     width: 14,
     padding: 4,
@@ -51,6 +53,11 @@ export const SavedMacroStyles = StyleSheet.create({
   nameText: {
     fontSize: 14,
     textAlign: 'center'
+  },
+  openNameText: {
+    fontSize: 14,
+    textAlign: 'center',
+    flexWrap: 'wrap'
   },
   readingContainer: {
     flex: 1,
@@ -65,7 +72,7 @@ export const SavedMacroStyles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#3f3d3d'
+    color: Colors.darkGrey2
   },
   values: {
     flexDirection: 'column',
@@ -75,13 +82,13 @@ export const SavedMacroStyles = StyleSheet.create({
     fontSize: 14,
     alignSelf: 'flex-end',
     fontWeight: 'bold',
-    color: 'black'
+    color: Colors.black
   }
-});
+})
 
 export const SavedMacrosForLetterStyles = StyleSheet.create({
   date: {
-    backgroundColor: '#e6e6e6',
+    backgroundColor: Colors.lightGrey3,
     flexDirection: 'row',
     fontSize: 22,
     padding: 14,
@@ -93,7 +100,7 @@ export const SavedMacrosForLetterStyles = StyleSheet.create({
   placeholder: {
     paddingLeft: 8,
     fontSize: 22,
-    color: '#e6e6e6'
+    color: Colors.lightGrey3
   },
   chevron: {
     fontSize: 22,
@@ -104,14 +111,14 @@ export const SavedMacrosForLetterStyles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
-    backgroundColor: '#dbdbdb'
+    backgroundColor: Colors.lightGrey5
   }
-});
+})
 
 export const SavedMacrosHeaderStyles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    backgroundColor: '#e8e8e8',
+    backgroundColor: Colors.lightGrey3,
     justifyContent: 'space-around',
     alignItems: 'center',
     padding: 8
@@ -124,6 +131,11 @@ export const SavedMacrosHeaderStyles = StyleSheet.create({
     height: 30,
     width: 30
   },
+  previousReadings: {
+    height: 40,
+    width: 30,
+    position: 'absolute'
+  },
   textContainer: {
     flex: 4
   },
@@ -132,7 +144,7 @@ export const SavedMacrosHeaderStyles = StyleSheet.create({
     textAlign: 'center'
   },
   numberOfEntries: {
-    color: 'red',
+    color: Colors.red,
     textAlign: 'right',
     paddingTop: 6,
     paddingRight: 4,
@@ -141,4 +153,4 @@ export const SavedMacrosHeaderStyles = StyleSheet.create({
     height: 40,
     width: 30
   }
-});
+})

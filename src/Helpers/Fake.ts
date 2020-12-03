@@ -3,16 +3,16 @@ export const testGetReadings = (table: string): any => {
     bg: BgReadings,
     dose: DoseReadings,
     macro: MacroReadings
-  };
-  console.log('Fake readings for: ', table);
+  }
+  console.log('Fake readings for: ', table)
 
-  return map[table];
-};
+  return map[table]
+}
 
 export const testGetStats = (): any => {
-  console.log('Fake readings for stats');
-  return StatsReadings;
-};
+  console.log('Fake readings for stats')
+  return StatsReadings
+}
 
 export const BgReadings = [
   {
@@ -55,7 +55,7 @@ export const BgReadings = [
     created: '2020-08-03T07:20:06.947Z',
     reading: 4.2
   }
-];
+]
 
 export const StatsReadings = [
   {
@@ -83,7 +83,7 @@ export const StatsReadings = [
     avg: 5.8,
     stddev: 1.71059614267934
   }
-];
+]
 
 export const DoseReadings = [
   {
@@ -153,7 +153,7 @@ export const DoseReadings = [
     islong: true
   },
 
-];
+]
 
 export const MacroReadings = [
   {
@@ -183,4 +183,4 @@ export const MacroReadings = [
     protein: 20.5,
     fat: 10.2
   }
-];
+]

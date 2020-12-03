@@ -1,7 +1,7 @@
 import Config from 'react-native-config'
 
 import { LocalStore } from '../Store'
-import { DataKey, Reading, ReadingProps, StoredReading, Table } from '../types'
+import { DataKey, ReadingProps, StoredReading, Table } from '../types'
 import { delay } from '../Helpers'
 
 const { BASE_URL } = Config
@@ -36,15 +36,32 @@ interface DeleteReadingOptions {
   id: number
 }
 
-const store = new LocalStore()
+const generateReadingsQuery = (options: GenerateReadingsQueryOptions): string => {
+  const { dataKeys, days } = options
+  const queryMap: { [key: string]: string } = {
+    bgReadings: 'bgReadings { id, created data }',
+    bgStats: `bgStats(days: [${days}]) { created avg stddev }`,
+    doseReadings: 'doseReadings { id, created data long }',
+    macroReadings: 'macroReadings { id, created kcal carbs sugar protein fat }',
+    ketoReadings: 'ketoReadings { id, created data }',
+    savedMacros: 'savedMacros { id, created, name, kcal, carbs, sugar, protein, fat, amount, unit, times_added }'
+  }
+  const querys: string[] = []
+
+  dataKeys.forEach((key) => {
+    querys.push(queryMap[key])
+  })
+
+  return querys.length > 0 ? `{ ${querys.join(' ')} }` : ''
+}
 
 export default class ReadingsService {
-  async getReadings(options: GetReadingsOptions): Promise<GetReadingsResult> {
+  static async getReadings(options: GetReadingsOptions): Promise<GetReadingsResult> {
     const { dataKeys, days } = options
     if (!dataKeys && !days) {
       throw new Error('Error getReadings: Must provide dataKeys to query (& array of days if relevent).')
     }
-    const query = this.generateReadingsQuery({ dataKeys, days })
+    const query = generateReadingsQuery({ dataKeys, days })
     const url = `${BASE_URL}/graphql`
     let readings
 
@@ -67,7 +84,7 @@ export default class ReadingsService {
     return readings
   }
 
-  async submitReading(options: SubmitReadingOptions): Promise<StoredReading> {
+  static async submitReading(options: SubmitReadingOptions): Promise<StoredReading> {
     const { table, reading } = options
     const url = `${BASE_URL}/readings/${table}`
     let body = {} as any
@@ -99,10 +116,11 @@ export default class ReadingsService {
     return newReading
   }
 
-  async putReading(options: PutReadingOptions) {
+  static async putReading(options: PutReadingOptions) {
     const { table, id, data } = options
     const url = `${BASE_URL}/readings/${table}/${id}`
 
+    let entry
     try {
       const result = await fetch(url, {
         method: 'PUT',
@@ -114,17 +132,19 @@ export default class ReadingsService {
       })
 
       console.log('Made request putReading')
-      const entry = await result.json()
-      return entry
+      entry = await result.json()
     } catch (err) {
-      console.log('Error putReading: ', err)
+      return console.log('Error putReading: ', err)
     }
+
+    return entry
   }
 
-  async deleteReading(options: DeleteReadingOptions) {
+  static async deleteReading(options: DeleteReadingOptions) {
     const { table, id } = options
     const url = `${BASE_URL}/readings/${table}/${id}`
 
+    let response
     try {
       const result = await fetch(url, {
         method: 'DELETE',
@@ -135,19 +155,21 @@ export default class ReadingsService {
       })
 
       console.log('Made request deleteReading')
-      return await result.json()
+      response = await result.json()
     } catch (err) {
-      console.log('Error deleteReading: ', err)
+      return console.log('Error deleteReading: ', err)
     }
+
+    return response
   }
 
-  async handleSuccessfulSubmit(
+  static async handleSuccessfulSubmit(
     dataKey: string,
-    response: { [key: string]: any },
-    modalSwitchFunction: (isVisible: boolean) => void
+    response: StoredReading,
+    modalSwitchFunction: (_: boolean) => void
   ): Promise<void> {
     try {
-      await store.addReading(dataKey, response)
+      await LocalStore.addReading(dataKey, response)
       modalSwitchFunction(true)
       await delay(1000)
       modalSwitchFunction(false)
@@ -156,13 +178,13 @@ export default class ReadingsService {
     }
   }
 
-  async handleSuccessfulUpdate(
+  static async handleSuccessfulUpdate(
     dataKey: string,
     updatedReading: any,
-    modalSwitchFunction: (isVisible: boolean) => void
+    modalSwitchFunction: (_: boolean) => void
   ) {
     try {
-      await store.updateReadings(dataKey, updatedReading)
+      await LocalStore.updateReadings(dataKey, updatedReading)
       modalSwitchFunction(true)
       await delay(1000)
       modalSwitchFunction(false)
@@ -171,14 +193,14 @@ export default class ReadingsService {
     }
   }
 
-  async handleSuccessfulDelete(
+  static async handleSuccessfulDelete(
     dataKey: string,
     response: { id: number },
-    modalSwitchFunction: (isVisible: boolean) => void
+    modalSwitchFunction: (_: boolean) => void
   ): Promise<void> {
     const { id } = response
     try {
-      await store.removeReading(dataKey, id)
+      await LocalStore.removeReading(dataKey, id)
       modalSwitchFunction(true)
       await delay(1000)
       modalSwitchFunction(false)
@@ -187,61 +209,41 @@ export default class ReadingsService {
     }
   }
 
-  async getHomeScreenData(): Promise<any> {
-    await this.updateHomeScreenData()
+  static async getHomeScreenData(): Promise<any> {
+    await ReadingsService.updateHomeScreenData()
+    let homeScreenData = {} as any
     try {
-      const bgReadings = await store.getData(DataKey.bg)
-      const bgStats = await store.getData(DataKey.bgStats)
-      const doseReadings = await store.getData(DataKey.dose)
-      const macroReadings = await store.getData(DataKey.macro)
+      const bgReadings = await LocalStore.getData(DataKey.bg)
+      const bgStats = await LocalStore.getData(DataKey.bgStats)
+      const doseReadings = await LocalStore.getData(DataKey.dose)
+      const macroReadings = await LocalStore.getData(DataKey.macro)
 
-      return {
-        bgReadings,
-        bgStats,
-        doseReadings,
-        macroReadings
-      }
+      homeScreenData = { ...bgReadings, ...bgStats, ...doseReadings, ...macroReadings }
     } catch (err) {
-      console.log('Error getHomeScreenData: ', err.stack)
+      return console.log('Error getHomeScreenData: ', err.stack)
     }
+
+    return homeScreenData
   }
 
-  async updateHomeScreenData() {
+  static async updateHomeScreenData() {
     const dataKeys: DataKey[] = []
-    for (const key of [DataKey.bg, DataKey.bgStats, DataKey.dose, DataKey.macro, DataKey.keto]) {
-      if (await store.needsUpdating(key)) {
+    const allDataKeys = [DataKey.bg, DataKey.bgStats, DataKey.dose, DataKey.macro, DataKey.keto]
+    allDataKeys.forEach(async (key: DataKey) => {
+      if (await LocalStore.needsUpdating(key)) {
         dataKeys.push(key)
       }
-    }
+    })
 
     if (dataKeys.length > 0) {
       try {
-        const data = await this.getReadings({ dataKeys, days: [7, 14, 30, 90, 365] })
-        for (const key of Object.keys(data)) {
-          await store.storeData(key, data[key])
-        }
+        const data = await ReadingsService.getReadings({ dataKeys, days: [7, 14, 30, 90, 365] })
+        Object.keys(data).forEach(async (key: string) => {
+          await LocalStore.storeData(key, data[key])
+        })
       } catch (err) {
-        console.log('Error getHomeScreenData: ', err.stack)
+        console.log('Error updateHomeScreenData: ', err.stack)
       }
     }
-  }
-
-  generateReadingsQuery(options: GenerateReadingsQueryOptions): string {
-    const { dataKeys, days } = options
-    const queryMap: { [key: string]: string } = {
-      bgReadings: 'bgReadings { id, created data }',
-      bgStats: `bgStats(days: [${days}]) { created avg stddev }`,
-      doseReadings: 'doseReadings { id, created data long }',
-      macroReadings: 'macroReadings { id, created kcal carbs sugar protein fat }',
-      ketoReadings: 'ketoReadings { id, created data }',
-      savedMacros: 'savedMacros { id, created, name, kcal, carbs, sugar, protein, fat, amount, unit, times_added }'
-    }
-    const querys: string[] = []
-
-    for (const key of dataKeys) {
-      querys.push(queryMap[key])
-    }
-
-    return querys.length > 0 ? `{ ${querys.join(' ')} }` : ''
   }
 }

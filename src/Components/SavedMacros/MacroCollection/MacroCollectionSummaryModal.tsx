@@ -5,16 +5,16 @@ import { useNavigation } from '@react-navigation/native'
 
 import MacroCollectionEntry from './MacroCollectionEntry'
 import { ChoiceButtons, GradientBorder } from '../../Minor'
-import { MacroReadingData } from '../../../types'
+import { DataKey, MacroReadingData } from '../../../types'
 import { CollectionSummaryModalStyles } from './Styles'
 
 interface MacroCollectionSummaryModalProps {
   isVisible: boolean
   collection: typeof MacroCollectionEntry[]
   onClose: () => void
-  removeEntry: (key: string) => void
+  removeEntry: (_: DataKey) => void
   clearCollection: () => void
-  updateReading: (macros: MacroReadingData) => void
+  updateReading: (_: MacroReadingData) => void
 }
 
 const MacroCollectionSummaryModal: React.FC<MacroCollectionSummaryModalProps> = (

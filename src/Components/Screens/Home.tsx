@@ -14,15 +14,13 @@ const defaultHomeScreenData = {
   macroReadings: { readings: [] }
 }
 
-const readingService = new ReadingService()
-
 const HomeScreen: React.FC = () => {
   const [data, setData] = useState(defaultHomeScreenData)
 
   const getHomeData = async () => {
     // await clearAllData()
     try {
-      const homeScreenData = await readingService.getHomeScreenData()
+      const homeScreenData = await ReadingService.getHomeScreenData()
       console.log('THE HOME SCREEN DATA => ', homeScreenData)
       setData(homeScreenData)
     } catch (err) {

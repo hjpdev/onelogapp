@@ -14,8 +14,6 @@ interface NewSavedMacroModalProps {
   onClose: () => void
 }
 
-const readingService = new ReadingService()
-
 const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMacroModalProps) => {
   const { isVisible, onClose, data } = props
 
@@ -26,16 +24,18 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
 
   const handleSubmit = async () => {
     const reading: SavedMacroReadingProps = { data, name, amount, unit }
+    let response
     try {
-      const response = await readingService.submitReading({
+      response = await ReadingService.submitReading({
         table: Table.savedMacro,
         reading
       })
       onClose()
-      return readingService.handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)
     } catch (err) {
-      console.log('Error NewSavedMacroModal handleSubmit: ', err)
+      return console.log('Error NewSavedMacroModal handleSubmit: ', err)
     }
+
+    return ReadingService.handleSuccessfulSubmit('savedMacros', response, setShowSuccessModal)
   }
 
   return (
@@ -57,7 +57,7 @@ const NewSavedMacroModal: React.FC<NewSavedMacroModalProps> = (props: NewSavedMa
           <ChoiceButtons
             confirmationText="Submit"
             cancellationText="Cancel"
-            onSubmit={async () => await handleSubmit()}
+            onSubmit={async () => handleSubmit()}
             onClose={onClose}
           />
         </View>

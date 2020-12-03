@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, ReactText, useState, useEffect } from 'react'
+import React, { Dispatch, SetStateAction, useState, useEffect } from 'react'
 import { ScrollView } from 'react-native'
 
 import MacroCollectionSummaryModal from './MacroCollection/MacroCollectionSummaryModal'
@@ -18,11 +18,8 @@ interface SavedMacrosProps {
   updateReading: Dispatch<SetStateAction<StoredSavedMacroReading>>
 }
 
-const readingService = new ReadingService()
-
 const SavedMacros: React.FC<SavedMacrosProps> = (props: SavedMacrosProps) => {
   const { updateReading } = props
-  const store = new LocalStore()
 
   const [savedMacros, setSavedMacros] = useState([] as StoredSavedMacroReading[])
   const [collection, setCollection] = useState([] as MacroCollectionEntry[])
@@ -40,14 +37,14 @@ const SavedMacros: React.FC<SavedMacrosProps> = (props: SavedMacrosProps) => {
 
   const fetchSavedMacros = async () => {
     try {
-      const data = await store.getData(DataKey.savedMacro)
+      const data = await LocalStore.getData(DataKey.savedMacro)
       let { readings } = data
       if (!readings) {
-        const response = await readingService.getReadings({
+        const response = await ReadingService.getReadings({
           dataKeys: [DataKey.savedMacro]
         })
         readings = response.savedMacros
-        await store.storeData(DataKey.savedMacro, readings)
+        await LocalStore.storeData(DataKey.savedMacro, readings)
       }
       setSavedMacros(readings)
     } catch (err) {

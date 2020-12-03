@@ -10,7 +10,6 @@ import { DataKey, NewReadingHeaderText, Table } from '../../../types'
 import { BgStyles } from '../Styles'
 
 const dataKey = DataKey.bg
-const readingService = new ReadingService()
 
 export const NewBgReading: React.FC = () => {
   const [data, setData] = useState(0.0)
@@ -25,16 +24,16 @@ export const NewBgReading: React.FC = () => {
       }
       try {
         const reading = dateTime ? { data, created: dateTime } : { data }
-        response = await readingService.submitReading({
+        response = await ReadingService.submitReading({
           table: Table.bg,
           reading
         })
       } catch (err) {
-        console.log('Error bg handleSubmit: ', err) // eslint-disable-line no-console
+        console.log('Error bg handleSubmit: ', err)
       }
     }
 
-    return response && readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
+    return response && ReadingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
   }
 
   return (

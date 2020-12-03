@@ -10,7 +10,6 @@ import { DataKey, DoseReadingProps, NewReadingHeaderText, Table } from '../../..
 import { DoseStyles } from '../Styles'
 
 const dataKey = DataKey.dose
-const readingService = new ReadingService()
 
 export const NewDoseReading: React.FC = () => {
   const [data, setData] = useState(0.0)
@@ -26,16 +25,16 @@ export const NewDoseReading: React.FC = () => {
       }
       try {
         const reading: DoseReadingProps = dateTime ? { data, long, created: dateTime } : { data, long }
-        response = await readingService.submitReading({
+        response = await ReadingService.submitReading({
           table: Table.dose,
           reading
         })
       } catch (err) {
-        console.log('Error dose handleSubmit: ', err) // eslint-disable-line no-console
+        console.log('Error dose handleSubmit: ', err)
       }
     }
 
-    return response && readingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
+    return response && ReadingService.handleSuccessfulSubmit(dataKey, response, setShowSuccessModal)
   }
 
   return (

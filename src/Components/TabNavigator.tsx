@@ -1,22 +1,23 @@
-import React from 'react';
-import { Image, StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react'
+import { Image, StyleSheet } from 'react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-import AccountScreen from './Screens/Account';
-import AnalyticsScreen from './Screens/Analytics';
-import HomeScreen from './Screens/Home';
-import NewReadingScreen from './Screens/NewReading';
-import SettingsScreen from './Screens/Settings';
+import AccountScreen from './Screens/Account'
+import AnalyticsScreen from './Screens/Analytics'
+import HomeScreen from './Screens/Home'
+import NewReadingScreen from './Screens/NewReading'
+import SettingsScreen from './Screens/Settings'
+import Colors from '../Assets/Styles/Colors'
 
 const tabBarOptions = {
-  activeTintColor: 'tomato',
-  inactiveTintColor: '#ebebeb',
-  style: { backgroundColor: 'black' },
+  activeTintColor: Colors.tomato,
+  inactiveTintColor: Colors.lightGrey1,
+  style: { backgroundColor: Colors.black },
   labelStyle: { fontSize: 12 }
-};
+}
 
 const TabNavigator: React.FC = () => {
-  const Tab = createBottomTabNavigator();
+  const Tab = createBottomTabNavigator()
 
   return (
     <Tab.Navigator initialRouteName="Home" tabBarOptions={tabBarOptions}>
@@ -26,10 +27,10 @@ const TabNavigator: React.FC = () => {
       <Tab.Screen name="New Reading" component={NewReadingScreen} options={{ tabBarIcon: getNewReadingIcon }} />
       <Tab.Screen name="Analytics" component={AnalyticsScreen} options={{ tabBarIcon: getAnalyticsIcon }} />
     </Tab.Navigator>
-  );
-};
+  )
+}
 
-export default TabNavigator;
+export default TabNavigator
 
 type tabIconOptions = {
   size: number
@@ -37,45 +38,45 @@ type tabIconOptions = {
   color: string
 }
 
-const getSettingsIcon = (options: tabIconOptions) => (
+const getSettingsIcon = (_: tabIconOptions) => (
   <Image
     style={Styles.icon}
     source={require('../Assets/Images/NavBarSettings.png')}
   />
-);
+)
 
-const getAccountIcon = (options: tabIconOptions) => (
+const getAccountIcon = (_: tabIconOptions) => (
   <Image
     style={Styles.icon}
     source={require('../Assets/Images/NavBarAccount.png')}
   />
-);
+)
 
-const getHomeIcon = (options: tabIconOptions) => (
+const getHomeIcon = (_: tabIconOptions) => (
   <Image
     style={Styles.icon}
     source={require('../Assets/Images/NavBarHome.png')}
   />
-);
+)
 
-const getNewReadingIcon = (options: tabIconOptions) => (
+const getNewReadingIcon = (_: tabIconOptions) => (
   <Image
     style={Styles.icon}
     source={require('../Assets/Images/NavBarNewReading.png')}
   />
-);
+)
 
-const getAnalyticsIcon = (options: tabIconOptions) => (
+const getAnalyticsIcon = (_: tabIconOptions) => (
   <Image
     style={Styles.icon}
     source={require('../Assets/Images/NavBarAnalytics.png')}
   />
-);
+)
 
 const Styles = StyleSheet.create({
   icon: {
     width: 22,
     height: 22,
-    tintColor: '#ebebeb'
+    tintColor: Colors.lightGrey1
   }
-});
+})

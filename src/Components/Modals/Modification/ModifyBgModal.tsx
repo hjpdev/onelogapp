@@ -18,7 +18,6 @@ interface ModifyBgModalProps {
 }
 
 const dataKey = DataKey.bg
-const readingService = new ReadingService()
 
 const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) => {
   const { isVisible, reading, onClose, onDelete, update } = props
@@ -30,17 +29,17 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
   const handleSubmit = async () => {
     try {
       const body = created !== reading.created ? { created, data } : { data }
-      const response = await readingService.putReading({
+      const response = await ReadingService.putReading({
         table: Table.bg,
         data: body,
         id: reading.id
       })
 
-      await readingService.handleSuccessfulUpdate(dataKey, response, setShowSuccessModal)
+      await ReadingService.handleSuccessfulUpdate(dataKey, response, setShowSuccessModal)
       update(dataKey)
       onClose()
     } catch (err) {
-      console.log(`Error ModifyBgModal.handleSubmit: ${err}`) // eslint-disable-line no-console
+      console.log(`Error ModifyBgModal.handleSubmit: ${err}`)
     }
   }
 

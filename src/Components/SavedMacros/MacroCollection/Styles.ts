@@ -1,21 +1,22 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
+import Colors from '../../../Assets/Styles/Colors'
 
 export const ConfirmationModalStyles = StyleSheet.create({
   container: {
     width: '50%',
-    backgroundColor: 'white',
+    backgroundColor: Colors.white,
     borderWidth: 1.5,
     borderBottomWidth: 2,
     borderRadius: 4,
   },
   modal: {
-	  alignItems: 'center'
+    alignItems: 'center'
   }
-});
+})
 
 export const EntryStyles = StyleSheet.create({
   header: {
-    backgroundColor: '#e6e6e6',
+    backgroundColor: Colors.lightGrey3,
     flexDirection: 'row',
     fontSize: 22,
     padding: 4,
@@ -28,11 +29,17 @@ export const EntryStyles = StyleSheet.create({
     paddingRight: 8,
     marginRight: 14
   },
-  headerText: {
+  headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '60%'
+  },
+  headerText: {
+    flexWrap: 'wrap'
+  },
+  amountText: {
+    textAlign: 'right'
   },
   remove: {
     fontSize: 12,
@@ -57,7 +64,7 @@ export const EntryStyles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
-    color: '#3f3d3d'
+    color: Colors.darkGrey2
   },
   values: {
     flexDirection: 'column',
@@ -67,15 +74,15 @@ export const EntryStyles = StyleSheet.create({
     fontSize: 12,
     alignSelf: 'flex-end',
     fontWeight: 'bold',
-    color: 'black'
+    color: Colors.black
   },
-});
+})
 
 export const CollectionSummaryModalStyles = StyleSheet.create({
   modal: {
     alignSelf: 'center',
     alignItems: 'center',
-    backgroundColor: '#ebebeb',
+    backgroundColor: Colors.lightGrey1,
     width: '80%',
     height: '50%',
     flex: 0,
@@ -91,7 +98,7 @@ export const CollectionSummaryModalStyles = StyleSheet.create({
     borderRadius: 2,
     borderWidth: 1.2,
     flexDirection: 'row',
-    backgroundColor: '#ebebeb',
+    backgroundColor: Colors.lightGrey1,
     justifyContent: 'space-between'
   },
   labels: {
@@ -100,7 +107,7 @@ export const CollectionSummaryModalStyles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: '#3f3d3d'
+    color: Colors.darkGrey2
   },
   numbers: {
     flexDirection: 'row',
@@ -115,7 +122,7 @@ export const CollectionSummaryModalStyles = StyleSheet.create({
     fontSize: 14,
     alignSelf: 'flex-end',
     fontWeight: 'bold',
-    color: 'black'
+    color: Colors.black
   },
   percentages: {
     width: '40%',
@@ -127,4 +134,4 @@ export const CollectionSummaryModalStyles = StyleSheet.create({
   entries: {
     width: '100%'
   }
-});
+})

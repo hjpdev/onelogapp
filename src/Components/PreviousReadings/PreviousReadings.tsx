@@ -25,10 +25,7 @@ const templateMap: { [key: string]: any } = {
   macroReadings: PreviousMacroReading
 }
 
-const readingService = new ReadingService()
-
 const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadingsProps) => {
-  const store = new LocalStore()
   const { route } = props
   const { dataKey, headerText } = route.params
 
@@ -36,15 +33,15 @@ const PreviousReadings: React.FC<PreviousReadingsProps> = (props: PreviousReadin
 
   const fetchReadings = async (key: DataKey) => {
     try {
-      let { readings } = await store.getData(key)
+      let { readings } = await LocalStore.getData(key)
       if (!readings) {
-        const response = await readingService.getReadings({ dataKeys: [key] })
+        const response = await ReadingService.getReadings({ dataKeys: [key] })
         readings = response[key]
-        await store.storeData(key, readings)
+        await LocalStore.storeData(key, readings)
       }
       setPreviousReadings(readings)
     } catch (err) {
-      console.log('Error PreviousReadings.fetchReadings: ', err) // eslint-disable-line no-console
+      console.log('Error PreviousReadings.fetchReadings: ', err)
     }
   }
 

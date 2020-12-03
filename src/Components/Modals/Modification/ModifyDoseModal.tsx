@@ -17,8 +17,6 @@ interface ModifyDoseModalProps {
   update: (_: DataKey) => void
 }
 
-const readingService = new ReadingService()
-
 const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalProps) => {
   const { isVisible, reading, onClose, update } = props
 
@@ -45,17 +43,17 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
           body[key] = state[key]
         }
       })
-      const response = await readingService.putReading({
+      const response = await ReadingService.putReading({
         table: Table.dose,
         data: body,
         id: state.id
       })
 
-      await readingService.handleSuccessfulUpdate(DataKey.dose, response, setShowSuccessModal)
+      await ReadingService.handleSuccessfulUpdate(DataKey.dose, response, setShowSuccessModal)
       update(DataKey.dose)
       onClose()
     } catch (err) {
-      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`) // eslint-disable-line no-console
+      console.log(`Error ModifyDoseModal.handleSubmit: ${err}`)
     }
   }
 
