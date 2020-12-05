@@ -3,8 +3,8 @@ import { Text, View, TouchableOpacity, Switch } from 'react-native'
 
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../../Modals/SuccessModal'
-import { TimeSelector, WheelSelector } from '../../Minor'
 import { NewReadingHeader } from '../NewReadingHeader'
+import { TimeSelector, WheelSelector } from '../../Minor'
 import { delay, WheelSelectorOptions } from '../../../Helpers/General'
 import { DataKey, DoseReadingProps, NewReadingHeaderText, Table } from '../../../types'
 import { DoseStyles } from '../Styles'
@@ -43,7 +43,6 @@ export const NewDoseReading: React.FC = () => {
       <View style={DoseStyles.container}>
         <TimeSelector setDateTime={setDateTime} />
         <WheelSelector
-          isDose
           integerOptions={WheelSelectorOptions.bgInt}
           fractionOptions={WheelSelectorOptions.doseFrac}
           updateData={setData}

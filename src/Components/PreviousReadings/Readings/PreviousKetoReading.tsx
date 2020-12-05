@@ -54,6 +54,7 @@ export const PreviousKetoReading: React.FC<PreviousKetoReadingProps> = (props: P
         isVisible={showModifyKetoModal}
         reading={reading}
         onClose={() => setShowModifyKetoModal(false)}
+        showKetoModal={() => setShowModifyKetoModal(true)}
         update={update}
       />
     </>

@@ -57,6 +57,7 @@ export const PreviousDoseReading: React.FC<PreviousDoseReadingProps> = (props: P
         isVisible={showModifyDoseModal}
         reading={reading}
         onClose={() => setShowModifyDoseModal(false)}
+        showDoseModal={() => setShowModifyDoseModal(true)}
         update={update}
       />
     </>

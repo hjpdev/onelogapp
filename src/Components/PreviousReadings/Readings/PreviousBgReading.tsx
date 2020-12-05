@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { Image, View, Text, TouchableOpacity } from 'react-native'
 
-import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
 import ModifyBgModal from '../../Modals/Modification/ModifyBgModal'
 import { GradientBorder } from '../../Minor'
 import { generateCreatedTime } from '../../../Helpers/Date'
-import { StoredBgReading, DataKey, Table } from '../../../types'
+import { StoredBgReading, DataKey } from '../../../types'
 import { BgStyles } from '../Styles'
 import Colors from '../../../Assets/Styles/Colors'
 
@@ -23,10 +22,9 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
   const { created, data } = reading
   const timeCreated = generateCreatedTime(created)
 
-  const generateColor = (): string | undefined => {
-    let color
+  const generateColor = (): string => {
+    let color = Colors.bgGreen
     if (data < 3.9) color = Colors.bgRed // '#d91e1e'
-    if (data >= 3.9 && data < 8.1) color = Colors.bgGreen
     if (data > 8.0) color = Colors.bgYellow
 
     return color

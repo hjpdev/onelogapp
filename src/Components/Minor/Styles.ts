@@ -168,11 +168,14 @@ export const TimeSelectorStyles = StyleSheet.create({
 export const WheelSelectorStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    borderLeftWidth: 0.7,
-    borderRightWidth: 0.7
+    justifyContent: 'center'
   },
-  picker: {
+  pickerLeft: {
+    height: 200,
+    width: 140,
+    justifyContent: 'center'
+  },
+  pickerRight: {
     height: 200,
     width: 140,
     justifyContent: 'center'

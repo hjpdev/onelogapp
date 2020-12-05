@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Image, TouchableOpacity, View } from 'react-native'
 
 import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
-import { ChoiceButtons, ModifyTimeSelector, WheelSelector } from '../../Minor'
+import { ChoiceButtons, GradientBorder, ModifyTimeSelector, WheelSelector } from '../../Minor'
 import { WheelSelectorOptions } from '../../../Helpers'
 import { StoredBgReading, DataKey, Table } from '../../../types'
 import { ModifyBgStyles } from '../Styles'
@@ -71,17 +71,21 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
         onModalHide={onHide}
       >
         <View style={ModifyBgStyles.container}>
-          <ModifyTimeSelector created={created} setDateTime={setCreated} />
-          <WheelSelector
-            data={data}
-            integerOptions={WheelSelectorOptions.bgInt}
-            fractionOptions={WheelSelectorOptions.default}
-            updateData={setData}
-          />
-          <View style={ModifyBgStyles.deleteContainer}>
+        <View style={ModifyBgStyles.deleteContainer}>
             <TouchableOpacity onPress={() => onDelete()}>
-              <Text style={ModifyBgStyles.deleteText}>Delete</Text>
+              <Image source={require('../../../Assets/Images/Bin.png')} style={{ height: 20, width: 20, borderBottomWidth: 1 }} />
             </TouchableOpacity>
+          </View>
+          <GradientBorder x={1.0} y={1.0} />
+          <ModifyTimeSelector created={created} setDateTime={setCreated} />
+          <GradientBorder x={1.0} y={1.0} />
+          <View style={{}}>
+            <WheelSelector
+              data={data}
+              integerOptions={WheelSelectorOptions.bgInt}
+              fractionOptions={WheelSelectorOptions.default}
+              updateData={setData}
+            />
           </View>
           <ChoiceButtons
             confirmationText="Submit"
@@ -98,8 +102,8 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
         table={Table.bg}
         dataKey={DataKey.bg}
         onClose={() => setShowDeleteConfirmationModal(false)}
-        showModal={showBgModal}
         update={() => update(DataKey.bg)}
+        onModalHide={showBgModal}
       />
     </>
   )

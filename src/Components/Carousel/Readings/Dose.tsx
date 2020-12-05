@@ -15,7 +15,7 @@ export const DoseCarousel: React.FC<DoseCarouselProps> = (props: DoseCarouselPro
   const { reading } = props
   const { data, long } = reading
 
-  const generateColors = () => (long ? ['#ebebeb', '#e0d5b7'] : ['#ebebeb', '#b56076'])
+  const generateColors = () => (long ? ['#ebebeb', '#d9c79a'] : ['#ebebeb', '#b56076'])
 
   return (
     <View style={DoseStyles.container} testID="carousel-dose">

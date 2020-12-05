@@ -49,11 +49,8 @@ export const ModifyBgStyles = StyleSheet.create({
     alignItems: 'center'
   },
   deleteContainer: {
-    width: '33%',
-    margin: 4,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    marginVertical: 10
+    width: '100%',
+    padding: 8
   },
   deleteText: {
     textAlign: 'center'
@@ -87,7 +84,8 @@ export const ModifyDoseStyles = StyleSheet.create({
     fontSize: 16
   },
   deleteContainer: {
-    width: '100%'
+    width: '100%',
+    padding: 8
   },
   deleteText: {
     textAlign: 'left',
@@ -108,11 +106,8 @@ export const ModifyKetoStyles = StyleSheet.create({
     alignItems: 'center'
   },
   deleteContainer: {
-    width: '33%',
-    margin: 4,
-    borderBottomWidth: 2,
-    borderRadius: 4,
-    marginBottom: 12
+    width: '100%',
+    padding: 8
   },
   deleteText: {
     textAlign: 'center'

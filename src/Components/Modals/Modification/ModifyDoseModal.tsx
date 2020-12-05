@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import { Switch, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Switch, Text, TouchableOpacity, View } from 'react-native'
 
 import DeleteConfirmationModal from '../../Modals/DeleteConfirmationModal'
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
-import { ChoiceButtons, ModifyTimeSelector, WheelSelector } from '../../Minor'
+import { ChoiceButtons, GradientBorder, ModifyTimeSelector, WheelSelector } from '../../Minor'
 import { WheelSelectorOptions } from '../../../Helpers'
 import { DataKey, StoredDoseReading, Table } from '../../../types'
 import { ModifyDoseStyles } from '../Styles'
@@ -14,16 +14,18 @@ interface ModifyDoseModalProps {
   isVisible: boolean
   reading: StoredDoseReading
   onClose: () => void
+  showDoseModal: () => void
   update: (_: DataKey) => void
 }
 
 const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalProps) => {
-  const { isVisible, reading, onClose, update } = props
+  const { isVisible, reading, onClose,showDoseModal, update } = props
 
   const [created, setCreated] = useState(reading.created)
   const [data, setData] = useState(reading.data || 0.0)
   const [long, setLong] = useState(reading.long)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const state: StoredDoseReading = {
@@ -57,6 +59,16 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
     }
   }
 
+  const onHide = () => {
+    deleteConfirmation && setShowDeleteConfirmationModal(true)
+    setDeleteConfirmation(false)
+  }
+
+  const onDelete = () => {
+    setDeleteConfirmation(true)
+    onClose()
+  }
+
   return (
     <>
       <Modal
@@ -69,14 +81,17 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
         onBackdropPress={onClose}
         backdropOpacity={0.66}
         style={ModifyDoseStyles.modal}
+        onModalHide={onHide}
       >
         <View style={ModifyDoseStyles.container}>
           <View style={ModifyDoseStyles.deleteContainer}>
-            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
-              <Text style={ModifyDoseStyles.deleteText}>Delete</Text>
+            <TouchableOpacity onPress={() => onDelete()}>
+              <Image source={require('../../../Assets/Images/Bin.png')} style={{ height: 20, width: 20 }} />
             </TouchableOpacity>
           </View>
+          <GradientBorder x={1.0} y={1.0} />
           <ModifyTimeSelector created={state.created} setDateTime={setCreated} />
+          <GradientBorder x={1.0} y={1.0} />
           <WheelSelector
             data={reading.data}
             integerOptions={WheelSelectorOptions.bgInt}
@@ -104,6 +119,7 @@ const ModifyDoseModal: React.FC<ModifyDoseModalProps> = (props: ModifyDoseModalP
         dataKey={DataKey.dose}
         onClose={() => setShowDeleteConfirmationModal(false)}
         update={() => update(DataKey.dose)}
+        onModalHide={showDoseModal}
       />
     </>
   )

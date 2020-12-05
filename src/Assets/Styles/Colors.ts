@@ -5,7 +5,7 @@ export default {
   black: '#000000',
   darkGrey1: '#808080',
   darkGrey2: '#3f3d3d',
-  doseLong: '#e0d5b7',
+  doseLong: '#d9c79a',
   doseShort: '#b56076',
   keto: '#b8b884',
   lightGrey1: '#ebebeb',

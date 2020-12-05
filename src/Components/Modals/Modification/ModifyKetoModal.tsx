@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Image, TouchableOpacity, View } from 'react-native'
 
 import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
-import { ChoiceButtons, ModifyTimeSelector, WheelSelector } from '../../Minor'
+import { ChoiceButtons, GradientBorder, ModifyTimeSelector, WheelSelector } from '../../Minor'
 import { WheelSelectorOptions } from '../../../Helpers'
 import { DataKey, StoredKetoReading, Table } from '../../../types'
 import { ModifyKetoStyles } from '../Styles'
@@ -14,15 +14,17 @@ interface ModifyKetoModalProps {
   isVisible: boolean
   reading: StoredKetoReading
   onClose: () => void
+  showKetoModal: () => void
   update: (_: DataKey) => void
 }
 
 const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalProps) => {
-  const { isVisible, reading, onClose, update } = props
+  const { isVisible, reading, onClose, showKetoModal, update } = props
 
   const [created, setCreated] = useState(reading.created)
   const [data, setData] = useState(reading.data || 0.0)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false)
   const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const handleSubmit = async () => {
@@ -42,6 +44,16 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
     }
   }
 
+  const onHide = () => {
+    deleteConfirmation && setShowDeleteConfirmationModal(true)
+    setDeleteConfirmation(false)
+  }
+
+  const onDelete = () => {
+    setDeleteConfirmation(true)
+    onClose()
+  }
+
   return (
     <>
       <Modal
@@ -54,20 +66,23 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
         onBackdropPress={onClose}
         backdropOpacity={0.66}
         style={ModifyKetoStyles.modal}
+        onModalHide={onHide}
       >
         <View style={ModifyKetoStyles.container}>
+          <View style={ModifyKetoStyles.deleteContainer}>
+            <TouchableOpacity onPress={() => onDelete()}>
+              <Image source={require('../../../Assets/Images/Bin.png')} style={{ height: 20, width: 20 }} />
+            </TouchableOpacity>
+          </View>
+          <GradientBorder x={1.0} y={1.0} />
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
+          <GradientBorder x={1.0} y={1.0} />
           <WheelSelector
             data={reading.data}
             integerOptions={WheelSelectorOptions.default}
             fractionOptions={WheelSelectorOptions.default}
             updateData={setData}
           />
-          <View style={ModifyKetoStyles.deleteContainer}>
-            <TouchableOpacity onPress={() => setShowDeleteConfirmationModal(true)}>
-              <Text style={ModifyKetoStyles.deleteText}>Delete</Text>
-            </TouchableOpacity>
-          </View>
           <ChoiceButtons
             confirmationText="Submit"
             cancellationText="Cancel"
@@ -84,6 +99,7 @@ const ModifyKetoModal: React.FC<ModifyKetoModalProps> = (props: ModifyKetoModalP
         dataKey={DataKey.keto}
         onClose={() => setShowDeleteConfirmationModal(false)}
         update={() => update(DataKey.keto)}
+        onModalHide={showKetoModal}
       />
     </>
   )

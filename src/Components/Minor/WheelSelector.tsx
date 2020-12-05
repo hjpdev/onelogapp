@@ -43,7 +43,7 @@ export const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelector
     <View style={WheelSelectorStyles.container}>
       <Picker
         selectedValue={`${integerPart}`}
-        style={WheelSelectorStyles.picker}
+        style={WheelSelectorStyles.pickerLeft}
         itemStyle={WheelSelectorStyles.pickerItem}
         onValueChange={onIntegerPartSelected}
       >
@@ -54,7 +54,7 @@ export const WheelSelector: React.FC<WheelSelectorProps> = (props: WheelSelector
       </View>
       <Picker
         selectedValue={`${fractionPart}`}
-        style={WheelSelectorStyles.picker}
+        style={WheelSelectorStyles.pickerRight}
         itemStyle={WheelSelectorStyles.pickerItem}
         onValueChange={onFractionPartSelected}
       >
