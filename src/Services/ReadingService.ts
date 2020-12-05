@@ -218,7 +218,7 @@ export default class ReadingsService {
       const doseReadings = await LocalStore.getData(DataKey.dose)
       const macroReadings = await LocalStore.getData(DataKey.macro)
 
-      homeScreenData = { ...bgReadings, ...bgStats, ...doseReadings, ...macroReadings }
+      homeScreenData = { bgReadings, bgStats, doseReadings, macroReadings }
     } catch (err) {
       return console.log('Error getHomeScreenData: ', err.stack)
     }

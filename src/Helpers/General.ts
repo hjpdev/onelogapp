@@ -11,7 +11,9 @@ export const capitalise = (word: string): string => {
   return `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`
 }
 
-export const capitaliseAddWhitespace = (name: string) => titleCase(name.replace(/_/g, ' '))
+export const capitaliseAddWhitespace = (name: string): string => {
+  return titleCase(name.replace(/_/g, ' '))
+}
 
 export const truncateName = (limit: number, name: string) => {
   let formattedName = capitaliseAddWhitespace(name)
@@ -61,6 +63,6 @@ export const clockMinutes = [
   '50', '51', '52', '53', '54', '55', '56', '57', '58', '59'
 ]
 
-const titleCase = (name: string) => {
-  name.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+const titleCase = (name: string): string => {
+  return name.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
 }

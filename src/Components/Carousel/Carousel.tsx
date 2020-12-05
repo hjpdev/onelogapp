@@ -4,17 +4,13 @@ import GestureRecognizer from 'react-native-swipe-gestures'
 
 import { Chevron, GradientBorder } from '../Minor'
 import { capitalise, generateCreatedDate } from '../../Helpers'
-import { Reading } from '../../types'
+import { StoredReading } from '../../types'
 import { CarouselStyles } from './Styles'
-
-interface ReadingCarouselProps {
-  reading: Reading
-}
 
 interface CarouselProps {
   name: string
-  Template: React.FC<ReadingCarouselProps>
-  readings: any[]
+  Template: React.FC<any>
+  readings: StoredReading[]
   startingIndex?: number
 }
 
