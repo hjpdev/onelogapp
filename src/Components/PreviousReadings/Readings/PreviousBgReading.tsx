@@ -19,17 +19,9 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
   const { reading, update } = props
 
   const [showModifyBgModal, setShowModifyBgModal] = useState(false)
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const { created, data } = reading
   const timeCreated = generateCreatedTime(created)
-
-  const handleDelete = (): void => {
-    setShowModifyBgModal(false)
-    setTimeout(() => {
-      setShowDeleteConfirmationModal(true)
-    }, 100)
-  }
 
   const generateColor = (): string | undefined => {
     let color
@@ -67,16 +59,8 @@ export const PreviousBgReading: React.FC<PreviousBgReadingProps> = (props: Previ
         isVisible={showModifyBgModal}
         reading={reading}
         onClose={() => setShowModifyBgModal(false)}
-        onDelete={handleDelete}
+        showBgModal={() => setShowModifyBgModal(true)}
         update={update}
-      />
-      <DeleteConfirmationModal
-        isVisible={showDeleteConfirmationModal}
-        reading={reading}
-        table={Table.bg}
-        dataKey={DataKey.bg}
-        onClose={() => setShowDeleteConfirmationModal(false)}
-        update={() => update(DataKey.bg)}
       />
     </>
   )

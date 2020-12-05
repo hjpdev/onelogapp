@@ -1,8 +1,8 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import PreviousReadings from '../PreviousReadings/PreviousReadings'
 import NewReadingSelection from '../NewReading/NewReadingSelection'
+import PreviousReadings from '../PreviousReadings/PreviousReadings'
 import { NewBgReading, NewDoseReading, NewMacroReading, NewKetoReading } from '../NewReading/Readings'
 
 const NewReadingScreen: React.FC = () => {

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Modal from 'react-native-modal'
 import { Text, TouchableOpacity, View } from 'react-native'
 
+import DeleteConfirmationModal from '../DeleteConfirmationModal'
 import ReadingService from '../../../Services/ReadingService'
 import SuccessModal from '../SuccessModal'
 import { ChoiceButtons, ModifyTimeSelector, WheelSelector } from '../../Minor'
@@ -13,18 +14,20 @@ interface ModifyBgModalProps {
   isVisible: boolean
   reading: StoredBgReading
   onClose: () => void
-  onDelete: () => void
+  showBgModal: () => void
   update: (_: DataKey) => void
 }
 
 const dataKey = DataKey.bg
 
 const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) => {
-  const { isVisible, reading, onClose, onDelete, update } = props
+  const { isVisible, reading, onClose, showBgModal, update } = props
 
-  const [created, setCreated] = useState(reading.created)
   const [data, setData] = useState(reading.data || 0.0)
+  const [created, setCreated] = useState(reading.created)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false)
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] = useState(false)
 
   const handleSubmit = async () => {
     try {
@@ -43,6 +46,16 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
     }
   }
 
+  const onHide = () => {
+    deleteConfirmation && setShowDeleteConfirmationModal(true)
+    setDeleteConfirmation(false)
+  }
+
+  const onDelete = () => {
+    setDeleteConfirmation(true)
+    onClose()
+  }
+
   return (
     <>
       <Modal
@@ -55,6 +68,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
         onBackdropPress={onClose}
         backdropOpacity={0.66}
         style={ModifyBgStyles.modal}
+        onModalHide={onHide}
       >
         <View style={ModifyBgStyles.container}>
           <ModifyTimeSelector created={created} setDateTime={setCreated} />
@@ -65,7 +79,7 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
             updateData={setData}
           />
           <View style={ModifyBgStyles.deleteContainer}>
-            <TouchableOpacity onPress={onDelete}>
+            <TouchableOpacity onPress={() => onDelete()}>
               <Text style={ModifyBgStyles.deleteText}>Delete</Text>
             </TouchableOpacity>
           </View>
@@ -78,6 +92,15 @@ const ModifyBgModal: React.FC<ModifyBgModalProps> = (props: ModifyBgModalProps) 
         </View>
       </Modal>
       <SuccessModal isVisible={showSuccessModal} onPress={() => setShowSuccessModal(false)} />
+      <DeleteConfirmationModal
+        isVisible={showDeleteConfirmationModal}
+        reading={reading}
+        table={Table.bg}
+        dataKey={DataKey.bg}
+        onClose={() => setShowDeleteConfirmationModal(false)}
+        showModal={showBgModal}
+        update={() => update(DataKey.bg)}
+      />
     </>
   )
 }

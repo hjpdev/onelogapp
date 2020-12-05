@@ -3,8 +3,8 @@ import { View } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 
 import Carousel from '../Carousel/Carousel'
-import ScreenStyles from '../../Assets/Styles/Screen'
 import ReadingService from '../../Services/ReadingService'
+import ScreenStyles from '../../Assets/Styles/Screen'
 import { BgCarousel, StatsCarousel, DoseCarousel, MacroCarousel } from '../Carousel/Readings'
 import { StoredReading } from '../../types'
 

@@ -107,7 +107,7 @@ export const MacroStyles = StyleSheet.create({
 export const HeaderStyles = StyleSheet.create({
   header: {
     flexDirection: 'row',
-    backgroundColor: Colors.lightGrey6,
+    backgroundColor: Colors.lightGrey3,
     width: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',

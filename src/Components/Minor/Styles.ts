@@ -23,7 +23,8 @@ export const ChoiceButtonsStyles = StyleSheet.create({
     borderBottomEndRadius: 2
   },
   submitButton: {
-    width: '50%'
+    width: '50%',
+    borderRightWidth: 0.5
   },
   closeButton: {
     width: '50%',

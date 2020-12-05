@@ -16,11 +16,12 @@ interface DeleteConfirmationModalProps {
   dataKey: DataKey
   isVisible: boolean
   onClose: () => void
+  showModal: () => void
   update: (_: DataKey) => void
 }
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: DeleteConfirmationModalProps) => {
-  const { reading, table, dataKey, isVisible, onClose, update } = props
+  const { reading, table, dataKey, isVisible, onClose, showModal, update } = props
   const { id, created } = reading
   const name = generateCreatedDate(`${created}`)
 
@@ -50,6 +51,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = (props: 
         onBackdropPress={onClose}
         backdropOpacity={0.33}
         style={DeleteConfirmationStyles.modal}
+        onModalHide={() => showModal()}
       >
         <View style={DeleteConfirmationStyles.container}>
           <Text style={DeleteConfirmationStyles.name}>{`Delete:  ${truncateName(20, name)}?`}</Text>

@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { TextInput, View } from 'react-native'
 import Modal from 'react-native-modal'
 
+import MacroAmountSelector from '../Minor/MacroAmountSelector'
 import ReadingService from '../../Services/ReadingService'
 import SuccessModal from '../Modals/SuccessModal'
-import { GradientBorder, ChoiceButtons, MacroAmountSelector } from '../Minor'
+import { GradientBorder, ChoiceButtons } from '../Minor'
 import { MacroReadingData, SavedMacroReadingProps, Table } from '../../types'
 import { NewSavedMacroModalStyles } from './Styles'
 
